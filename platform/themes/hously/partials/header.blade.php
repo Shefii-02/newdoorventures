@@ -221,11 +221,12 @@
         {!! Theme::header() !!}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         @stack('custom-style')
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     </head>
  
     <body class="dark:bg-slate-900">
-     @stack('custom-scripts')
+
         {!! apply_filters(THEME_FRONT_BODY, null) !!}
 
         <div id="alert-container"></div>
