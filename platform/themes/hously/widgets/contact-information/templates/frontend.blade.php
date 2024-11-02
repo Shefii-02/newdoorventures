@@ -25,7 +25,9 @@
         <div class="flex mt-6">
             <i data-feather="phone" class="w-5 h-5 text-primary me-2"></i>
             <div>
-                <a href="tel:{{ $phone }}" dir="ltr" class="duration-500 ease-in-out text-slate-300 hover:text-slate-400">{{ $phone }}</a>
+                <a href="tel:{{ $phone }}" dir="ltr" class="duration-500 ease-in-out text-slate-300 hover:text-slate-400">{{ $phone }}</a> <br>
+                <a href="tel:+91 9686366086" dir="ltr" class="duration-500 ease-in-out text-slate-300 hover:text-slate-400">+91 9686 366 086</a>
+
             </div>
         </div>
     @endif

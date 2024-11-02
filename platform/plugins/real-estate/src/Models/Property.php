@@ -114,7 +114,7 @@ class Property extends BaseModel
             get: function () {
                 $square = $this->square;
 
-                $unit = setting('real_estate_square_unit', 'm²');
+                $unit = setting('real_estate_square_unit', 'Sq Ft');
 
                 return apply_filters('real_estate_property_square_text', sprintf('%s %s', number_format($square), __($unit)), $square);
             },
