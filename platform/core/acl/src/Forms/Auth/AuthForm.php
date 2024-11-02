@@ -1,0 +1,56 @@
+<?php
+
+namespace Botble\ACL\Forms\Auth;
+
+use Botble\Base\Forms\FieldOptions\HtmlFieldOption;
+use Botble\Base\Forms\Fields\HtmlField;
+use Botble\Base\Forms\FormAbstract;
+use Botble\Base\Models\BaseModel;
+
+class AuthForm extends FormAbstract
+{
+    public function setup(): void
+    {
+        $this
+            ->model(BaseModel::class)
+            ->template('core/acl::auth.form');
+    }
+
+    public function heading(string $heading): self
+    {
+        $this->add(
+            'heading',
+            HtmlField::class,
+            HtmlFieldOption::make()
+                ->content(sprintf(
+                    '<h2 class="h3 text-center mb-3">%s</h2>',
+                    $heading
+                ))
+                ->toArray()
+        );
+
+        return $this;
+    }
+
+    public function submitButton(string $label, string|null $icon = null): self
+    {
+        $this
+            ->add(
+                'open_wrap_button',
+                HtmlField::class,
+                HtmlFieldOption::make()->content('<div class="form-footer">')->toArray()
+            )
+            ->add(
+                'button_submit',
+                HtmlField::class,
+                HtmlFieldOption::make()->view('core/acl::auth.includes.submit', compact('label', 'icon'))->toArray()
+            )
+            ->add(
+                'close_wrap_button',
+                HtmlField::class,
+                HtmlFieldOption::make()->content('</div>')->toArray()
+            );
+
+        return $this;
+    }
+}
