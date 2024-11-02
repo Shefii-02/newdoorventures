@@ -1,10 +1,10 @@
 <form action="{{ $actionUrl ?? RealEstateHelper::getPropertiesListPageUrl() }}"
     data-ajax-url="{{ $ajaxUrl ?? route('public.properties') }}">
     <input type="hidden" name="type" value="{{ $type }}">
-    <div class="col-lg-12" >
+    <div class="col-lg-12">
         <div class="row align-items-center">
             <div class="col-md-2 flex justify-end">
-                <button type="button"  @click="openRent = !openRent"
+                <button type="button" @click="openRent = !openRent"
                     class="flex items-center gap-2 toggle-advanced-search text-primary hover:text-secondary">
                     {{ __('All Residential') }}
                     <i :class="openRent ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
@@ -17,8 +17,8 @@
                         {!! Theme::partial('filters.keyword', compact('type')) !!}
                     </div>
                     <div class="col-lg-1 flex gap-5 hidden">
-                        <button type="button" onclick="runSpeechRecog()" class="mdi mdi-microphone fs-3 text-primary"></button>
-                        <button type="button" onclick="getLocation()" class="mdi mdi-map-marker-radius-outline fs-3 text-primary"></button>
+                        <i class="mdi mdi-map-marker-radius-outline fs-3 text-primary"></i>
+                        <i class="mdi mdi-microphone fs-3 text-primary"></i>
                     </div>
                 </div>
             </div>
@@ -32,60 +32,60 @@
             </div>
         </div>
 
-    <!-- Rent Tab -->
-    <div>
+        <!-- Rent Tab -->
+        <div>
 
-        <div class="advanced-search duration-200 px-5 " x-show="openRent" x-transition x-cloak>
-            <div class="col-span-12">
-                {!! Theme::partial('filters.property-type', compact('type', 'categories')) !!}
-            </div>
-
-            <div class="mt-3">
-                <div class="flex space-x-4 mb-4 gap-8">
-                    <span role="button" @click="activeTab = (activeTab === 'budget_rent' ? '' : 'budget_rent')"
-                        :class="{ 'font-bold tab-active': activeTab === 'budget_rent' }"
-                        class="text-dark border rounded-3xl px-4 fs-6">
-                        Budget
-                        <i :class="activeTab === 'budget_rent' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                    </span>
-
-                    <span role="button" @click="activeTab = (activeTab === 'bedroom_rent' ? '' : 'bedroom_rent')"
-                        :class="{ 'font-bold tab-active': activeTab === 'bedroom_rent' }"
-                        class="text-dark border rounded-3xl px-4 fs-6">
-                        Bedroom
-                        <i :class="activeTab === 'bedroom_rent' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                    </span>
-
-                    <span role="button"
-                        @click="activeTab = (activeTab === 'construction_rent' ? '' : 'construction_rent')"
-                        :class="{ 'font-bold tab-active': activeTab === 'construction_rent' }"
-                        class="text-dark border rounded-3xl px-4 fs-6">
-                        Construction Status
-                        <i
-                            :class="activeTab === 'construction_rent' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                    </span>
+            <div x-show="openRent" x-transition x-cloak>
+                <div class="col-span-12">
+                    {!! Theme::partial('filters.property-type', compact('type', 'categories')) !!}
                 </div>
 
-                <div>
-                    <div x-show="activeTab === 'budget_rent'" class="p-4 rounded-lg" x-cloak>
-                        {!! Theme::partial('filters.price-range', compact('type')) !!}
+                <div class="mt-3">
+                    <div class="flex space-x-4 mb-4 gap-8">
+                        <span role="button"
+                            @click="activeTab = (activeTab === 'budget_Rent' ? '' : 'budget_Rent')"
+                            :class="{ 'font-bold tab-active': activeTab === 'budget_Rent' }"
+                            class="text-dark border rounded-3xl px-4 fs-6">
+                            Budget
+                            <i
+                                :class="activeTab === 'budget_Rent' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </span>
+
+                        <span role="button"
+                            @click="activeTab = (activeTab === 'bedroom_Rent' ? '' : 'bedroom_Rent')"
+                            :class="{ 'font-bold tab-active': activeTab === 'bedroom_Rent' }"
+                            class="text-dark border rounded-3xl px-4 fs-6">
+                            Bedroom
+                            <i
+                                :class="activeTab === 'bedroom_Rent' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </span>
+
+                        <span role="button"
+                            @click="activeTab = (activeTab === 'construction_Rent' ? '' : 'construction_Rent')"
+                            :class="{ 'font-bold tab-active': activeTab === 'construction_Rent' }"
+                            class="text-dark border rounded-3xl px-4 fs-6">
+                            Construction Status
+                            <i
+                                :class="activeTab === 'construction_Rent' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </span>
                     </div>
-                    <div x-show="activeTab === 'bedroom_rent'" class="p-4 rounded-lg" x-cloak>
-                        {!! Theme::partial('filters.bedroom-section', compact('type')) !!}
-                    </div>
-                    <div x-show="activeTab === 'construction_rent'" class="p-4 rounded-lg" x-cloak>
-                        {!! Theme::partial('filters.construction-status', compact('type')) !!}
+
+                    <div>
+                        <div x-show="activeTab === 'budget_Rent'" class="p-4 rounded-lg" x-cloak>
+                            {!! Theme::partial('filters.price-range', compact('type')) !!}
+                        </div>
+                        <div x-show="activeTab === 'bedroom_Rent'" class="p-4 rounded-lg" x-cloak>
+                            {!! Theme::partial('filters.bedroom-section', compact('type')) !!}
+                        </div>
+                        <div x-show="activeTab === 'construction_Rent'" class="p-4 rounded-lg" x-cloak>
+                            {!! Theme::partial('filters.construction-status', compact('type')) !!}
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-      
     </div>
 </form>
-
-
-
-   

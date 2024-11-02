@@ -10,6 +10,7 @@
                     <i :class="openBuy ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                 </button>
             </div>
+
             <div class="col-md-8">
                 <div class="row align-items-center">
                     <div class="col-lg-12">
@@ -21,6 +22,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-2">
                 <button type="submit"
                     class="btn bg-primary hover:bg-secondary border-primary hover:border-secondary text-white submit-btn w-full !h-12 rounded transition-all ease-in-out duration-200">
@@ -29,53 +31,61 @@
                 </button>
             </div>
         </div>
+
         <!-- Buy Tab -->
         <div>
-            
-            <div class="advanced-search duration-200 px-5 " x-show="openBuy" x-transition x-cloak>
+
+            <div x-show="openBuy" x-transition x-cloak>
                 <div class="col-span-12">
                     {!! Theme::partial('filters.property-type', compact('type', 'categories')) !!}
                 </div>
 
                 <div class="mt-3">
                     <div class="flex space-x-4 mb-4 gap-8">
-                        <span role="button" @click="activeTab = (activeTab === 'budget' ? '' : 'budget')"
-                            :class="{ 'font-bold tab-active': activeTab === 'budget' }"
+                        <span role="button"
+                            @click="activeTab = (activeTab === 'budget_Buy' ? '' : 'budget_Buy')"
+                            :class="{ 'font-bold tab-active': activeTab === 'budget_Buy' }"
                             class="text-dark border rounded-3xl px-4 fs-6">
                             Budget
-                            <i :class="activeTab === 'budget' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                            <i
+                                :class="activeTab === 'budget_Buy' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                         </span>
 
-                        <span role="button" @click="activeTab = (activeTab === 'bedroom' ? '' : 'bedroom')"
-                            :class="{ 'font-bold tab-active': activeTab === 'bedroom' }"
+                        <span role="button"
+                            @click="activeTab = (activeTab === 'bedroom_Buy' ? '' : 'bedroom_Buy')"
+                            :class="{ 'font-bold tab-active': activeTab === 'bedroom_Buy' }"
                             class="text-dark border rounded-3xl px-4 fs-6">
                             Bedroom
-                            <i :class="activeTab === 'bedroom' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                            <i
+                                :class="activeTab === 'bedroom_Buy' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                         </span>
 
-                        <span role="button" @click="activeTab = (activeTab === 'construction' ? '' : 'construction')"
-                            :class="{ 'font-bold tab-active': activeTab === 'construction' }"
+                        <span role="button"
+                            @click="activeTab = (activeTab === 'construction_Buy' ? '' : 'construction_Buy')"
+                            :class="{ 'font-bold tab-active': activeTab === 'construction_Buy' }"
                             class="text-dark border rounded-3xl px-4 fs-6">
                             Construction Status
                             <i
-                                :class="activeTab === 'construction' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                                :class="activeTab === 'construction_Buy' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                         </span>
                     </div>
 
                     <div>
-                        <div x-show="activeTab === 'budget'" class="p-4 rounded-lg" x-cloak>
+                        <div x-show="activeTab === 'budget_Buy'" class="p-4 rounded-lg" x-cloak>
                             {!! Theme::partial('filters.price-range', compact('type')) !!}
                         </div>
-                        <div x-show="activeTab === 'bedroom'" class="p-4 rounded-lg" x-cloak>
+                        <div x-show="activeTab === 'bedroom_Buy'" class="p-4 rounded-lg" x-cloak>
                             {!! Theme::partial('filters.bedroom-section', compact('type')) !!}
                         </div>
-                        <div x-show="activeTab === 'construction'" class="p-4 rounded-lg" x-cloak>
+                        <div x-show="activeTab === 'construction_Buy'" class="p-4 rounded-lg" x-cloak>
                             {!! Theme::partial('filters.construction-status', compact('type')) !!}
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
-     
+
+
     </div>
 </form>
