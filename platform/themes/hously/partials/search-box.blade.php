@@ -53,3 +53,33 @@
         
     </div>
 </div>
+
+
+<!-- Modal -->
+<div id="voiceSearchModal" class="modal">
+    <div class="modal-content">
+        <form action="{{ $actionUrl ?? RealEstateHelper::getPropertiesListPageUrl() }}">
+            <input type="hidden" name="k" id="keyword-search" autocomplete="off">
+            <span role="button"  id="closeModal" class="mt-10"><i class="mdi mdi-close"></i></span>
+            {{-- <h2 class="mb-4">Voice Search</h2> --}}
+            <p id="action" class="mb-3" style="color: grey; font-weight: 800;"></p>
+
+            <div id="startSpeech">
+                <span role="button" id="startButton" class="btn mic-btn type2">
+                    <div class="pulse"></div>
+                    <i class="mdi mdi-microphone  microphone" aria-hidden="true"></i>
+                </span>
+                
+            </div>
+            <h3 id="output" class="hide mt-5"></h3>
+
+            <button  class="mt-3 btn bg-primary hover:bg-secondary border-primary hover:border-secondary text-white submit-btn-voice w-full !h-12 rounded transition-all ease-in-out duration-200">
+                <i class="mdi mdi-magnify me-2"></i>
+                Search
+            </button>
+
+        </form>
+      
+    </div>
+    
+</div>

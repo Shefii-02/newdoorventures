@@ -1,4 +1,4 @@
-<form action="{{ $actionUrl ?? RealEstateHelper::getPropertiesListPageUrl() }}"
+<form action="{{ $actionUrl ?? RealEstateHelper::getPropertiesListPageUrl() }}" class="property"
     data-ajax-url="{{ $ajaxUrl ?? route('public.properties') }}">
     <input type="hidden" name="type" value="{{ $type }}">
     <div class="col-lg-12">
@@ -13,12 +13,11 @@
 
             <div class="col-md-8">
                 <div class="row align-items-center">
-                    <div class="col-lg-12">
+                    <div class="col-lg-10">
                         {!! Theme::partial('filters.keyword', compact('type')) !!}
                     </div>
-                    <div class="col-lg-1 flex gap-5 hidden">
-                        <i class="mdi mdi-map-marker-radius-outline fs-3 text-primary"></i>
-                        <i class="mdi mdi-microphone fs-3 text-primary"></i>
+                    <div class="col-lg-2 flex gap-5">
+                        {!! Theme::partial('filters.tabs.mic-location') !!}
                     </div>
                 </div>
             </div>

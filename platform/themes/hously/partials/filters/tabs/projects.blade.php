@@ -13,12 +13,11 @@
 
             <div class="col-md-8">
                 <div class="row align-items-center">
-                    <div class="col-lg-12">
+                    <div class="col-lg-11">
                         {!! Theme::partial('filters.keyword', compact('type')) !!}
                     </div>
-                    <div class="col-lg-1 flex gap-5 hidden">
-                        <i class="mdi mdi-map-marker-radius-outline fs-3 text-primary"></i>
-                        <i class="mdi mdi-microphone fs-3 text-primary"></i>
+                    <div class="col-lg-1 flex gap-5">
+                        <i role="button" class="mdi mdi-microphone fs-3 text-primary openModal"></i>
                     </div>
                 </div>
             </div>
