@@ -1,5 +1,5 @@
 <div class="mt-6">
-    {{-- <label class="form-label" for="property-status" class=" form-label text-slate-900 dark:text-white">Construction Status</label> --}}
+    <label class="form-label" for="property-status" class=" form-label text-slate-900 dark:text-white">Residential Project</label>
     <div class="relative mt-2 filter-search-form filter-border  gap-8" style="display:flex;" >
         <div class="lg:grid-cols-3 ">
             <div class="form-check">

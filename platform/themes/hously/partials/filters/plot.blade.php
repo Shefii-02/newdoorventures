@@ -15,8 +15,6 @@
 
         <div class="grid hidden grid-cols-1 gap-6 transition-all duration-200 ease-in-out  lg:gap-0 advanced-search">
             
-        
-            
             <nav>
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <button class="nav-link active" id="nav-bud-tab" data-bs-toggle="tab" data-bs-target="#nav-bud" type="button" role="tab" aria-controls="nav-bud" aria-selected="true">Budget</button>

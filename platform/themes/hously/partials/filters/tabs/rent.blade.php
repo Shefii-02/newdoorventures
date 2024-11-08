@@ -41,17 +41,14 @@
 
                 <div class="mt-3">
                     <div class="flex space-x-4 mb-4 gap-8">
-                        <span role="button"
-                            @click="activeTab = (activeTab === 'budget_Rent' ? '' : 'budget_Rent')"
+                        <span role="button" @click="activeTab = (activeTab === 'budget_Rent' ? '' : 'budget_Rent')"
                             :class="{ 'font-bold tab-active': activeTab === 'budget_Rent' }"
                             class="text-dark border rounded-3xl px-4 fs-6">
                             Budget
-                            <i
-                                :class="activeTab === 'budget_Rent' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                            <i :class="activeTab === 'budget_Rent' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                         </span>
 
-                        <span role="button"
-                            @click="activeTab = (activeTab === 'bedroom_Rent' ? '' : 'bedroom_Rent')"
+                        <span role="button" @click="activeTab = (activeTab === 'bedroom_Rent' ? '' : 'bedroom_Rent')"
                             :class="{ 'font-bold tab-active': activeTab === 'bedroom_Rent' }"
                             class="text-dark border rounded-3xl px-4 fs-6">
                             Bedroom
@@ -67,6 +64,15 @@
                             <i
                                 :class="activeTab === 'construction_Rent' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                         </span>
+                        
+                        <span role="button"
+                            @click="activeTab = (activeTab === 'furnishing_Rent' ? '' : 'furnishing_Rent')"
+                            :class="{ 'font-bold tab-active': activeTab === 'furnishing_Rent' }"
+                            class="text-dark border rounded-3xl px-4 fs-6">
+                            Furnishing
+                            <i
+                                :class="activeTab === 'furnishing_Rent' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </span>
                     </div>
 
                     <div>
@@ -78,6 +84,9 @@
                         </div>
                         <div x-show="activeTab === 'construction_Rent'" class="p-4 rounded-lg" x-cloak>
                             {!! Theme::partial('filters.construction-status', compact('type')) !!}
+                        </div>
+                        <div x-show="activeTab === 'furnishing_Rent'" class="p-4 rounded-lg" x-cloak>
+                            {!! Theme::partial('filters.furnishing', compact('type')) !!}
                         </div>
 
                     </div>

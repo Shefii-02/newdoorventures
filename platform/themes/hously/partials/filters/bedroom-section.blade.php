@@ -1,6 +1,6 @@
 
 <div class="mt-10">
-    <label class="form-label" for="min-price" class="font-medium form-label text-slate-900 dark:text-white">Number of Bedrooms</label>
+    {{-- <label class="form-label" for="min-price" class="font-medium form-label text-slate-900 dark:text-white">Number of Bedrooms</label> --}}
     <div class="relative mt-2 filter-search-form filter-border">
         <ul class="ks-cboxtags p-0">
             @foreach(range(1, 5) as $i)

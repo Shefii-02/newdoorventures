@@ -1,15 +1,19 @@
 @php
     $places = $dropDownLocation->pluck('name');
-    $placeholders = [];
+    // $placeholders = [];
 
-    foreach ($places as $key => $value) {
-        $placeholders[] = 'Searching Property for "' . $value.'"';
-    }
+    // foreach ($places as $key => $value) {
+    //     $placeholders[] = 'Searching Property for "' . $value.'"';
+    // }
 
-    $placeholders[] = 'Search for Property "Keywords"';
-    $placeholders[] = 'Searching for "3 BHK for buy"';
-    $placeholders[] = 'Searching for "2 BHK for buy"';
-    $placeholders[] = 'Searching for "2 BHK for buy"';
+    $placeholders = ['Search: 3 BHK for sale',
+                    'Search: 2 BHK for rent',
+                    'Search: Plot and land',
+                    'Search: PG',
+                    'Search: Farm house',
+                    'Search: Bangalore north',
+                    'Search: Villa']
+    
 @endphp
 <div x-data="{
     placeholders: {{ json_encode($placeholders) }},

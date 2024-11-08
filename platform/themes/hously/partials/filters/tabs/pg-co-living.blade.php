@@ -55,7 +55,21 @@
                             <i :class="activeTab === 'bedroom_pg' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                         </span>
 
-                       
+                        <span role="button" @click="activeTab = (activeTab === 'sharing_pg' ? '' : 'sharing_pg')"
+                            :class="{ 'font-bold tab-active': activeTab === 'sharing_pg' }"
+                            class="text-dark border rounded-3xl px-4 fs-6">
+                            Sharing
+                            <i :class="activeTab === 'sharing_pg' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </span>
+
+                        <span role="button" @click="activeTab = (activeTab === 'available_for_pg' ? '' : 'available_for_pg')"
+                            :class="{ 'font-bold tab-active': activeTab === 'available_for_pg' }"
+                            class="text-dark border rounded-3xl px-4 fs-6">
+                            Available for
+                            <i :class="activeTab === 'available_for_pg' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </span>
+
+
                     </div>
 
                     <div>
@@ -65,7 +79,14 @@
                         <div x-show="activeTab === 'bedroom_pg'" class="p-4 rounded-lg" x-cloak>
                             {!! Theme::partial('filters.bedroom-section', compact('type')) !!}
                         </div>
-                       
+                        <div x-show="activeTab === 'sharing_pg'" class="p-4 rounded-lg" x-cloak>
+                            {!! Theme::partial('filters.sharing', compact('type')) !!}
+                        </div>
+                        <div x-show="activeTab === 'available_for_pg'" class="p-4 rounded-lg" x-cloak>
+                            {!! Theme::partial('filters.available-for', compact('type')) !!}
+                        </div>
+
+                        
                     </div>
                 </div>
             </div>

@@ -51,7 +51,7 @@
                         <span role="button" @click="activeTab = (activeTab === 'bedroom_Plot' ? '' : 'bedroom_Plot')"
                             :class="{ 'font-bold tab-active': activeTab === 'bedroom_Plot' }"
                             class="text-dark border rounded-3xl px-4 fs-6">
-                            Bedroom
+                            Area
                             <i :class="activeTab === 'bedroom_Plot' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                         </span>
 
@@ -63,7 +63,8 @@
                             {!! Theme::partial('filters.price-range', compact('type')) !!}
                         </div>
                         <div x-show="activeTab === 'bedroom_Plot'" class="p-4 rounded-lg" x-cloak>
-                            {!! Theme::partial('filters.bedroom-section', compact('type')) !!}
+                            
+                            {!! Theme::partial('filters.size-section',compact('type')) !!}
                         </div>
                        
                     </div>

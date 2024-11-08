@@ -36,7 +36,7 @@
 
             <div x-show="openProject" x-transition x-cloak>
                 <div class="col-span-12">
-                    {!! Theme::partial('filters.property-type', compact('type', 'categories')) !!}
+                    {!! Theme::partial('filters.project-category', compact('type', 'categories')) !!}
                 </div>
 
                 <div class="mt-3">
@@ -59,14 +59,14 @@
                                 :class="activeTab === 'bedroom_Project' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                         </span>
 
-                        <span role="button"
+                        {{-- <span role="button"
                             @click="activeTab = (activeTab === 'construction_Project' ? '' : 'construction_Project')"
                             :class="{ 'font-bold tab-active': activeTab === 'construction_Project' }"
                             class="text-dark border rounded-3xl px-4 fs-6">
                             Construction Status
                             <i
                                 :class="activeTab === 'construction_Project' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                        </span>
+                        </span> --}}
                     </div>
 
                     <div>
