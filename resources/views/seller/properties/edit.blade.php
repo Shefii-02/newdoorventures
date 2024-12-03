@@ -2515,7 +2515,7 @@
                 const options = {
                     bounds: defaultBounds, // Restrict to Bangalore's bounding box
                     strictBounds: true, // Enforce the bounding box strictly
-                    types: ['address'],
+                    types: ['establishment'],
                     componentRestrictions: {
                         country: 'IN', // Restrict to India
                     }
