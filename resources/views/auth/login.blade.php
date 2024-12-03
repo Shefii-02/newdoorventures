@@ -5,15 +5,15 @@
             style="background-image: url('https://hously.archielite.com/storage/backgrounds/02.jpg')"></div>
 
         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black z-2" id="particles-snow"><canvas
-                class="particles-js-canvas-el"  style="width: 100%; height: 100%;"></canvas></div>
+                class="particles-js-canvas-el" style="width: 100%; height: 100%;"></canvas></div>
         <div class="container z-3">
             <div class="flex justify-center">
                 <div
                     class="login-form max-w-[400px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md">
                     <a href="{{ route('public.index') }}"><img
-                            src="{{ asset('/images/general/logo-authentication-page.png') }}"
-                            class="mx-auto" width="64" height="64" alt="New Door Ventures"></a>
-                    <h5 class="my-6 text-xl font-semibold">Login</h5>
+                            src="{{ asset('/images/general/logo-authentication-page.png') }}" class="mx-auto" width="64"
+                            height="64" alt="New Door Ventures"></a>
+                    <h5 class="my-6 text-xl font-semibold text-center ">Login</h5>
                     <form class="text-start" action="{{ route('user.login.submit') }}" method="post">
                         @csrf
                         <div class="grid grid-cols-1">
@@ -36,8 +36,8 @@
                                     <label class="text-slate-400" for="RememberMe">Remember me?</label>
                                 </div>
                                 <p class="mb-0 text-slate-400">
-                                    <a href="{{ route('user.forget-password') }}"
-                                        class="text-slate-400">Forgot password?</a>
+                                    <a href="{{ route('user.forget-password') }}" class="text-slate-400">Forgot
+                                        password?</a>
                                 </p>
                             </div>
 

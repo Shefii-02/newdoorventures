@@ -8,9 +8,7 @@ use Botble\Base\Supports\Avatar;
 use App\Facades\RvMedia;
 use App\Models\MediaFile;
 use Botble\RealEstate\Enums\ReviewStatusEnum;
-use Botble\RealEstate\Facades\RealEstateHelper;
-use Botble\RealEstate\Notifications\ConfirmEmailNotification;
-use Botble\RealEstate\Notifications\ResetPasswordNotification;
+
 use Exception;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\MustVerifyEmail;

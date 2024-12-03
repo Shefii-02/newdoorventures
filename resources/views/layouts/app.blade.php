@@ -58,7 +58,8 @@
 
     <link media="all" type="text/css" rel="stylesheet" href="{{ asset('themes/hously/css/style.css?v=1.8.6') }}">
 
-    <link media="all" type="text/css" rel="stylesheet" href="{{ asset('themes/hously/plugins/leaflet/leaflet.css') }}">
+    <link media="all" type="text/css" rel="stylesheet"
+        href="{{ asset('themes/hously/plugins/leaflet/leaflet.css') }}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css'">
 
@@ -83,11 +84,11 @@
             list-style: none;
             /*padding: 20px;*/
         }
-    
+
         ul.ks-cboxtags li {
             display: inline;
         }
-    
+
         ul.ks-cboxtags li label {
             display: inline-block;
             background-color: rgba(255, 255, 255, .9);
@@ -104,12 +105,12 @@
             -webkit-tap-highlight-color: transparent;
             transition: all .2s;
         }
-    
+
         ul.ks-cboxtags li label {
             padding: 2px 10px;
             cursor: pointer;
         }
-    
+
         ul.ks-cboxtags li label::before {
             display: inline-block;
             font-style: normal;
@@ -123,42 +124,73 @@
             content: "+";
             transition: transform .3s ease-in-out;
         }
-    
+
         ul.ks-cboxtags li input[type="checkbox"]:checked+label::before {
             content: "✔";
             transform: rotate(-360deg);
             transition: transform .3s ease-in-out;
         }
-    
+
         ul.ks-cboxtags li input[type="checkbox"]:checked+label {
             border: 2px solid var(--secondary-color);
             background-color: var(--secondary-color);
             color: #fff;
             transition: all .2s;
         }
-    
+
         ul.ks-cboxtags li input[type="checkbox"] {
             display: absolute;
         }
-    
+
         ul.ks-cboxtags li input[type="checkbox"] {
             position: absolute;
             opacity: 0;
         }
-    
+
         ul.ks-cboxtags li input[type="checkbox"]:focus+label {
             border: 2px solid #e9a1ff;
+        }
+    </style>
+    <style>
+        .loading-state {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000ad;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 10px solid #ddd;
+            border-top-color: orange;
+            animation: loading 1s linear infinite;
+        }
+
+        @keyframes loading {
+            to {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
 
 <body class="dark:bg-slate-900">
-
+    <div class="loading-state">
+        <div class="loading"></div>
+    </div>
     {{-- {!! apply_filters(THEME_FRONT_BODY, null) !!} --}}
 
     <div id="alert-container"></div>
 
-  @include('layouts.topnav')
+    @include('layouts.topnav')
 
     @yield('content')
 
@@ -168,8 +200,8 @@
     @include('layouts.footer')
 
     <!-- Modal -->
-    <div class="modal fade z-999" id="BookingModal" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade z-999" id="BookingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content border-3 border-theme modal-body rounded-3xl">
                 <div class="col-lg-12 text-end flex justify-between">
@@ -187,13 +219,13 @@
 
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="name" required
-                                id="floatingInputName" placeholder="">
+                            <input type="text" class="form-control" name="name" required id="floatingInputName"
+                                placeholder="">
                             <label for="floatingInputName">Full Name</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="email" required
-                                id="floatingInputName" placeholder="">
+                            <input type="text" class="form-control" name="email" required id="floatingInputName"
+                                placeholder="">
                             <label for="floatingInputName">Email Id</label>
                         </div>
                         <div class="form-floating mb-3">
@@ -267,21 +299,21 @@
     </div>
 
 
-  
-        <div class="fixed top-1/4 z-999 -start-2">
-            <span class="relative inline-block rotate-90">
-                <input type="checkbox" class="absolute opacity-0 checkbox" id="chk" />
-                <label
-                    class="flex items-center justify-between h-8 p-1 rounded-full shadow cursor-pointer label bg-slate-900 dark:bg-white dark:shadow-gray-700 w-14"
-                    for="chk">
-                    <i class="mt-1 text-lg text-yellow-500 mdi mdi-weather-sunny"></i>
-                    <i class="mt-1 text-lg text-yellow-500 mdi mdi-weather-night"></i>
-                    <span
-                        class="ball bg-white dark:bg-slate-900 rounded-full absolute top-0.5 rtl:start-6 start-0.5 w-7 h-7"></span>
-                </label>
-            </span>
-        </div>
-  
+
+    <div class="fixed top-1/4 z-999 -start-2">
+        <span class="relative inline-block rotate-90">
+            <input type="checkbox" class="absolute opacity-0 checkbox" id="chk" />
+            <label
+                class="flex items-center justify-between h-8 p-1 rounded-full shadow cursor-pointer label bg-slate-900 dark:bg-white dark:shadow-gray-700 w-14"
+                for="chk">
+                <i class="mt-1 text-lg text-yellow-500 mdi mdi-weather-sunny"></i>
+                <i class="mt-1 text-lg text-yellow-500 mdi mdi-weather-night"></i>
+                <span
+                    class="ball bg-white dark:bg-slate-900 rounded-full absolute top-0.5 rtl:start-6 start-0.5 w-7 h-7"></span>
+            </label>
+        </span>
+    </div>
+
 
     <button type="button" onclick="topFunction()" id="back-to-top"
         class="fixed z-10 items-center justify-center hidden text-lg text-center text-white rounded-full bg-primary back-to-top bottom-5 end-5 h-9 w-9"
@@ -336,7 +368,7 @@
     <script src="{{ asset('vendor/core/plugins/cookie-consent/js/cookie-consent.js?v=1.0.1') }}"></script>
     <script src="{{ asset('themes/hously/js/app2cb4.js?v=1.8.6') }}"></script>
     <script src="{{ asset('themes/hously/js/script2cb4.js?v=1.8.6') }}"></script>
-    
+
     <script>
         $(document).ready(function() {
 
@@ -609,6 +641,11 @@
     </script>
     @stack('footer')
     <script src="https://stage.newdoorventures.in/themes/hously/plugins/particles.js/particles.js"></script>
+    <script>
+        $(window).on('load', function () {
+            $(".loading-state").hide();
+        });
+    </script>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
-<form action="/"
-    data-ajax-url="/">
+<form action="{{ route('public.properties') }}"
+    data-ajax-url="{{ route('searching-in-keywords') }}">
     <input type="hidden" name="type" value="rent">
     <input type="hidden" name="m" value="{{ 'pg' }}">
     <div class="col-lg-12">
@@ -37,7 +37,7 @@
 
             <div x-show="openPg" x-transition x-cloak>
                
-                <div class="container mt-3">
+                <div class="container-fluid px-3 mt-3">
                     <div class="flex space-x-4 mb-4 gap-8">
                         <span role="button" @click="activeTab2 = (activeTab2 === 'budget_pg' ? '' : 'budget_pg')"
                             :class="{ 'font-bold tab-active bg-theme-light': activeTab2 === 'budget_pg' }"
@@ -72,7 +72,7 @@
 
                     <div>
                         <div x-show="activeTab2 === 'budget_pg'" class="p-4 rounded-lg" x-cloak>
-                            @include("front.shortcuts.filters.price-range", ['type' => $type])
+                            @include('front.shortcuts.filters.price-range-new', ['type' => $type,'min' => '1000','max'=> '100000','step'=>'500'])
                         </div>
                         <div x-show="activeTab2 === 'bedroom_pg'" class="p-4 rounded-lg" x-cloak>
                             @include("front.shortcuts.filters.bedroom-section", ['type' => $type])

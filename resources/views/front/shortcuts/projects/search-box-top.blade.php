@@ -9,7 +9,7 @@
                         <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
                             class="border-theme px-3 py-2 rounded-s-2xl">
                             <option value="null" selected>Projects</option>
-                            <option value="sell">Sell</option>
+                            <option value="sell">Sale</option>
                             <option value="rent">Rent</option>
                             <option value="pg">PG</option>
                             <option value="plot">Plot</option>
@@ -102,6 +102,7 @@
                                     'min' => 0,
                                     'max' => 500000000,
                                     'step' => 500000,
+                                    'single_page' =>true,
                                 ])
                             </div>
                         </div>

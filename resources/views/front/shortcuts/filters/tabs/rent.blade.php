@@ -1,4 +1,4 @@
-<form action="/" x-data="{openRent: false, activeTab2: ''}" data-ajax-url="/">
+<form action="{{ route('public.properties') }}" x-data="{openRent: false, activeTab2: ''}" data-ajax-url="{{ route('searching-in-keywords') }}">
     <input type="hidden" name="type" value="rent">
     <div class="col-lg-12">
         <div class="row align-items-center">
@@ -81,7 +81,7 @@
 
                     <div>
                         <div x-show="activeTab2 === 'budget_Rent'" class="p-4 rounded-lg" x-cloak>
-                            @include('front.shortcuts.filters.price-range', ['type' => $type])
+                            @include('front.shortcuts.filters.price-range-new', ['type' => $type,'min' => '0','max'=> '100000000','step'=>'5000'])
                         </div>
                         <div x-show="activeTab2 === 'bedroom_Rent'" class="p-4 rounded-lg" x-cloak>
                             @include('front.shortcuts.filters.bedroom-section', ['type' => $type])

@@ -64,6 +64,8 @@
                     'categories' => $categories,
                     'cities' => $cities,
                     'builders' => $builders,
+                    'min_price' => request()->get('min_price') ?? '',
+                    'max_price' => request()->get('max_price') ?? '',
                 ])
                
             </div>

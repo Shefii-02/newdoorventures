@@ -3,10 +3,15 @@
       class="absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
       @click.outside="sidebarToggle = false">
       <!-- SIDEBAR HEADER -->
-      <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-          <a href="index.html">
-              <img src="src/images/logo/logo.svg" alt="Logo" />
-          </a>
+      <div
+          class="flex items-center justify-between gap-2 px-6 py-5.5 border-0 border-end-3 lg:py-5.5 bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
+          <div class="d-flex flex item items-center">
+              <a href="{{ route('admin.dashboard') }}" class="text-md">
+                  <img class="h-12.5" src="{{ asset('images/general/logo-dark.png') }}" alt="Logo" /> 
+              </a>
+              <span class="text-sm ms-2">NEW DOOR VENTURES</span>
+          </div>
+
 
           <button class="block lg:hidden" @click.stop="sidebarToggle = !sidebarToggle">
               <svg class="fill-current" width="20" height="18" viewBox="0 0 20 18" fill="none"
@@ -30,7 +35,8 @@
                       <!-- Menu Item Dashboard -->
                       <li>
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                              href="{{ route('dashboard') }}" @click="selected = (selected === 'Dashboard' ? '':'Dashboard')"
+                              href="{{ route('admin.dashboard') }}"
+                              @click="selected = (selected === 'Dashboard' ? '':'Dashboard')"
                               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Dashboard') && (page === 'dashboard') }">
                               <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none"
                                   xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +60,8 @@
                       <!-- Menu Item Properties -->
                       <li>
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                              href="{{ route('admin.properties.index') }}" @click="selected = (selected === 'Properties' ? '':'Properties')"
+                              href="{{ route('admin.properties.index') }}"
+                              @click="selected = (selected === 'Properties' ? '':'Properties')"
                               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Properties') && (page === 'properties') }">
                               <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none"
                                   xmlns="http://www.w3.org/2000/svg">
@@ -69,7 +76,8 @@
                       <!-- Menu Item Projects -->
                       <li>
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                              href="{{ route('admin.projects.index') }}" @click="selected = (selected === 'Projects' ? '':'Projects')"
+                              href="{{ route('admin.projects.index') }}"
+                              @click="selected = (selected === 'Projects' ? '':'Projects')"
                               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Projects') && (page === 'projects') }">
                               <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none"
                                   xmlns="http://www.w3.org/2000/svg">
@@ -84,7 +92,8 @@
                       <!-- Menu Item Builders -->
                       <li>
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                              href="{{ route('admin.builders.index') }}" @click="selected = (selected === 'Builders' ? '':'Builders')"
+                              href="{{ route('admin.builders.index') }}"
+                              @click="selected = (selected === 'Builders' ? '':'Builders')"
                               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Builders') && (page === 'builders') }">
                               <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none"
                                   xmlns="http://www.w3.org/2000/svg">
@@ -99,7 +108,8 @@
                       <!-- Menu Item Accounts -->
                       <li>
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                              href="{{ route('admin.accounts.index') }}" @click="selected = (selected === 'Accounts' ? '':'Accounts')"
+                              href="{{ route('admin.accounts.index') }}"
+                              @click="selected = (selected === 'Accounts' ? '':'Accounts')"
                               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Accounts') && (page === 'accounts') }">
                               <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none"
                                   xmlns="http://www.w3.org/2000/svg">
@@ -114,7 +124,8 @@
                       <!-- Menu Item Consults -->
                       <li>
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                              href="{{ route('admin.consults.index') }}" @click="selected = (selected === 'Consults' ? '':'Consults')"
+                              href="{{ route('admin.consults.index') }}"
+                              @click="selected = (selected === 'Consults' ? '':'Consults')"
                               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Consults') && (page === 'consults') }">
                               <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none"
                                   xmlns="http://www.w3.org/2000/svg">
@@ -196,7 +207,7 @@
                                           :class="page === 'landmarks' && '!text-white'">Landmarks
                                       </a>
                                   </li>
-                              
+
                                   <li>
                                       <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                           href="{{ route('admin.furnishing.index') }}"
@@ -205,13 +216,15 @@
                                   </li>
                                   <li>
                                       <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                          href="{{ route('admin.rules.index') }}" :class="page === 'rules' && '!text-white'">Rules
+                                          href="{{ route('admin.rules.index') }}"
+                                          :class="page === 'rules' && '!text-white'">Rules
                                       </a>
                                   </li>
 
                                   <li>
                                       <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                          href="{{ route('admin.advertisement.index') }}" :class="page === 'advertisement' && '!text-white'">Advertisement
+                                          href="{{ route('admin.advertisement.index') }}"
+                                          :class="page === 'advertisement' && '!text-white'">Advertisement
                                       </a>
                                   </li>
                                   <li>
@@ -221,12 +234,12 @@
                                       </a>
                                   </li>
                                   <li>
-                                    <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                        href="{{ route('admin.configration.index') }}"
-                                        :class="page === 'configration' && '!text-white'">Configrations
-                                    </a>
-                                </li>
-                                  
+                                      <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                          href="{{ route('admin.configration.index') }}"
+                                          :class="page === 'configration' && '!text-white'">Configrations
+                                      </a>
+                                  </li>
+
                               </ul>
                           </div>
                           <!-- Dropdown Menu End -->
@@ -235,7 +248,8 @@
                       <!-- Menu Item Contact -->
                       <li>
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                              href="{{ route('admin.contact.index') }}" @click="selected = (selected === 'Contact' ? '':'Contact')"
+                              href="{{ route('admin.contact.index') }}"
+                              @click="selected = (selected === 'Contact' ? '':'Contact')"
                               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Contact') && (page === 'contact') }">
                               <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18"
                                   fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -250,7 +264,8 @@
                       <!-- Menu Item Newsletters -->
                       <li>
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                              href="{{ route('admin.newsletter.index') }}" @click="selected = (selected === 'Newsletters' ? '':'Newsletters')"
+                              href="{{ route('admin.newsletter.index') }}"
+                              @click="selected = (selected === 'Newsletters' ? '':'Newsletters')"
                               :class="{
                                   'bg-graydark dark:bg-meta-4': (selected === 'Newsletters') && (
                                       page === 'newsletters')
@@ -268,7 +283,8 @@
                       <!-- Menu Item Activity Logs -->
                       <li>
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                              href="{{ route('admin.activity.index') }}" @click="selected = (selected === 'Activity' ? '':'Activity')"
+                              href="{{ route('admin.activity.index') }}"
+                              @click="selected = (selected === 'Activity' ? '':'Activity')"
                               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Activity') && (page === 'activity') }">
                               <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18"
                                   fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -287,5 +303,3 @@
           <!-- Sidebar Menu -->
       </div>
   </aside>
-
-

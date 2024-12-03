@@ -1,5 +1,5 @@
-<form action="/"
-    data-ajax-url="/">
+<form action="{{ route('public.properties') }}"
+    data-ajax-url="{{ route('searching-in-keywords') }}">
     <input type="hidden" name="type" value="{{ $type }}">
     <input type="hidden" name="m" value="{{ 'commercial' }}">
     <div class="col-lg-12">
@@ -52,7 +52,7 @@
                         <span role="button" @click="activeTab2 = (activeTab2 === 'bedroom_commercial' ? '' : 'bedroom_commercial')"
                             :class="{ 'font-bold tab-active bg-theme-light': activeTab2 === 'bedroom_commercial' }"
                             class="text-dark border rounded-3xl px-4 fs-6">
-                            Bedroom
+                            Area
                             <i :class="activeTab2 === 'bedroom_commercial' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                         </span>
 

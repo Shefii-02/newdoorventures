@@ -2,16 +2,24 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\ProfileController;
 
 Route::prefix('admin')->group(function () {
+    Route::get('/', [LoginController::class, 'showLoginForm'])->name('admin.index');
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [LoginController::class, 'login'])->name('admin.login.submit');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
 });
 Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers\Admin'], function () {
     Route::get('dashboard', function () {
         return view('admin.dashboard.index');
     })->name('dashboard');
 
+    Route::get('profile', [ProfileController::class,'index'])->name('profile');
+    Route::post('profile/update', 'ProfileController@updateProfile')->name('profile.update');
+    Route::post('profile/update-password', 'ProfileController@changePassword')->name('profile.changePassword');
+    
+    
     // Route::resource('dashboard', DashboardController::class)->names('dashboard');
     Route::resource('properties', PropertyController::class)->names('properties');
     Route::resource('projects', ProjectController::class)->names('projects');

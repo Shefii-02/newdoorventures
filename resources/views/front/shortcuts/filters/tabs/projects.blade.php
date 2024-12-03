@@ -1,5 +1,5 @@
-<form action="/"
-    data-ajax-url="/">
+<form action="{{ route('public.projects') }}"
+    data-ajax-url="{{ route('searching-in-keywords') }}">
     <input type="hidden" name="type" value="{{ $type }}">
     <div class="col-lg-12">
         <div class="row align-items-center">

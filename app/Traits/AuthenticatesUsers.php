@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Account;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Foundation\Application;
@@ -89,6 +90,10 @@ trait AuthenticatesUsers
 
         $this->clearLoginAttempts($request);
         $this->authenticated($request, $this->guard()->user());
+
+        $user = Account::where('id',auth('account')->id())->first();
+        $user->last_login = date('Y-m-d H:i');
+        $user->save();
 
         return $request->wantsJson()
             ? new Response('', 204)

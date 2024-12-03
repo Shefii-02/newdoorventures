@@ -8,7 +8,7 @@
                         <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
                             class="border-theme px-3 py-2 rounded-s-2xl">
                             <option value="null" selected>Properties</option>
-                            <option value="sell">Sell</option>
+                            <option value="sell">Sale</option>
                             <option value="rent">Rent</option>
                             <option value="pg">PG</option>
                             <option value="plot">Plot</option>
@@ -103,6 +103,7 @@
                                         'min' => 0,
                                         'max' => 500000000,
                                         'step' => 500000,
+                                        'single_page' =>true,
                                     ])
                                 </div>
                             </div>
@@ -407,7 +408,7 @@
                         })
                         .then((response) => response.json())
                         .then((data) => {
-                            // window.history.pushState({}, '', url);
+                            window.history.pushState({}, '', url);
                             document.getElementById('items-list').innerHTML = data.html;
                         })
                         .catch((error) => console.error('Error:', error));

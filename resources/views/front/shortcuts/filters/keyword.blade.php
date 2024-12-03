@@ -36,6 +36,8 @@
             class="border-0 form-input filter-input-box bg-gray-50 dark:bg-slate-800 keyword-search" autocomplete="off"
             placeholder="{{ __('Search your ' . ucfirst('projects') . ' or Area') }}"
             value="{{ stringify(request()->query('k')) }}">
-        <i class="absolute hidden mdi mdi-loading mdi-spin top-5 end-5"></i>
+        <i class="absolute hidden mdi mdi-loading mdi-spin top-5 end-5"></i>  
+
     </div>
+  
 </div>

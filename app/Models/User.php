@@ -3,7 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Exception;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -21,6 +25,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'first_name',
+        'last_name',
+        'name',
+        ''
     ];
 
     /**
@@ -45,4 +53,34 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function avatar(): BelongsTo
+    {
+        return $this->belongsTo(MediaFile::class)->withDefault();
+    }
+
+    protected function avatarUrl(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if ($this->avatar->url) {
+                    return asset('images/'.$this->avatar->url);
+                }
+
+                try {
+                    return 'https://ui-avatars.com/api//?background=5c60f5&color=fff&name='.$this->name;
+                } catch (Exception) {
+                    return '';
+                }
+            },
+        );
+    }
+
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->first_name . ' ' . $this->last_name,
+        );
+    }
+
 }

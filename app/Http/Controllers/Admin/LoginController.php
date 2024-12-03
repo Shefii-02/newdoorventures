@@ -40,7 +40,6 @@ class LoginController extends Controller
         auth('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
-        return redirect(route('user.login'));
+        return redirect(route('admin.login'));
     }
 }

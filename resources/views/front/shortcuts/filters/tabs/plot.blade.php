@@ -1,13 +1,12 @@
-<form action="/"
-    data-ajax-url="/">
-    <input type="hidden" name="type" value="{{ 'sell' }}">
-    <input type="hidden" name="m" value="{{ 'plot' }}">
+<form action="{{ route('public.properties') }}"
+    data-ajax-url="{{ route('searching-in-keywords') }}">
+    <input type="hidden" name="type" value="{{ 'plot' }}">
     <div class="col-lg-12">
         <div class="row align-items-center">
             <div class="col-md-2 flex justify-end">
                 <button type="button" @click="openPlot = !openPlot"
                     class="flex items-center gap-2 toggle-advanced-search text-primary hover:text-secondary">
-                    {{ __('All Residential') }}
+                    {{ __('All Plots/Land') }}
                     <i :class="openPlot ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                 </button>
             </div>
@@ -40,7 +39,6 @@
                     <div class="container-fluid px-3">
                         @include('front.shortcuts.filters.plots-land', [
                             'type' => $type,
-                            'categories' => [],
                         ])
                     </div>
                 </div>
