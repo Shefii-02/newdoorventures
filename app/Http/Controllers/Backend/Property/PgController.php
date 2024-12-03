@@ -54,7 +54,7 @@ class PgController extends BaseController
         $request->merge([
             'expire_date' => Carbon::now()->addDays(RealEstateHelper::propertyExpiredDays()),
             'images' => array_filter($request->input('images', [])),
-            'author_type' => Account::class,
+            
         ]);
         //   $request->merge(['city_id' => 6]);
 

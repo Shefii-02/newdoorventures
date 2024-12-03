@@ -254,7 +254,7 @@ class AccountPropertyController extends Controller
 
             // $property->fill(array_merge($this->processRequestData($request), [
             //     'author_id' => auth('account')->id(),
-            //     'author_type' => Account::class,
+            //     
             // ]));
 
             // $property->expire_date = Carbon::now()->addDays(RealEstateHelper::propertyExpiredDays());
@@ -332,7 +332,7 @@ class AccountPropertyController extends Controller
         $property = Property::where([
             'id' => $id,
             'author_id' => auth('account')->id(),
-            'author_type' => Account::class,
+            
         ])->first() ?? abort(404);
         
 
@@ -379,7 +379,7 @@ class AccountPropertyController extends Controller
         $property = Property::where([
             'id' => $id,
             'author_id' => auth('account')->id(),
-            'author_type' => Account::class,
+            
         ])->first() ?? abort(404);
 
         if (! $property) {
@@ -651,7 +651,7 @@ class AccountPropertyController extends Controller
         $property = Property::where([
             'id' => $id,
             'author_id' => auth('account')->id(),
-            'author_type' => Account::class,
+            
         ])->first() ?? abort(404);
 
 

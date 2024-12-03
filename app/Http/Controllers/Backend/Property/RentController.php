@@ -57,7 +57,7 @@ class RentController extends BaseController
         $request->merge([
             'expire_date' => Carbon::now()->addDays(RealEstateHelper::propertyExpiredDays()),
             'images' => array_filter($request->input('images', [])),
-            'author_type' => Account::class,
+            
         ]);
 
         $country = Country::query()->where('name','India')->pluck('id')->first();
