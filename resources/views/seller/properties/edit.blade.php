@@ -800,7 +800,7 @@
                                                             </div>
 
                                                             <!-- Super Built-up Area Input -->
-                                                            <div class="mb-2 d-none">
+                                                            <div class="mb-2 ">
                                                                 <div class="relative">
                                                                     <input form="propertyFrom" name="super_built_up_area"
                                                                         value="{{ $property->super_built_up_area ?? 0 }}"
