@@ -76,6 +76,9 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
           ],
           ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
         });
+
+
+
       </script>
     <!-- Check for Flash Messages and Trigger Toasts -->
     @if (session('success_msg'))

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Feature;
+use App\Models\Facility;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +17,7 @@ class LandmarksController extends Controller
     public function index()
     {
         //
-        $landmarks = Feature::orderBy('id', 'desc')->get();
+        $landmarks = Facility::orderBy('id', 'desc')->get();
 
         return view('admin.landmarks.index', compact('landmarks'));
     }
@@ -38,7 +38,7 @@ class LandmarksController extends Controller
     {
         DB::beginTransaction();
         try {
-            $amenety = Feature::query()->create($request->input());
+            $amenety = Facility::query()->create($request->input());
             $result = uploadFiletoMedia($request->file('icon'), 'landmarks');
             $amenety->icon = isset($result['media_id']) ? $result['media_id'] : null;
             $amenety->save();
@@ -68,7 +68,7 @@ class LandmarksController extends Controller
     public function edit(string $id)
     {
         //
-        $landmark=Feature::where('id', $id)->first() ?? abort(404);
+        $landmark=Facility::where('id', $id)->first() ?? abort(404);
 
         return view('admin.landmarks.form', compact('landmark'));
     }
@@ -79,7 +79,7 @@ class LandmarksController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $landmark = Feature::where('id', $id)->first() ?? abort(404);
+        $landmark = Facility::where('id', $id)->first() ?? abort(404);
         //
         DB::beginTransaction();
         try {
@@ -117,9 +117,9 @@ class LandmarksController extends Controller
         //
         DB::beginTransaction();
         try{
-            $ffeatureItem =  Feature::where('id', $id)->first() ?? abort(404);
-            deleteFilefromMedia($ffeatureItem->icon);
-            $ffeatureItem->delete();
+            $fFacilityItem =  Facility::where('id', $id)->first() ?? abort(404);
+            deleteFilefromMedia($fFacilityItem->icon);
+            $fFacilityItem->delete();
             Db::commit();
         }
         catch(Exception $e){

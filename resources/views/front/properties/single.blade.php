@@ -9,15 +9,15 @@
                     <div class="px-3 col-lg-9">
                         <div class="row pt-5 align-items-top">
 
-                            <div class="px-3 col-lg-3 mt-5 md:p-4 md:flex flex-column">
+                            <div class="px-3 col-lg-2 mt-5 md:p-4 md:flex flex-column">
                                 <span class="fw-bold fs-2 text-theme">
                                     {{ shorten_price($property->price) }}
                                 </span>
                                 <span class="mt-2 fs-5">{{ $property->square_text }}</span>
                             </div>
-                            <div class="px-3 col-lg-8 md:p-4 md:flex flex-column">
+                            <div class="px-3 col-lg-9 md:p-4 md:flex flex-column">
                                 <div class="flex flex-column flex-column">
-                                    <h4 class="fs-4 d-inline  font-bold me-2">{{ $property->name }}
+                                    <h4 class=" d-inline  font-bold me-2">{{ $property->name }}
                                         <span
                                             class="fs-4 d-inline font-bold text-capitalize text-theme border-5 border-gray-300 border-end-0 border-top-0 border-bottom-0 ps-2">
                                             For {{ $property->type }}</span>

@@ -142,13 +142,13 @@
                                                 </div>
                                                 <!-- Normal Images Section -->
                                                 <div class="px-3">
-                                                    <div class="mb-5 border p-3" >
+                                                    <div class="mb-5 border p-3">
                                                         <label
                                                             class="mb-3 block text-lg font-semibold text-black dark:text-dark">
                                                             Project Images</label>
 
                                                         <!-- Existing Normal Images -->
-                                                        
+
                                                         <div x-data="imageUploader()" class="mx-auto  space-y-6">
                                                             <!-- Image Preview Grid -->
                                                             <div class="grid grid-cols-6 md:grid-cols-5 gap-4">
@@ -157,8 +157,7 @@
                                                                         class="relative group border rounded-lg overflow-hidden existing-data-box">
                                                                         <img src="{{ asset('images/' . $image) }}"
                                                                             class="thumbnail" alt="Uploaded Image">
-                                                                        <input type="hidden" 
-                                                                            value="{{ $image }}"
+                                                                        <input type="hidden" value="{{ $image }}"
                                                                             name="existingImage[]" />
                                                                         <button type="button"
                                                                             onclick="removeExistingRow(this)"
@@ -207,8 +206,7 @@
                                                                         <label
                                                                             class="flex items-center space-x-2 text-dark cursor-pointer hidden">
                                                                             <input type="radio" name="coverImage"
-                                                                                 class="hidden"
-                                                                                :value="image.name"
+                                                                                class="hidden" :value="image.name"
                                                                                 @change="setCoverImage(index)"
                                                                                 :checked="currentCover === index" />
                                                                             <span>Make Cover Photo</span>
@@ -223,8 +221,7 @@
                                                                     <div class="relative group border rounded-lg p-2 overflow-hidden"
                                                                         @click="triggerFileInput()"
                                                                         x-bind:class="{ 'border-blue-500': isDragging }">
-                                                                        <input name="new_normal_images[]"
-                                                                             type="file"
+                                                                        <input name="new_normal_images[]" type="file"
                                                                             accept="image/*" id="fileInput"
                                                                             class="hidden" multiple
                                                                             @change="addImages($event)">
@@ -241,84 +238,116 @@
                                                         </div>
 
 
-                                                     
+
                                                     </div>
                                                 </div>
 
 
                                                 <!-- Master Plan Images Section -->
-                                           
-                                                      <div class="px-3">
-                                                        <div class="mb-5 border p-3" >
-                                                            <label
-                                                                class="mb-3 block text-lg font-semibold text-black dark:text-dark">
-                                                                Master Plan Images</label>
-    
-                                                            <!-- Existing Normal Images -->
-                                                         
-                                                            
-                                                            <div x-data="imageUploader2()" class="mx-auto space-y-6">
-                                                                <!-- Existing Images -->
-                                                                <div class="grid grid-cols-6 md:grid-cols-5 gap-4">
-                                                                    @foreach ($project->master_plan_images ?? [] as $key => $plan_images)
-                                                                        <div class="relative group border rounded-lg overflow-hidden existing-data-box">
-                                                                            <img src="{{ asset('images/' . $plan_images) }}" class="thumbnail" alt="Uploaded Image">
-                                                                            <input type="hidden" value="{{ $plan_images }}" name="existingImageMaster[]" />
-                                                                            <button type="button" onclick="removeExistingRow2(this)" class="absolute bg-white p-1 right-0 top-0 rounded-full">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="red" viewBox="0 0 20 20">
-                                                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+
+                                                <div class="px-3">
+                                                    <div class="mb-5 border p-3">
+                                                        <label
+                                                            class="mb-3 block text-lg font-semibold text-black dark:text-dark">
+                                                            Master Plan Images</label>
+
+                                                        <!-- Existing Normal Images -->
+
+
+                                                        <div x-data="imageUploader2()" class="mx-auto space-y-6">
+                                                            <!-- Existing Images -->
+                                                            <div class="grid grid-cols-6 md:grid-cols-5 gap-4">
+                                                                @foreach ($project->master_plan_images ?? [] as $key => $plan_images)
+                                                                    <div
+                                                                        class="relative group border rounded-lg overflow-hidden existing-data-box">
+                                                                        <img src="{{ asset('images/' . $plan_images) }}"
+                                                                            class="thumbnail" alt="Uploaded Image">
+                                                                        <input type="hidden" value="{{ $plan_images }}"
+                                                                            name="existingImageMaster[]" />
+                                                                        <button type="button"
+                                                                            onclick="removeExistingRow2(this)"
+                                                                            class="absolute bg-white p-1 right-0 top-0 rounded-full">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4" fill="red"
+                                                                                viewBox="0 0 20 20">
+                                                                                <path fill-rule="evenodd"
+                                                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                                    clip-rule="evenodd" />
+                                                                            </svg>
+                                                                        </button>
+                                                                    </div>
+                                                                @endforeach
+
+                                                                <!-- Alpine.js Managed Image Previews -->
+                                                                <template x-for="(image, index) in images"
+                                                                    :key="index">
+                                                                    <div
+                                                                        class="relative group border rounded-lg overflow-hidden">
+                                                                        <!-- Image Preview -->
+                                                                        <img :src="image.url" style="height: 100px;"
+                                                                            alt="Uploaded Image"
+                                                                            class="w-30 h-30 object-cover">
+
+                                                                        <!-- Overlay with Remove and Set Cover Options -->
+                                                                        <div
+                                                                            class="absolute flex flex-col inset-0 group-hover:opacity-100 space-y-2 transition">
+                                                                            <button @click="removeImage2(index)"
+                                                                                class="absolute bg-white p-1 right-0 rounded-full top-0">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    class="h-4 w-4" fill="red"
+                                                                                    viewBox="0 0 20 20">
+                                                                                    <path fill-rule="evenodd"
+                                                                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                                        clip-rule="evenodd" />
                                                                                 </svg>
                                                                             </button>
                                                                         </div>
-                                                                    @endforeach
-                                                            
-                                                                    <!-- Alpine.js Managed Image Previews -->
-                                                                    <template x-for="(image, index) in images" :key="index">
-                                                                        <div class="relative group border rounded-lg overflow-hidden">
-                                                                            <!-- Image Preview -->
-                                                                            <img :src="image.url" style="height: 100px;" alt="Uploaded Image" class="w-30 h-30 object-cover">
-                                                            
-                                                                            <!-- Overlay with Remove and Set Cover Options -->
-                                                                            <div class="absolute flex flex-col inset-0 group-hover:opacity-100 space-y-2 transition">
-                                                                                <button @click="removeImage2(index)" class="absolute bg-white p-1 right-0 rounded-full top-0">
-                                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="red" viewBox="0 0 20 20">
-                                                                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                                                    </svg>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                        <label class="flex items-center space-x-2 text-dark cursor-pointer hidden">
-                                                                            <input type="radio" name="coverImage" class="hidden" :value="image.name" @change="setCoverImage2(index)" :checked="currentCover === index" />
-                                                                            <span>Make Cover Photo</span>
-                                                                        </label>
-                                                                        <span x-show="currentCover === index" class="absolute top-0 left-0 p-2 text-white bg-black opacity-50">Cover</span>
-                                                                    </template>
-                                                            
-                                                                    <!-- Upload New Images -->
-                                                                    <div class="flex flex-col col-auto text-center">
-                                                                        <div class="relative group border rounded-lg p-2 overflow-hidden" @click="triggerFileInput2()" x-bind:class="{ 'border-blue-500': isDragging2 }">
-                                                                            <input name="new_normal_images[]" type="file" accept="image/*" id="fileInput2" class="hidden" multiple @change="addImages2($event)">
-                                                                            <p class="text-gray-600 text-sm">
-                                                                                Click to upload your images here.<br>(Keep image size 800 × 533 pixels)
-                                                                            </p>
-                                                                            <p class="text-sm text-blue-500 font-medium hidden">
-                                                                                Upload up to 30 images
-                                                                            </p>
-                                                                        </div>
+                                                                    </div>
+                                                                    <label
+                                                                        class="flex items-center space-x-2 text-dark cursor-pointer hidden">
+                                                                        <input type="radio" name="coverImage"
+                                                                            class="hidden" :value="image.name"
+                                                                            @change="setCoverImage2(index)"
+                                                                            :checked="currentCover === index" />
+                                                                        <span>Make Cover Photo</span>
+                                                                    </label>
+                                                                    <span x-show="currentCover === index"
+                                                                        class="absolute top-0 left-0 p-2 text-white bg-black opacity-50">Cover</span>
+                                                                </template>
+
+                                                                <!-- Upload New Images -->
+                                                                <div class="flex flex-col col-auto text-center">
+                                                                    <div class="relative group border rounded-lg p-2 overflow-hidden"
+                                                                        @click="triggerFileInput2()"
+                                                                        x-bind:class="{ 'border-blue-500': isDragging2 }">
+                                                                        <input name="new_master_plan_images[]"
+                                                                            type="file" accept="image/*"
+                                                                            id="fileInput2" class="hidden" multiple
+                                                                            @change="addImages2($event)">
+                                                                        <p class="text-gray-600 text-sm">
+                                                                            Click to upload your images here.<br>(Keep image
+                                                                            size 800 × 533 pixels)
+                                                                        </p>
+                                                                        <p
+                                                                            class="text-sm text-blue-500 font-medium hidden">
+                                                                            Upload up to 30 images
+                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
-    
-                                                         
                                                         </div>
+
+
+
                                                     </div>
-    
+                                                </div>
+
                                                 <div class="form-group mb-3 col-md-12">
                                                     <label for="youtube_video"
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Youtube
                                                         video link</label>
-                                                    <input class="form-control" placeholder="" autocomplete="off" value="{{ old('youtube_video', $project->youtube_video ?? '') }}"
+                                                    <input class="form-control" placeholder="" autocomplete="off"
+                                                        value="{{ old('youtube_video', $project->youtube_video ?? '') }}"
                                                         name="youtube_video" type="url" id="youtube_video">
                                                 </div>
                                             </div>
@@ -328,9 +357,9 @@
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Lowest
                                                         price</label>
                                                     <input class="form-control input-mask-number"
-                                                        placeholder="Lowest price" value="{{ old('price_from', $project->price_from ?? '') }}"
-                                                        name="price_from" type="text"
-                                                        id="price_from">
+                                                        placeholder="Lowest price"
+                                                        value="{{ old('price_from', $project->price_from ?? '') }}"
+                                                        name="price_from" type="text" id="price_from">
                                                 </div>
                                                 <div class="form-group mb-3 col-md-3">
                                                     <label for="price_to"
@@ -361,21 +390,19 @@
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Categories</label>
                                                     <ul class="list-unstyled  col-lg-12">
                                                         <div class="row">
-                                                        
+
                                                             @foreach ($categories as $category)
-                                                            <li class="col-lg-4">
-                                                                <label class="form-check">
-                                                                    <input type="radio" name="categories[]"
-                                                                           value="{{ $category->id }}"
-                                                                           @if($project && $project->category->id == $category->id)
-                                                                               checked
-                                                                           @endif
-                                                                           class="form-check-input">
-                                                                    <span class="form-check-label text-capitalize">
-                                                                        {{ $category->name }}
-                                                                    </span>
-                                                                </label>
-                                                            </li>
+                                                                <li class="col-lg-4">
+                                                                    <label class="form-check">
+                                                                        <input type="radio" name="categories[]"
+                                                                            value="{{ $category->id }}"
+                                                                            @if ($project && $project->category->id == $category->id) checked @endif
+                                                                            class="form-check-input">
+                                                                        <span class="form-check-label text-capitalize">
+                                                                            {{ $category->name }}
+                                                                        </span>
+                                                                    </label>
+                                                                </li>
                                                             @endforeach
                                                         </div>
                                                     </ul>
@@ -388,10 +415,8 @@
                                                         <div class="row px-3">
                                                             <div class="form-check col-lg-4">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="construction_status" id="new_launch" 
-                                                                    @if($project && $project->construction_status== 'new_launch')
-                                                                        checked
-                                                                    @endif
+                                                                    name="construction_status" id="new_launch"
+                                                                    @if ($project && $project->construction_status == 'new_launch') checked @endif
                                                                     value="new_launch" checked>
                                                                 <label class="form-check-label" for="new_launch">
                                                                     New Launch
@@ -400,9 +425,7 @@
                                                             <div class="form-check col-lg-4">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="construction_status" id="under_construction"
-                                                                    @if($project && $project->construction_status== 'under_construction')
-                                                                        checked
-                                                                    @endif
+                                                                    @if ($project && $project->construction_status == 'under_construction') checked @endif
                                                                     value="under_construction">
                                                                 <label class="form-check-label" for="under_construction">
                                                                     Under Construction
@@ -411,9 +434,7 @@
                                                             <div class="form-check col-lg-4">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="construction_status" id="ready_to_move"
-                                                                    @if($project && $project->construction_status== 'ready_to_move')
-                                                                        checked
-                                                                    @endif
+                                                                    @if ($project && $project->construction_status == 'ready_to_move') checked @endif
                                                                     value="ready_to_move">
                                                                 <label class="form-check-label" for="ready_to_move">
                                                                     Ready to Move
@@ -429,16 +450,13 @@
                                                         <div class="form-group mb-3">
                                                             <label
                                                                 class="mb-3 block text-sm font-medium text-black dark:text-dark">Builder</label>
-                                            
+
                                                             <select class="form-control form-select" id="builder"
-                                                                name="builder">
+                                                                name="investor_id">
                                                                 <option value=""></option>
                                                                 @foreach ($builders as $builder)
                                                                     <option value="{{ $builder->id }}"
-                                                                        @if($project && $builder->id == $project->investor_id)
-                                                                            selected
-                                                                        @endif
-                                                                    >
+                                                                        @if ($project && $builder->id == $project->investor_id) selected @endif>
                                                                         {{ $builder->name }}
                                                                     </option>
                                                                 @endforeach
@@ -452,14 +470,12 @@
                                                                 Registration Status
                                                             </label>
                                                             <div class="form-check form-check-inline">
+                                                                {{ $project->rera_statu }}
                                                                 <input class="form-check-input" type="radio"
                                                                     name="rera_status" id="registered" value="registered"
-                                                                    @if($project && $project->rera_status== 'registered')
-                                                                        checked
+                                                                    @if ($project && $project->rera_status == 'registered') checked
                                                                     @else
-                                                                        checked
-                                                                    @endif
-                                                                    >
+                                                                        checked @endif>
                                                                 <label class="form-check-label"
                                                                     for="registered">Registered</label>
                                                             </div>
@@ -467,12 +483,8 @@
                                                                 <input class="form-check-input" type="radio"
                                                                     name="rera_status" id="unregistered"
                                                                     value="unregistered"
-                                                                    @if($project && $project->rera_status== 'unregistered')
-                                                                        checked
-                                                                    @else
-                                                                        checked
-                                                                    @endif
-                                                                    >
+                                                                    @if ($project && $project->rera_status == 'unregistered') checked
+                                                                    @else @endif>
                                                                 <label class="form-check-label"
                                                                     for="unregistered">Unregistered</label>
                                                             </div>
@@ -486,6 +498,7 @@
                                                                 Registration Number
                                                             </label>
                                                             <input class="form-control"
+                                                                value="{{ old('rera_reg_no', $project->rera_reg_no ?? '') }}"
                                                                 placeholder="Enter RERA Registration Number"
                                                                 data-counter="300" autocomplete="off" name="rera_reg_no"
                                                                 type="text" id="rera_reg_no">
@@ -497,11 +510,13 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="px-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         <h4 class="card-title"> Unit Price </h4>
                                     </div>
+
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -516,6 +531,58 @@
                                                                 this.items.splice(index, 1);
                                                             }
                                                         }">
+
+                                                            @foreach ($project->priceVariations as $key => $priceVari)
+                                                                <div class="row g-3 mb-2 position-relative">
+                                                                    <!-- Unit Type -->
+                                                                    <div class="col-md-4">
+                                                                        <label class="form-label">Unit Type</label>
+                                                                        <input type="text"
+                                                                            name="unitDetails[100{{ $key }}][unit_type]"
+                                                                            value="{{ $priceVari['unit_type'] }}"
+                                                                            class="form-control"
+                                                                            placeholder="Enter unit type" />
+                                                                    </div>
+
+                                                                    <!-- Size in Sq.ft -->
+                                                                    <div class="col-md-4">
+                                                                        <label class="form-label">Size in Sq.ft</label>
+                                                                        <input type="number"
+                                                                            value="{{ $priceVari['size'] }}"
+                                                                            name="unitDetails[100{{ $key }}][size]"
+                                                                            class="form-control"
+                                                                            placeholder="Enter size in sq.ft" />
+                                                                    </div>
+
+                                                                    <!-- Approx. Price -->
+                                                                    <div class="col-md-4">
+                                                                        <label class="form-label">Approx. Price (all
+                                                                            Inclusive)</label>
+                                                                        <input type="number"
+                                                                            value="{{ $priceVari['price'] }}"
+                                                                            name="unitDetails[100{{ $key }}][price]"
+                                                                            class="form-control"
+                                                                            placeholder="Enter price" />
+                                                                    </div>
+
+                                                                    <!-- Remove Button -->
+                                                                    <div class="position-absolute">
+                                                                        <span role="button"
+                                                                            class="position-absolute right-4  text-danger"
+                                                                            @click="deleteRow(index)">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="16" height="16"
+                                                                                fill="currentColor" class="bi bi-x-circle"
+                                                                                viewBox="0 0 16 16">
+                                                                                <path
+                                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                                                                <path
+                                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                                                                            </svg>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
 
                                                             <!-- Loop through Unit Details -->
                                                             <template x-for="(item, index) in items"
@@ -552,20 +619,21 @@
                                                                     </div>
 
                                                                     <!-- Remove Button -->
-
-                                                                    <span role="button"
-                                                                        class="position-absolute right-4  text-danger"
-                                                                        @click="deleteRow(index)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="16" height="16"
-                                                                            fill="currentColor" class="bi bi-x-circle"
-                                                                            viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                                                            <path
-                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                                                                        </svg>
-                                                                    </span>
+                                                                    <div class="position-absolute">
+                                                                        <span role="button"
+                                                                            class="position-absolute right-4  text-danger"
+                                                                            @click="deleteRow(index)">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="16" height="16"
+                                                                                fill="currentColor" class="bi bi-x-circle"
+                                                                                viewBox="0 0 16 16">
+                                                                                <path
+                                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                                                                <path
+                                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                                                                            </svg>
+                                                                        </span>
+                                                                    </div>
                                                                 </div>
                                                             </template>
 
@@ -591,6 +659,7 @@
                                     <div class="card-header">
                                         <h4 class="card-title">Landmarks </h4>
                                     </div>
+                                
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="row">
@@ -601,6 +670,52 @@
                                                                 <div class="col-md-12">
                                                                     <div id="facilitiesForm">
                                                                         <div x-data="facilitiesManager">
+                                                                            @foreach ($project->facilities ?? [] as $keyf => $facilityItem)
+                                                                                <div class="row g-2 mb-2">
+                                                                                    <div class="col">
+                                                                                        <label
+                                                                                            class="form-label">Facility</label>
+                                                                                        <select
+                                                                                            name="facilities[100{{ $keyf }}][id]"
+                                                                                            class="form-control">
+                                                                                            <option value="">Select
+                                                                                                Facility</option>
+                                                                                                @foreach($facilities as $facilityVal)
+                                                                                                    <option
+                                                                                                    @if ($project && $facilityVal->id == $facilityItem->pivot->facility_id) selected @endif
+                                                                                                    value="{{ $facilityVal->id }}">{{ $facilityVal->name }}</option>
+                                                                                                @endforeach
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="col">
+                                                                                        <label class="form-label">Name with
+                                                                                            Distance</label>
+                                                                                        <input type="text"
+                                                                                            name="facilities[100{{ $keyf }}][distance]"
+                                                                                            class="form-control"
+                                                                                            placeholder="e.g: HSK... (5km)"
+                                                                                            value="{{ $facilityItem->pivot->distance ?? '' }}">
+                                                                                    </div>
+                                                                                    <div class="col-auto">
+                                                                                        <button type="button"
+                                                                                            class="bg-danger text-light rounded-circle"
+                                                                                            @click="removeFacility(100{{ $keyf }})">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                width="16"
+                                                                                                height="16"
+                                                                                                fill="currentColor"
+                                                                                                class="bi bi-x-circle"
+                                                                                                viewBox="0 0 16 16">
+                                                                                                <path
+                                                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                                                                                <path
+                                                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endforeach
+
                                                                             <!-- Facilities Container -->
                                                                             <template
                                                                                 x-for="(facility, index) in selectedFacilities"
@@ -683,22 +798,30 @@
                                             <div class="col-md-12">
 
                                                 <div class="row">
-                                                    @foreach ($configration as $key => $config)
+                                                    @foreach ($configration ?? [] as $key => $config)
+                                                    @php
+                                                        $existConfg = $project->configration->where('id',$config->id)->first();
+                                                        if($existConfg){
+                                                            $existConfgDisntace = $existConfg->pivot->distance;
+                                                        }
+                                                        else{
+                                                            $existConfgDisntace = 0;
+                                                        }
+                                                    @endphp
                                                         <div class="col-md-6 mb-3">
-                                                            <label for="configration[{{ $key }}]"
+                                                            <label for="configration[100{{ $key }}]"
                                                                 class="form-label">{{ $config['name'] }}</label>
-                                                            <input type="text" class="form-control"
-                                                                id="configration[{{ $key }}]"
-                                                                name="configration[{{ $key }}][value]"
-                                                                value="{{ old("configration.$key.value", $selectedConfigration[$key]['value'] ?? '') }}"
+                                                            <input type="text" class="form-control" autocomplete="off"
+                                                                id="configration[100{{ $key }}]"
+                                                                name="configration[100{{ $key }}][value]"
+                                                                value="{{ old('configration.' . $key . '.value', $existConfgDisntace ?? '') }}"
                                                                 placeholder="Enter {{ $config['name'] }}" />
                                                             <input type="hidden"
-                                                                name="configration[{{ $key }}][id]"
+                                                                name="configration[100{{ $key }}][id]"
                                                                 value="{{ $config['id'] }}">
                                                         </div>
                                                     @endforeach
                                                 </div>
-
 
                                             </div>
                                         </div>
@@ -712,57 +835,57 @@
                                     </div>
                                     <div class="card-body">
                                         <div id="specifications-container">
+                                            @if (!isset($project))
+                                                <div class="col-lg-12 border p-3 rounded-3 specification-box">
+                                                    <div class="row position-relative" data-index="0">
+                                                        <!-- Image Input (Media Image Field) -->
+                                                        <div class="col-md-6">
+                                                            <label for="specification-0-image"
+                                                                class="form-label mb-2">Icon</label>
+                                                            <input type="file" name="specifications[0][image]"
+                                                                id="specification-0-image"
+                                                                class="form-control media-image-picker"
+                                                                value="{{ old('specifications.' . '0' . '.image', $specification['image'] ?? '') }}"
+                                                                onchange="uploadAndPreviewImage(this, 0)" />
+                                                            <img id="preview-0" src="#" alt="Preview Image"
+                                                                style="max-width: 150px; display: none;" />
+                                                            <!-- Hidden field to store the image path -->
+                                                            <input type="hidden" name="specifications[0][imagePath]"
+                                                                id="specification-0-image-path"
+                                                                value="{{ $specification['image'] ?? '' }}">
+                                                        </div>
 
-                                            <div class="col-lg-12 border p-3 rounded-3 specification-box">
-                                                <div class="row position-relative" data-index="0">
-                                                    <!-- Image Input (Media Image Field) -->
-                                                    <div class="col-md-6">
-                                                        <label for="specification-0-image"
-                                                            class="form-label mb-2">Icon</label>
-                                                        <input type="file" name="specifications[0][image]"
-                                                            id="specification-0-image"
-                                                            class="form-control media-image-picker"
-                                                            value="{{ old('specifications.' . '0' . '.image', $specification['image'] ?? '') }}"
-                                                            onchange="uploadAndPreviewImage(this, 0)" />
-                                                        <img id="preview-0" src="#" alt="Preview Image"
-                                                            style="max-width: 150px; display: none;" />
-                                                        <!-- Hidden field to store the image path -->
-                                                        <input type="hidden" name="specifications[0][imagePath]"
-                                                            id="specification-0-image-path"
-                                                            value="{{ $specification['image'] ?? '' }}">
+                                                        <!-- Text Input (Description) -->
+                                                        <div class="col-md-12 mt-3">
+                                                            <label for="specification-0-description"
+                                                                class="form-label">Content</label>
+                                                            <textarea name="specifications[0][description]" id="specification-0-description" class="form-control"
+                                                                rows="4">{{ old('specifications.' . '0' . '.description', $specification['description'] ?? '') }}</textarea>
+                                                        </div>
+
+                                                        <!-- Delete Row Button -->
+                                                        <div class="position-absolute">
+                                                            <span
+                                                                class=" text-danger right-0 position-absolute btn-sm delete-specification-btn  top-0"
+                                                                onclick="removeSpecificationRow(this)">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                    height="16" fill="currentColor"
+                                                                    class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                                                    <path
+                                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+
+
                                                     </div>
-
-                                                    <!-- Text Input (Description) -->
-                                                    <div class="col-md-12 mt-3">
-                                                        <label for="specification-0-description"
-                                                            class="form-label">Content</label>
-                                                        <textarea name="specifications[0][description]" id="specification-0-description" class="form-control"
-                                                            rows="4">{{ old('specifications.' . '0' . '.description', $specification['description'] ?? '') }}</textarea>
-                                                    </div>
-
-                                                    <!-- Delete Row Button -->
-                                                    <div class="position-absolute">
-                                                        <span
-                                                            class=" text-danger right-0 position-absolute btn-sm delete-specification-btn  top-0"
-                                                            onclick="removeSpecificationRow(this)">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                height="16" fill="currentColor" class="bi bi-x-circle"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                                                <path
-                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                                                            </svg>
-                                                        </span>
-                                                    </div>
-
-
                                                 </div>
-                                            </div>
-
-                                            @if (isset($selectedSpecification))
+                                            @endif
+                                            @if (isset($project))
                                                 <!-- Dynamically added specification rows will be appended here -->
-                                                @foreach ($selectedSpecification as $index => $specification)
+                                                @foreach ($project->specifications ?? [] as $index => $specification)
                                                     <div class="col-lg-12 border p-3 rounded-3 specification-box">
                                                         <div class="row position-relative"
                                                             data-index="{{ $index + 1 }}">
@@ -913,6 +1036,7 @@
                                     <div class="card-header">
                                         <h4 class="card-title"> Ameneties </h4>
                                     </div>
+
                                     <div class="card-body">
                                         <div class="col-lg-12">
                                             <div class="row">
@@ -921,6 +1045,7 @@
                                                         <div class="d-flex  align-items-center">
                                                             <label class="form-check form-check-inline mb-3"><input
                                                                     type="checkbox" name="features[]"
+                                                                    @if (in_array($feature->id, $project->features->pluck('id')->toArray())) checked @endif
                                                                     class="form-check-input" value="{{ $feature->id }}">
                                                                 <span
                                                                     class="form-check-label text-capitalize d-flex gap-2 items-center text-sm"><img
@@ -1013,20 +1138,20 @@
             };
         }
     </script>
-     <script>
+    <script>
         function imageUploader2() {
             return {
                 isDragging2: false,
                 images: [], // For storing preview URLs and file objects
-                files: [], // For uploading files
-                currentCover: null, // Index of the current cover image
-    
+                files: [], // For uploading files2
+                currentCover2: null, // Index of the current cover image
+
                 // Trigger the hidden file input when clicked
                 triggerFileInput2() {
                     document.getElementById('fileInput2').click();
                 },
-    
-                // Add images to the preview and files list
+
+                // Add images to the preview and files2 list
                 addImages2(event) {
                     const files = event.target.files || event.dataTransfer.files;
                     Array.from(files).forEach(file => {
@@ -1042,22 +1167,22 @@
                     });
                     event.target.value = ''; // Clear input for consecutive uploads
                 },
-    
+
                 // Remove an image
                 removeImage2(index) {
-                    if (this.currentCover === index) {
-                        this.currentCover = null; // Reset cover if it's removed
+                    if (this.currentCover2 === index) {
+                        this.currentCover2 = null; // Reset cover if it's removed
                     }
                     this.images.splice(index, 1);
                     this.files.splice(index, 1); // Remove from upload list
                 },
-    
+
                 // Set an image as the cover
                 setCoverImage2(index) {
-                    this.currentCover = index;
+                    this.currentCover2 = index;
                     console.log('Cover Image:', this.images[index].name);
                 },
-    
+
                 // Drag-and-drop handlers
                 handleDrop2(event) {
                     event.preventDefault();
@@ -1070,7 +1195,7 @@
             };
         }
     </script>
-    
+
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('facilitiesManager', () => ({
@@ -1250,7 +1375,7 @@
                     this.validationErrors = [];
                     this.errorMessage = '';
                     this.responseMessage = '';
-
+                    tinymce.triggerSave();
                     // Reference the form element
                     const formElement = document.getElementById('proectForm');
                     const formData = new FormData(formElement);

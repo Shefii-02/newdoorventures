@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Facility;
+use App\Models\Feature;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +17,7 @@ class AmenetiesController extends Controller
     public function index()
     {
         //
-        $ameneties = Facility::orderBy('created_at', 'desc')->get();
+        $ameneties = Feature::orderBy('id', 'desc')->get();
 
         return view('admin.ameneties.index', compact('ameneties'));
     }
@@ -39,7 +39,7 @@ class AmenetiesController extends Controller
         
         DB::beginTransaction();
         try {
-            $amenety = Facility::query()->create($request->input());
+            $amenety = Feature::query()->create($request->input());
             $result = uploadFiletoMedia($request->file('icon'), 'ameneties');
             $amenety->icon = isset($result['media_id']) ? $result['media_id'] : null;
             $amenety->save();
@@ -69,7 +69,7 @@ class AmenetiesController extends Controller
     public function edit($id)
     {
         //
-        $amenety = Facility::where('id', $id)->first() ?? abort(404);
+        $amenety = Feature::where('id', $id)->first() ?? abort(404);
         return view('admin.ameneties.form', compact('amenety'));
     }
 
@@ -79,7 +79,7 @@ class AmenetiesController extends Controller
     public function update(Request $request,$id)
     {
      
-        $amenety = Facility::where('id', $id)->first() ?? abort(404);
+        $amenety = Feature::where('id', $id)->first() ?? abort(404);
         //
         DB::beginTransaction();
         try {
@@ -112,14 +112,14 @@ class AmenetiesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id, Facility $facility)
+    public function destroy(string $id, Feature $Feature)
     {
         //
         DB::beginTransaction();
         try{
-            $facilityItem =  Facility::where('id', $id)->first() ?? abort(404);
-            deleteFilefromMedia($facilityItem->icon);
-            $facilityItem->delete();
+            $FeatureItem =  Feature::where('id', $id)->first() ?? abort(404);
+            deleteFilefromMedia($FeatureItem->icon);
+            $FeatureItem->delete();
             Db::commit();
         }
         catch(Exception $e){

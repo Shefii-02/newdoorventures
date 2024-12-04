@@ -96,7 +96,7 @@
 
                         <!-- Step Titles -->
                         <div class="ms-2 lg:ml-0  ">
-                            Property Overview
+                            Submit for review
                         </div>
                     </li>
                 </ul>
