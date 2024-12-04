@@ -12,7 +12,7 @@
           
                 @include('front.shortcuts.properties.slider', [
                     'item' => $property,
-                    'youtube_video' => '',
+                    'youtube_video' => $property->youtube_video ?? '',
                     'property_type' => 'property',
                 ])
                 <div class="container-fluid ">

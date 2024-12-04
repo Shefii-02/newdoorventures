@@ -46,6 +46,7 @@ Route::prefix('account')->group(function () {
 
 
             $mostVisitedProperties = DB::table('re_properties as properties')
+                ->where('properties.author_id', auth('account')->user()->id)
                 ->select('properties.id', 'properties.name', 'properties.views')
                 ->orderByDesc('properties.views')  // Order by the views column
                 ->limit(5)
