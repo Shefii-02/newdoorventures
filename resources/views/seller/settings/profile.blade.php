@@ -54,8 +54,12 @@
                                             class="p-2 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200">
                                             Change picture
                                         </button>
+                                         @error('avatar')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
-
+                                   
+                                    
                                 </div>
                             </div>
                             <div
