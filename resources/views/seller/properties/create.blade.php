@@ -1069,6 +1069,81 @@
                                         <div class="mx-2 mb-5 card p-3">
                                             <div x-data="{ furnishingStatus: 'furnished' }" class="mb-5 mx-2">
                                                 <div class="section">
+
+                                                    <div id="MoreaboutDetails" class="HideUnwantedSectionsInPlot">
+                                                        <h5 class="mt-3 font-medium">More about Details</h5>
+                                                        <div class="mt-3  ">
+                                                            <div x-data="{
+                                                                customFields: [{ selected: '', value: '' }],
+                                                                addField() {
+                                                                    this.customFields.push({ selected: '', value: '' });
+                                                                },
+                                                                removeField(index) {
+                                                                    if (this.customFields.length > 1) {
+                                                                        this.customFields.splice(index, 1);
+                                                                    } else {
+                                                                        alert('At least one field must remain.');
+                                                                    }
+                                                                }
+                                                            }">
+
+                                                                <!-- Dynamic Custom Fields -->
+                                                                <template x-for="(field, index) in customFields"
+                                                                    :key="index">
+                                                                    <div class="flex items-center gap-2 mb-3">
+                                                                        <!-- Select Box -->
+                                                                        <div class="w-1/2">
+                                                                            <select form="propertyFrom"
+                                                                                :name="'custom_fields[' + index + '][name]'"
+                                                                                x-model="field.selected"
+                                                                                class="w-full p-2 border rounded-md">
+                                                                                <option value="">Select Option
+                                                                                </option>
+                                                                                @foreach ($customFields ?? [] as $option_item)
+                                                                                    <option
+                                                                                        value="{{ $option_item->name }}">
+                                                                                        {{ $option_item->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+
+                                                                        <!-- Input Box -->
+                                                                        <div class="w-1/2">
+                                                                            <input type="text" form="propertyFrom"
+                                                                                autocomplete="off"
+                                                                                :name="'custom_fields[' + index + '][value]'"
+                                                                                x-model="field.value"
+                                                                                class="w-full p-2 border rounded-md"
+                                                                                placeholder="Enter value">
+                                                                        </div>
+
+                                                                        <!-- Remove Button -->
+                                                                        <div class="position-absolute right-2">
+                                                                            <button @click="removeField(index)"
+                                                                                class="text-red-500 hover:text-red-700">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="20" height="20"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-x-circle"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M11.742 4.742a1 1 0 1 0-1.414-1.414L8 6.586 5.672 4.258a1 1 0 1 0-1.414 1.414L6.586 8l-2.328 2.328a1 1 0 1 0 1.414 1.414L8 9.414l2.328 2.328a1 1 0 1 0 1.414-1.414L9.414 8l2.328-2.328z" />
+                                                                                </svg>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+
+                                                                <div class="mt-4 text-end">
+                                                                    <!-- Add More Button -->
+                                                                    <button @click="addField"
+                                                                        class="bg-gray-500 px-2 py-1 rounded-2xl text-dark text-sm">
+                                                                        <i class="fa fa-plus me-2"></i> Add More
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div id="furnishing" class="HideUnwantedSectionsInPlot">
                                                         <h5 class="mt-3 font-medium">Furnishing Details</h5>
 
@@ -1232,80 +1307,6 @@
                                                     </div>
 
 
-                                                    <div id="MoreaboutDetails" class="HideUnwantedSectionsInPlot">
-                                                        <h5 class="mt-3 font-medium">More about Details</h5>
-                                                        <div class="mt-3  ">
-                                                            <div x-data="{
-                                                                customFields: [{ selected: '', value: '' }],
-                                                                addField() {
-                                                                    this.customFields.push({ selected: '', value: '' });
-                                                                },
-                                                                removeField(index) {
-                                                                    if (this.customFields.length > 1) {
-                                                                        this.customFields.splice(index, 1);
-                                                                    } else {
-                                                                        alert('At least one field must remain.');
-                                                                    }
-                                                                }
-                                                            }">
-
-                                                                <!-- Dynamic Custom Fields -->
-                                                                <template x-for="(field, index) in customFields"
-                                                                    :key="index">
-                                                                    <div class="flex items-center gap-2 mb-3">
-                                                                        <!-- Select Box -->
-                                                                        <div class="w-1/2">
-                                                                            <select form="propertyFrom"
-                                                                                :name="'custom_fields[' + index + '][name]'"
-                                                                                x-model="field.selected"
-                                                                                class="w-full p-2 border rounded-md">
-                                                                                <option value="">Select Option
-                                                                                </option>
-                                                                                @foreach ($customFields ?? [] as $option_item)
-                                                                                    <option
-                                                                                        value="{{ $option_item->name }}">
-                                                                                        {{ $option_item->name }}</option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
-
-                                                                        <!-- Input Box -->
-                                                                        <div class="w-1/2">
-                                                                            <input type="text" form="propertyFrom"
-                                                                                autocomplete="off"
-                                                                                :name="'custom_fields[' + index + '][value]'"
-                                                                                x-model="field.value"
-                                                                                class="w-full p-2 border rounded-md"
-                                                                                placeholder="Enter value">
-                                                                        </div>
-
-                                                                        <!-- Remove Button -->
-                                                                        <div class="position-absolute right-2">
-                                                                            <button @click="removeField(index)"
-                                                                                class="text-red-500 hover:text-red-700">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                    width="20" height="20"
-                                                                                    fill="currentColor"
-                                                                                    class="bi bi-x-circle"
-                                                                                    viewBox="0 0 16 16">
-                                                                                    <path
-                                                                                        d="M11.742 4.742a1 1 0 1 0-1.414-1.414L8 6.586 5.672 4.258a1 1 0 1 0-1.414 1.414L6.586 8l-2.328 2.328a1 1 0 1 0 1.414 1.414L8 9.414l2.328 2.328a1 1 0 1 0 1.414-1.414L9.414 8l2.328-2.328z" />
-                                                                                </svg>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </template>
-
-                                                                <div class="mt-4 text-end">
-                                                                    <!-- Add More Button -->
-                                                                    <button @click="addField"
-                                                                        class="bg-gray-500 px-2 py-1 rounded-2xl text-dark text-sm">
-                                                                        <i class="fa fa-plus me-2"></i> Add More
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
 
