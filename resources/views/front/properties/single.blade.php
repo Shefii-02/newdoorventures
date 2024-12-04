@@ -424,40 +424,9 @@
                                 </div>
                             @endif
 
-                            {{-- @if ($relatedProperties->count())
-                                <div class="container-fluid mb-5">
-                                    <div class="md:flex">
-                                        <div class="w-full p-1 ">
-                                            <div class="border-theme rounded-xl">
-                                                <div class="mx-3 mt-10 mb-5">
-                                                    <h5 class="fs-5 text-dark font-bold me-2">
-                                                        {{ __('Other Properties in this Project and Nearby') }}</h5>
-                                                    {!! Theme::partial('real-estate.properties.items-scroll-single-page', ['properties' => $relatedProperties]) !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif --}}
+                           
 
-                            @if (!empty($recent_properties) && $recent_properties->count())
-                                <div class="container-fluid mb-5">
-                                    <div class="md:flex">
-                                        <div class="w-full p-1 ">
-                                            <div class="border-theme rounded-xl">
-                                                <div class="px-3 py-5">
-                                                    <h4 class="fs-5 text-dark font-bold me-2">People who viewed this
-                                                        property
-                                                        also liked
-                                                    </h4>
-                                                </div>
-                                                {!! Theme::partial('real-estate.properties.items-scroll-single-page', ['properties' => $recent_properties]) !!}
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
+                         
                             @if ($property->facilities->groupBy('name')->count())
                                 <div class="container-fluid mb-5" id="Landmarks" class="section"
                                     :class="{ 'active': activeSection === 'Landmarks' }">

@@ -57,7 +57,7 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
 <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
     <script>
         tinymce.init({
-          selector: 'textarea',
+          selector: '.tinyeditor',
           plugins: [
             // Core editing features
             'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',

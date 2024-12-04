@@ -162,7 +162,7 @@
                     </span>
 
                     <span class="h-12 w-12 rounded-full">
-                        <img class="rounded-circle object-cover p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500 h-100 " src="{{ auth()->user()->avatar_url }}" alt="User" />
+                        <img class="rounded-circle object-cover rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500 h-100 " src="{{ auth()->user()->avatar_url }}" alt="User" />
                     </span>
 
                     <svg :class="dropdownOpen && 'rotate-180'" class="hidden fill-current sm:block"
