@@ -1541,13 +1541,10 @@
                                                     <input name="images[]" form="propertyFrom" type="file"
                                                         accept="image/*" id="fileInput" class="hidden" multiple
                                                         @change="addImages($event)">
-                                                        <p class="text-gray-600 text-sm">
-                                                            click to upload your images here.<br>(Keep image Size 800 × 533 pixels)</p>
-                                                        <p
-                                                            class="text-sm text-blue-500 font-medium hidden">
-                                                            Upload up to 30
-                                                            images</p>
-                                                    </div>
+                                                    <p class="text-gray-600">
+                                                        click to upload your images here.</p>
+                                                    <p class="text-sm text-blue-500 font-medium hidden">Upload up to 30
+                                                        images</p>
                                                 </div>
                                             </div>
                                         </div>

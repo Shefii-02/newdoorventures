@@ -142,36 +142,13 @@
                                                 </div>
                                                 <!-- Normal Images Section -->
                                                 <div class="px-3">
-                                                    <div class="mb-5 border p-3" x-data="{ normalImages: [], newNormalImages: [], deletedNormalImages: [] }">
+                                                    <div class="mb-5 border p-3" >
                                                         <label
                                                             class="mb-3 block text-lg font-semibold text-black dark:text-dark">
                                                             Project Images</label>
 
                                                         <!-- Existing Normal Images -->
-                                                        {{-- <div class="gallery-images-wrapper list-images form-fieldset mb-3">
-
-                                                            <template x-for="(image, index) in normalImages"
-                                                                :key="index">
-                                                                <div class="image-preview mb-3 inline-block p-3 rounded-2">
-                                                                    <img :src="`/images/${image.path}`" alt="Normal Image"
-                                                                        class="img-thumbnail mb-1"
-                                                                        style="max-width: 100px;">
-                                                                    <span
-                                                                        class="btn position-absolute right-0 top-0 position-relative"
-                                                                        @click="deletedNormalImages.push(image.id); normalImages.splice(index, 1)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="16" height="16"
-                                                                            fill="currentColor" class="bi bi-x-circle"
-                                                                            viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                                                            <path
-                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                                                                        </svg>
-                                                                    </span>
-                                                                </div>
-                                                            </template>
-                                                        </div> --}}
+                                                        
                                                         <div x-data="imageUploader()" class="mx-auto  space-y-6">
                                                             <!-- Image Preview Grid -->
                                                             <div class="grid grid-cols-6 md:grid-cols-5 gap-4">
@@ -180,7 +157,7 @@
                                                                         class="relative group border rounded-lg overflow-hidden existing-data-box">
                                                                         <img src="{{ asset('images/' . $image) }}"
                                                                             class="thumbnail" alt="Uploaded Image">
-                                                                        <input type="hidden" form="propertyFrom"
+                                                                        <input type="hidden" 
                                                                             value="{{ $image }}"
                                                                             name="existingImage[]" />
                                                                         <button type="button"
@@ -230,7 +207,7 @@
                                                                         <label
                                                                             class="flex items-center space-x-2 text-dark cursor-pointer hidden">
                                                                             <input type="radio" name="coverImage"
-                                                                                form="propertyFrom" class="hidden"
+                                                                                 class="hidden"
                                                                                 :value="image.name"
                                                                                 @change="setCoverImage(index)"
                                                                                 :checked="currentCover === index" />
@@ -247,7 +224,7 @@
                                                                         @click="triggerFileInput()"
                                                                         x-bind:class="{ 'border-blue-500': isDragging }">
                                                                         <input name="new_normal_images[]"
-                                                                            form="propertyFrom" type="file"
+                                                                             type="file"
                                                                             accept="image/*" id="fileInput"
                                                                             class="hidden" multiple
                                                                             @change="addImages($event)">
@@ -264,115 +241,84 @@
                                                         </div>
 
 
-                                                        <!-- New Normal Images -->
-                                                        {{-- <div class="mb-3">
-                                                            <button type="button" class="btn bg-dark btn-sm text-white"
-                                                                @click="$refs.normalInput.click()">Add Images</button>
-                                                            <input type="file" x-ref="normalInput" class="hidden"
-                                                                name="new_normal_images[]" multiple accept="image/*"
-                                                                @change="Array.from($event.target.files).forEach(file => newNormalImages.push(file))">
-                                                        </div> --}}
-                                                        {{-- <div class="gallery-images-wrapper">
-                                                            <template x-for="(file, index) in newNormalImages"
-                                                                :key="index">
-                                                                <div
-                                                                    class="image-preview mb-3 p-3 inline-block position-relative">
-                                                                    <img :src="URL.createObjectURL(file)" alt="New Image"
-                                                                        class="img-thumbnail mb-1"
-                                                                        style="max-width: 100px;">
-                                                                    <span class="btn position-absolute right-0 top-0"
-                                                                        @click="newNormalImages.splice(index, 1)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="16" height="16"
-                                                                            fill="currentColor" class="bi bi-x-circle"
-                                                                            viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                                                            <path
-                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                                                                        </svg>
-                                                                    </span>
-                                                                </div>
-                                                            </template>
-                                                        </div> --}}
+                                                     
                                                     </div>
                                                 </div>
 
 
                                                 <!-- Master Plan Images Section -->
-                                                <div class="px-3">
-                                                    <div class="mb-5 border p-3" x-data="{ masterPlanImages: @json(isset($project) ? $project->masterPlanImages : []), newMasterPlanImages: [], deletedMasterPlanImages: [] }">
-                                                        <label
-                                                            class="mb-3 block text-lg font-semibold text-black dark:text-dark">
-                                                            Master Plan Images</label>
-
-                                                        <!-- Existing Master Plan Images -->
-                                                        <div class="gallery-images-wrapper list-images form-fieldset mb-3">
-                                                            <template x-for="(image, index) in masterPlanImages"
-                                                                :key="index">
-                                                                <div
-                                                                    class="image-preview mb-3 inline-block position-relative p-3">
-                                                                    <img :src="`/images/${image.path}`"
-                                                                        alt="Master Plan Image" class="img-thumbnail mb-1"
-                                                                        style="max-width: 100px;">
-                                                                    <span class="btn position-absolute right-0 top-0"
-                                                                        @click="deletedMasterPlanImages.push(image.id); masterPlanImages.splice(index, 1)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="16" height="16"
-                                                                            fill="currentColor" class="bi bi-x-circle"
-                                                                            viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                                                            <path
-                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                                                                        </svg>
-                                                                    </span>
+                                           
+                                                      <div class="px-3">
+                                                        <div class="mb-5 border p-3" >
+                                                            <label
+                                                                class="mb-3 block text-lg font-semibold text-black dark:text-dark">
+                                                                Master Plan Images</label>
+    
+                                                            <!-- Existing Normal Images -->
+                                                         
+                                                            
+                                                            <div x-data="imageUploader2()" class="mx-auto space-y-6">
+                                                                <!-- Existing Images -->
+                                                                <div class="grid grid-cols-6 md:grid-cols-5 gap-4">
+                                                                    @foreach ($project->master_plan_images ?? [] as $key => $plan_images)
+                                                                        <div class="relative group border rounded-lg overflow-hidden existing-data-box">
+                                                                            <img src="{{ asset('images/' . $plan_images) }}" class="thumbnail" alt="Uploaded Image">
+                                                                            <input type="hidden" value="{{ $plan_images }}" name="existingImageMaster[]" />
+                                                                            <button type="button" onclick="removeExistingRow2(this)" class="absolute bg-white p-1 right-0 top-0 rounded-full">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="red" viewBox="0 0 20 20">
+                                                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                                                </svg>
+                                                                            </button>
+                                                                        </div>
+                                                                    @endforeach
+                                                            
+                                                                    <!-- Alpine.js Managed Image Previews -->
+                                                                    <template x-for="(image, index) in images" :key="index">
+                                                                        <div class="relative group border rounded-lg overflow-hidden">
+                                                                            <!-- Image Preview -->
+                                                                            <img :src="image.url" style="height: 100px;" alt="Uploaded Image" class="w-30 h-30 object-cover">
+                                                            
+                                                                            <!-- Overlay with Remove and Set Cover Options -->
+                                                                            <div class="absolute flex flex-col inset-0 group-hover:opacity-100 space-y-2 transition">
+                                                                                <button @click="removeImage2(index)" class="absolute bg-white p-1 right-0 rounded-full top-0">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="red" viewBox="0 0 20 20">
+                                                                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                                                    </svg>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <label class="flex items-center space-x-2 text-dark cursor-pointer hidden">
+                                                                            <input type="radio" name="coverImage" class="hidden" :value="image.name" @change="setCoverImage2(index)" :checked="currentCover === index" />
+                                                                            <span>Make Cover Photo</span>
+                                                                        </label>
+                                                                        <span x-show="currentCover === index" class="absolute top-0 left-0 p-2 text-white bg-black opacity-50">Cover</span>
+                                                                    </template>
+                                                            
+                                                                    <!-- Upload New Images -->
+                                                                    <div class="flex flex-col col-auto text-center">
+                                                                        <div class="relative group border rounded-lg p-2 overflow-hidden" @click="triggerFileInput2()" x-bind:class="{ 'border-blue-500': isDragging2 }">
+                                                                            <input name="new_normal_images[]" type="file" accept="image/*" id="fileInput2" class="hidden" multiple @change="addImages2($event)">
+                                                                            <p class="text-gray-600 text-sm">
+                                                                                Click to upload your images here.<br>(Keep image size 800 × 533 pixels)
+                                                                            </p>
+                                                                            <p class="text-sm text-blue-500 font-medium hidden">
+                                                                                Upload up to 30 images
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </template>
-                                                        </div>
-
-
-                                                        <!-- New Master Plan Images -->
-                                                        <div class="mb-3">
-                                                            <button type="button" class="btn bg-dark btn-sm text-white"
-                                                                @click="$refs.masterPlanInput.click()">Add Master Plan
-                                                                Images</button>
-                                                            <input type="file" x-ref="masterPlanInput" class="hidden"
-                                                                name="new_master_plan_images[]" multiple accept="image/*"
-                                                                @change="Array.from($event.target.files).forEach(file => newMasterPlanImages.push(file))">
-                                                        </div>
-                                                        <div class="gallery-images-wrapper">
-                                                            <template x-for="(file, index) in newMasterPlanImages"
-                                                                :key="index">
-                                                                <div
-                                                                    class="image-preview mb-3 inline-block position-relative p-3">
-                                                                    <img :src="URL.createObjectURL(file)"
-                                                                        alt="New Master Plan Image"
-                                                                        class="img-thumbnail mb-1"
-                                                                        style="max-width: 100px;">
-                                                                    <span class="btn position-absolute right-0 top-0"
-                                                                        @click="newMasterPlanImages.splice(index, 1)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="16" height="16"
-                                                                            fill="currentColor" class="bi bi-x-circle"
-                                                                            viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                                                            <path
-                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                                                                        </svg>
-                                                                    </span>
-                                                                </div>
-                                                            </template>
+                                                            </div>
+                                                            
+    
+                                                         
                                                         </div>
                                                     </div>
-                                                </div>
-
+    
                                                 <div class="form-group mb-3 col-md-12">
                                                     <label for="youtube_video"
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Youtube
                                                         video link</label>
-                                                    <input class="form-control" placeholder="" autocomplete="off"
+                                                    <input class="form-control" placeholder="" autocomplete="off" value="{{ old('youtube_video', $project->youtube_video ?? '') }}"
                                                         name="youtube_video" type="url" id="youtube_video">
                                                 </div>
                                             </div>
@@ -382,8 +328,8 @@
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Lowest
                                                         price</label>
                                                     <input class="form-control input-mask-number"
-                                                        placeholder="Lowest price" data-thousands-separator=","
-                                                        data-decimal-separator="." name="price_from" type="text"
+                                                        placeholder="Lowest price" value="{{ old('price_from', $project->price_from ?? '') }}"
+                                                        name="price_from" type="text"
                                                         id="price_from">
                                                 </div>
                                                 <div class="form-group mb-3 col-md-3">
@@ -391,15 +337,15 @@
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Max
                                                         price</label>
                                                     <input class="form-control input-mask-number" placeholder="Max price"
-                                                        data-thousands-separator="," data-decimal-separator="."
+                                                        value="{{ old('price_to', $project->price_to ?? '') }}"
                                                         name="price_to" type="text" id="price_to">
                                                 </div>
                                                 <div class="form-group mb-3 col-md-3">
                                                     <label for="resale_properties"
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">
-                                                        Resale
-                                                        Properties in this project</label>
+                                                        Resale Properties in this project</label>
                                                     <input class="form-control" placeholder="" name="resale_properties"
+                                                        value="{{ old('resale_properties', $project->resale_properties ?? '') }}"
                                                         type="number" id="resale_properties">
                                                 </div>
                                                 <div class="form-group mb-3 col-md-3">
@@ -407,6 +353,7 @@
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Rental
                                                         Properties in this project</label>
                                                     <input class="form-control" placeholder="" name="rent_properties"
+                                                        value="{{ old('rent_properties', $project->rent_properties ?? '') }}"
                                                         type="number" id="rent_properties">
                                                 </div>
                                                 <div class="form-group mb-3 col-lg-12">
@@ -414,16 +361,21 @@
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Categories</label>
                                                     <ul class="list-unstyled  col-lg-12">
                                                         <div class="row">
+                                                        
                                                             @foreach ($categories as $category)
-                                                                <li value="1" class="col-lg-4">
-                                                                    <label class="form-check">
-                                                                        <input type="radio" name="categories[]"
-                                                                            class="form-check-input"
-                                                                            value="{{ $category->id }}"><span
-                                                                            class="form-check-label text-capitalize">
-                                                                            {{ $category->name }} </span>
-                                                                    </label>
-                                                                </li>
+                                                            <li class="col-lg-4">
+                                                                <label class="form-check">
+                                                                    <input type="radio" name="categories[]"
+                                                                           value="{{ $category->id }}"
+                                                                           @if($project && $project->category->id == $category->id)
+                                                                               checked
+                                                                           @endif
+                                                                           class="form-check-input">
+                                                                    <span class="form-check-label text-capitalize">
+                                                                        {{ $category->name }}
+                                                                    </span>
+                                                                </label>
+                                                            </li>
                                                             @endforeach
                                                         </div>
                                                     </ul>
@@ -1036,6 +988,64 @@
             };
         }
     </script>
+     <script>
+        function imageUploader2() {
+            return {
+                isDragging2: false,
+                images: [], // For storing preview URLs and file objects
+                files: [], // For uploading files
+                currentCover: null, // Index of the current cover image
+    
+                // Trigger the hidden file input when clicked
+                triggerFileInput2() {
+                    document.getElementById('fileInput2').click();
+                },
+    
+                // Add images to the preview and files list
+                addImages2(event) {
+                    const files = event.target.files || event.dataTransfer.files;
+                    Array.from(files).forEach(file => {
+                        if (file.size <= 10 * 1024 * 1024 && file.type.startsWith('image/')) {
+                            const fileObject = {
+                                url: URL.createObjectURL(file), // Blob URL for preview
+                                file, // Actual file object
+                                name: file.name // Original file name
+                            };
+                            this.images.push(fileObject);
+                            this.files.push(file); // Save for upload
+                        }
+                    });
+                    event.target.value = ''; // Clear input for consecutive uploads
+                },
+    
+                // Remove an image
+                removeImage2(index) {
+                    if (this.currentCover === index) {
+                        this.currentCover = null; // Reset cover if it's removed
+                    }
+                    this.images.splice(index, 1);
+                    this.files.splice(index, 1); // Remove from upload list
+                },
+    
+                // Set an image as the cover
+                setCoverImage2(index) {
+                    this.currentCover = index;
+                    console.log('Cover Image:', this.images[index].name);
+                },
+    
+                // Drag-and-drop handlers
+                handleDrop2(event) {
+                    event.preventDefault();
+                    this.isDragging2 = false;
+                    this.addImages2(event);
+                },
+                toggleDragging2(state) {
+                    this.isDragging2 = state;
+                },
+            };
+        }
+    </script>
+    
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('facilitiesManager', () => ({
