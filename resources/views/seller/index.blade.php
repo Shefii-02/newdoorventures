@@ -1,6 +1,6 @@
 @extends('seller.layouts.master')
 @section('content')
-  
+
     <div class="main">
         <div class="col-lg-12 mb-5">
             <div class="container">
@@ -30,35 +30,35 @@
             </div>
             <div class="col-lg-12 mb-5">
                 <div class="row">
-                    @foreach($properties ?? [] as $key => $item)
-                    <div class="col-lg-3">
-                        <a href="{{ route('public.property_single',['uid' => $item->unique_id,'slug' => $item->slug]) }}" target="_new">
-                        <div class="relative overflow-hidden">
-                       
-                            <img src="{{ asset('images/'.$item->image) }}" style="height:230px"
-                                    alt="{{ $key }}" class="rounded-bottom-0 rounded-xl duration-500 ">
-                        
+                    @foreach ($properties ?? [] as $key => $item)
+                        <div class="col-lg-3">
+                            <a href="{{ route('public.property_single', ['uid' => $item->unique_id, 'slug' => $item->slug]) }}"
+                                target="_new">
+                                <div class="relative overflow-hidden">
+
+                                    <img src="{{ asset('images/' . $item->image) }}" style="height:230px"
+                                        alt="{{ $key }}" class="rounded-bottom-0 rounded-xl duration-500 ">
+
+                                </div>
+                                <div class="border border-top-0 p-3 rounded-bottom-4 ">
+                                    <span class="text-sm font-medium uppercase duration-500 ease-in-out hover:text-primary">
+                                        {{ $item->name }}
+                                    </span>
+                                    <p class="truncate text-slate-600 dark:text-slate-300">
+                                        <i class="mdi mdi-map-marker-outline"></i>
+                                        {{ $item->location }}
+                                    </p>
+                                    <div class="flex flex-wrap gap-3 items-center justify-between pt-1 ps-0 mb-0 list-none">
+                                        <li>
+                                            <span class="text-slate-400">Price</span>
+                                            <p class="text-lg font-semibold">{{ shorten_price($item->price) }}</p>
+                                        </li>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                        <div class="border border-top-0 p-3 rounded-bottom-4 ">
-                            <span
-                                class="text-sm font-medium uppercase duration-500 ease-in-out hover:text-primary">
-                                {{ $item->name }}
-                            </span>
-                            <p class="truncate text-slate-600 dark:text-slate-300">
-                                <i class="mdi mdi-map-marker-outline"></i>
-                                {{ $item->location }}
-                            </p>
-                            <div class="flex flex-wrap gap-3 items-center justify-between pt-1 ps-0 mb-0 list-none">
-                                <li>
-                                    <span class="text-slate-400">Price</span>
-                                    <p class="text-lg font-semibold">{{ shorten_price($item->price) }}</p>
-                                </li>
-                            </div>
-                        </div>
-                        </a>
-                    </div>
                     @endforeach
-                   
+
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
         </div>
 
 
-      
+
     @stop
 
 
@@ -86,13 +86,21 @@
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
         <script>
+            var leadData = {
+                categories: @json($leads->pluck('date')), // Get the dates
+                series: [{
+                    name: "Leads",
+                    data: @json($leads->pluck('lead_count')) // Get the lead counts
+                }]
+            };
+
             var options = {
                 chart: {
                     height: 280,
                     type: "area"
                 },
                 title: {
-                    text: 'Weekly Responses',
+                    text: 'Weekly Property Leads',
                     align: 'left',
                     margin: 10,
                     offsetX: 0,
@@ -107,10 +115,7 @@
                 dataLabels: {
                     enabled: false
                 },
-                series: [{
-                    name: "Series 1",
-                    data: [45, 52, 38, 45, ]
-                }],
+                series: leadData.series,
                 fill: {
                     type: "gradient",
                     gradient: {
@@ -121,20 +126,36 @@
                     }
                 },
                 xaxis: {
-                    categories: [
-                        "04 Jan",
-                        "05 Jan",
-                        "06 Jan",
-                        "07 Jan"
-                    ]
+                    categories: leadData.categories
                 }
             };
 
             var chart = new ApexCharts(document.querySelector("#leadChart"), options);
-
             chart.render();
 
+
+
             ///////////////////////////////////////////////////
+
+            var propertyStatusData = {
+                series: [{
+                    name: 'Sold',
+                    data: [{{ $propertyStatusData->sold }}]
+                }, {
+                    name: 'Rented',
+                    data: [{{ $propertyStatusData->rented }}]
+                }, {
+                    name: 'Renting',
+                    data: [{{ $propertyStatusData->renting }}]
+                }, {
+                    name: 'Selling',
+                    data: [{{ $propertyStatusData->selling }}]
+                }, {
+                    name: 'Pending',
+                    data: [{{ $propertyStatusData->pending }}]
+                }],
+                categories: ["Property Status"] // You can change this to a specific time period if necessary
+            };
 
             var options2 = {
                 title: {
@@ -157,10 +178,7 @@
                 dataLabels: {
                     enabled: false
                 },
-                series: [{
-                    name: "Series 1",
-                    data: [45, 52, 38, 45, ]
-                }],
+                series: propertyStatusData.series,
                 fill: {
                     type: "gradient",
                     gradient: {
@@ -171,20 +189,30 @@
                     }
                 },
                 xaxis: {
-                    categories: [
-                        "04 Jan",
-                        "05 Jan",
-                        "06 Jan",
-                        "07 Jan"
-                    ]
+                    categories: propertyStatusData.categories
                 }
             };
 
             var chart2 = new ApexCharts(document.querySelector("#PropertyChart"), options2);
-
             chart2.render();
 
             ///////////////////////////////////////////////////
+
+            var mostVisitedData = {
+                series: [{
+                    name: 'Views',
+                    data: [
+                        @foreach ($mostVisitedProperties as $property)
+                            {{ $property->views }},
+                        @endforeach
+                    ]
+                }],
+                categories: [
+                    @foreach ($mostVisitedProperties as $property)
+                        '"{{ Str::limit($property->name,"5","...") }}"',
+                    @endforeach
+                ]
+            };
 
             var options3 = {
                 title: {
@@ -207,10 +235,7 @@
                 dataLabels: {
                     enabled: false
                 },
-                series: [{
-                    name: "Series 1",
-                    data: [45, 52, 38, 45, ]
-                }],
+                series: mostVisitedData.series,
                 fill: {
                     type: "gradient",
                     gradient: {
@@ -221,17 +246,11 @@
                     }
                 },
                 xaxis: {
-                    categories: [
-                        "04 Jan",
-                        "05 Jan",
-                        "06 Jan",
-                        "07 Jan"
-                    ]
+                    categories: mostVisitedData.categories
                 }
             };
 
             var chart3 = new ApexCharts(document.querySelector("#visitedChart"), options3);
-
             chart3.render();
         </script>
     @endpush
