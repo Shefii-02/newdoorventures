@@ -42,7 +42,7 @@
                                 'rent' => 'Rent',
                                 'new-launch' => 'New Launch',
                                 'pg-co-living' => 'PG / Co-living',
-                                'commercial' => 'Commercial',
+                                // 'commercial' => 'Commercial',
                                 'plot' => 'Plots/Land',
                                 'projects' => 'Projects',
                             ];

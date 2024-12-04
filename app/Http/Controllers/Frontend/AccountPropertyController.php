@@ -99,7 +99,7 @@ class AccountPropertyController extends Controller
     {
         // ->canPost()
         if (! auth('account')->user()) {
-            return back()->with(['error_msg' => trans('plugins/real-estate::package.add_credit_alert')]);
+            return back()->with(['error_msg' => 'Not Found']);
         }
 
         $user       = auth('account')->user();
@@ -300,13 +300,13 @@ class AccountPropertyController extends Controller
             DB::commit();
 
 
-            Session::flash('success_msg', trans('core/base::notices.create_success_message'));
+            Session::flash('success_msg', 'Successfully Created');
 
 
 
             return response()->json([
                 'status' => 'success',
-                'message' => trans('core/base::notices.create_success_message'),
+                'message' => 'Successfully Created',
                 'redirect' => route('user.properties.index')
             ]);
 
@@ -599,20 +599,15 @@ class AccountPropertyController extends Controller
 
             // SlugHelper::createSlug($property);
 
-            Session::flash('success_msg', trans('core/base::notices.update_success_message'));
+            Session::flash('success_msg', 'Successfully Updated');
 
             return response()->json([
                 'status' => 'success',
-                'message' => trans('core/base::notices.update_success_message'),
+                'message' => 'Successfully Updated',
                 'redirect' => route('user.properties.index')
             ]);
 
 
-            // return $this
-            //     ->httpResponse()
-            //     ->setPreviousUrl(route('public.account.properties.index'))
-            //     ->setNextUrl(route('public.account.properties.edit', $property->id))
-            //     ->setMessage(trans('core/base::notices.update_success_message'));
         } catch (\Exception $e) {
 
             DB::rollBack();
@@ -671,31 +666,7 @@ class AccountPropertyController extends Controller
             ->setMessage(__('Delete property successfully!'));
     }
 
-    // public function renew(int|string $id)
-    // {
-    //     $property = Property::query()->findOrFail($id);
-
-    //     $account = auth('account')->user();
-
-    //     if (RealEstateHelper::isEnabledCreditsSystem() && $account->credits < 1) {
-    //         return $this
-    //             ->httpResponse()
-    //             ->setError()
-    //             ->setMessage(__("You don't have enough credit to renew this property!"));
-    //     }
-
-    //     $property->expire_date = $property->expire_date->addDays(RealEstateHelper::propertyExpiredDays());
-    //     $property->save();
-
-    //     if (RealEstateHelper::isEnabledCreditsSystem()) {
-    //         $account->credits--;
-    //         $account->save();
-    //     }
-
-    //     return $this
-    //         ->httpResponse()
-    //         ->setMessage(__('Renew property successfully'));
-    // }
+   
 
     protected function saveCustomFields(Property $property, array $customFields = []): void
     {
@@ -714,7 +685,7 @@ class AccountPropertyController extends Controller
 
         FacilityDistance::where('reference_id', $property->id)->delete();
 
-        foreach ($facilities as $facilityValue) {
+        foreach ($facilities ?? [] as $facilityValue) {
             if ($facilityValue['id'] != '') {
                 $faciDistance              = new FacilityDistance();
                 $faciDistance->reference_id  = $property->id;
@@ -732,7 +703,7 @@ class AccountPropertyController extends Controller
         RuleDetails::where('reference_id', $property->id)->delete();
 
         if ($property->type == 'pg') {
-            foreach ($rule as $ruleValue) {
+            foreach ($rule ?? [] as $ruleValue) {
                 if ($ruleValue['id'] != '') {
                     $ruleNew              = new RuleDetails();
                     $ruleNew->reference_id  = $property->id;
@@ -763,7 +734,7 @@ class AccountPropertyController extends Controller
         $filePaths = []; // Array to store file paths with keys
 
         // Loop through each file
-        foreach ($files as $index => $file) {
+        foreach ($files ??[] as $index => $file) {
 
             // $fileName = auth('account')->user()->id . '-' . time() . '-' . Str::slug(File::basename($file->getClientOriginalName())) . '.' . $file->getClientOriginalExtension();
 

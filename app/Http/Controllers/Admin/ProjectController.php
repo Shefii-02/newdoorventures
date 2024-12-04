@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Configration;
 use App\Models\Facility;
+use App\Models\Feature;
+use App\Models\Investor;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -44,7 +47,10 @@ class ProjectController extends Controller
         //
         $configration = Configration::query()->select(['id', 'name'])->get();
         $facilities   = Facility::query()->select(['id', 'name'])->get();
-        return view('admin.projects.form',compact('configration','facilities'));
+        $categories   = Category::get();
+        $builders     = Investor::get();
+        $features     = Feature::get();
+        return view('admin.projects.form',compact('configration','facilities','categories','builders','features'));
     }
 
     /**

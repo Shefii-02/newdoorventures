@@ -149,7 +149,7 @@
                             </div>
 
                             <!-- Type Selection -->
-                            <div>
+                            <div class="d-none">
                                 <h6 class="mb-3 mt-3 font-medium">What kind of property do you have?<sup
                                         class="text-danger fs-4">*</sup></h6>
                                 <div class="flex flex-wrap ">
@@ -1901,7 +1901,8 @@
 
                         // Set types for Sell and Rent modes
                         if (mode === 'sell' || mode === 'rent') {
-                            this.types = ['Residential', 'Commercial'];
+                            // Commercial
+                            this.types = ['Residential'];
                         } else if (mode === 'pg') {
                             this.types = ['Residential'];
                             ShowWantedSectionInPg();
