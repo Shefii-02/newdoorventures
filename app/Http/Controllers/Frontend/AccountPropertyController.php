@@ -667,7 +667,7 @@ class AccountPropertyController extends Controller
     }
 
    
-
+     
     protected function saveCustomFields(Property $property, array $customFields = []): void
     {
 
