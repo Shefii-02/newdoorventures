@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\LoginController;
 use App\Http\Controllers\Frontend\AccountPropertyController;
 use App\Http\Controllers\Frontend\ProfileController;
-
+use App\Models\Property;
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 
@@ -22,7 +22,8 @@ Route::prefix('account')->group(function () {
 
     Route::middleware(['auth:account'])->group(function () {
         Route::get('/dashboard', function () {
-            return view('seller.index');
+            $properties = Property::where('author_id',auth('account')->user()->id)->orderBy('views','desc')->limit(4)->get();
+            return view('seller.index',compact('properties'));
         })->name('user.dashboard');
         Route::resource('properties', AccountPropertyController::class)->names('user.properties');
         Route::get('/settings', function () {

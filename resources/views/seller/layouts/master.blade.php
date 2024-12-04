@@ -31,6 +31,12 @@
     <meta property="og:type" content="website">
     <meta property="og:image" content="{{ asset('images/new-door-logo.png') }}">
 
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+
     <style>
         [v-cloak],
         [x-cloak] {
@@ -292,6 +298,14 @@
         });
     </script>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('[data-slick]').slick();
+    });
+</script>
 </body>
 
 </html>
