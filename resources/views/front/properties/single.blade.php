@@ -426,7 +426,7 @@
 
                            
 
-                         
+                          
                             @if ($property->facilities->groupBy('name')->count())
                                 <div class="container-fluid mb-5" id="Landmarks" class="section"
                                     :class="{ 'active': activeSection === 'Landmarks' }">

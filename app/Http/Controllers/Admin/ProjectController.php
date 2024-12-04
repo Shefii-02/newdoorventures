@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Configration;
+use App\Models\Facility;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -40,7 +42,9 @@ class ProjectController extends Controller
     public function create()
     {
         //
-        return view('admin.projects.form');
+        $configration = Configration::query()->select(['id', 'name'])->get();
+        $facilities   = Facility::query()->select(['id', 'name'])->get();
+        return view('admin.projects.form',compact('configration','facilities'));
     }
 
     /**

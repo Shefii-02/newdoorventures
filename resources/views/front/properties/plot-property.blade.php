@@ -60,7 +60,7 @@
                                                         <div class="p-3 flex gap-5">
                                                             <div class="ms-3">
                                                                 <span class="">Plot Area<br><span
-                                                                        class="fw-bold ">{{ $property->square_text }}</span></span>
+                                                                        class="fw-bold ">{{ $property->plot_area }}.sqft</span></span>
                                                             </div>
 
                                                             <div class=" ms-3">
