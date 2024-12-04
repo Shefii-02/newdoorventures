@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Configration;
+use App\Models\ConfigrationDetail;
+use App\Models\CustomFieldValue;
 use App\Models\Facility;
 use App\Models\FacilityDistance;
 use App\Models\Feature;
 use App\Models\Investor;
 use App\Models\Project;
+use App\Models\ProjectPriceVariations;
+use App\Models\ProjectSpecification;
 use AppServices\StoreProjectCategoryService;
 use Botble\RealEstate\Services\SaveFacilitiesService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -115,19 +120,19 @@ class ProjectController extends Controller
 
             $this->projectCategoryService($request, $project);
 
-
+            DB::commit();
             Session::flash('success_msg', 'Successfully Created');
-
-
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Successfully Created',
-                'redirect' => route('user.properties.index')
+                'redirect' => route('admin.projects.index')
             ]);
             
 
+
         } catch (\Exception $e) {
+
 
               DB::rollBack();
             // Return error response if something goes wrong
@@ -152,6 +157,14 @@ class ProjectController extends Controller
     public function edit(string $id)
     {
         //
+        $project      = Project::where('id',$id)->first() ?? abort(404);
+        $configration = Configration::query()->select(['id', 'name'])->get();
+        $facilities   = Facility::query()->select(['id', 'name'])->get();
+        $categories   = Category::get();
+        $builders     = Investor::get();
+        $features     = Feature::get();
+        return view('admin.projects.form',compact('configration','facilities','categories','builders','features','project'));
+
     }
 
     /**
@@ -213,7 +226,7 @@ class ProjectController extends Controller
 
             // $fileName = auth('account')->user()->id . '-' . time() . '-' . Str::slug(File::basename($file->getClientOriginalName())) . '.' . $file->getClientOriginalExtension();
 
-            $folderPath = 'properties';
+            $folderPath = 'projects';
             $result = uploadFile($file, $folderPath, 'public');
 
             if (isset($result)) {
@@ -258,12 +271,33 @@ class ProjectController extends Controller
         $project->customFields()->saveMany($customFields);
     }
 
+    protected function formatCustomFields(array $customFields = []): array
+    {
+        $newCustomFields = [];
+
+        foreach ($customFields ?? [] as $item) {
+            $customField = null;
+
+            if ($item['id']) {
+                $customField = CustomFieldValue::query()->find($item['id']);
+                $customField->fill($item);
+            } else {
+                Arr::forget($item, 'id');
+                $customField = new CustomFieldValue($item);
+            }
+
+            $newCustomFields[] = $customField;
+        }
+
+        return $newCustomFields;
+    }
+
 
     protected function formatConfigrationFields(array $configrationFields = []): array
     {
         $newCustomFields = [];
 
-        foreach ($configrationFields as $item) {
+        foreach ($configrationFields ?? [] as $item) {
             $customField = null;
 
             if ($item['id']) {
@@ -280,5 +314,72 @@ class ProjectController extends Controller
         return $newCustomFields;
     }
 
-    
+
+    protected function saveConfigrationFields(Project $project, array $configrationFields = []): void
+    {
+
+       
+
+//         ConfigrationDetail::where('reference_id', $project->id)
+//             ->where('reference_type', 'App\Models\Project')
+//             ->delete();
+// dd($configrationFields);
+//         foreach ($configrationFields ?? [] as $confValue) {
+//             if($confValue['id'] != null && $confValue['id'] != ''){
+//                 $confItm                  = new ConfigrationDetail();
+//                 $confItm->reference_id    = $project->id;
+//                 $confItm->configration_id = $confValue['id'];
+//                 $confItm->distance        = $confValue['distance'] ?? '';
+//                 $confItm->reference_type  = 'App\Models\Project';
+//                 $confItm->save();
+//             }
+//         }
+    }
+
+
+    protected function saveSpecificationFields(Project $project, array $specificationFields = []): void
+    {
+
+
+        ProjectSpecification::where('project_id', $project->id)->delete();
+
+        foreach ($specificationFields as $specValue) {
+            $specification              = new ProjectSpecification();
+            $specification->project_id    = $project->id;
+            $specification->name          = null;
+            $specification->image        = $specValue['imagePath'];
+            $specification->description    = $specValue['description'];
+            $specification->save();
+        }
+    }
+
+
+    protected function savePriceUnitFields(Project $project, array $unitDetails = []): void
+    {
+        ProjectPriceVariations::where('project_id', $project->id)->delete();
+
+        foreach ($unitDetails as $priceValue) {
+            $priceVari              = new ProjectPriceVariations();
+            $priceVari->project_id    = $project->id;
+            $priceVari->unit_type    = $priceValue['unit_type'];
+            $priceVari->size        = $priceValue['size'];
+            $priceVari->price        = $priceValue['price'];
+            $priceVari->save();
+        }
+    }
+
+
+    protected function projectCategoryService($request,Project $property){
+        $categories = $request->input('categories', []);
+        if (is_array($categories)) {
+            if ($categories) {
+                $property->categories()->sync($categories);
+            } else {
+                $property->categories()->detach();
+            }
+        }
+    }
+
+
+
 }

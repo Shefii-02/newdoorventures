@@ -715,7 +715,7 @@
                                                         </div>
 
                                                         <!-- Available Floor -->
-                                                        <div class="mb-2 d-none">
+                                                        <div class="mb-2">
                                                             <div class="relative">
                                                                 <input form="propertyFrom" name="available_floor"
                                                                     autocomplete="off" type="number" min="0"

@@ -11,15 +11,15 @@
             </div>
             <div class="" x-data="formHandler()">
 
-            <div x-show="showToast" x-transition
-                :class="toastType === 'success' ? 'bg-success text-light' : 'bg-danger text-light'"
-                class="fixed top-5 right-5 text-white p-3 rounded shadow-lg transition z-99999">
+                <div x-show="showToast" x-transition
+                    :class="toastType === 'success' ? 'bg-success text-light' : 'bg-danger text-light'"
+                    class="fixed top-5 right-5 text-white p-3 rounded shadow-lg transition z-99999">
 
-                <p x-html="toastMessage"></p>
+                    <p x-html="toastMessage"></p>
 
-            </div>
+                </div>
                 <!-- Form -->
-                <form enctype="multipart/form-data" @submit.prevent="submitForm"  id="proectForm"
+                <form enctype="multipart/form-data" @submit.prevent="submitForm" id="proectForm"
                     action="{{ isset($project) ? route('admin.projects.update', $project->id) : route('admin.projects.store') }}"
                     method="POST">
                     @csrf
@@ -34,32 +34,33 @@
                                     <div class="card-body">
                                         <div class="form-body">
                                             <div class="row">
-                                                <div class="mb-3 position-relative">
-                                                    <label class="mb-3 block text-sm font-medium text-black dark:text-dark"
-                                                        for="name" >Name</label>
-                                                    <input class="form-control" data-counter="250" placeholder="Name" 
-                                                        autocomplete="off" name="name" type="text"
-                                                        value="{{ old('name', $property->name ?? '') }}" >
-                                                </div>
+                                                <div class="" x-data="slugGenerator()">
 
-                                                <div class="mb-3">
-                                                    <div class="slug-field-wrapper" data-field-name="name">
-                                                        <div class="mb-3 position-relative">
-                                                            <label
-                                                                class="mb-3 block text-sm font-medium text-black dark:text-dark"
-                                                                for="slug" >Permalink</label>
-                                                            <div class="input-group input-group-flat">
-                                                                <span class="input-group-text">
-                                                                    {{ url('projects/') }}
-                                                                </span>
-                                                                <input class="form-control ps-0" type="text" name="slug"
-                                                                    id="slug"  autocomplete="off"
-                                                                    
-                                                                    value="{{ old('slug', $property->slug ?? '') }}">
+                                                    <div class="mb-3 position-relative">
+                                                        <label
+                                                            class="mb-3 block text-sm font-medium text-black dark:text-dark"
+                                                            for="name">Name</label>
+                                                        <input class="form-control"    required  x-model="name"  data-counter="250" placeholder="Name"
+                                                            autocomplete="off" name="name" type="text" @input="updateSlug" 
+                                                            value="{{ old('name', $property->name ?? '') }}">
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <div class="slug-field-wrapper" data-field-name="name">
+                                                            <div class="mb-3 position-relative">
+                                                                <label
+                                                                    class="mb-3 block text-sm font-medium text-black dark:text-dark"
+                                                                    for="slug">Permalink</label>
+                                                                <div class="input-group input-group-flat">
+                                                                    <span class="input-group-text">
+                                                                        {{ url('projects/') }}
+                                                                    </span>
+                                                                    <input class="form-control ps-0"  @input="stopAutoSlug()"     x-model="slug"  type="text"
+                                                                        name="slug" id="slug" autocomplete="off"
+                                                                        value="{{ old('slug', $property->slug ?? '') }}">
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <input class="slug-current" name="slug" type="hidden"
-                                                            value="{{ old('slug', $property->slug ?? '') }}">
                                                     </div>
                                                 </div>
 
@@ -83,8 +84,9 @@
                                                 <div class="form-group mb-3 col-md-4">
                                                     <label for="city"
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">City</label>
-                                                    <input class="form-control" placeholder="City" id="auto_city" name="city"
-                                                        type="text" value="{{ old('city', $property->city ?? '') }}">
+                                                    <input class="form-control" placeholder="City" id="auto_city"
+                                                        name="city" type="text"
+                                                        value="{{ old('city', $property->city ?? '') }}">
                                                 </div>
 
                                                 <div class="form-group mb-3 col-md-4">
@@ -99,8 +101,8 @@
                                                     <label for="sub_locality"
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Sub
                                                         Locality</label>
-                                                    <input class="form-control" placeholder="Sub Locality" id="auto_subLocality"
-                                                        name="sub_locality" type="text"
+                                                    <input class="form-control" placeholder="Sub Locality"
+                                                        id="auto_subLocality" name="sub_locality" type="text"
                                                         value="{{ old('sub_locality', $property->sub_locality ?? '') }}">
                                                 </div>
 
@@ -115,8 +117,9 @@
                                                 <div class="form-group mb-3 col-md-4">
                                                     <label for="latitude"
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Latitude</label>
-                                                    <input class="form-control" placeholder="Ex: 1.462260" autocomplete="off"
-                                                        id="auto_latitude" name="latitude" type="text"
+                                                    <input class="form-control" placeholder="Ex: 1.462260"
+                                                        autocomplete="off" id="auto_latitude" name="latitude"
+                                                        type="text"
                                                         value="{{ old('latitude', $property->latitude ?? '') }}">
                                                     <a class="form-hint"
                                                         href="https://www.latlong.net/convert-address-to-lat-long.html"
@@ -148,14 +151,16 @@
                                                             <template x-for="(image, index) in normalImages"
                                                                 :key="index">
                                                                 <div class="image-preview mb-3 inline-block p-3 rounded-2">
-                                                                    <img :src="`/storage/${image.path}`" alt="Normal Image"
-                                                                        class="img-thumbnail mb-1" style="max-width: 100px;">
+                                                                    <img :src="`/images/${image.path}`" alt="Normal Image"
+                                                                        class="img-thumbnail mb-1"
+                                                                        style="max-width: 100px;">
                                                                     <span
                                                                         class="btn position-absolute right-0 top-0 position-relative"
                                                                         @click="deletedNormalImages.push(image.id); normalImages.splice(index, 1)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                            height="16" fill="currentColor"
-                                                                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="16" height="16"
+                                                                            fill="currentColor" class="bi bi-x-circle"
+                                                                            viewBox="0 0 16 16">
                                                                             <path
                                                                                 d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                                                                             <path
@@ -166,9 +171,7 @@
                                                             </template>
                                                         </div>
 
-                                                        <!-- Hidden input for deleted normal images -->
-                                                        <input type="hidden" name="deleted_normal_images"
-                                                            :value="JSON.stringify(deletedNormalImages)">
+
 
                                                         <!-- New Normal Images -->
                                                         <div class="mb-3">
@@ -184,12 +187,14 @@
                                                                 <div
                                                                     class="image-preview mb-3 p-3 inline-block position-relative">
                                                                     <img :src="URL.createObjectURL(file)" alt="New Image"
-                                                                        class="img-thumbnail mb-1" style="max-width: 100px;">
+                                                                        class="img-thumbnail mb-1"
+                                                                        style="max-width: 100px;">
                                                                     <span class="btn position-absolute right-0 top-0"
                                                                         @click="newNormalImages.splice(index, 1)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                            height="16" fill="currentColor"
-                                                                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="16" height="16"
+                                                                            fill="currentColor" class="bi bi-x-circle"
+                                                                            viewBox="0 0 16 16">
                                                                             <path
                                                                                 d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                                                                             <path
@@ -216,14 +221,15 @@
                                                                 :key="index">
                                                                 <div
                                                                     class="image-preview mb-3 inline-block position-relative p-3">
-                                                                    <img :src="`/storage/${image.path}`"
+                                                                    <img :src="`/images/${image.path}`"
                                                                         alt="Master Plan Image" class="img-thumbnail mb-1"
                                                                         style="max-width: 100px;">
                                                                     <span class="btn position-absolute right-0 top-0"
                                                                         @click="deletedMasterPlanImages.push(image.id); masterPlanImages.splice(index, 1)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                            height="16" fill="currentColor"
-                                                                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="16" height="16"
+                                                                            fill="currentColor" class="bi bi-x-circle"
+                                                                            viewBox="0 0 16 16">
                                                                             <path
                                                                                 d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                                                                             <path
@@ -234,9 +240,6 @@
                                                             </template>
                                                         </div>
 
-                                                        <!-- Hidden input for deleted master plan images -->
-                                                        <input type="hidden" name="deleted_master_plan_images"
-                                                            :value="JSON.stringify(deletedMasterPlanImages)">
 
                                                         <!-- New Master Plan Images -->
                                                         <div class="mb-3">
@@ -253,13 +256,15 @@
                                                                 <div
                                                                     class="image-preview mb-3 inline-block position-relative p-3">
                                                                     <img :src="URL.createObjectURL(file)"
-                                                                        alt="New Master Plan Image" class="img-thumbnail mb-1"
+                                                                        alt="New Master Plan Image"
+                                                                        class="img-thumbnail mb-1"
                                                                         style="max-width: 100px;">
                                                                     <span class="btn position-absolute right-0 top-0"
                                                                         @click="newMasterPlanImages.splice(index, 1)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                            height="16" fill="currentColor"
-                                                                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="16" height="16"
+                                                                            fill="currentColor" class="bi bi-x-circle"
+                                                                            viewBox="0 0 16 16">
                                                                             <path
                                                                                 d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                                                                             <path
@@ -277,7 +282,7 @@
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Youtube
                                                         video link</label>
                                                     <input class="form-control" placeholder="" autocomplete="off"
-                                                        name="youtube_video" type="text" id="youtube_video">
+                                                        name="youtube_video" type="url" id="youtube_video">
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -285,9 +290,10 @@
                                                     <label for="price_from"
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Lowest
                                                         price</label>
-                                                    <input class="form-control input-mask-number" placeholder="Lowest price"
-                                                        data-thousands-separator="," data-decimal-separator="."
-                                                        name="price_from" type="text" id="price_from">
+                                                    <input class="form-control input-mask-number"
+                                                        placeholder="Lowest price" data-thousands-separator=","
+                                                        data-decimal-separator="." name="price_from" type="text"
+                                                        id="price_from">
                                                 </div>
                                                 <div class="form-group mb-3 col-md-3">
                                                     <label for="price_to"
@@ -371,11 +377,12 @@
                                                         <div class="form-group mb-3">
                                                             <label
                                                                 class="mb-3 block text-sm font-medium text-black dark:text-dark">Builder</label>
-                                                            <select class="form-control form-select" 
-                                                                id="builder" name="builder" >
+                                                            <select class="form-control form-select" id="builder"
+                                                                name="builder">
                                                                 <option value=""></option>
                                                                 @foreach ($builders as $builder)
-                                                                    <option value="{{ $builder->id }}">{{ $builder->name }}
+                                                                    <option value="{{ $builder->id }}">
+                                                                        {{ $builder->name }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
@@ -443,14 +450,16 @@
                                                         }">
 
                                                             <!-- Loop through Unit Details -->
-                                                            <template x-for="(item, index) in items" :key="index">
+                                                            <template x-for="(item, index) in items"
+                                                                :key="index">
                                                                 <div class="row g-3 mb-2 position-relative">
                                                                     <!-- Unit Type -->
                                                                     <div class="col-md-4">
                                                                         <label class="form-label">Unit Type</label>
                                                                         <input type="text"
                                                                             :name="`unitDetails[${index}][unit_type]`"
-                                                                            class="form-control" placeholder="Enter unit type"
+                                                                            class="form-control"
+                                                                            placeholder="Enter unit type"
                                                                             x-model="item.unit_type" />
                                                                     </div>
 
@@ -479,9 +488,10 @@
                                                                     <span role="button"
                                                                         class="position-absolute right-4  text-danger"
                                                                         @click="deleteRow(index)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                            height="16" fill="currentColor"
-                                                                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="16" height="16"
+                                                                            fill="currentColor" class="bi bi-x-circle"
+                                                                            viewBox="0 0 16 16">
                                                                             <path
                                                                                 d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                                                                             <path
@@ -493,7 +503,8 @@
 
                                                             <!-- Add New Unit Detail Button -->
                                                             <div class="mt-3">
-                                                                <button type="button" class="btn bg-dark text-light btn-sm "
+                                                                <button type="button"
+                                                                    class="btn bg-dark text-light btn-sm "
                                                                     @click="addRow">
                                                                     Add New Unit Detail
                                                                 </button>
@@ -510,7 +521,7 @@
                             <div class="px-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <h4 class="card-title">landmarks </h4>
+                                        <h4 class="card-title">Landmarks </h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -521,15 +532,65 @@
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div id="facilitiesForm">
-                                                                        <!-- Dynamic Facilities Rows -->
-                                                                        <div id="facilitiesContainer">
-                                                                            <!-- This will be populated dynamically -->
-                                                                        </div>
+                                                                        <div x-data="facilitiesManager">
+                                                                            <!-- Facilities Container -->
+                                                                            <template
+                                                                                x-for="(facility, index) in selectedFacilities"
+                                                                                :key="index">
+                                                                                <div class="row g-2 mb-2">
+                                                                                    <div class="col">
+                                                                                        <label
+                                                                                            class="form-label">Facility</label>
+                                                                                        <select
+                                                                                            :name="`facilities[${index}][id]`"
+                                                                                            class="form-control"
+                                                                                            x-model="facility.id">
+                                                                                            <option value="">Select
+                                                                                                Facility</option>
+                                                                                            <template
+                                                                                                x-for="option in facilities"
+                                                                                                :key="option.id">
+                                                                                                <option
+                                                                                                    :value="option.id"
+                                                                                                    x-text="option.name">
+                                                                                                </option>
+                                                                                            </template>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="col">
+                                                                                        <label class="form-label">Name with
+                                                                                            Distance</label>
+                                                                                        <input type="text"
+                                                                                            :name="`facilities[${index}][distance]`"
+                                                                                            class="form-control"
+                                                                                            placeholder="e.g: HSK... (5km)"
+                                                                                            x-model="facility.distance">
+                                                                                    </div>
+                                                                                    <div class="col-auto">
+                                                                                        <button type="button"
+                                                                                            class="bg-danger text-light rounded-circle"
+                                                                                            @click="removeFacility(index)">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                width="16"
+                                                                                                height="16"
+                                                                                                fill="currentColor"
+                                                                                                class="bi bi-x-circle"
+                                                                                                viewBox="0 0 16 16">
+                                                                                                <path
+                                                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                                                                                <path
+                                                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </template>
 
-                                                                        <!-- Add New Facility Button -->
-                                                                        <button type="button"
-                                                                            class="btn bg-dark btn-sm text-light"
-                                                                            onclick="addRow()">Add New </button>
+                                                                            <!-- Add Facility Button -->
+                                                                            <button type="button"
+                                                                                class="btn bg-dark text-light btn-sm mt-3"
+                                                                                @click="addFacility">Add Facility</button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -563,6 +624,9 @@
                                                                 name="configration[{{ $key }}][value]"
                                                                 value="{{ old("configration.$key.value", $selectedConfigration[$key]['value'] ?? '') }}"
                                                                 placeholder="Enter {{ $config['name'] }}" />
+                                                            <input type="hidden"
+                                                                name="configration[{{ $key }}][id]"
+                                                                value="{{ $config['id'] }}">
                                                         </div>
                                                     @endforeach
                                                 </div>
@@ -588,7 +652,8 @@
                                                         <label for="specification-0-image"
                                                             class="form-label mb-2">Icon</label>
                                                         <input type="file" name="specifications[0][image]"
-                                                            id="specification-0-image" class="form-control media-image-picker"
+                                                            id="specification-0-image"
+                                                            class="form-control media-image-picker"
                                                             value="{{ old('specifications.' . '0' . '.image', $specification['image'] ?? '') }}"
                                                             onchange="uploadAndPreviewImage(this, 0)" />
                                                         <img id="preview-0" src="#" alt="Preview Image"
@@ -631,7 +696,8 @@
                                                 <!-- Dynamically added specification rows will be appended here -->
                                                 @foreach ($selectedSpecification as $index => $specification)
                                                     <div class="col-lg-12 border p-3 rounded-3 specification-box">
-                                                        <div class="row position-relative" data-index="{{ $index + 1 }}">
+                                                        <div class="row position-relative"
+                                                            data-index="{{ $index + 1 }}">
                                                             <!-- Image Input (Media Image Field) -->
                                                             <div class="col-md-6">
                                                                 <label for="specification-{{ $index + 1 }}-image"
@@ -820,75 +886,51 @@
 @endsection
 @push('footer')
     <script>
-        // Predefined facilities data (in a real use case, this will come from the server)
-        const facilities = @json($facilities); // Assuming $facilities is passed to the view
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('facilitiesManager', () => ({
+                facilities: @json($facilities), // Predefined facilities from the server
+                selectedFacilities: @json($selectedFacilities ?? []), // Selected facilities (from the server or default)
 
-        // Predefined selected facilities (in a real use case, this will come from the server)
-        let selectedFacilities = @json($selectedFacilities ?? []);
+                // Add a new facility
+                addFacility() {
+                    this.selectedFacilities.push({
+                        id: '',
+                        distance: ''
+                    });
+                },
 
-        // Function to render the form rows
-        function renderRows() {
-            const container = document.getElementById('facilitiesContainer');
-            container.innerHTML = ''; // Clear the container before re-rendering
+                // Remove a facility by index
+                removeFacility(index) {
+                    this.selectedFacilities.splice(index, 1);
+                }
+            }));
+        });
 
-            selectedFacilities.forEach((item, index) => {
-                const row = document.createElement('div');
-                row.classList.add('row', 'g-2', 'mb-2');
+        function slugGenerator() {
+        return {
+            name: '', // The name input
+            slug: '', // The slug input
+            autoGenerate: true, // Toggle for auto-generating the slug
 
-                row.innerHTML = `
-                <div class="col">
-                    <label class="form-label">Facility</label>
-                    <select name="facilities[${index}][id]" class="form-control" onchange="removeSelectedItem(${index})">
-                        <option value="">Select Facility</option>
-                        ${facilities.map(facility => `
-                                                                        <option value="${facility.id}" ${facility.id === item.id ? 'selected' : ''}>${facility.name}</option>
-                                                                    `).join('')}
-                    </select>
-                </div>
-                <div class="col">
-                    <label class="form-label">Distance</label>
-                    <input type="text" name="facilities[${index}][distance]" class="form-control" placeholder="Facility name  (Distance)" value="${item.distance || ''}">
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn bg-danger p-0 text-light" onclick="deleteRow(${index})"> 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                            height="16" fill="currentColor"
-                            class="bi bi-x-circle" viewBox="0 0 16 16">
-                            <path
-                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                            <path
-                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </button>
-                </div>
-            `;
+            // Update slug based on the name if autoGenerate is true
+            updateSlug() {
+                this.autoGenerate = true;
+                if (this.autoGenerate) {
+                    this.slug = this.name
+                        .toLowerCase()                  // Convert to lowercase
+                        .trim()                         // Remove leading/trailing spaces
+                        .replace(/[^a-z0-9\s-]/g, '')   // Remove non-alphanumeric characters
+                        .replace(/\s+/g, '-')           // Replace spaces with dashes
+                        .replace(/-+/g, '-');           // Remove duplicate dashes
+                }
+            },
 
-                container.appendChild(row);
-            });
-        }
-
-        // Function to add a new row
-        function addRow() {
-            selectedFacilities.push({
-                id: '',
-                distance: ''
-            });
-            renderRows();
-        }
-
-        // Function to delete a row
-        function deleteRow(index) {
-            selectedFacilities.splice(index, 1);
-            renderRows();
-        }
-
-        // Function to remove selected item (optional logic based on the change event)
-        function removeSelectedItem(index) {
-            // Logic to remove selected item can be added here if needed
-        }
-
-        // Initial render when the page loads
-        renderRows();
+            // Stop auto-generating the slug when manually edited
+            stopAutoSlug() {
+                this.autoGenerate = false;
+            }
+        };
+    }
     </script>
 
     <script
@@ -1006,80 +1048,80 @@
         });
     </script>
 
-<script>
-    function formHandler() {
-        return {
-            formData: {}, // Object to hold form data
-            responseMessage: '', // Success message
-            errorMessage: '', // Error message
-            validationErrors: [], // Array to store validation errors
-            showToast: false, // Controls visibility of the toast
-            toastMessage: '', // Message for the toast
-            toastType: '', // Type of toast (success/error)
+    <script>
+        function formHandler() {
+            return {
+                formData: {}, // Object to hold form data
+                responseMessage: '', // Success message
+                errorMessage: '', // Error message
+                validationErrors: [], // Array to store validation errors
+                showToast: false, // Controls visibility of the toast
+                toastMessage: '', // Message for the toast
+                toastType: '', // Type of toast (success/error)
 
-            async submitForm() {
-                // Reset validation errors before submitting
-                this.validationErrors = [];
-                this.errorMessage = '';
-                this.responseMessage = '';
+                async submitForm() {
+                    // Reset validation errors before submitting
+                    this.validationErrors = [];
+                    this.errorMessage = '';
+                    this.responseMessage = '';
 
-                // Reference the form element
-                const formElement = document.getElementById('proectForm');
-                const formData = new FormData(formElement);
+                    // Reference the form element
+                    const formElement = document.getElementById('proectForm');
+                    const formData = new FormData(formElement);
 
-                try {
-                    const response = await fetch(`{{ isset($project) ? route('admin.projects.update', $project->id) : route('admin.projects.store') }}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include Laravel CSRF token
-                        },
-                        body: formData // Use FormData as request body
-                    });
+                    try {
+                        const response = await fetch(
+                            `{{ isset($project) ? route('admin.projects.update', $project->id) : route('admin.projects.store') }}`, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include Laravel CSRF token
+                                },
+                                body: formData // Use FormData as request body
+                            });
 
-                    // Handle validation errors (422)
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        this.validationErrors = errorData.errors || [];
-                        this.showToastMessage('Validation failed.', 'error');
-                        return; // Stop further execution if validation fails
+                        // Handle validation errors (422)
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            this.validationErrors = errorData.errors || [];
+                            this.showToastMessage('Validation failed.', 'error');
+                            return; // Stop further execution if validation fails
+                        }
+
+                        // Handle successful response
+                        const data = await response.json();
+                        this.responseMessage = data.message || 'Form submitted successfully!';
+                        this.validationErrors = []; // Clear validation errors
+                        this.showToastMessage(this.responseMessage, 'success');
+                        window.location = data.redirect;
+                    } catch (error) {
+                        // Catch unexpected errors (e.g., network issues)
+                        this.errorMessage = error.message || 'An error occurred during form submission';
+                        this.responseMessage = ''; // Clear success messages
+                        this.showToastMessage(this.errorMessage, 'error');
                     }
+                },
 
-                    // Handle successful response
-                    const data = await response.json();
-                    this.responseMessage = data.message || 'Form submitted successfully!';
-                    this.validationErrors = []; // Clear validation errors
-                    this.showToastMessage(this.responseMessage, 'success');
-                    window.location = data.redirect;
-                } catch (error) {
-                    // Catch unexpected errors (e.g., network issues)
-                    this.errorMessage = error.message || 'An error occurred during form submission';
-                    this.responseMessage = ''; // Clear success messages
-                    this.showToastMessage(this.errorMessage, 'error');
-                }
-            },
+                showToastMessage(message, type) {
+                    this.toastType = type;
 
-            showToastMessage(message, type) {
-                this.toastType = type;
-
-                if (type === 'error' && this.validationErrors.length > 0) {
-                    // Construct an unordered list of errors
-                    this.toastMessage = `
+                    if (type === 'error' && this.validationErrors.length > 0) {
+                        // Construct an unordered list of errors
+                        this.toastMessage = `
                         <strong>${message}</strong>
                         <ul>
                             ${this.validationErrors.map(error => `<li>${error}</li>`).join('')}
                         </ul>
                     `;
-                } else {
-                    this.toastMessage = message;
+                    } else {
+                        this.toastMessage = message;
+                    }
+
+                    this.showToast = true;
+                    setTimeout(() => {
+                        this.showToast = false; // Hide toast after 3 seconds
+                    }, 3000);
                 }
-
-                this.showToast = true;
-                setTimeout(() => {
-                    this.showToast = false; // Hide toast after 3 seconds
-                }, 3000);
-            }
-        };
-    }
-</script>
-
+            };
+        }
+    </script>
 @endpush
