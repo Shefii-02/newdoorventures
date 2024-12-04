@@ -45,7 +45,7 @@
                                             src="{{ auth()->user()->avatar_url }}" id="imagePreview" alt="Bordered avatar">
                                     </div>
                                     <div class="w-2/4">
-                                        <input type="file" id="avatarInput" accept="image/*" class="hidden"
+                                        <input type="file" id="avatarInput" accept="image/*" class="hidden" name="avatar"
                                             onchange="previewImage(event)">
                                         <button type="button" onclick="document.getElementById('avatarInput').click()"
                                             class="p-2 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200">

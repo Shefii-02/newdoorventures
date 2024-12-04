@@ -21,6 +21,7 @@ class ProfileController extends Controller
 
     public function updateProfile(Request $request)
     {
+    
         // Validate incoming data
         $request->validate([
             'first_name' => 'required|string|max:255',
@@ -42,7 +43,7 @@ class ProfileController extends Controller
         if ($request->hasFile('avatar')) {
             deleteFilefromMedia($user->avatar_id);
             $result = uploadFiletoMedia($request->file('avatar'), 'users');
-            $user->avatar_url = isset($result['media_id']) ? $result['media_id'] : null;
+            $user->avatar_id = isset($result['media_id']) ? $result['media_id'] : null;
         }
 
         $user->save();
