@@ -446,10 +446,11 @@
                                                             <h4 class="fs-5  font-bold me-2">Rules</h4>
                                                             <div class="row align-items-center">
                                                                 @foreach ($property->pg_rules ?? [] as $ruleItem)
+                                                           
                                                                     <div
                                                                         class="col-lg-3 d-flex  flex-column align-items-center">
                                                                         <img class="rounded-xl w-6 w-1/2 h-6"
-                                                                            src="{{ $ruleItem->rule->icon }}">
+                                                                            src="{{ $ruleItem->rule->image_url }}">
                                                                         <div class="p-3">
                                                                             <span class="text-sm">
                                                                                 {!! $ruleItem->value === 'no' || $ruleItem->value === ''
