@@ -390,10 +390,7 @@ class AccountPropertyController extends Controller
 
         try {
 
-
-
             $categories[] = $request->category ?? '';
-
 
             $request->merge(['categories' => $categories]);
 
@@ -498,7 +495,7 @@ class AccountPropertyController extends Controller
             $property->youtube_video    = $youtube_video;
             $property->landmark         = $request->landmark;
             $property->available_floor  = $request->available_floor;
-            $property->balconies        = $request->balconies;
+            $property->balconies        = $request->balconie;
             $property->carpet_area      = $request->carpet_area;
             $property->built_up_area    = $request->built_up_area;
             $property->covered_parking  = $request->covered_parking;
