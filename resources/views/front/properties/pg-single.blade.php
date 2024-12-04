@@ -276,9 +276,12 @@
                                                 </div>
 
                                             </div>
-                                            <span class="px-3 mx-3 border-theme text-sm py-3 rounded">
-                                                {!! $property->content !!}
-                                            </span>
+                                            <div class="px-3 mx-3 border-theme rounded">
+                                                <span class=" text-sm py-3 ">
+                                                    {!! $property->content !!}
+                                                </span>
+                                            </div>
+                                          
                                             <div class="px-3 mt-5">
                                                 <a href=""
                                                     class="btn-sm text-white btn bg-primary">{{ __('Get Phone Number') }}</a>
@@ -451,7 +454,7 @@
                                                                         class="col-lg-3 d-flex  flex-column align-items-center">
                                                                         <img class="rounded-xl w-6 w-1/2 h-6"
                                                                             src="{{ $ruleItem->rule->image_url }}">
-                                                                            <label>{{ $ruleItem->rule->name }}</label>
+                                                                            <label class="text-sm mt-1">{{ $ruleItem->rule->name }}</label>
                                                                         <div class="p-3">
                                                                             <span class="text-sm">
                                                                                 {!! $ruleItem->value === 'no' || $ruleItem->value === ''
