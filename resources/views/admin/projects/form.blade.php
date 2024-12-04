@@ -388,7 +388,10 @@
                                                         <div class="row px-3">
                                                             <div class="form-check col-lg-4">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="construction_status" id="new_launch"
+                                                                    name="construction_status" id="new_launch" 
+                                                                    @if($project && $project->construction_status== 'new_launch')
+                                                                        checked
+                                                                    @endif
                                                                     value="new_launch" checked>
                                                                 <label class="form-check-label" for="new_launch">
                                                                     New Launch
@@ -397,6 +400,9 @@
                                                             <div class="form-check col-lg-4">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="construction_status" id="under_construction"
+                                                                    @if($project && $project->construction_status== 'under_construction')
+                                                                        checked
+                                                                    @endif
                                                                     value="under_construction">
                                                                 <label class="form-check-label" for="under_construction">
                                                                     Under Construction
@@ -405,6 +411,9 @@
                                                             <div class="form-check col-lg-4">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="construction_status" id="ready_to_move"
+                                                                    @if($project && $project->construction_status== 'ready_to_move')
+                                                                        checked
+                                                                    @endif
                                                                     value="ready_to_move">
                                                                 <label class="form-check-label" for="ready_to_move">
                                                                     Ready to Move
@@ -420,11 +429,16 @@
                                                         <div class="form-group mb-3">
                                                             <label
                                                                 class="mb-3 block text-sm font-medium text-black dark:text-dark">Builder</label>
+                                            
                                                             <select class="form-control form-select" id="builder"
                                                                 name="builder">
                                                                 <option value=""></option>
                                                                 @foreach ($builders as $builder)
-                                                                    <option value="{{ $builder->id }}">
+                                                                    <option value="{{ $builder->id }}"
+                                                                        @if($project && $builder->id == $project->investor_id)
+                                                                            selected
+                                                                        @endif
+                                                                    >
                                                                         {{ $builder->name }}
                                                                     </option>
                                                                 @endforeach
@@ -440,14 +454,25 @@
                                                             <div class="form-check form-check-inline">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="rera_status" id="registered" value="registered"
-                                                                    checked>
+                                                                    @if($project && $project->rera_status== 'registered')
+                                                                        checked
+                                                                    @else
+                                                                        checked
+                                                                    @endif
+                                                                    >
                                                                 <label class="form-check-label"
                                                                     for="registered">Registered</label>
                                                             </div>
                                                             <div class="form-check form-check-inline">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="rera_status" id="unregistered"
-                                                                    value="unregistered">
+                                                                    value="unregistered"
+                                                                    @if($project && $project->rera_status== 'unregistered')
+                                                                        checked
+                                                                    @else
+                                                                        checked
+                                                                    @endif
+                                                                    >
                                                                 <label class="form-check-label"
                                                                     for="unregistered">Unregistered</label>
                                                             </div>
