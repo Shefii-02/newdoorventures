@@ -8,7 +8,7 @@
                 <div class="p-4 md:p-6 xl:p-7.5">
                     <div class="flex items-start justify-between">
                         <h2 class="text-title-sm2 font-bold text-black dark:text-white">
-                            Consults List
+                            Leads List
                         </h2>
                     </div>
                 </div>
