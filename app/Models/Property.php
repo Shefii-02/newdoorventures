@@ -136,7 +136,7 @@ class Property extends BaseModel
 
     public function getVideoUrlAttribute()
     {
-        return $this->video_collect && $this->video_collect->url ? asset('storage/' . $this->video_collect->url) : '';
+        return $this->video_collect && $this->video_collect->url ? asset('images/' . $this->video_collect->url) : '';
     }
 
    

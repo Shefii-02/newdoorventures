@@ -637,7 +637,7 @@
                                                                 <label for="specification-{{ $index + 1 }}-image"
                                                                     class="form-label mb-2">Icon</label>
                                                                 <img id="preview-{{ $index + 1 }}"
-                                                                    src="{{ asset('storage/' . $specification['image']) }}"
+                                                                    src="{{ asset('images/' . $specification['image']) }}"
                                                                     alt="" class="img-thumbnail mb-2"
                                                                     style="max-width: 150px;">
                                                                 <input type="hidden"

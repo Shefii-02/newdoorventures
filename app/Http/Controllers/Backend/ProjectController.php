@@ -365,7 +365,7 @@ class ProjectController extends BaseController
 
         return response()->json([
             'success' => true,
-            'fileUrl' => asset('storage/' . $filePath),
+            'fileUrl' => asset('images/' . $filePath),
             'fileName' => $filePath
         ]);
 
@@ -376,7 +376,7 @@ class ProjectController extends BaseController
 
         // return response()->json([
         //     'success' => true,
-        //     'fileUrl' => asset('storage/' . $path),
+        //     'fileUrl' => asset('images/' . $path),
         //     'fileName' => $fileName
         // ]);
     }

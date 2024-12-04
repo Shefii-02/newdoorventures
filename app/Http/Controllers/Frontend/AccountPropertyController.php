@@ -429,7 +429,7 @@ class AccountPropertyController extends Controller
             foreach ($removedImages ?? [] as $imageLoc) {
                 try {
                     // Check if the original image file exists before unlinking
-                    $imagePath = public_path('storage/' . $imageLoc);
+                    $imagePath = public_path('images/' . $imageLoc);
                     if (file_exists($imagePath)) {
                         unlink($imagePath);
                     }
@@ -438,17 +438,17 @@ class AccountPropertyController extends Controller
                     // $filename = pathinfo($imageLoc, PATHINFO_FILENAME);
 
                     // // Check if each thumbnail file exists before unlinking
-                    // $thumb150x150 = public_path('storage/' . $filename . '-150x150.png');
+                    // $thumb150x150 = public_path('images/' . $filename . '-150x150.png');
                     // if (file_exists($thumb150x150)) {
                     //     unlink($thumb150x150);
                     // }
 
-                    // $thumb600x400 = public_path('storage/' . $filename . '-600x400.png');
+                    // $thumb600x400 = public_path('images/' . $filename . '-600x400.png');
                     // if (file_exists($thumb600x400)) {
                     //     unlink($thumb600x400);
                     // }
 
-                    // $thumb600x600 = public_path('storage/' . $filename . '-600x600.png');
+                    // $thumb600x600 = public_path('images/' . $filename . '-600x600.png');
                     // if (file_exists($thumb600x600)) {
                     //     unlink($thumb600x600);
                     // }
@@ -459,7 +459,7 @@ class AccountPropertyController extends Controller
             }
 
             foreach ($removedVideos ?? [] as $videoLoc) {
-                unlink('storage/' . $videoLoc);
+                unlink('images/' . $videoLoc);
             }
 
             $old_type  = $property->type;
@@ -543,8 +543,6 @@ class AccountPropertyController extends Controller
 
             
             $property->save();
-
-
 
 
             $property->features()->sync($request->input('amenities', []));

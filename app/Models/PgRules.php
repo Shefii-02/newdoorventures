@@ -34,7 +34,7 @@ class PgRules extends BaseModel
 
     public function getImageUrlAttribute()
     {
-        return $this->image && $this->image->url ? asset('storage/' . $this->image->url) : '';
+        return $this->image && $this->image->url ? asset('images/' . $this->image->url) : '';
     }
 
     public function getRuleByName($name)
