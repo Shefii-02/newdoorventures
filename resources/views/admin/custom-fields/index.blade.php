@@ -27,13 +27,13 @@
                         <div class="w-2/12 xl:w-3/12">
                             <span class="font-medium">Name</span>
                         </div>
-                        <div class="w-2/12 xl:w-3/12">
+                        <div class="w-2/12 xl:w-3/12 d-none">
                             <span class="font-medium">Sale</span>
                         </div>
-                        <div class="w-2/12 xl:w-3/12">
+                        <div class="w-2/12 xl:w-3/12 d-none">
                             <span class="font-medium">Rent</span>
                         </div>
-                        <div class="w-2/12 xl:w-3/12">
+                        <div class="w-2/12 xl:w-3/12 d-none">
                             <span class="font-medium">PG</span>
                         </div>
                        
@@ -52,7 +52,7 @@
                                         <span class="hidden font-medium xl:block">{{ $customfiled->name }}</span>
                                     </div>
                                 </div>
-                                <div class="w-2/12 xl:w-3/12">
+                                <div class="w-2/12 xl:w-3/12 d-none">
                                     <div class="flex items-center gap-4">
                                         <span
                                         class="inline-block text-capitalize rounded {{ $customfiled->has_sell == 0 ? 'bg-red' : 'bg-success' }} px-2.5 py-0.5 text-sm font-medium text-white">
@@ -60,7 +60,7 @@
                                     </span>
                                     </div>
                                 </div>
-                                <div class="w-2/12 xl:w-3/12">
+                                <div class="w-2/12 xl:w-3/12 d-none">
                                     <div class="flex items-center gap-4">
                                         <span
                                         class="inline-block text-capitalize rounded {{ $customfiled->has_rent == 0 ? 'bg-red' : 'bg-success' }} px-2.5 py-0.5 text-sm font-medium text-white">
@@ -68,7 +68,7 @@
                                     </span>
                                     </div>
                                 </div>
-                                <div class="w-2/12 xl:w-3/12">
+                                <div class="w-2/12 xl:w-3/12 d-none">
                                     <div class="flex items-center gap-4">
                                         <span
                                         class="inline-block text-capitalize rounded {{ $customfiled->has_pg == 0 ? 'bg-red' : 'bg-success' }} px-2.5 py-0.5 text-sm font-medium text-white">

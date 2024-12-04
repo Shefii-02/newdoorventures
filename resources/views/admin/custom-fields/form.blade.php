@@ -32,7 +32,7 @@
                                 <span class="text-sm text-red-600">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-lg-6  mt-4">
+                        <div class="col-lg-6  mt-4 d-none">
 
                             <div class="form-group mb-3 col-md-4">
                                 <label class="form-check form-switch">

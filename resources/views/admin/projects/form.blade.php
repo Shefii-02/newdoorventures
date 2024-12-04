@@ -34,15 +34,15 @@
                                     <div class="card-body">
                                         <div class="form-body">
                                             <div class="row">
-                                                <div class="" x-data="slugGenerator()">
-
+                                                <div class="" x-data="slugGenerator('{{ old('name', $project->name ?? '') }}', '{{ old('slug', $project->slug ?? '') }}')">
                                                     <div class="mb-3 position-relative">
                                                         <label
                                                             class="mb-3 block text-sm font-medium text-black dark:text-dark"
                                                             for="name">Name</label>
-                                                        <input class="form-control"    required  x-model="name"  data-counter="250" placeholder="Name"
-                                                            autocomplete="off" name="name" type="text" @input="updateSlug" 
-                                                            value="{{ old('name', $property->name ?? '') }}">
+                                                        <input class="form-control" required x-model="name"
+                                                            data-counter="250" placeholder="Name" autocomplete="off"
+                                                            name="name" type="text" @input="updateSlug"
+                                                            value="{{ old('name', $project->name ?? '') }}">
                                                     </div>
 
                                                     <div class="mb-3">
@@ -55,9 +55,10 @@
                                                                     <span class="input-group-text">
                                                                         {{ url('projects/') }}
                                                                     </span>
-                                                                    <input class="form-control ps-0"  @input="stopAutoSlug()"     x-model="slug"  type="text"
-                                                                        name="slug" id="slug" autocomplete="off"
-                                                                        value="{{ old('slug', $property->slug ?? '') }}">
+                                                                    <input class="form-control ps-2" @input="stopAutoSlug()"
+                                                                        x-model="slug" type="text" name="slug"
+                                                                        id="slug" autocomplete="off"
+                                                                        value="{{ old('slug', $project->slug ?? '') }}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -68,7 +69,7 @@
                                                     <label for="content"
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Content/Description</label>
                                                     <textarea class="form-control tinyeditor" rows="4" placeholder="Write your content" id="content" name="content"
-                                                        cols="50">{{ old('content', $property->content ?? '') }}</textarea>
+                                                        cols="50">{{ old('content', $project->content ?? '') }}</textarea>
                                                 </div>
 
                                                 <div class="mb-3 position-relative">
@@ -78,7 +79,7 @@
                                                     <input class="form-control pac-target-input"
                                                         placeholder="Property location/address" id="location"
                                                         autocomplete="off" name="location" type="text"
-                                                        value="{{ old('location', $property->location ?? '') }}">
+                                                        value="{{ old('location', $project->location ?? '') }}">
                                                 </div>
 
                                                 <div class="form-group mb-3 col-md-4">
@@ -86,7 +87,7 @@
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">City</label>
                                                     <input class="form-control" placeholder="City" id="auto_city"
                                                         name="city" type="text"
-                                                        value="{{ old('city', $property->city ?? '') }}">
+                                                        value="{{ old('city', $project->city ?? '') }}">
                                                 </div>
 
                                                 <div class="form-group mb-3 col-md-4">
@@ -94,7 +95,7 @@
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Locality</label>
                                                     <input class="form-control" placeholder="Locality" id="auto_locality"
                                                         name="locality" type="text"
-                                                        value="{{ old('locality', $property->locality ?? '') }}">
+                                                        value="{{ old('locality', $project->locality ?? '') }}">
                                                 </div>
 
                                                 <div class="form-group mb-3 col-md-4">
@@ -103,7 +104,7 @@
                                                         Locality</label>
                                                     <input class="form-control" placeholder="Sub Locality"
                                                         id="auto_subLocality" name="sub_locality" type="text"
-                                                        value="{{ old('sub_locality', $property->sub_locality ?? '') }}">
+                                                        value="{{ old('sub_locality', $project->sub_locality ?? '') }}">
                                                 </div>
 
                                                 <div class="form-group mb-3 col-md-4">
@@ -111,7 +112,7 @@
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Landmark</label>
                                                     <input class="form-control" placeholder="Landmark" id="auto_landmark"
                                                         name="landmark" type="text"
-                                                        value="{{ old('landmark', $property->landmark ?? '') }}">
+                                                        value="{{ old('landmark', $project->landmark ?? '') }}">
                                                 </div>
 
                                                 <div class="form-group mb-3 col-md-4">
@@ -120,7 +121,7 @@
                                                     <input class="form-control" placeholder="Ex: 1.462260"
                                                         autocomplete="off" id="auto_latitude" name="latitude"
                                                         type="text"
-                                                        value="{{ old('latitude', $property->latitude ?? '') }}">
+                                                        value="{{ old('latitude', $project->latitude ?? '') }}">
                                                     <a class="form-hint"
                                                         href="https://www.latlong.net/convert-address-to-lat-long.html"
                                                         target="_blank" rel="nofollow">Go here to get Latitude from
@@ -133,7 +134,7 @@
                                                     <input class="form-control" placeholder="Ex: 103.812530"
                                                         autocomplete="off" id="auto_longitude" name="longitude"
                                                         type="text"
-                                                        value="{{ old('longitude', $property->longitude ?? '') }}">
+                                                        value="{{ old('longitude', $project->longitude ?? '') }}">
                                                     <a class="form-hint"
                                                         href="https://www.latlong.net/convert-address-to-lat-long.html"
                                                         target="_blank" rel="nofollow">Go here to get Longitude from
@@ -141,13 +142,14 @@
                                                 </div>
                                                 <!-- Normal Images Section -->
                                                 <div class="px-3">
-                                                    <div class="mb-5 border p-3" x-data="{ normalImages: @json(isset($property) ? $property->normalImages : []), newNormalImages: [], deletedNormalImages: [] }">
+                                                    <div class="mb-5 border p-3" x-data="{ normalImages: [], newNormalImages: [], deletedNormalImages: [] }">
                                                         <label
                                                             class="mb-3 block text-lg font-semibold text-black dark:text-dark">
                                                             Project Images</label>
 
                                                         <!-- Existing Normal Images -->
-                                                        <div class="gallery-images-wrapper list-images form-fieldset mb-3">
+                                                        {{-- <div class="gallery-images-wrapper list-images form-fieldset mb-3">
+
                                                             <template x-for="(image, index) in normalImages"
                                                                 :key="index">
                                                                 <div class="image-preview mb-3 inline-block p-3 rounded-2">
@@ -169,19 +171,108 @@
                                                                     </span>
                                                                 </div>
                                                             </template>
+                                                        </div> --}}
+                                                        <div x-data="imageUploader()" class="mx-auto  space-y-6">
+                                                            <!-- Image Preview Grid -->
+                                                            <div class="grid grid-cols-6 md:grid-cols-5 gap-4">
+                                                                @foreach ($project->images ?? [] as $key => $image)
+                                                                    <div
+                                                                        class="relative group border rounded-lg overflow-hidden existing-data-box">
+                                                                        <img src="{{ asset('images/' . $image) }}"
+                                                                            class="thumbnail" alt="Uploaded Image">
+                                                                        <input type="hidden" form="propertyFrom"
+                                                                            value="{{ $image }}"
+                                                                            name="existingImage[]" />
+                                                                        <button type="button"
+                                                                            onclick="removeExistingRow(this)"
+                                                                            class="absolute bg-white p-1 right-0 top-0 rounded-full">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4" fill="red"
+                                                                                viewBox="0 0 20 20">
+                                                                                <path fill-rule="evenodd"
+                                                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                                    clip-rule="evenodd" />
+                                                                            </svg>
+                                                                        </button>
+                                                                    </div>
+                                                                @endforeach
+
+
+                                                                <!-- Existing Images -->
+                                                                <template x-for="(image, index) in images"
+                                                                    :key="index">
+                                                                    <div class="flex flex-col relative">
+                                                                        <div
+                                                                            class="relative group border rounded-lg overflow-hidden">
+                                                                            <!-- Image -->
+                                                                            <img :src="image.url"
+                                                                                style="height: 100px;"
+                                                                                alt="Uploaded Image"
+                                                                                class="w-30 h-30 object-cover">
+
+                                                                            <!-- Overlay with Cover Option -->
+                                                                            <div
+                                                                                class="absolute flex flex-col inset-0 group-hover:opacity-100 space-y-2 transition">
+                                                                                <!-- Remove Image -->
+                                                                                <button @click="removeImage(index)"
+                                                                                    class="absolute bg-white p-1 right-0 rounded-full top-0">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                        class="h-4 w-4"
+                                                                                        viewBox="0 0 20 20"
+                                                                                        fill="red">
+                                                                                        <path fill-rule="evenodd"
+                                                                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                                            clip-rule="evenodd" />
+                                                                                    </svg>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <label
+                                                                            class="flex items-center space-x-2 text-dark cursor-pointer hidden">
+                                                                            <input type="radio" name="coverImage"
+                                                                                form="propertyFrom" class="hidden"
+                                                                                :value="image.name"
+                                                                                @change="setCoverImage(index)"
+                                                                                :checked="currentCover === index" />
+                                                                            <span>Make Cover Photo</span>
+                                                                        </label>
+                                                                        <span x-show="currentCover === index"
+                                                                            class="absolute top-0 left-0 p-2 text-white bg-black opacity-50">Cover</span>
+                                                                    </div>
+                                                                </template>
+
+                                                                <!-- Upload New Images -->
+                                                                <div class="flex flex-col col-auto text-center">
+                                                                    <div class="relative group border rounded-lg p-2 overflow-hidden"
+                                                                        @click="triggerFileInput()"
+                                                                        x-bind:class="{ 'border-blue-500': isDragging }">
+                                                                        <input name="new_normal_images[]"
+                                                                            form="propertyFrom" type="file"
+                                                                            accept="image/*" id="fileInput"
+                                                                            class="hidden" multiple
+                                                                            @change="addImages($event)">
+                                                                        <p class="text-gray-600 text-sm">
+                                                                            click to upload your images here.<br>(Keep image
+                                                                            Size 800 × 533 pixels)</p>
+                                                                        <p
+                                                                            class="text-sm text-blue-500 font-medium hidden">
+                                                                            Upload up to 30
+                                                                            images</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
 
 
-
                                                         <!-- New Normal Images -->
-                                                        <div class="mb-3">
+                                                        {{-- <div class="mb-3">
                                                             <button type="button" class="btn bg-dark btn-sm text-white"
                                                                 @click="$refs.normalInput.click()">Add Images</button>
                                                             <input type="file" x-ref="normalInput" class="hidden"
                                                                 name="new_normal_images[]" multiple accept="image/*"
                                                                 @change="Array.from($event.target.files).forEach(file => newNormalImages.push(file))">
-                                                        </div>
-                                                        <div class="gallery-images-wrapper">
+                                                        </div> --}}
+                                                        {{-- <div class="gallery-images-wrapper">
                                                             <template x-for="(file, index) in newNormalImages"
                                                                 :key="index">
                                                                 <div
@@ -203,14 +294,14 @@
                                                                     </span>
                                                                 </div>
                                                             </template>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                 </div>
 
 
                                                 <!-- Master Plan Images Section -->
                                                 <div class="px-3">
-                                                    <div class="mb-5 border p-3" x-data="{ masterPlanImages: @json(isset($property) ? $property->masterPlanImages : []), newMasterPlanImages: [], deletedMasterPlanImages: [] }">
+                                                    <div class="mb-5 border p-3" x-data="{ masterPlanImages: @json(isset($project) ? $project->masterPlanImages : []), newMasterPlanImages: [], deletedMasterPlanImages: [] }">
                                                         <label
                                                             class="mb-3 block text-lg font-semibold text-black dark:text-dark">
                                                             Master Plan Images</label>
@@ -886,6 +977,66 @@
 @endsection
 @push('footer')
     <script>
+        function imageUploader() {
+            return {
+                isDragging: false,
+                images: [],
+                currentCover: null,
+                files: [],
+
+                // Trigger the hidden file input when the user clicks the drop area
+                triggerFileInput() {
+                    document.getElementById('fileInput').click();
+                },
+
+                // Add images when they are selected from the file input or dropped
+                addImages(event) {
+                    const files = event.target.files || event.dataTransfer.files;
+                    Array.from(files).forEach(file => {
+                        if (file.size <= 10 * 1024 * 1024 && file.type.startsWith('image/')) {
+                            const fileObject = {
+                                url: URL.createObjectURL(file), // Blob URL for preview
+                                file: file, // The actual file object for uploading
+                                name: file.name // Original file name
+                            };
+                            this.images.push(fileObject);
+                            this.files.push(file); // Store the file object for uploading
+                        }
+                    });
+                },
+
+                // Remove an image from the list and reset the cover if needed
+                removeImage(index) {
+                    // Check if the removed image was the cover photo
+                    if (this.currentCover === index) {
+                        this.currentCover = null; // Reset the cover image if it was removed
+                    }
+                    this.images.splice(index, 1);
+                    this.files.splice(index, 1); // Remove the file object as well
+                },
+
+                // Set the selected image as the cover photo and store the original filename
+                setCoverImage(index) {
+                    this.currentCover = index;
+                    // Access the original file name here
+                    const coverImageName = this.images[index].name;
+                    console.log('Cover Image Name:', coverImageName); // Use this value to send to your server
+                },
+
+                // Handle the drop event for drag-and-drop
+                handleDrop(event) {
+                    this.isDragging = false;
+                    this.addImages(event);
+                },
+
+                // Visual feedback for drag-and-drop area
+                toggleDragging(state) {
+                    this.isDragging = state;
+                },
+            };
+        }
+    </script>
+    <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('facilitiesManager', () => ({
                 facilities: @json($facilities), // Predefined facilities from the server
@@ -906,31 +1057,31 @@
             }));
         });
 
-        function slugGenerator() {
-        return {
-            name: '', // The name input
-            slug: '', // The slug input
-            autoGenerate: true, // Toggle for auto-generating the slug
+        function slugGenerator(initialName = '', initialSlug = '') {
+            return {
+                name: initialName, // Initial name value
+                slug: initialSlug,
+                autoGenerate: true, // Toggle for auto-generating the slug
 
-            // Update slug based on the name if autoGenerate is true
-            updateSlug() {
-                this.autoGenerate = true;
-                if (this.autoGenerate) {
-                    this.slug = this.name
-                        .toLowerCase()                  // Convert to lowercase
-                        .trim()                         // Remove leading/trailing spaces
-                        .replace(/[^a-z0-9\s-]/g, '')   // Remove non-alphanumeric characters
-                        .replace(/\s+/g, '-')           // Replace spaces with dashes
-                        .replace(/-+/g, '-');           // Remove duplicate dashes
+                // Update slug based on the name if autoGenerate is true
+                updateSlug() {
+                    this.autoGenerate = true;
+                    if (this.autoGenerate) {
+                        this.slug = this.name
+                            .toLowerCase() // Convert to lowercase
+                            .trim() // Remove leading/trailing spaces
+                            .replace(/[^a-z0-9\s-]/g, '') // Remove non-alphanumeric characters
+                            .replace(/\s+/g, '-') // Replace spaces with dashes
+                            .replace(/-+/g, '-'); // Remove duplicate dashes
+                    }
+                },
+
+                // Stop auto-generating the slug when manually edited
+                stopAutoSlug() {
+                    this.autoGenerate = false;
                 }
-            },
-
-            // Stop auto-generating the slug when manually edited
-            stopAutoSlug() {
-                this.autoGenerate = false;
-            }
-        };
-    }
+            };
+        }
     </script>
 
     <script
