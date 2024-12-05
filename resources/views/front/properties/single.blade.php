@@ -42,7 +42,7 @@
                                             @if ($property->city)
                                                 <p
                                                     class="d-inline  me-2 text-base text-theme text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 ps-2">
-                                                    {{ $property->city }}{{ $property->city ? ', ' : '' }}{{ $property->locality }}
+                                                    {{ $property->locality }},{{ $property->city }}
                                                 </p>
                                             @endif
 

@@ -25,7 +25,7 @@
                                             @if ($property->city)
                                                 <p class="d-inline fw-bolder me-2 text-base text-theme text-capitalize ">
                                                     <span class="mdi mdi-map-marker-right fs-6 text-theme">
-                                                        {{ $property->city }}{{ $property->city ? ', ' : '' }}{{ $property->locality }}
+                                                        {{ $property->locality }},{{ $property->city }}
                                                 </p>
                                             @endif
 
