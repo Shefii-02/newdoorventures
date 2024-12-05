@@ -803,7 +803,7 @@
                                                             <div class="mb-2 ">
                                                                 <div class="relative">
                                                                     <input form="propertyFrom" name="super_built_up_area"
-                                                                        value="{{ $property->super_built_up_area ?? 0 }}"
+                                                                        value="{{ $property->square ?? 0 }}"
                                                                         autocomplete="off" type="text"
                                                                         id="super_built_up_area"
                                                                         class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
