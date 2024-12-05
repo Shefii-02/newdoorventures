@@ -237,7 +237,7 @@ class Property extends BaseModel
     }
 
     protected function categoryName(): Attribute
-    {
+    {   
         return Attribute::make(
             get: function () {
                 return $this->category->name;
