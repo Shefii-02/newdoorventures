@@ -245,6 +245,10 @@ class Property extends BaseModel
         );
     }
 
+    public function getTypeAttribute()
+{
+    return $this->attributes['type'] === 'sell' ? 'sale' : $this->attributes['type'];
+}
 
     
 

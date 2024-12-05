@@ -21,7 +21,7 @@ class FrontendController extends Controller
     public function index()
     {
         $categories                 = Category::where('status', 'published')->get();
-        $featured_properties        = Property::where('moderation_status', 'approved')->where('type','sale')->get();
+        $featured_properties        = Property::where('moderation_status', 'approved')->where('type','sell')->get();
         $featured_properties_rent   = Property::where('moderation_status', 'approved')->where('type','rent')->get();
 
         $featured_project           = Project::get();
