@@ -659,7 +659,7 @@
                                     <div class="card-header">
                                         <h4 class="card-title">Landmarks </h4>
                                     </div>
-                                
+
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="row">
@@ -680,11 +680,13 @@
                                                                                             class="form-control">
                                                                                             <option value="">Select
                                                                                                 Facility</option>
-                                                                                                @foreach($facilities as $facilityVal)
-                                                                                                    <option
+                                                                                            @foreach ($facilities as $facilityVal)
+                                                                                                <option
                                                                                                     @if ($project && $facilityVal->id == $facilityItem->pivot->facility_id) selected @endif
-                                                                                                    value="{{ $facilityVal->id }}">{{ $facilityVal->name }}</option>
-                                                                                                @endforeach
+                                                                                                    value="{{ $facilityVal->id }}">
+                                                                                                    {{ $facilityVal->name }}
+                                                                                                </option>
+                                                                                            @endforeach
                                                                                         </select>
                                                                                     </div>
                                                                                     <div class="col">
@@ -799,15 +801,16 @@
 
                                                 <div class="row">
                                                     @foreach ($configration ?? [] as $key => $config)
-                                                    @php
-                                                        $existConfg = $project->configration->where('id',$config->id)->first();
-                                                        if($existConfg){
-                                                            $existConfgDisntace = $existConfg->pivot->distance;
-                                                        }
-                                                        else{
-                                                            $existConfgDisntace = 0;
-                                                        }
-                                                    @endphp
+                                                        @php
+                                                            $existConfg = $project->configration
+                                                                ->where('id', $config->id)
+                                                                ->first();
+                                                            if ($existConfg) {
+                                                                $existConfgDisntace = $existConfg->pivot->distance;
+                                                            } else {
+                                                                $existConfgDisntace = 0;
+                                                            }
+                                                        @endphp
                                                         <div class="col-md-6 mb-3">
                                                             <label for="configration[100{{ $key }}]"
                                                                 class="form-label">{{ $config['name'] }}</label>
@@ -835,6 +838,51 @@
                                     </div>
                                     <div class="card-body">
                                         <div id="specifications-container">
+                                            @if (isset($project))
+                                                <!-- Dynamically added specification rows will be appended here -->
+                                                @foreach ($project->specifications ?? [] as $index => $specification)
+                                            
+                                                    <div class="col-lg-12 border p-3 rounded-3 specification-box">
+                                                        <div class="row position-relative"
+                                                            data-index="{{ $index + 1 }}">
+                                                            <!-- Image Input (Media Image Field) -->
+                                                            <div class="col-md-6">
+                                                                <label for="specification-{{ $index + 1 }}-image"
+                                                                    class="form-label mb-2">Icon</label>
+                                                                <img id="preview-{{ $index + 1 }}"
+                                                                    src="{{ asset('images/' . $specification['image']) }}"
+                                                                    alt="" class="img-thumbnail mb-2"
+                                                                    style="max-width: 150px;">
+                                                                <input type="hidden"
+                                                                    name="specifications[100{{ $index + 1 }}][eXimagePath]"
+                                                                    value="{{ $specification['image'] }}">
+                                                                <input type="file"
+                                                                    name="specifications[100{{ $index + 1 }}][image]"
+                                                                    id="specification-{{ $index + 1 }}-image"
+                                                                    class="form-control media-image-picker"
+                                                                    onchange="uploadAndPreviewImage(this, {{ $index + 1 }})" />
+                                                            </div>
+
+                                                            <!-- Text Input (Description) -->
+                                                            <div class="col-md-12 mt-3">
+                                                                <label for="specification-{{ $index + 1 }}-description"
+                                                                    class="form-label">Content</label>
+                                                                <textarea name="specifications[100{{ $index + 1 }}][description]" id="specification-{{ $index + 1 }}-description"
+                                                                    class="form-control" rows="4">{{ old('specifications.' . $index + 1 . '.description', $specification['description'] ?? '') }}</textarea>
+                                                            </div>
+
+                                                            <!-- Delete Row Button -->
+                                                            <div class="position-absolute">
+                                                                <button type="button"
+                                                                    class="btn btn-theme delete-specification-btn ribbon top-0"
+                                                                    onclick="removeSpecificationRow(this)">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
                                             @if (!isset($project))
                                                 <div class="col-lg-12 border p-3 rounded-3 specification-box">
                                                     <div class="row position-relative" data-index="0">
@@ -849,10 +897,7 @@
                                                                 onchange="uploadAndPreviewImage(this, 0)" />
                                                             <img id="preview-0" src="#" alt="Preview Image"
                                                                 style="max-width: 150px; display: none;" />
-                                                            <!-- Hidden field to store the image path -->
-                                                            <input type="hidden" name="specifications[0][imagePath]"
-                                                                id="specification-0-image-path"
-                                                                value="{{ $specification['image'] ?? '' }}">
+                                                           
                                                         </div>
 
                                                         <!-- Text Input (Description) -->
@@ -883,55 +928,7 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if (isset($project))
-                                                <!-- Dynamically added specification rows will be appended here -->
-                                                @foreach ($project->specifications ?? [] as $index => $specification)
-                                                    <div class="col-lg-12 border p-3 rounded-3 specification-box">
-                                                        <div class="row position-relative"
-                                                            data-index="{{ $index + 1 }}">
-                                                            <!-- Image Input (Media Image Field) -->
-                                                            <div class="col-md-6">
-                                                                <label for="specification-{{ $index + 1 }}-image"
-                                                                    class="form-label mb-2">Icon</label>
-                                                                <img id="preview-{{ $index + 1 }}"
-                                                                    src="{{ asset('images/' . $specification['image']) }}"
-                                                                    alt="" class="img-thumbnail mb-2"
-                                                                    style="max-width: 150px;">
-                                                                <input type="hidden"
-                                                                    name="specifications[{{ $index + 1 }}][imagePath]"
-                                                                    value="{{ $specification['image'] }}">
-                                                                <input type="file"
-                                                                    name="specifications[{{ $index + 1 }}][image]"
-                                                                    id="specification-{{ $index + 1 }}-image"
-                                                                    class="form-control media-image-picker"
-                                                                    onchange="uploadAndPreviewImage(this, {{ $index + 1 }})" />
-                                                                <!-- Hidden field to store the image path -->
-                                                                <input type="hidden"
-                                                                    name="specifications[{{ $index + 1 }}][imagePath]"
-                                                                    id="specification-{{ $index + 1 }}-image-path"
-                                                                    value="{{ $specification['image'] }}">
-                                                            </div>
-
-                                                            <!-- Text Input (Description) -->
-                                                            <div class="col-md-12 mt-3">
-                                                                <label for="specification-{{ $index + 1 }}-description"
-                                                                    class="form-label">Content</label>
-                                                                <textarea name="specifications[{{ $index + 1 }}][description]" id="specification-{{ $index + 1 }}-description"
-                                                                    class="form-control" rows="4">{{ old('specifications.' . $index + 1 . '.description', $specification['description'] ?? '') }}</textarea>
-                                                            </div>
-
-                                                            <!-- Delete Row Button -->
-                                                            <div class="position-absolute">
-                                                                <button type="button"
-                                                                    class="btn btn-theme delete-specification-btn ribbon top-0"
-                                                                    onclick="removeSpecificationRow(this)">
-                                                                    <i class="fa fa-times"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            @endif
+                                            
                                         </div>
 
                                         <!-- Add New Specification Button -->
@@ -971,8 +968,6 @@
                                                                             class="form-control media-image-picker"
                                                                             onchange="uploadAndPreviewImage(this, ${specificationIndex})"
                                                                         />
-                                                                        <!-- Hidden field to store the image path -->
-                                                                        <input type="hidden" name="specifications[${specificationIndex}][imagePath]" id="specification-${specificationIndex}-image-path" />
                                                                     </div>
                                         
                                                                     <!-- Text Input -->
@@ -1015,13 +1010,24 @@
                                                         }
                                                     };
 
-                                                    // Handle file upload and image preview
-                                                    window.uploadAndPreviewImage = function(input, index) {
+                                                    window.uploadAndPreviewImage = function (input, index) {
                                                         const file = input.files[0];
-                                                        if (file) {
-                                                            const formData = new FormData();
-                                                            formData.append('file', file);
 
+                                                        if (file) {
+                                                            // Check file size (20 KB = 20 * 1024 bytes)
+                                                            const maxSize = 20 * 1024; // 20 KB
+                                                            if (file.size > maxSize) {
+                                                                alert('The image size exceeds 20 KB. Please upload a smaller file.');
+                                                                input.value = ''; // Clear the file input
+                                                                return;
+                                                            }
+
+                                                            // Display the preview using a Blob URL
+                                                            const previewElement = document.getElementById(`preview-${index}`);
+                                                            previewElement.src = URL.createObjectURL(file);
+                                                            previewElement.style.display = 'block';
+                                                        } else {
+                                                            alert('Please select a valid image file.');
                                                         }
                                                     };
                                                 });
@@ -1165,7 +1171,7 @@
                             this.files.push(file); // Save for upload
                         }
                     });
-                    event.target.value = ''; // Clear input for consecutive uploads
+                    // event.target.value = ''; // Clear input for consecutive uploads
                 },
 
                 // Remove an image
@@ -1379,6 +1385,7 @@
                     // Reference the form element
                     const formElement = document.getElementById('proectForm');
                     const formData = new FormData(formElement);
+                    
 
                     try {
                         const response = await fetch(

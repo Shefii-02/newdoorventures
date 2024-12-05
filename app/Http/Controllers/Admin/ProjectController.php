@@ -71,6 +71,8 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+
+   
         DB::beginTransaction();
         try {
             $videos[] = $request->input('videos') ?? [];
@@ -90,7 +92,7 @@ class ProjectController extends Controller
                 $master_images = [];
             }
 
-            $request->merge(['images' => $images, 'master_images' => $master_images]);
+            $request->merge(['images' => $images, 'master_plan_images' => $master_images]);
             $request->merge(['videos' => array_filter($videos)]);
 
             // $request->merge(['images' => array_filter($request->input('images', []))]);
@@ -109,7 +111,7 @@ class ProjectController extends Controller
 
             $this->saveConfigrationFields($project, $request->input('configration', []));
 
-            $this->saveSpecificationFields($project, $request->input('specifications', []));
+            $this->saveSpecificationFields($project, $request);
 
             $this->savePriceUnitFields($project, $request->input('unitDetails', []));
 
@@ -184,6 +186,7 @@ class ProjectController extends Controller
             if ($request->hasFile('new_master_plan_images')) {
                 $imagePath2 = $this->storeFiles($request->file('new_master_plan_images'));
             }
+            
 
             // Find images and videos that were removed by comparing with the new ones
             $removedImages  = array_diff($project->images ?? [], $request->existingImage ?? []);
@@ -192,7 +195,7 @@ class ProjectController extends Controller
 
             // Merge the existing and new images and videos to get the final list
             $NewimagePath = array_merge($imagePath ?? [], $request->existingImage ?? []);
-            $NewimagePath2 = array_merge($imagePath2 ?? [], $request->existingVideo ?? []);
+            $NewimagePath2 = array_merge($imagePath2 ?? [], $request->existingImageMaster ?? []);
 
             foreach ($removedImages ?? [] as $imageLoc) {
                 try {
@@ -236,7 +239,7 @@ class ProjectController extends Controller
             //     $master_images = [];
             // }
 
-            $request->merge(['images' => $NewimagePath, 'master_images' => $NewimagePath2]);
+            $request->merge(['images' => $NewimagePath, 'master_plan_images' => $NewimagePath2]);
             $request->merge(['videos' => array_filter($videos)]);
 
 
@@ -251,8 +254,8 @@ class ProjectController extends Controller
             $this->saveCustomFields($project, $request->input('custom_fields', []));
 
             $this->saveConfigrationFields($project, $request->input('configration', []));
-
-            $this->saveSpecificationFields($project, $request->input('specifications', []));
+          
+            $this->saveSpecificationFields($project, $request);
 
             $this->savePriceUnitFields($project, $request->input('unitDetails', []));
 
@@ -441,17 +444,16 @@ class ProjectController extends Controller
     }
 
 
-    protected function saveSpecificationFields(Project $project, array $specificationFields = []): void
+    protected function saveSpecificationFields(Project $project, Request $request): void
     {
-
-
         ProjectSpecification::where('project_id', $project->id)->delete();
-
-        foreach ($specificationFields as $specValue) {
-            if ($specValue['imagePath'] != null) {
-                $path = uploadFile($specValue['imagePath'], 'projects');
+        $specificationFields = $request->specifications;
+        foreach ($specificationFields as $index => $specValue) {
+            if (isset($specValue['image']) && $request->hasFile("specifications.$index.image")) {
+                $path = uploadFile($specValue['image'], 'projects');
+                unlink('images/'.$specValue['eXimagePath']);
             } else {
-                $path = null;
+                $path = $specValue['eXimagePath'];
             }
             $specification              = new ProjectSpecification();
             $specification->project_id    = $project->id;
