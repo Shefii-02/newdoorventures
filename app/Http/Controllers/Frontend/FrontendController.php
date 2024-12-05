@@ -40,8 +40,11 @@ class FrontendController extends Controller
                 $query->where('name', $plot);
             });
         }
-        else if($request->filled('type')) {
+        else if($request->filled('type') && $request->type !== '') {
             $query->where('type',  $request->type);
+        }
+        else{
+
         }
 
         // Keyword search
@@ -51,7 +54,7 @@ class FrontendController extends Controller
         }
 
         // City filter
-        if ($request->filled('city') && $request->city !== 'null') {
+        if ($request->filled('city') && $request->city !== '') {
             $query->where('locality', $request->city);
         }
 
@@ -141,7 +144,8 @@ class FrontendController extends Controller
 
     public function propertyDetails($uid, $slug)
     {
-        $property = Property::where('slug', $slug)->where('unique_id', $uid)->firstOrFail();
+   
+        $property = Property::where('slug', $slug)->where('unique_id', $uid)->first() ?? abort(404);
         $recent_properties = $this->recentlyViewedProperties();
         $rules = PgRules::get();
 
@@ -158,7 +162,7 @@ class FrontendController extends Controller
 
     public function projectDetails($uid, $slug)
     {
-        $project = Project::where('slug', $slug)->where('unique_id', $uid)->firstOrFail();
+        $project = Project::where('slug', $slug)->where('unique_id', $uid)->first() ?? abort(404);
         $configurations = Configration::get();
         $advertisement = Advertisement::where('status', 1)->limit(1)->inRandomOrder()->first();
 
