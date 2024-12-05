@@ -58,6 +58,7 @@
                 @endif
             </div>
         @else
+
             <div class="lg:w-1/2 md:w-1/2 p-1">
                 
                 @include('front.shortcuts.properties..slider-image', ['property' => $item, 'image' => $images[0], 'main' => true,'property_type' => $property_type])
@@ -73,6 +74,7 @@
                             'image' => $images[2],
                             'mores' => $numberImages > 3 ? $numberImages - 2 : 0,
                         ])
+                            
                     </div>
                 </div>
                 @if($hasYouTube)
@@ -81,8 +83,20 @@
                     </div>
                 @else
                     <div class="grid grid-cols-2 gap-1 mt-2">
-                        @foreach (array_slice($images, 3, 4) as $image)
-                            @include('front.shortcuts.properties..slider-image', ['property' => $item, 'image' => $image])
+                        
+                        @foreach (array_slice($images, 3, 4) as $keyEx => $image)
+                            @if($keyEx < 1)
+                                @include('front.shortcuts.properties..slider-image', ['property' => $item, 'image' => $image])
+                            @else
+                                @include('front.shortcuts.properties..slider-image', [
+                                    'property' => $item,
+                                    'image' => $image,
+                                    'mores' => count(array_slice($images, 3, 4)) - 2 ?? 0,
+                                ])
+                                @php
+                                break;
+                                @endphp
+                            @endif
                         @endforeach
                     </div>
                 @endif
