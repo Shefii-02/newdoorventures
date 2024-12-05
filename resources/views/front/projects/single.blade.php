@@ -6,6 +6,18 @@
     $towers_and_blocks = $project->configration->where('name', 'Towers and Blocks')->first();
 @endphp
 
+@push('header')
+    <style>
+        @media (min-width: 1280px) {
+            .container {
+                max-width: 1450px !important;
+            }
+        }
+    </style>
+@endpush
+
+
+
 @section('content')
     <section class="relative mt-36">
         <div class="container" data-property-id="{{ $project->id }}" x-data="scrollSpy()" x-init="init()">
