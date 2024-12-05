@@ -6,12 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\CustomField;
 use App\Models\Facility;
+use App\Models\FacilityDistance;
 use App\Models\Feature;
 use App\Models\Furnishing;
 use App\Models\PgRules;
 use App\Models\Project;
 use App\Models\Property;
+use App\Models\RuleDetails;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class PropertyController extends Controller
 {
@@ -31,6 +36,7 @@ class PropertyController extends Controller
                                     ");
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
+
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%$search%")
                     ->orWhere('location', 'LIKE', "%$search%")
@@ -42,17 +48,17 @@ class PropertyController extends Controller
             //     ->orWhere('last_name', 'LIKE', "%$search%");
             // });
         }
-       
+
         $properties = $query->paginate(10);
 
-        // if ($request->ajax()) {
-        //     $rows = view('admin.properties.items', compact('properties'))->render();
-        //     $pagination = view('admin.properties.pagination', compact('properties'))->render();
-        //     return response()->json(['rows' => $rows, 'pagination' => $pagination]);
-        // }
+        if ($request->ajax()) {
+            $rows = view('admin.properties.items', compact('properties'))->render();
+            $pagination = view('admin.properties.pagination', compact('properties'))->render();
+            return response()->json(['rows' => $rows, 'pagination' => $pagination]);
+        }
 
-    
-        return view('admin.properties.index',compact('properties'));
+
+        return view('admin.properties.index', compact('properties'));
     }
 
     /**
@@ -82,7 +88,7 @@ class PropertyController extends Controller
 
         $pg_rules = PgRules::orderBy('type', 'desc')->get();
 
-        return view('admin.properties.form',compact( 'categories', 'projects', 'has_rent', 'has_sell', 'has_pg', 'furnishing', 'features', 'facilities', 'customFields', 'pg_rules'));
+        return view('admin.properties.form', compact('categories', 'projects', 'has_rent', 'has_sell', 'has_pg', 'furnishing', 'features', 'facilities', 'customFields', 'pg_rules'));
     }
 
     /**
@@ -100,7 +106,7 @@ class PropertyController extends Controller
     {
         //
         $property = Property::findOrFail($id);
-   
+
         return view('admin.properties.modal-content', compact('property'));
     }
 
@@ -129,9 +135,36 @@ class PropertyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
-        return abort(404);
+        $property = Property::findOrFail($id);
+        DB::beginTransaction();
+        try {
+            foreach ($property->images  ?? [] as $imageLoc) {
+                $imagePath = public_path('images/' . $imageLoc);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+            
+            FacilityDistance::where('reference_id', $property->id)->delete();
+            RuleDetails::where('reference_id', $property->id)->delete();
+            DB::table('re_custom_field_values')->where('reference_type', 'App\Models\Property')->where('reference_id', $property->id)->delete();
+            DB::table('re_property_categories')->where('property_id', $id)->delete();
+            DB::table('re_property_furnishing')->where('property_id', $id)->delete();
+            $property->delete();
+            DB::commit();
+            Session::flash('success_msg', 'Successfully Deleted');
+            return redirect()->route('admin.properties.index')->with('success_msg', 'Status updated deleted!');
+
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            // Return error response if something goes wrong
+            return response()->json([
+                'status' => 'failed_msg',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

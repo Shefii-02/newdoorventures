@@ -396,7 +396,8 @@
                                                                     <label class="form-check">
                                                                         <input type="radio" name="categories[]"
                                                                             value="{{ $category->id }}"
-                                                                            @if ($project && $project->category->id == $category->id) checked @endif
+                                                                            @if(!isset($project)) @if($loop->first) {{ 'checked' }} @endif @endif
+                                                                            @if (isset($project) && $project->category->id == $category->id) checked @endif
                                                                             class="form-check-input">
                                                                         <span class="form-check-label text-capitalize">
                                                                             {{ $category->name }}
@@ -416,7 +417,7 @@
                                                             <div class="form-check col-lg-4">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="construction_status" id="new_launch"
-                                                                    @if ($project && $project->construction_status == 'new_launch') checked @endif
+                                                                    @if (isset($project) && $project->construction_status == 'new_launch') checked @endif
                                                                     value="new_launch" checked>
                                                                 <label class="form-check-label" for="new_launch">
                                                                     New Launch
@@ -425,7 +426,7 @@
                                                             <div class="form-check col-lg-4">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="construction_status" id="under_construction"
-                                                                    @if ($project && $project->construction_status == 'under_construction') checked @endif
+                                                                    @if (isset($project) && $project->construction_status == 'under_construction') checked @endif
                                                                     value="under_construction">
                                                                 <label class="form-check-label" for="under_construction">
                                                                     Under Construction
@@ -434,7 +435,7 @@
                                                             <div class="form-check col-lg-4">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="construction_status" id="ready_to_move"
-                                                                    @if ($project && $project->construction_status == 'ready_to_move') checked @endif
+                                                                    @if (isset($project) && $project->construction_status == 'ready_to_move') checked @endif
                                                                     value="ready_to_move">
                                                                 <label class="form-check-label" for="ready_to_move">
                                                                     Ready to Move
@@ -456,7 +457,7 @@
                                                                 <option value=""></option>
                                                                 @foreach ($builders as $builder)
                                                                     <option value="{{ $builder->id }}"
-                                                                        @if ($project && $builder->id == $project->investor_id) selected @endif>
+                                                                        @if (isset($project) && $builder->id == $project->investor_id) selected @endif>
                                                                         {{ $builder->name }}
                                                                     </option>
                                                                 @endforeach
@@ -470,10 +471,9 @@
                                                                 Registration Status
                                                             </label>
                                                             <div class="form-check form-check-inline">
-                                                                {{ $project->rera_statu }}
                                                                 <input class="form-check-input" type="radio"
                                                                     name="rera_status" id="registered" value="registered"
-                                                                    @if ($project && $project->rera_status == 'registered') checked
+                                                                    @if (isset($project) && $project->rera_status == 'registered') checked
                                                                     @else
                                                                         checked @endif>
                                                                 <label class="form-check-label"
@@ -483,7 +483,7 @@
                                                                 <input class="form-check-input" type="radio"
                                                                     name="rera_status" id="unregistered"
                                                                     value="unregistered"
-                                                                    @if ($project && $project->rera_status == 'unregistered') checked
+                                                                    @if (isset($project) && $project->rera_status == 'unregistered') checked
                                                                     @else @endif>
                                                                 <label class="form-check-label"
                                                                     for="unregistered">Unregistered</label>
@@ -531,58 +531,60 @@
                                                                 this.items.splice(index, 1);
                                                             }
                                                         }">
+                                                            @if (isset($project))
+                                                                @foreach ($project->priceVariations as $key => $priceVari)
+                                                                    <div class="row g-3 mb-2 position-relative">
+                                                                        <!-- Unit Type -->
+                                                                        <div class="col-md-4">
+                                                                            <label class="form-label">Unit Type</label>
+                                                                            <input type="text"
+                                                                                name="unitDetails[100{{ $key }}][unit_type]"
+                                                                                value="{{ $priceVari['unit_type'] }}"
+                                                                                class="form-control"
+                                                                                placeholder="Enter unit type" />
+                                                                        </div>
 
-                                                            @foreach ($project->priceVariations as $key => $priceVari)
-                                                                <div class="row g-3 mb-2 position-relative">
-                                                                    <!-- Unit Type -->
-                                                                    <div class="col-md-4">
-                                                                        <label class="form-label">Unit Type</label>
-                                                                        <input type="text"
-                                                                            name="unitDetails[100{{ $key }}][unit_type]"
-                                                                            value="{{ $priceVari['unit_type'] }}"
-                                                                            class="form-control"
-                                                                            placeholder="Enter unit type" />
-                                                                    </div>
+                                                                        <!-- Size in Sq.ft -->
+                                                                        <div class="col-md-4">
+                                                                            <label class="form-label">Size in Sq.ft</label>
+                                                                            <input type="number"
+                                                                                value="{{ $priceVari['size'] }}"
+                                                                                name="unitDetails[100{{ $key }}][size]"
+                                                                                class="form-control"
+                                                                                placeholder="Enter size in sq.ft" />
+                                                                        </div>
 
-                                                                    <!-- Size in Sq.ft -->
-                                                                    <div class="col-md-4">
-                                                                        <label class="form-label">Size in Sq.ft</label>
-                                                                        <input type="number"
-                                                                            value="{{ $priceVari['size'] }}"
-                                                                            name="unitDetails[100{{ $key }}][size]"
-                                                                            class="form-control"
-                                                                            placeholder="Enter size in sq.ft" />
-                                                                    </div>
+                                                                        <!-- Approx. Price -->
+                                                                        <div class="col-md-4">
+                                                                            <label class="form-label">Approx. Price (all
+                                                                                Inclusive)</label>
+                                                                            <input type="number"
+                                                                                value="{{ $priceVari['price'] }}"
+                                                                                name="unitDetails[100{{ $key }}][price]"
+                                                                                class="form-control"
+                                                                                placeholder="Enter price" />
+                                                                        </div>
 
-                                                                    <!-- Approx. Price -->
-                                                                    <div class="col-md-4">
-                                                                        <label class="form-label">Approx. Price (all
-                                                                            Inclusive)</label>
-                                                                        <input type="number"
-                                                                            value="{{ $priceVari['price'] }}"
-                                                                            name="unitDetails[100{{ $key }}][price]"
-                                                                            class="form-control"
-                                                                            placeholder="Enter price" />
+                                                                        <!-- Remove Button -->
+                                                                        <div class="position-absolute">
+                                                                            <span role="button"
+                                                                                class="position-absolute right-4  text-danger"
+                                                                                @click="deleteRow(index)">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-x-circle"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                                                                    <path
+                                                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                                                                                </svg>
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
-
-                                                                    <!-- Remove Button -->
-                                                                    <div class="position-absolute">
-                                                                        <span role="button"
-                                                                            class="position-absolute right-4  text-danger"
-                                                                            @click="deleteRow(index)">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="16" height="16"
-                                                                                fill="currentColor" class="bi bi-x-circle"
-                                                                                viewBox="0 0 16 16">
-                                                                                <path
-                                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                                                                <path
-                                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                                                                            </svg>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            @endforeach
+                                                                @endforeach
+                                                            @endif
 
                                                             <!-- Loop through Unit Details -->
                                                             <template x-for="(item, index) in items"
@@ -802,13 +804,15 @@
                                                 <div class="row">
                                                     @foreach ($configration ?? [] as $key => $config)
                                                         @php
-                                                            $existConfg = $project->configration
-                                                                ->where('id', $config->id)
-                                                                ->first();
-                                                            if ($existConfg) {
-                                                                $existConfgDisntace = $existConfg->pivot->distance;
-                                                            } else {
-                                                                $existConfgDisntace = 0;
+                                                            if(isset($project)){
+                                                                $existConfg = $project->configration
+                                                                    ->where('id', $config->id)
+                                                                    ->first();
+                                                                if ($existConfg) {
+                                                                    $existConfgDisntace = $existConfg->pivot->distance;
+                                                                } else {
+                                                                    $existConfgDisntace = 0;
+                                                                }
                                                             }
                                                         @endphp
                                                         <div class="col-md-6 mb-3">
@@ -817,7 +821,9 @@
                                                             <input type="text" class="form-control" autocomplete="off"
                                                                 id="configration[100{{ $key }}]"
                                                                 name="configration[100{{ $key }}][value]"
+                                                                @if(isset($project))
                                                                 value="{{ old('configration.' . $key . '.value', $existConfgDisntace ?? '') }}"
+                                                                @endif
                                                                 placeholder="Enter {{ $config['name'] }}" />
                                                             <input type="hidden"
                                                                 name="configration[100{{ $key }}][id]"
@@ -841,7 +847,6 @@
                                             @if (isset($project))
                                                 <!-- Dynamically added specification rows will be appended here -->
                                                 @foreach ($project->specifications ?? [] as $index => $specification)
-                                            
                                                     <div class="col-lg-12 border p-3 rounded-3 specification-box">
                                                         <div class="row position-relative"
                                                             data-index="{{ $index + 1 }}">
@@ -867,8 +872,8 @@
                                                             <div class="col-md-12 mt-3">
                                                                 <label for="specification-{{ $index + 1 }}-description"
                                                                     class="form-label">Content</label>
-                                                                <textarea name="specifications[100{{ $index + 1 }}][description]" id="specification-{{ $index + 1 }}-description"
-                                                                    class="form-control" rows="4">{{ old('specifications.' . $index + 1 . '.description', $specification['description'] ?? '') }}</textarea>
+                                                                <textarea name="specifications[100{{ $index + 1 }}][description]"
+                                                                    id="specification-{{ $index + 1 }}-description" class="form-control" rows="4">{{ old('specifications.' . $index + 1 . '.description', $specification['description'] ?? '') }}</textarea>
                                                             </div>
 
                                                             <!-- Delete Row Button -->
@@ -897,7 +902,7 @@
                                                                 onchange="uploadAndPreviewImage(this, 0)" />
                                                             <img id="preview-0" src="#" alt="Preview Image"
                                                                 style="max-width: 150px; display: none;" />
-                                                           
+
                                                         </div>
 
                                                         <!-- Text Input (Description) -->
@@ -928,7 +933,7 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            
+
                                         </div>
 
                                         <!-- Add New Specification Button -->
@@ -1010,7 +1015,7 @@
                                                         }
                                                     };
 
-                                                    window.uploadAndPreviewImage = function (input, index) {
+                                                    window.uploadAndPreviewImage = function(input, index) {
                                                         const file = input.files[0];
 
                                                         if (file) {
@@ -1051,7 +1056,7 @@
                                                         <div class="d-flex  align-items-center">
                                                             <label class="form-check form-check-inline mb-3"><input
                                                                     type="checkbox" name="features[]"
-                                                                    @if (in_array($feature->id, $project->features->pluck('id')->toArray())) checked @endif
+                                                                    @if(isset($project)) @if (in_array($feature->id, $project->features->pluck('id')->toArray())) checked @endif @endif
                                                                     class="form-check-input" value="{{ $feature->id }}">
                                                                 <span
                                                                     class="form-check-label text-capitalize d-flex gap-2 items-center text-sm"><img
@@ -1385,7 +1390,7 @@
                     // Reference the form element
                     const formElement = document.getElementById('proectForm');
                     const formData = new FormData(formElement);
-                    
+
 
                     try {
                         const response = await fetch(

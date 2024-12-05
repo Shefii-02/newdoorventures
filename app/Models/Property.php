@@ -9,7 +9,7 @@ use App\Enums\ModerationStatusEnum;
 use App\Enums\PropertyPeriodEnum;
 use App\Enums\PropertyStatusEnum;
 use App\Enums\PropertyTypeEnum;
-use Botble\RealEstate\QueryBuilders\PropertyBuilder;
+
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -19,9 +19,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Models\MediaFile;
 
-/**
- * @method static \Botble\RealEstate\QueryBuilders\PropertyBuilder<static> query()
- */
+
 class Property extends BaseModel
 {
     protected $table = 're_properties';
@@ -78,14 +76,14 @@ class Property extends BaseModel
     protected static function booted(): void
     {
         static::deleting(function (Property $property) {
-            $property->categories()->detach();
-            $property->customFields()->delete();
-            $property->reviews()->delete();
-            $property->features()->detach();
-            $property->facilities()->detach();
-            $property->pg_rules()->detach();
-            $property->furnishing()->detach();
-            $property->metadata()->delete();
+            // $property->categories()->detach();
+            // $property->customFields()->delete();
+            // // $property->reviews()->delete();
+            // $property->features()->detach();
+            // $property->facilities()->detach();
+            // $property->pg_rules()->detach();
+            // $property->furnishing()->detach();
+            // $property->metadata()->delete();
         });
     }
 
@@ -115,8 +113,6 @@ class Property extends BaseModel
 
     }
 
-    
-
     protected function image(): Attribute
     {
         return Attribute::make(
@@ -125,8 +121,6 @@ class Property extends BaseModel
             },
         );
     }
-
-
 
     public function video_collect()
     {
@@ -140,7 +134,6 @@ class Property extends BaseModel
 
    
     
-
     protected function squareText(): Attribute
     {
         return Attribute::make(
@@ -167,6 +160,10 @@ class Property extends BaseModel
         return $this->hasOne(Account::class,  'id', 'author_id');
     }
 
+
+    public function author() {
+        return $this->hasOne(Account::class,  'id', 'author_id');
+    }
 
     protected function category(): Attribute
     {
@@ -195,10 +192,10 @@ class Property extends BaseModel
         return $this->belongsTo(Currency::class);
     }
 
-    public function author(): MorphTo
-    {
-        return $this->morphTo()->withDefault();
-    }
+    // public function author(): MorphTo
+    // {
+    //     return $this->morphTo()->withDefault();
+    // }
 
     public function categories(): BelongsToMany
     {
