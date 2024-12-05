@@ -1,5 +1,16 @@
 @extends('layouts.app')
 
+@push('header')
+    <style>
+        @media (min-width: 1280px) {
+            .container {
+                max-width: 1450px !important;
+            }
+        }
+    </style>
+@endpush
+
+
 @section('content')
 
     <section class="relative  content" data-property-id="{{ $property->id }}" x-data="scrollSpy()" x-init="init()">

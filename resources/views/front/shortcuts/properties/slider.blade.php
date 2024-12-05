@@ -1,3 +1,4 @@
+@if(isset($item->images) && is_array($item->images))
 @php
     $property_type = $property_type ?? 'property';
     $images = $item->images;
@@ -5,7 +6,7 @@
     $numberImages = count($images);
     $hasYouTube = !empty($youtube_video);
 @endphp
-
+@if($numberImages > 0)
 <div class="container-fluid">
     <div class="mt-4 md:flex">
         @if ($numberImages === 1)
@@ -18,16 +19,18 @@
                 </div>
             @endif
         @elseif ($numberImages === 2)
+     
             <div class="lg:w-1/2 md:w-1/2 p-1">
                 @include('front.shortcuts.properties.slider-image', ['property' => $item, 'image' => $images[0]])
             </div>
             <div class="lg:w-1/2 md:w-1/2 p-1">
+               
                 @if($hasYouTube)
                     <div class="flex flex-col">
-                        <div class="h-1/2">
+                        <div class="w-1/2">
                             @include('front.shortcuts.properties..slider-image', ['property' => $item, 'image' => $images[1]])
                         </div>
-                        <div class="h-1/2 mt-2">
+                        <div class="w-1/2 mt-2">
                             @include('front.shortcuts.properties..youtube-video', ['youtube_video' => $youtube_video])
                         </div>
                     </div>
@@ -87,3 +90,5 @@
         @endif
     </div>
 </div>
+@endif
+@endif

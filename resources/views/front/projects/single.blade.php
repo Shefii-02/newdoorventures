@@ -213,7 +213,7 @@
                                         <div class="w-full p-1 pb-5">
                                             <div class="border-theme rounded-xxl">
                                                 <div class="px-5 py-5">
-                                                    <h4 class="fs-4 font-bold me-2 text-theme">About {{ $project->name }}
+                                                    <h4 class="fs-5  font-bold me-2  ">About {{ $project->name }}
                                                     </h4>
                                                     <div class="md:flex">
                                                         <div class="px-3 col-lg-12 md:p-4">
@@ -234,7 +234,7 @@
                                             <div class="w-full p-1 mb-5">
                                                 <div class="border-theme rounded-xl">
                                                     <div class="px-5 py-5">
-                                                        <h4 class="fs-4 font-bold me-2 text-theme mb-3">Project Video</h4>
+                                                        <h4 class="fs-5  font-bold me-2  mb-3">Project Video</h4>
                                                         <iframe width="100%" height="315"
                                                             src="https://www.youtube.com/embed/{{ $project->youtube_video_url }}"
                                                             title="YouTube video player" frameborder="0"
@@ -255,10 +255,10 @@
                                         <div class="w-full p-1 ">
                                             <div class="border-theme rounded-xl">
                                                 <div class="px-5 py-5">
-                                                    <h4 class="fs-4 font-bold me-2 text-theme">Configuration</h4>
+                                                    <h4 class="fs-5  font-bold me-2 ">Configuration</h4>
                                                     <div class="table-responsive mt-4">
                                                         <table class="table table-bordered border-xl border-2">
-                                                            @foreach ($configrations as $listingConfig)
+                                                            @foreach ($configrations ?? [] as $listingConfig)
                                                                 @if ($option = $project->configration->where('name', $listingConfig->name)->first()->pivot)
                                                                     <tr class="border-bottom-none">
                                                                         <td class="text-gray-800 text-center p-3">
@@ -295,7 +295,7 @@
                                         <div class="w-full p-1 ">
                                             <div class="border-theme rounded-xl">
                                                 <div class="px-5 py-5">
-                                                    <h4 class="fs-4 font-bold me-2 text-theme">Price</h4>
+                                                    <h4 class="fs-5  font-bold me-2 ">Price</h4>
                                                     <div class="table-responsive mt-4">
                                                         <table class="table table-bordered border-4 border-2">
                                                             <thead class="bg-secondary text-white">
@@ -310,7 +310,7 @@
                                                                 </th>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach ($project->priceVariations as $variUnit)
+                                                                @foreach ($project->priceVariations ?? [] as $variUnit)
                                                                     <tr class="border-bottom-none">
                                                                         <td class="text-gray-800 text-center">
                                                                             <span
@@ -346,12 +346,12 @@
                                         <div class="w-full p-1 ">
                                             <div class="border-theme rounded-xl">
                                                 <div class="px-3 py-5">
-                                                    <h4 class="fs-5 text-theme font-bold me-2 mb-3">Ameneties </h4>
+                                                    <h4 class="fs-5  font-bold me-2 mb-3">Ameneties </h4>
                                                     <div class="px-3">
                                                         <div class="row align-items-center">
                                                             @foreach ($project->features ?? [] as $featureItem)
                                                                 <div class="col-lg-3 d-flex align-items-center">
-                                                                    <img class="rounded-xl w-6 w-1/2 h-6"
+                                                                    <img class="rounded-xl w-10 w-1/2 h-10"
                                                                         src="{{ $featureItem->image_url }}">
                                                                     <div class="p-3">
                                                                         <span
@@ -376,7 +376,7 @@
                                         <div class="w-full p-1 ">
                                             <div class="border-theme rounded-xl">
                                                 <div class="px-3 py-5">
-                                                    <h4 class="fs-5 text-theme font-bold me-2 mb-3">Master & Floor Plans
+                                                    <h4 class="fs-5  font-bold me-2 mb-3">Master & Floor Plans
                                                     </h4>
                                                     <div
                                                         data-slick='{
@@ -392,7 +392,7 @@
                                                 {"breakpoint": 480, "settings": {"slidesToShow": 1}}
                                             ]
                                         }'>
-                                                        @foreach ($project->master_plan_images as $master_image)
+                                                        @foreach ($project->master_plan_images ?? [] as $master_image)
                                                             @if ($master_image != null || $master_image != '')
                                                                 <div class="p-2" role="button">
                                                                     <img src="{{ asset('images/'.$master_image) }}"
@@ -414,7 +414,7 @@
                                         <div class="w-full p-1 ">
                                             <div class="border-theme rounded-xl">
                                                 <div class="px-5 py-5">
-                                                    <h4 class="fs-4 font-bold me-2 text-theme">Specifications</h4>
+                                                    <h4 class="fs-5  font-bold me-2 ">Specifications</h4>
                                                     <div class="table-responsive mt-4">
                                                         <table class="table table-bordered border-4 border-2">
                                                             @foreach ($project->specifications ?? [] as $spec)
@@ -494,7 +494,7 @@
                                         <div class="w-full p-1 ">
                                             <div class="border-theme rounded-xl">
                                                 <div class="px-3 py-5">
-                                                    <h4 class="fs-4 font-bold me-2">{{ __('Location') }}
+                                                    <h4 class="fs-5  font-bold me-2 ">{{ __('Location') }}
                                                     </h4>
                                                 </div>
                                                 <div class="box-map property-street-map-container">
@@ -618,7 +618,7 @@
                                         <div class="w-full p-1 ">
                                             <div class="border-theme rounded-xl">
                                                 <div class="mx-3 mt-10 mb-5">
-                                                    <h4 class="fs-4 font-bold me-2 text-theme  ">About the Builder -
+                                                    <h4 class="fs-5  font-bold me-2   ">About the Builder -
                                                         {{ $project->investor->name }}</h4>
                                                     <div class="">
                                                         <div class="px-3 col-lg-12 md:p-4">
@@ -629,25 +629,25 @@
                                                                 <div class="col-lg-3">
                                                                     <div
                                                                         class="card rounded-x text-center py-2 border-theme dark:bg-slate-900 rounded-lg shadow-lg">
-                                                                        <span class="fw-bold fs-5">Ongoing</span>
+                                                                        <span class="fw-bold text-sm  fs-5">Ongoing</span>
                                                                         <span
-                                                                            class="mt-1">{{ $project->investor->ongoing > 0 ? $project->investor->ongoing : 0 }}</span>
+                                                                            class="mt-1 fw-bold text-md">{{ $project->investor->ongoing > 0 ? $project->investor->ongoing : 0 }}</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-3">
                                                                     <div
                                                                         class="card rounded-x text-center py-2 border-theme dark:bg-slate-900 rounded-lg shadow-lg">
-                                                                        <span class="fw-bold fs-5">Completed</span>
+                                                                        <span class="fw-bold text-sm fs-5">Completed</span>
                                                                         <span
-                                                                            class="mt-1">{{ $project->investor->completed ? $project->investor->completed : 0 }}</span>
+                                                                            class="mt-1 fw-bold text-md">{{ $project->investor->completed ? $project->investor->completed : 0 }}</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-3">
                                                                     <div
                                                                         class="card rounded-x text-center py-2 border-theme dark:bg-slate-900 rounded-lg shadow-lg">
-                                                                        <span class="fw-bold fs-5">Total</span>
+                                                                        <span class="fw-bold text-sm  fs-5">Total</span>
                                                                         <span
-                                                                            class="mt-1">{{ (int) $project->investor->ongoing + (int) $project->investor->completed }}</span>
+                                                                            class="mt-1 fw-bold text-md">{{ (int) $project->investor->ongoing + (int) $project->investor->completed }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
