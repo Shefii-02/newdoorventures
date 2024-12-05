@@ -2,6 +2,8 @@
 
 
     <div data-slick='{
+        "autoplay": true,
+        "autoplaySpeed": 2000,
         "slidesToShow": 3,
         "slidesToScroll": 1,
         "arrows": true,
@@ -14,16 +16,16 @@
         ]
     }'>
         @foreach($projects as $project)
-            <div role="button" class="p-2 overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
+            <div role="button" class="p-3 overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
                 <div class="relative overflow-hidden">
                     <a href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}">
-                        <img src="{{ asset('images/'.$project->image) }}" alt="{{ $project->name }}" class="h-50 rounded-xl duration-500 ">
+                        <img src="{{ asset('images/'.$project->image) }}" alt="{{ $project->name }}" onerror="this.src='/themes/images/dummy-image.webp'" class="h-50 rounded-xl duration-500 ">
                     </a>
-                    <div class="absolute top-6 end-6">
+                    {{-- <div class="absolute top-6 end-6">
                         <button type="button" class="text-lg text-red-600 bg-white rounded-full shadow btn btn-icon dark:bg-slate-900 dark:shadow-gray-700 add-to-wishlist" aria-label="{{ __('Add to wishlist') }}" data-box-type="project" data-id="{{ $project->id }}">
                             <i class="mdi mdi-heart-outline"></i>
                         </button>
-                    </div>
+                    </div> --}}
                     @if($project->images && $imagesCount = count($project->images))
                         <div class="absolute top-6 start-6">
                             <div class="flex items-center justify-center p-2 py-1 text-sm text-white bg-gray-700 rounded-lg bg-opacity-30">
@@ -41,7 +43,7 @@
                         <p class="truncate text-slate-600 dark:text-slate-300">
                             <i class="mdi mdi-map-marker-outline"></i>
                             {{ $project->location}}{{-- $project->state->name --}}<br>
-                            <span class="ps-4">{{ $project->city }}.</span>
+                            <span class="mdi mdi-map-marker-multiple">{{ $project->city }}.</span>
                         </p>  
                     @endif
                     <div class="flex flex-wrap gap-3 items-center justify-between pt-2 ps-0 mb-0 list-none">

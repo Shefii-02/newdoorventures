@@ -21,7 +21,7 @@
     </div>
 
     <div>
-        @include('front.home.recent-viewed-properties', ['recent_properties' => $recent_viwed_properties, 'title' => '', 'content' => ''])
+        @include('front.home.featured-properties-rent', ['featured_properties_rent' => $featured_properties_rent, 'title' => '', 'content' => ''])
     </div>
 
     <div>
@@ -38,7 +38,7 @@
                     A great platform to buy, sell, and rent your properties without any agent or commissions.
                 </p>
                 <div class="mt-6">
-                    <a href="contact.html" class="text-white rounded-md bg-primary btn hover:bg-secondary">
+                    <a href="{{ url('contact') }}" class="text-white rounded-md bg-primary btn hover:bg-secondary">
                         <i class="align-middle mdi mdi-phone me-2"></i> Contact us
                     </a>
                 </div>

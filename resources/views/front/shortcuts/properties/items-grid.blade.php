@@ -9,17 +9,17 @@
     
                   @endphp
                     <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}">
-                        <img src="{{ asset('images/'.$property->image) }}"
+                        <img src="{{ asset('images/'.$property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'"
                             alt="{{ $property->name }}" class="transition-all duration-500 hover:scale-110 h-230">
                     </a>
-                    <div class="absolute top-6 end-6">
+                    {{-- <div class="absolute top-6 end-6">
                         <button type="button"
                             class="text-lg text-red-600 bg-white rounded-full shadow btn btn-icon dark:bg-slate-900 dark:shadow-gray-700 add-to-wishlist"
                             aria-label="{{ __('Add to wishlist') }}" data-box-type="property"
                             data-id="{{ $property->id }}">
                             <i class="mdi mdi-heart-outline"></i>
                         </button>
-                    </div>
+                    </div> --}}
                     @if ($property->images && ($imagesCount = count($property->images)))
                         <div class="absolute top-6 start-6">
                             <div

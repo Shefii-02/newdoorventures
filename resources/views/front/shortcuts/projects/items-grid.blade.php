@@ -4,7 +4,7 @@
             <div class="overflow-hidden duration-500 ease-in-out bg-white shadow project-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
                 <div class="relative overflow-hidden">
                     <a href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}">
-                        <img src="{{ asset('images/'.$project->image) }}" alt="{{ $project->name }}" class="transition-all duration-500 hover:scale-110 h-48">
+                        <img src="{{ asset('images/'.$project->image) }}" onerror="this.src='/themes/images/dummy-image.webp'" alt="{{ $project->name }}" class="transition-all duration-500 hover:scale-110 h-48">
                     </a>
                     <div class="absolute top-6 end-6">
                         <button type="button" class="text-lg text-red-600 bg-white rounded-full shadow btn btn-icon dark:bg-slate-900 dark:shadow-gray-700 add-to-wishlist" aria-label="{{ __('Add to wishlist') }}" data-box-type="project" data-id="{{ $project->id }}">

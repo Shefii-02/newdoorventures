@@ -10,16 +10,16 @@
                         <div class="row pt-5 align-items-top">
 
                             <div class="px-3 col-lg-2 mt-5 md:p-4 md:flex flex-column">
-                                <span class="fw-bold fs-2 text-theme">
+                                <span class="fw-bold fs-4 text-theme">
                                     {{ shorten_price($property->price) }}
                                 </span>
-                                <span class="mt-2 fs-5">{{ $property->square_text }}</span>
+                                <span class="mt-2 fs-6">{{ $property->square_text }}</span>
                             </div>
                             <div class="px-3 col-lg-9 md:p-4 md:flex flex-column">
                                 <div class="flex flex-column flex-column">
                                     <h4 class=" d-inline  font-bold me-2">{{ $property->name }}
                                         <span
-                                            class="fs-4 d-inline font-bold text-capitalize text-theme border-5 border-gray-300 border-end-0 border-top-0 border-bottom-0 ps-2">
+                                            class=" d-inline font-bold text-capitalize text-theme border-5 border-gray-300 border-end-0 border-top-0 border-bottom-0 ps-2">
                                             For {{ $property->type }}</span>
                                         <div class=" mt-2">
 
@@ -30,7 +30,7 @@
                                             @endif
                                             @if ($property->city)
                                                 <p
-                                                    class="d-inline fw-bolder me-2 text-base text-theme text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 ps-2">
+                                                    class="d-inline  me-2 text-base text-theme text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 ps-2">
                                                     {{ $property->city }}{{ $property->city ? ', ' : '' }}{{ $property->locality }}
                                                 </p>
                                             @endif
@@ -146,7 +146,7 @@
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <div class="flex flex-column">
-                                                        <h4 class="fw-bold">Closed parking</h4>
+                                                        <h4 class="fw-bold">Covered parking</h4>
                                                         <span>{{ $property->covered_parking }}</span>
                                                     </div>
                                                 </div>
@@ -164,7 +164,7 @@
                     </div>
                 </div>
             </div>
-            <div class="jump-header sticky top-34 z-1">
+            <div class="jump-header sticky top-34 z-999">
                 <ul class="flex-wrap justify-left inline-block w-full p-4  text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
                     x-data="{ isDragging: false, startX: 0, scrollLeft: 0 }"
                     x-on:mousedown="isDragging = true; startX = $event.pageX - $el.offsetLeft; scrollLeft = $el.scrollLeft;"
@@ -175,7 +175,7 @@
 
                     <li role="presentation" class="inline-block">
                         <button @click="scrollToSection('Overview')" :class="{ 'tab-active': activeTab === 'Overview' }"
-                            class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 tab-active"
+                            class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 tab-active"
                             id="overview-tab" data-tabs-target="#overview" type="button" role="tab"
                             aria-controls="overview" aria-selected="false">
                             Overview
@@ -185,7 +185,7 @@
                     <li role="presentation" class="inline-block">
                         <button @click="scrollToSection('MoreDetails')"
                             :class="{ 'tab-active': activeTab === 'MoreDetails' }"
-                            class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                            class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                             id="moredetails-tab" data-tabs-target="#moredetails" type="button" role="tab"
                             aria-controls="moredetails" aria-selected="true">
                             More Details
@@ -195,7 +195,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('AboutProject')"
                                 :class="{ 'tab-active': activeTab === 'AboutProject' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="aboutproject-tab" data-tabs-target="#aboutproject" type="button" role="tab"
                                 aria-controls="aboutproject" aria-selected="false">
                                 About Project
@@ -206,7 +206,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('FurnishingDetails')"
                                 :class="{ 'tab-active': activeTab === 'FurnishingDetails' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="FurnishingDetails-tab" data-tabs-target="#FurnishingDetails" type="button"
                                 role="tab" aria-controls="FurnishingDetails" aria-selected="false">
                                 Furnishing Details
@@ -218,7 +218,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Ameneties')"
                                 :class="{ 'tab-active': activeTab === 'Ameneties' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="Ameneties-tab" data-tabs-target="#Ameneties" type="button" role="tab"
                                 aria-controls="Ameneties" aria-selected="false">
                                 Ameneties
@@ -230,7 +230,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Landmarks')"
                                 :class="{ 'tab-active': activeTab === 'Landmarks' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="landmarks-tab" data-tabs-target="#landmarkssDetails" type="button" role="tab"
                                 aria-controls="landmarkssDetails" aria-selected="false">
                                 Landmarks
@@ -242,7 +242,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Location')"
                                 :class="{ 'tab-active': activeTab === 'location' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="location-tab" data-tabs-target="#locationDetails" type="button" role="tab"
                                 aria-controls="locationDetails" aria-selected="false">
                                 Location
@@ -256,7 +256,7 @@
                 <div class=" mt-4">
                     <div class="md:flex">
                         <div class=" lg:w-2/3 md:w-1/2 ">
-                            @if ($property->customFields->count())
+                           
                                 <div class="container-fluid mb-5" id="MoreDetails" class="section"
                                     :class="{ 'active': activeSection === 'MoreDetails' }">
                                     <div class="md:flex">
@@ -267,7 +267,7 @@
                                                     <div class="table-responsive mt-4">
                                                         <table class="table ">
 
-                                                            @foreach ($property->customFields as $customValue)
+                                                            @foreach ($property->customFields ?? [] as $customValue)
                                                                 <tr class="border-bottom-none">
                                                                     <td class="text-gray-800 w-1/2">
                                                                         {{ $customValue->name }}
@@ -277,6 +277,14 @@
                                                                     </th>
                                                                 </tr>
                                                             @endforeach
+                                                                <tr class="border-bottom-none">
+                                                                    <td class="text-gray-800 w-1/2">
+                                                                        {{ $property->construction_status == 'under-construction' ? 'Possession By:' : 'Age of construction' }} 
+                                                                    </td>
+                                                                    <th>
+                                                                        {{ $property->construction_status == 'under-construction' ?  $property->possession : $property->property_age . ' years' }}
+                                                                    </th>
+                                                                </tr>
 
                                                         </table>
                                                         <div class="px-3 mt-8">
@@ -293,7 +301,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                    
                             @if ($property->project_id && ($project = $property->project))
                                 <div class="container-fluid mb-5" id="AboutProject" class="section"
                                     :class="{ 'active': activeSection === 'AboutProject' }">
@@ -503,7 +511,7 @@
                                                         data-popup-id="#street-map-popup-template"
                                                         data-center="{{ json_encode([$property->latitude, $property->longitude]) }}"
                                                         {{-- ->label() --}}
-                                                        data-map-icon="{{ $property->type }}: {{ $property->price_html }}"
+                                                        data-map-icon="{{ $property->type }}: {{ shorten_price($property->price) }}"
                                                         style="height: 300px;">
                                                         <div class="hidden property-template-popup-map">
                                                             <table width="100%">
@@ -523,7 +531,7 @@
                                                                                     target="_blank">{!! $property->name !!}</a>
                                                                             </h5>
                                                                             <div class="text-info">
-                                                                                <strong>{{ $property->price_html }}</strong>
+                                                                                <strong>{{ shorten_price($property->price) }}</strong>
                                                                             </div>
                                                                             <div>
                                                                                 {{ $property->locality . ', ' . $property->sub_locality . ', ' . $property->city }}

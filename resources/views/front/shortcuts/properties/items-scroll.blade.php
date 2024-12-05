@@ -2,6 +2,8 @@
 
     <div
         data-slick='{
+        "autoplay": true,
+        "autoplaySpeed": 2000,
         "slidesToShow": 3,
         "slidesToScroll": 1,
         "arrows": true,
@@ -20,17 +22,17 @@
             <div role="button" class="p-2 overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
                 <div class="relative overflow-hidden">
                     <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}">
-                        <img src="{{ asset('images/'.$property->image) }}"
+                        <img src="{{ asset('images/'.$property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'"
                             alt="{{ $property->name }}" class="rounded-xl duration-500 h-50">
                     </a>
-                    <div class="absolute top-6 end-6">
+                    {{-- <div class="absolute top-6 end-6">
                         <button type="button"
                             class="text-lg text-red-600 bg-white rounded-full shadow btn btn-icon dark:bg-slate-900 dark:shadow-gray-700 add-to-wishlist"
                             aria-label="{{ __('Add to wishlist') }}" data-box-type="property"
                             data-id="{{ $property->id }}">
                             <i class="mdi mdi-heart-outline"></i>
                         </button>
-                    </div>
+                    </div> --}}
                     @if ($property->images && ($imagesCount = count($property->images)))
                         <div class="absolute top-6 start-6">
                             <div
@@ -48,7 +50,7 @@
                         <span class="flex items-center py-1 ps-6 pe-4 text-white">
                             {{ $property->category->name }}
                         </span>
-                        <span class="label-success status-label">{!! $property->status !!}</span>
+                        <span class="label-success status-label text-capitalize">{!! $property->type !!}</span>
                     </div>
                 </div>
 
@@ -63,7 +65,7 @@
 
                         <p class="truncate text-slate-600 dark:text-slate-300">
                             {{ $property->location}}{{-- $project->state->name --}}<br>
-                                <span class="ps-4">{{ $property->city }}.</span>
+                                <span class="mdi mdi-map-marker-multiple">{{ $property->city }}.</span>
                         </p>
 
                     </div>

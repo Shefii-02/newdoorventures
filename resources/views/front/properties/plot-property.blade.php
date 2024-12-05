@@ -369,7 +369,7 @@
                                                     <div class="property-street-map"
                                                         data-popup-id="#street-map-popup-template"
                                                         data-center="{{ json_encode([$property->latitude, $property->longitude]) }}"
-                                                        data-map-icon="{{ $property->type }}: {{ $property->price_html }}"
+                                                        data-map-icon="{{ $property->type }}: {{ shorten_price($property->price) }}"
                                                         style="height: 300px;">
                                                         <div class="hidden property-template-popup-map">
                                                             <table width="100%">
@@ -388,7 +388,7 @@
                                                                                     target="_blank">{!! $property->name !!}</a>
                                                                             </h5>
                                                                             <div class="text-info">
-                                                                                <strong>{{ $property->price_html }}</strong>
+                                                                                <strong>{{ shorten_price($property->price) }}</strong>
                                                                             </div>
                                                                             <div>{{ $property->city_name }}</div>
                                                                             <div class="ltr:flex">

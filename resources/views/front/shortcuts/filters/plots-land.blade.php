@@ -15,7 +15,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    {{-- <div class="col-lg-4">
                         <div class="form-check">
                             <input class="form-check-input" checked type="radio"
                                 value="commercial" name="purpose"
@@ -24,7 +24,7 @@
                             Commercial
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                
             </div>

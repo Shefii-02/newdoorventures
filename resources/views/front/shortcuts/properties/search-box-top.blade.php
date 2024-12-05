@@ -62,7 +62,7 @@
 
                     <!-- Purpose -->
                     <template x-if="showFilters.purpose">
-                        <div class="relative mb-2">
+                        <div class="relative mb-2 d-none">
                             <button type="button" @click="toggleDropdown('purpose')"
                                 class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
                                 Purpose<i
@@ -399,6 +399,7 @@
                         window.location.href = "{{ route('public.projects') }}";
                         return;
                     }
+                    document.body.scrollTop = 0, document.documentElement.scrollTop = 0
                     const params = new URLSearchParams(this.filters).toString();
                     var url = `{{ route('public.properties') }}?${params}`;
                     fetch(url, {
@@ -408,7 +409,7 @@
                         })
                         .then((response) => response.json())
                         .then((data) => {
-                            window.history.pushState({}, '', url);
+                            // window.history.pushState({}, '', url);
                             document.getElementById('items-list').innerHTML = data.html;
                         })
                         .catch((error) => console.error('Error:', error));

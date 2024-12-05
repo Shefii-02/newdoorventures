@@ -52,14 +52,14 @@
                                 :class="activeTab2 === 'budget_Project' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                         </span>
 
-                        <span role="button"
+                        {{-- <span role="button"
                             @click="activeTab2 = (activeTab2 === 'bedroom_Project' ? '' : 'bedroom_Project')"
                             :class="{ 'font-bold tab-active bg-theme-light': activeTab2 === 'bedroom_Project' }"
                             class="text-dark border rounded-3xl px-4 fs-6">
                             Bedroom
                             <i
                                 :class="activeTab2 === 'bedroom_Project' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                        </span>
+                        </span> --}}
 
                         <span role="button"
                             @click="activeTab2 = (activeTab2 === 'construction_Project' ? '' : 'construction_Project')"

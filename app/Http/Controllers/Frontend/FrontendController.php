@@ -20,18 +20,29 @@ class FrontendController extends Controller
 {
     public function index()
     {
-        $categories = Category::where('status', 'published')->get();
-        $featured_properties = Property::where('moderation_status', 'approved')->get();
-        $featured_project = Project::get();
-        $recent_viwed_properties = $this->recentlyViewedProperties();
-        $latest_blogs = Post::limit(4)->get();
+        $categories                 = Category::where('status', 'published')->get();
+        $featured_properties        = Property::where('moderation_status', 'approved')->where('type','sale')->get();
+        $featured_properties_rent   = Property::where('moderation_status', 'approved')->where('type','rent')->get();
 
-        return view('front.index', compact('categories', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
+        $featured_project           = Project::get();
+        $recent_viwed_properties    = $this->recentlyViewedProperties();
+        $latest_blogs               = Post::limit(4)->get();
+
+        return view('front.index', compact('categories','featured_properties_rent', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
     }
 
     public function properties(Request $request)
     {
         $query = Property::query();
+        if($request->filled('type') && $request->type == 'plot'){
+            $plot  = 'Plot and Land';
+            $query->whereHas('categories', function ($query) use ($plot) {
+                $query->where('name', $plot);
+            });
+        }
+        else if($request->filled('type')) {
+            $query->where('type',  $request->type);
+        }
 
         // Keyword search
         if ($request->filled('k')) {
@@ -70,7 +81,13 @@ class FrontendController extends Controller
 
         // Ownership filter
         if ($request->filled('ownership')) {
-            $query->whereIn('ownership', $request->ownership);
+            if(is_array($request->ownership)){
+                $ownership = $request->ownership;
+            }
+            else{
+                $ownership = explode(',', $request->ownership);
+            }
+            $query->whereIn('ownership', $ownership);
         }
 
         // Furnishing filter

@@ -43,7 +43,7 @@
                                     <input class="form-check-input" name="has_sell" type="checkbox" value="1"
                                         id="has_sell"
                                         {{ old('has_sell', isset($category) && $category->has_sell ? 'checked' : '') }}>
-                                    <span class="form-check-label">Available for Sell</span>
+                                    <span class="form-check-label">Available for Sale</span>
                                 </label>
                             </div>
 
