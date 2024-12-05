@@ -34,6 +34,12 @@
                             </div>
                         </div>
                     @endif
+                    <div class="absolute bottom-0 flex text-sm start-4 item-info-wrap">
+                        <span class="flex items-center py-1 ps-6 pe-4 text-white">
+                            {{ 'Project'}}
+                        </span>
+                        <span class="label-success status-label text-capitalize">{!! str_replace('_',' ',$project->construction_status) !!}</span>
+                    </div>
                 </div>
                 <div class="p-6">
                     <a href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}" class="text-lg font-medium uppercase duration-500 ease-in-out hover:text-primary">

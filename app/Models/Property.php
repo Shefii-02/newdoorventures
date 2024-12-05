@@ -245,10 +245,10 @@ class Property extends BaseModel
         );
     }
 
-    public function getTypeAttribute()
-{
-    return $this->attributes['type'] === 'sell' ? 'sale' : $this->attributes['type'];
-}
+    public function getTypeNameAttribute()
+    {
+        return $this->attributes['type'] === 'sell' ? 'sale' : $this->attributes['type'];
+    }
 
     
 
@@ -333,10 +333,10 @@ class Property extends BaseModel
         );
     }
 
-    public function reviews(): MorphMany
-    {
-        return $this->morphMany(Review::class, 'reviewable');
-    }
+    // public function reviews(): MorphMany
+    // {
+    //     return $this->morphMany(Review::class, 'reviewable');
+    // }
 
     // public function newEloquentBuilder($query): PropertyBuilder
     // {

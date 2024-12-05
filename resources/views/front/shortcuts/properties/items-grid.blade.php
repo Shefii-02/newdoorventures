@@ -33,7 +33,7 @@
                         <span class="flex items-center py-1 ps-6 pe-4 text-white">
                             {{ $property->category->name }}
                         </span>
-                        <span class="label-success status-label text-uppercase">{!! $property->type !!}</span>
+                        <span class="label-success status-label text-uppercase">{!! $property->type_name !!}</span>
                     </div>
                 </div>
 

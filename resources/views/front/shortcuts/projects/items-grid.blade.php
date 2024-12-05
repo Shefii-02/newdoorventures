@@ -6,11 +6,11 @@
                     <a href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}">
                         <img src="{{ asset('images/'.$project->image) }}" onerror="this.src='/themes/images/dummy-image.webp'" alt="{{ $project->name }}" class="transition-all duration-500 hover:scale-110 h-48">
                     </a>
-                    <div class="absolute top-6 end-6">
+                    {{-- <div class="absolute top-6 end-6">
                         <button type="button" class="text-lg text-red-600 bg-white rounded-full shadow btn btn-icon dark:bg-slate-900 dark:shadow-gray-700 add-to-wishlist" aria-label="{{ __('Add to wishlist') }}" data-box-type="project" data-id="{{ $project->id }}">
                             <i class="mdi mdi-heart-outline"></i>
                         </button>
-                    </div>
+                    </div> --}}
                     @if($project->images && $imagesCount = count($project->images))
                         <div class="absolute top-6 start-6">
                             <div class="flex items-center justify-center p-2 py-1 text-sm text-white bg-gray-700 rounded-lg bg-opacity-30">
@@ -19,6 +19,12 @@
                             </div>
                         </div>
                     @endif
+                    <div class="absolute bottom-0 flex text-sm start-4 item-info-wrap">
+                        <span class="flex items-center py-1 ps-6 pe-4 text-white">
+                            {{ 'Project'}}
+                        </span>
+                        <span class="label-success status-label text-uppercase">{!! str_replace('_',' ',$project->construction_status) !!}</span>
+                    </div>
                 </div>
                 <div class="p-6">
                     <a href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}" class="text-lg font-medium uppercase duration-500 ease-in-out hover:text-primary">

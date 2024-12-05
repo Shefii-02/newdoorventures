@@ -33,33 +33,33 @@ class FrontendController extends Controller
 
     public function properties(Request $request)
     {
-        $query = Property::query();
+        $query = Property::query()->where('moderation_status', 'approved');
         if($request->filled('type') && $request->type == 'plot'){
             $plot  = 'Plot and Land';
             $query->whereHas('categories', function ($query) use ($plot) {
                 $query->where('name', $plot);
             });
         }
-        else if($request->filled('type') && $request->type !== '') {
+        else if($request->filled('type') && $request->type != '' && $request->type != 'null') {
             $query->where('type',  $request->type);
         }
         else{
-
+      
         }
-
+   
         // Keyword search
-        if ($request->filled('k')) {
+        if ($request->filled('k') && $request->k != '' && $request->k != 'null') {
             $query->where('name', 'LIKE', '%' . $request->k . '%')
                 ->orWhere('content', 'LIKE', '%' . $request->k . '%');
         }
 
         // City filter
-        if ($request->filled('city') && $request->city !== '') {
+        if ($request->filled('city') && $request->city !== '' && $request->city != 'null') {
             $query->where('locality', $request->city);
         }
-
+      
         // Category filter
-        if ($request->filled('categories')) {
+        if ($request->filled('categories') && $request->categories !== '' && $request->categories != 'null') {
             if(is_array($request->categories)){
                 $categories = $request->categories;
             }
@@ -71,8 +71,9 @@ class FrontendController extends Controller
             });
         }
 
+       
         // Bedrooms filter
-        if ($request->filled('bedrooms')) {
+        if ($request->filled('bedrooms') && $request->bedrooms !== '' && $request->bedrooms != 'null') {
             if(is_array($request->bedrooms)){
                 $bedrooms = $request->bedrooms;
             }
@@ -83,7 +84,7 @@ class FrontendController extends Controller
         }
 
         // Ownership filter
-        if ($request->filled('ownership')) {
+        if ($request->filled('ownership') && $request->ownership !== '' && $request->ownership != 'null') {
             if(is_array($request->ownership)){
                 $ownership = $request->ownership;
             }
@@ -94,7 +95,7 @@ class FrontendController extends Controller
         }
 
         // Furnishing filter
-        if ($request->filled('furnishing')) {
+        if ($request->filled('furnishing') && $request->furnishing !== '' && $request->furnishing != 'null') {
             $query->whereIn('furnishing', $request->furnishing);
         }
 
@@ -106,6 +107,8 @@ class FrontendController extends Controller
             $query->whereBetween('price', [$request->min_price, $request->max_price]);
         }
 
+
+       
         // Other filters...
 
         $properties = $query->get();
@@ -114,6 +117,8 @@ class FrontendController extends Controller
             $html = view('front.shortcuts.properties.items', compact('properties'))->render();
             return response()->json(['html' => $html]);
         }
+
+  
 
         $builders = Investor::get();
         $cities = Property::groupBy('locality')->pluck('locality');
@@ -144,7 +149,6 @@ class FrontendController extends Controller
 
     public function propertyDetails($uid, $slug)
     {
-   
         $property = Property::where('slug', $slug)->where('unique_id', $uid)->first() ?? abort(404);
         $recent_properties = $this->recentlyViewedProperties();
         $rules = PgRules::get();
