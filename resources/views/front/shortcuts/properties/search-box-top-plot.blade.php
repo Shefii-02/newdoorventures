@@ -3,15 +3,15 @@
         <div class="row align-items-center">
             <!-- Property Type Dropdown -->
             <div class="col-lg-4 mb-4 px-1">
-                <div x-data="{ filters: { type: '{{ isset($type) ? $type : 'null' }}'},}">
+                <div x-data="{ filters: { type: '{{ isset($type) ? $type : 'null' }}' }, }">
                     <div class="flex items-center space-x-3">
                         <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
                             class="border-theme px-3 py-2 rounded-s-2xl">
                             <option value="null">Properties</option>
                             <option value="sell">Sale</option>
                             <option value="rent">Rent</option>
-                            <option selected value="pg">PG</option>
-                            <option value="plot">Plot</option>
+                            <option value="pg">PG</option>
+                            <option selected value="plot">Plot</option>
                             <option value="projects">Projects</option>
                         </select>
                         <input type="text" x-model="filters.k" @input="applyFilters()"
@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </div>
-
+           
             <!-- City Dropdown -->
             <div class="col-lg-2 mb-4 px-1">
                 <select x-model="filters.city" @change="applyFilters()"
@@ -103,7 +103,7 @@
                                         'min' => 0,
                                         'max' => 500000000,
                                         'step' => 500000,
-                                        'single_page' =>true,
+                                        'single_page' => true,
                                     ])
                                 </div>
                             </div>
@@ -274,7 +274,7 @@
                     ownership: [],
                     furnishing: [],
                     // builders: [],
-                    type: null,
+                    type: `{{ isset($type) ? $type : '' }}`,
                     purpose: []
                 },
                 cities: @json($cities),
@@ -297,7 +297,7 @@
                     // Populate the filters from the URL parameters
                     this.filters.k = urlParams.get('k') || '';
                     this.filters.city = urlParams.get('city') || 'null';
-                    this.filters.type = urlParams.get('type') || null;
+                    this.filters.type = `{{ isset($type) ? $type : '' }}`;
                     this.filters.purpose = this.getArrayFromUrlParam(urlParams, 'purpose');
                     this.filters.bedrooms = this.getArrayFromUrlParam(urlParams, 'bedrooms');
                     this.filters.ownership = this.getArrayFromUrlParam(urlParams, 'ownership');
@@ -331,7 +331,7 @@
                     // Check Categories
 
                     this.categories.forEach(category => {
-                     
+
                         if (this.filters.categories.includes(String(category.id))) {
                             this.$nextTick(() => {
                                 const categoryCheckbox = document.getElementById('category' + category.id);
@@ -396,24 +396,19 @@
                     if (this.filters.type == 'projects') {
                         window.location.href = "{{ route('public.projects') }}";
                         return;
-                    }
-                    else if(this.filters.type == 'sell') {
+                    } else if (this.filters.type == 'sell') {
                         window.location.href = "{{ route('public.properties.sale') }}";
                         return;
-                    }
-                    else if(this.filters.type == 'rent') {
+                    } else if (this.filters.type == 'rent') {
                         window.location.href = "{{ route('public.properties.rent') }}";
                         return;
-                    }
-                    else if(this.filters.type == 'pg') {
+                    } else if (this.filters.type == 'pg') {
                         window.location.href = "{{ route('public.properties.pg') }}";
                         return;
-                    }
-                    else if(this.filters.type == 'plot') {
+                    } else if (this.filters.type == 'plot') {
                         window.location.href = "{{ route('public.properties.plot') }}";
                         return;
-                    }
-                    else{
+                    } else {
                         // window.location.href = "{{ route('public.properties') }}";
                         return;
                     }

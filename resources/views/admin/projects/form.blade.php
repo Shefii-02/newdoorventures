@@ -10,13 +10,10 @@
                 </h3>
             </div>
             <div class="" x-data="formHandler()">
-
                 <div x-show="showToast" x-transition
                     :class="toastType === 'success' ? 'bg-success text-light' : 'bg-danger text-light'"
                     class="fixed top-5 right-5 text-white p-3 rounded shadow-lg transition z-99999">
-
                     <p x-html="toastMessage"></p>
-
                 </div>
                 <!-- Form -->
                 <form enctype="multipart/form-data" @submit.prevent="submitForm" id="proectForm"
@@ -242,9 +239,7 @@
                                                     </div>
                                                 </div>
 
-
                                                 <!-- Master Plan Images Section -->
-
                                                 <div class="px-3">
                                                     <div class="mb-5 border p-3">
                                                         <label
@@ -390,7 +385,6 @@
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Categories</label>
                                                     <ul class="list-unstyled  col-lg-12">
                                                         <div class="row">
-
                                                             @foreach ($categories as $category)
                                                                 <li class="col-lg-4">
                                                                     <label class="form-check">

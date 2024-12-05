@@ -32,30 +32,68 @@
                         }))
                     }
                 };
+                // var a, o = function(t, e, i) {
+                //         var n = new Date,
+                //             a = window.siteUrl;
+                //         a.includes(window.location.protocol) || (a = window.location.protocol + a);
+                //         var o = new URL(a);
+                //         n.setTime(n.getTime() + 24 * i * 60 * 60 * 1e3);
+                //         var s = "expires=" + n.toUTCString();
+                //         document.cookie = t + "=" + e + "; " + s + "; path=/; domain=" + o.hostname
+                //     },
+                //     s = function(t) {
+                //         for (var e = t + "=", i = document.cookie.split(";"), n = 0; n < i.length; n++) {
+                //             for (var a = i[n];
+                //                 " " === a.charAt(0);) a = a.substring(1);
+                //             if (0 === a.indexOf(e)) return a.substring(e.length, a.length)
+                //         }
+                //         return ""
+                //     },
+                //     r = function(t) {
+                //         var e = window.siteUrl;
+                //         e.includes(window.location.protocol) || (e = window.location.protocol + e);
+                //         var i = new URL(e);
+                //         document.cookie = t + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/; domain=" + i.hostname
+                //     };
                 var a, o = function(t, e, i) {
-                        var n = new Date,
-                            a = window.siteUrl;
-                        a.includes(window.location.protocol) || (a = window.location.protocol + a);
-                        var o = new URL(a);
-                        n.setTime(n.getTime() + 24 * i * 60 * 60 * 1e3);
-                        var s = "expires=" + n.toUTCString();
-                        document.cookie = t + "=" + e + "; " + s + "; path=/; domain=" + o.hostname
-                    },
-                    s = function(t) {
-                        for (var e = t + "=", i = document.cookie.split(";"), n = 0; n < i.length; n++) {
-                            for (var a = i[n];
-                                " " === a.charAt(0);) a = a.substring(1);
-                            if (0 === a.indexOf(e)) return a.substring(e.length, a.length)
-                        }
-                        return ""
-                    },
-                    r = function(t) {
-                        var e = window.siteUrl;
-                        e.includes(window.location.protocol) || (e = window.location.protocol + e);
-                        var i = new URL(e);
-                        document.cookie = t + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/; domain=" + i.hostname
-                    };
+                    var n = new Date,
+                        a = window.siteUrl || ""; // Provide a default value if siteUrl is undefined
+                    if (!a) {
+                        console.error("Error: window.siteUrl is not defined.");
+                        return;
+                    }
+                    if (!a.includes(window.location.protocol)) {
+                        a = window.location.protocol + a;
+                    }
+                    var o = new URL(a);
+                    n.setTime(n.getTime() + 24 * i * 60 * 60 * 1e3);
+                    var s = "expires=" + n.toUTCString();
+                    document.cookie = t + "=" + e + "; " + s + "; path=/; domain=" + o.hostname;
+                };
+                
+                var s = function(t) {
+                    for (var e = t + "=", i = document.cookie.split(";"), n = 0; n < i.length; n++) {
+                        for (var a = i[n];
+                            " " === a.charAt(0);) a = a.substring(1);
+                        if (0 === a.indexOf(e)) return a.substring(e.length, a.length);
+                    }
+                    return "";
+                };
+                
+                var r = function(t) {
+                    var e = window.siteUrl || ""; // Provide a default value if siteUrl is undefined
+                    if (!e) {
+                        console.error("Error: window.siteUrl is not defined.");
+                        return;
+                    }
+                    if (!e.includes(window.location.protocol)) {
+                        e = window.location.protocol + e;
+                    }
+                    var i = new URL(e);
+                    document.cookie = t + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/; domain=" + i.hostname;
+                };
 
+                
                 function l(t) {
                     return l = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(t) {
                         return typeof t

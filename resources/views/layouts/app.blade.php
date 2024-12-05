@@ -364,10 +364,12 @@
     <script src="{{ asset('themes/hously/plugins/easy_background.js') }}"></script>
 
     <script src="{{ asset('themes/hously/js/wishlist.js') }}"></script>
-    <script src="{{ asset('vendor/core/plugins/language/js/language-public.js?v=2.2.0') }}"></script>
-    <script src="{{ asset('vendor/core/plugins/cookie-consent/js/cookie-consent.js?v=1.0.1') }}"></script>
-    <script src="{{ asset('themes/hously/js/app2cb4.js?v=1.8.6') }}"></script>
-    <script src="{{ asset('themes/hously/js/script2cb4.js?v=1.8.6') }}"></script>
+
+
+    {{-- <script src="{{ asset('vendor/core/plugins/language/js/language-public.js?v=2.2.0') }}"></script> --}}
+    <script src="{{ asset('themes/hously/js/cookie-consent/js/cookie-consent.js') }}"></script>
+    <script src="{{ asset('themes/hously/js/app2cb4.js') }}"></script>
+    <script src="{{ asset('themes/hously/js/script2cb4.js') }}"></script>
 
     <script>
         $(document).ready(function() {
@@ -642,9 +644,45 @@
     @stack('footer')
     <script src="https://stage.newdoorventures.in/themes/hously/plugins/particles.js/particles.js"></script>
     <script>
-        $(window).on('load', function () {
+        $(window).on('load', function() {
             $(".loading-state").hide();
         });
+
+        try {
+            const switcher = document.getElementById('theme-mode')
+            switcher?.addEventListener('click', changeTheme)
+
+            const chk = document.getElementById('chk')
+
+            chk.addEventListener('change', changeTheme)
+
+            const defaultTheme = window.defaultThemeMode || 'system'
+
+            if (
+                getCookie('theme') === 'dark' ||
+                defaultTheme === 'dark' ||
+                (window.matchMedia('(prefers-color-scheme: dark)').matches && defaultTheme === 'system')
+            ) {
+                chk.checked = true
+                document.documentElement.classList.add('dark')
+            } else {
+                chk.checked = false
+                document.documentElement.classList.remove('dark')
+            }
+
+            function changeTheme(e) {
+                e.preventDefault()
+                const htmlTag = document.getElementsByTagName('html')[0]
+
+                if (htmlTag.className.includes('dark')) {
+                    setCookie('theme', 'light')
+                    htmlTag.className = 'light'
+                } else {
+                    setCookie('theme', 'dark')
+                    htmlTag.className = 'dark'
+                }
+            }
+        } catch (err) {}
     </script>
 </body>
 

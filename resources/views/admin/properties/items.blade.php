@@ -8,7 +8,6 @@
                 <span
                     class="fw-bold text-left text-dark-emphasis ">{{ Str::limit($property->name, '15', '...') }}</span>
             </a>
-
         </td>
         <th scope="row" class="px-2 py-1 text-center font-medium text-capitalize">
             <span class="text-sm">{{ $property->type }}<br>{{ $property->mode }}</span>

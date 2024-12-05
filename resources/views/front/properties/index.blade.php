@@ -41,7 +41,7 @@
                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm px-1.5 absolute top-2.5 end-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
                     <i class="text-xl mdi mdi-close"></i>
                 </button>
-                <div class="mt-8 mb-12 {{ $searchType === 'projects' ? 'project' : 'property' }}-search item-search">
+                {{-- <div class="mt-8 mb-12 {{ $searchType === 'projects' ? 'project' : 'property' }}-search item-search">
                     @include('front.shortcuts.properties.search-box-top', [
                         'id' => null,
                         'type' => request()->get('type') ?? $searchType,
@@ -50,23 +50,47 @@
                         'cities' => $cities,
                         'builders' => $builders,
                     ])
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
     <div class="p-2 bg-white  dark:border-gray-800 mb-0 dark:bg-slate-900 sticky top-0 z-999">
         <div class="container  ">
             <div class=" ">
-                @include('front.shortcuts.properties.search-box-top', [
-                    'id' => null,
-                    'type' => request()->get('type') ?? $searchType,
-                    'mode' => request()->get('m') ?? $searchType,
-                    'categories' => $categories,
-                    'cities' => $cities,
-                    'builders' => $builders,
-                    'min_price' => request()->get('min_price') ?? '',
-                    'max_price' => request()->get('max_price') ?? '',
-                ])
+                @if(isset($type) && $type == 'pg')
+                    @include('front.shortcuts.properties.search-box-top-pg', [
+                        'id' => null,
+                        'type' => request()->get('type') ??  isset($type) ? $type : '' ,
+                        'mode' => request()->get('m') ?? $searchType,
+                        'categories' => $categories,
+                        'cities' => $cities,
+                        'builders' => $builders,
+                        'min_price' => request()->get('min_price') ?? '',
+                        'max_price' => request()->get('max_price') ?? '',
+                    ])
+                @elseif(isset($type) && $type == 'plot')
+                    @include('front.shortcuts.properties.search-box-top', [
+                        'id' => null,
+                        'type' => request()->get('type') ?? isset($type) ? $type : '',
+                        'mode' => request()->get('m') ?? $searchType,
+                        'categories' => $categories,
+                        'cities' => $cities,
+                        'builders' => $builders,
+                        'min_price' => request()->get('min_price') ?? '',
+                        'max_price' => request()->get('max_price') ?? '',
+                    ])
+                @else
+                    @include('front.shortcuts.properties.search-box-top', [
+                        'id' => null,
+                        'type' => request()->get('type') ?? isset($type) ? $type : '',
+                        'mode' => request()->get('m') ?? $searchType,
+                        'categories' => $categories,
+                        'cities' => $cities,
+                        'builders' => $builders,
+                        'min_price' => request()->get('min_price') ?? '',
+                        'max_price' => request()->get('max_price') ?? '',
+                    ])
+                @endif
                
             </div>
         </div>

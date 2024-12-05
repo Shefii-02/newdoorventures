@@ -3,15 +3,15 @@
         <div class="row align-items-center">
             <!-- Property Type Dropdown -->
             <div class="col-lg-4 mb-4 px-1">
-                <div>
+                <div x-data="{ filters: { type: '{{ isset($type) ? $type : 'null' }}'},}">
                     <div class="flex items-center space-x-3">
                         <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
                             class="border-theme px-3 py-2 rounded-s-2xl">
-                            <option value="null" selected>Properties</option>
-                            <option value="sell">Sale</option>
-                            <option value="rent">Rent</option>
+                            <option value="null" >Properties</option>
+                            <option {{ isset($type) && $type == 'sell' ? 'selected' : '' }} value="sell">Sale</option>
+                            <option {{ isset($type) && $type == 'rent' ? 'selected' : '' }} value="rent">Rent</option>
                             <option value="pg">PG</option>
-                            <option value="plot">Plot</option>
+                            <option  value="plot">Plot</option>
                             <option value="projects">Projects</option>
                         </select>
                         <input type="text" x-model="filters.k" @input="applyFilters()"
@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </div>
-
+   
             <!-- City Dropdown -->
             <div class="col-lg-2 mb-4 px-1">
                 <select x-model="filters.city" @change="applyFilters()"
@@ -319,8 +319,6 @@
                     this.showFilters.bedrooms = ['sell', 'rent'].includes(type);
                     this.showFilters.occupancy = ['pg'].includes(type);
                     this.showFilters.availability = ['pg'].includes(type);
-
-
                 },
 
                 getArrayFromUrlParam(urlParams, param) {
@@ -333,7 +331,7 @@
                     // Check Categories
 
                     this.categories.forEach(category => {
-                        console.log(this.filters.categories, category.id)
+                     
                         if (this.filters.categories.includes(String(category.id))) {
                             this.$nextTick(() => {
                                 const categoryCheckbox = document.getElementById('category' + category.id);
@@ -397,6 +395,26 @@
                 applyFilters() {
                     if (this.filters.type == 'projects') {
                         window.location.href = "{{ route('public.projects') }}";
+                        return;
+                    }
+                    else if(this.filters.type == 'sell') {
+                        window.location.href = "{{ route('public.properties.sale') }}";
+                        return;
+                    }
+                    else if(this.filters.type == 'rent') {
+                        window.location.href = "{{ route('public.properties.rent') }}";
+                        return;
+                    }
+                    else if(this.filters.type == 'pg') {
+                        window.location.href = "{{ route('public.properties.pg') }}";
+                        return;
+                    }
+                    else if(this.filters.type == 'plot') {
+                        window.location.href = "{{ route('public.properties.plot') }}";
+                        return;
+                    }
+                    else{
+                        // window.location.href = "{{ route('public.properties') }}";
                         return;
                     }
                     document.body.scrollTop = 0, document.documentElement.scrollTop = 0
