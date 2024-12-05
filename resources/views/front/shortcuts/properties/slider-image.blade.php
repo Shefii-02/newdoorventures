@@ -17,11 +17,11 @@
             </div>
         @endif
         @if(isset($main) && $main == true)
-        <div class="absolute top-6 end-6">
+        {{-- <div class="absolute top-6 end-6">
             <button type="button" class="text-lg text-red-600 bg-white rounded-full shadow btn btn-icon dark:bg-slate-900 dark:shadow-gray-700 add-to-wishlist" aria-label="Add to wishlist" data-box-type="{{ $property_type }}" data-id="{{ $property->id }}" tabindex="0">
                 <i class="mdi mdi-heart-outline"></i>
             </button>
-        </div>
+        </div> --}}
         @endif
     </a>
 </div>

@@ -91,7 +91,7 @@
                                 @include('front.shortcuts.properties..slider-image', [
                                     'property' => $item,
                                     'image' => $image,
-                                    'mores' => count(array_slice($images, 3, 4)) - 2 ?? 0,
+                                    'mores' => $numberImages ?? 0,
                                 ])
                                 @php
                                 break;

@@ -459,7 +459,7 @@
                                                 <label for="name"
                                                     class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Name</label>
                                             </div>
-                                            <div class="relative z-0 w-full mb-3 group">
+                                            <div class="relative z-0 w-full mb-3 group d-none">
                                                 <input form="propertyFrom" name="unit_info" type="text"
                                                     autocomplete="off" id="unit-info"
                                                     value="{{ isset($property) && $property->unit_info ? $property->unit_info : '' }}"
@@ -1205,7 +1205,7 @@
                                             @endphp
 
 
-                                            <div id="MoreaboutDetails" class="HideUnwantedSectionsInPlot">
+                                            <div id="MoreaboutDetails" class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
                                                 <h5 class="mt-3 font-medium">More about Details</h5>
                                                 <div class="mt-3 card p-3">
                                                     <div x-data="{
@@ -1797,7 +1797,7 @@
 
                                     <li class="relative">
                                         <input form="propertyFrom" class="sr-only peer"
-                                            {{ $property->moderation_status == 'not_available' ? 'checked' : '' }}
+                                            {{ $property->status == 'not_available' ? 'checked' : '' }}
                                             type="radio" value="not_available" name="property_status"
                                             id="not_available">
                                         <label for="not_available"
@@ -1811,7 +1811,7 @@
                                         <li
                                             class="relative {{ $property->moderation_status == 'sold' || $property->moderation_status == 'pending' ? 'd-none' : '' }}">
                                             <input form="propertyFrom" class="sr-only peer" checked type="radio"
-                                                {{ $property->moderation_status == 'selling' ? 'checked' : '' }}
+                                                {{ $property->status == 'selling' ? 'checked' : '' }}
                                                 value="selling" name="property_status" id="selling">
                                             <label for="selling"
                                                 class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
@@ -1822,7 +1822,7 @@
                                         <li
                                             class="relative {{ $property->moderation_status == 'pending' ? 'd-none' : '' }}">
                                             <input form="propertyFrom" class="sr-only peer" type="radio"
-                                                {{ $property->moderation_status == 'sold' ? 'checked' : '' }}
+                                                {{ $property->status == 'sold' ? 'checked' : '' }}
                                                 value="sold" name="property_status" id="sold">
                                             <label for="sold"
                                                 class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
@@ -1833,17 +1833,18 @@
                                         <li
                                             class="relative {{ $property->moderation_status == 'rented' || $property->moderation_status == 'pending' ? 'd-none' : '' }}">
                                             <input form="propertyFrom" class="sr-only peer" type="radio"
-                                                {{ $property->moderation_status == 'renting' ? 'checked' : '' }}
+                                                {{ $property->status == 'renting' ? 'checked' : '' }}
                                                 value="renting" name="property_status" id="renting">
                                             <label for="renting"
                                                 class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
                                                 Renting
                                             </label>
                                         </li>
+
                                         <li
                                             class="relative {{ $property->moderation_status == 'pending' ? 'd-none' : '' }}">
                                             <input form="propertyFrom" class="sr-only peer" type="radio"
-                                                {{ $property->moderation_status == 'rented' ? 'checked' : '' }}
+                                                {{ $property->status == 'rented' ? 'checked' : '' }}
                                                 value="rented" name="property_status" id="rented">
                                             <label for="rented"
                                                 class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
