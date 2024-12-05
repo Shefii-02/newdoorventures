@@ -1,4 +1,4 @@
-<form action="{{ route('public.properties') }}"
+<form action="{{ route('public.properties.plot') }}"
     data-ajax-url="{{ route('searching-in-keywords') }}">
     <input type="hidden" name="type" value="{{ 'plot' }}">
     <div class="col-lg-12">

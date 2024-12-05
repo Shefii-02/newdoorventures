@@ -34,7 +34,8 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 9 4-4-4-4" />
                         </svg>
-                        <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Property Edit "{{ $property->name }}"</span>
+                        <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Property Edit
+                            "{{ $property->name }}"</span>
                     </div>
                 </li>
             </ol>
@@ -1196,20 +1197,21 @@
                                                         ];
                                                     })
                                                     ->toArray();
-                                                $customFieldJson = str_replace(
-                                                    '"',
-                                                    "'",
-                                                    json_encode($customFieldList ?? []),
-                                                );
-
+                                                // $customFieldJson = str_replace(
+                                                //     '"',
+                                                //     "'",
+                                                //     json_encode($customFieldList ?? []),
+                                                // );
+                                                // $customFieldJson = json_encode($customFieldList ?? []);
                                             @endphp
 
 
-                                            <div id="MoreaboutDetails" class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
+                                            <div id="MoreaboutDetails"
+                                                class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
                                                 <h5 class="mt-3 font-medium">More about Details</h5>
                                                 <div class="mt-3 card p-3">
                                                     <div x-data="{
-                                                        customFields: {{ $customFieldJson }},
+                                                        customFields: [],
                                                         addField() {
                                                             this.customFields.push({ selected: '', value: '' });
                                                         },
@@ -1221,6 +1223,51 @@
                                                             }
                                                         }
                                                     }">
+                                                        @foreach ($customFieldList as $keyCus => $customField)
+                                                            <div class="flex items-center gap-2 mb-3"
+                                                                id="100{{ $keyCus }}">
+                                                                <!-- Select Box -->
+                                                                <div class="w-1/2">
+                                                                    <select form="propertyFrom"
+                                                                        name="custom_fields[100{{ $keyCus }}][name]"
+                                                                        class="w-full p-2 border rounded-md">
+                                                                        <option value="">Select Option
+                                                                        </option>
+                                                                        @foreach ($customFields ?? [] as $option_item)
+                                                                            <option
+                                                                                {{ $customField['selected'] == $option_item->name ? 'selected' : '' }}
+                                                                                value="{{ $option_item->name }}">
+                                                                                {{ $option_item->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+
+                                                                <!-- Input Box -->
+                                                                <div class="w-1/2">
+                                                                    <input type="text" form="propertyFrom"
+                                                                        autocomplete="off"
+                                                                        value="{{ $customField['value'] }}"
+                                                                        name="custom_fields[100{{ $keyCus }}][value]"
+                                                                        class="w-full p-2 border rounded-md"
+                                                                        placeholder="Enter value">
+                                                                </div>
+
+                                                                <!-- Remove Button -->
+                                                                <div class="position-absolute right-2">
+                                                                    <button
+                                                                        @click="removeFieldParentDiv(100{{ $keyCus }})"
+                                                                        class="text-red-500 hover:text-red-700">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="20" height="20"
+                                                                            fill="currentColor" class="bi bi-x-circle"
+                                                                            viewBox="0 0 16 16">
+                                                                            <path
+                                                                                d="M11.742 4.742a1 1 0 1 0-1.414-1.414L8 6.586 5.672 4.258a1 1 0 1 0-1.414 1.414L6.586 8l-2.328 2.328a1 1 0 1 0 1.414 1.414L8 9.414l2.328 2.328a1 1 0 1 0 1.414-1.414L9.414 8l2.328-2.328z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
 
                                                         <!-- Dynamic Custom Fields -->
                                                         <template x-for="(field, index) in customFields"
@@ -1379,18 +1426,18 @@
                                                                 ];
                                                             })
                                                             ->toArray();
-                                                        $facilitiesJson = str_replace(
-                                                            '"',
-                                                            "'",
-                                                            json_encode($facilitiesList),
-                                                        );
+                                                        // $facilitiesJson = str_replace(
+                                                        //     '"',
+                                                        //     "'",
+                                                        //     json_encode($facilitiesList),
+                                                        // );
 
                                                     @endphp
 
 
                                                     <h5 class="mt-3 font-medium">Nearest Landmarks</h5>
                                                     <div class="mt-3 card p-3" x-data="{
-                                                        facilities: {{ $facilitiesJson }},
+                                                        facilities: [],
                                                         addFacility() {
                                                             this.facilities.push({ id: '', distance: '' });
                                                         },
@@ -1400,6 +1447,52 @@
                                                             }
                                                         }
                                                     }">
+                                                        @foreach ($facilitiesList as $keyFac => $exFacility)
+                                                            <div class="flex items-center space-x-4 mb-4"
+                                                                id="1000{{ $keyFac }}">
+                                                                <!-- Facility Select Box -->
+                                                                <div class="w-1/2">
+                                                                    <select form="propertyFrom"
+                                                                        name="facilities[100{{ $keyFac }}][id]"
+                                                                        class="w-full p-2 bg-gray-100 border border-gray-300 rounded-md">
+                                                                        <option value="">Select Landmark</option>
+                                                                        @foreach ($facilities ?? [] as $facility_item)
+                                                                            <option
+                                                                            {{ $exFacility['id'] == $facility_item->id ? 'selected' : '' }}
+                                                                             value="{{ $facility_item->id }}">
+                                                                                {{ $facility_item->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+
+                                                                <!-- Custom Facility Input Box -->
+                                                                <div class="w-1/2">
+                                                                    <input type="text"
+                                                                        name="facilities[100{{ $keyFac }}][distance]"
+                                                                        value="{{ $exFacility['distance'] }}"
+                                                                        autocomplete="off" form="propertyFrom"
+                                                                        class="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                                                                        placeholder="Enter custom facility distance">
+                                                                </div>
+
+                                                                <!-- Remove Icon Button -->
+                                                                <div class="position-absolute right-2">
+                                                                    <button
+                                                                        @click="removeFieldParentDiv(1000{{ $keyFac }})"
+                                                                        class="text-red-600 font-medium">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="16" height="16"
+                                                                            fill="currentColor" class="bi bi-x-circle"
+                                                                            viewBox="0 0 16 16">
+                                                                            <path
+                                                                                d="M11.742 4.742a1 1 0 1 0-1.414-1.414L8 6.586 5.672 4.258a1 1 0 1 0-1.414 1.414L6.586 8l-2.328 2.328a1 1 0 1 0 1.414 1.414L8 9.414l2.328 2.328a1 1 0 1 0 1.414-1.414L9.414 8l2.328-2.328z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+
+
                                                         <!-- Dynamic Facility List -->
                                                         <template x-for="(facility, index) in facilities"
                                                             :key="index">
@@ -1797,9 +1890,8 @@
 
                                     <li class="relative">
                                         <input form="propertyFrom" class="sr-only peer"
-                                            {{ $property->status == 'not_available' ? 'checked' : '' }}
-                                            type="radio" value="not_available" name="property_status"
-                                            id="not_available">
+                                            {{ $property->status == 'not_available' ? 'checked' : '' }} type="radio"
+                                            value="not_available" name="property_status" id="not_available">
                                         <label for="not_available"
                                             class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
                                             Not available
@@ -1811,8 +1903,8 @@
                                         <li
                                             class="relative {{ $property->moderation_status == 'sold' || $property->moderation_status == 'pending' ? 'd-none' : '' }}">
                                             <input form="propertyFrom" class="sr-only peer" checked type="radio"
-                                                {{ $property->status == 'selling' ? 'checked' : '' }}
-                                                value="selling" name="property_status" id="selling">
+                                                {{ $property->status == 'selling' ? 'checked' : '' }} value="selling"
+                                                name="property_status" id="selling">
                                             <label for="selling"
                                                 class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
                                                 Selling
@@ -1822,8 +1914,8 @@
                                         <li
                                             class="relative {{ $property->moderation_status == 'pending' ? 'd-none' : '' }}">
                                             <input form="propertyFrom" class="sr-only peer" type="radio"
-                                                {{ $property->status == 'sold' ? 'checked' : '' }}
-                                                value="sold" name="property_status" id="sold">
+                                                {{ $property->status == 'sold' ? 'checked' : '' }} value="sold"
+                                                name="property_status" id="sold">
                                             <label for="sold"
                                                 class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
                                                 Sold
@@ -1833,8 +1925,8 @@
                                         <li
                                             class="relative {{ $property->moderation_status == 'rented' || $property->moderation_status == 'pending' ? 'd-none' : '' }}">
                                             <input form="propertyFrom" class="sr-only peer" type="radio"
-                                                {{ $property->status == 'renting' ? 'checked' : '' }}
-                                                value="renting" name="property_status" id="renting">
+                                                {{ $property->status == 'renting' ? 'checked' : '' }} value="renting"
+                                                name="property_status" id="renting">
                                             <label for="renting"
                                                 class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
                                                 Renting
@@ -1844,8 +1936,8 @@
                                         <li
                                             class="relative {{ $property->moderation_status == 'pending' ? 'd-none' : '' }}">
                                             <input form="propertyFrom" class="sr-only peer" type="radio"
-                                                {{ $property->status == 'rented' ? 'checked' : '' }}
-                                                value="rented" name="property_status" id="rented">
+                                                {{ $property->status == 'rented' ? 'checked' : '' }} value="rented"
+                                                name="property_status" id="rented">
                                             <label for="rented"
                                                 class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
                                                 Rented
@@ -1897,6 +1989,16 @@
 
     @push('footer')
         <script>
+            function removeFieldParentDiv(id) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.remove();
+                } else {
+                    console.error(`Element with ID ${id} not found.`);
+                }
+            }
+
+
             function stepper() {
                 return {
                     currentStep: 0,

@@ -14,4 +14,20 @@ class FacilityDistance extends BaseModel
     protected $table = 're_facilities_distances';
     public $timestamps = false;
 
+
+    // public function setDistanceAttribute($value)
+    // {
+    //     $this->attributes['distance'] = addslashes($value);
+    // }
+
+
+    // public function getDistanceAttribute($value)
+    // {
+    //     return stripslashes($value);
+    // }
+
+
+
+    
+
 }

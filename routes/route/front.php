@@ -9,6 +9,11 @@ use App\Http\Controllers\Frontend\FrontendController;
 
 Route::get('/', [FrontendController::class, 'index'])->name('public.index');
 Route::get('properties', [FrontendController::class, 'properties'])->name('public.properties');
+Route::get('properties/sale', [FrontendController::class, 'PropertiesForSale'])->name('public.properties.sale');
+Route::get('properties/rent', [FrontendController::class, 'PropertiesForRent'])->name('public.properties.rent');
+Route::get('properties/plot', [FrontendController::class, 'PropertiesForPlot'])->name('public.properties.plot');
+Route::get('properties/pg', [FrontendController::class, 'PropertiesForPg'])->name('public.properties.pg');
+
 Route::get('projects', [FrontendController::class, 'projects'])->name('public.projects');
 Route::get('projects/{uid}/{slug}', [FrontendController::class, 'projectDetails'])->name('public.project_single');
 Route::get('properties/{uid}/{slug}', [FrontendController::class, 'propertyDetails'])->name('public.property_single');

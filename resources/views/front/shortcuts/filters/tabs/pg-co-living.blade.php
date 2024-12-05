@@ -1,4 +1,4 @@
-<form action="{{ route('public.properties') }}"
+<form action="{{ route('public.properties.pg') }}"
     data-ajax-url="{{ route('searching-in-keywords') }}">
     <input type="hidden" name="type" value="rent">
     <input type="hidden" name="m" value="{{ 'pg' }}">

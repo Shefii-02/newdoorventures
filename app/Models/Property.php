@@ -116,7 +116,6 @@ class Property extends BaseModel
     }
 
     
-    
 
     protected function image(): Attribute
     {

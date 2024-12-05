@@ -30,6 +30,18 @@ class CustomFieldValue extends BaseModel
         return $this->belongsTo(CustomField::class);
     }
 
+
+    public function setValueAttribute($value)
+    {
+        $this->attributes['value'] = addslashes($value);
+    }
+
+
+    public function getValueAttribute($value)
+    {
+        return stripslashes($value);
+    }
+
     public static function getCustomFieldValuesArray(BaseModel $object): array
     {
         $customFields = [];

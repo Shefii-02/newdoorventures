@@ -1,4 +1,4 @@
-<form action="{{ route('public.properties') }}" x-data="{openRent: false, activeTab2: ''}" data-ajax-url="{{ route('searching-in-keywords') }}">
+<form action="{{ route('public.properties.rent') }}" x-data="{openRent: false, activeTab2: ''}" data-ajax-url="{{ route('searching-in-keywords') }}">
     <input type="hidden" name="type" value="rent">
     <div class="col-lg-12">
         <div class="row align-items-center">

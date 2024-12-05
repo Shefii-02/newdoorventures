@@ -21,104 +21,42 @@ class FrontendController extends Controller
     public function index()
     {
         $categories                 = Category::where('status', 'published')->get();
-        $featured_properties        = Property::where('moderation_status', 'approved')->where('type','sell')->get();
-        $featured_properties_rent   = Property::where('moderation_status', 'approved')->where('type','rent')->get();
+        $featured_properties        = Property::where('moderation_status', 'approved')->where('type', 'sell')->get();
+        $featured_properties_rent   = Property::where('moderation_status', 'approved')->where('type', 'rent')->get();
 
         $featured_project           = Project::get();
         $recent_viwed_properties    = $this->recentlyViewedProperties();
         $latest_blogs               = Post::limit(4)->get();
 
-        return view('front.index', compact('categories','featured_properties_rent', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
+        return view('front.index', compact('categories', 'featured_properties_rent', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
     }
 
     public function properties(Request $request)
     {
         $query = Property::query()->where('moderation_status', 'approved');
-        if($request->filled('type') && $request->type == 'plot'){
+        if ($request->filled('type') && $request->type == 'plot') {
             $plot  = 'Plot and Land';
             $query->whereHas('categories', function ($query) use ($plot) {
                 $query->where('name', $plot);
             });
-        }
-        else if($request->filled('type') && $request->type != '' && $request->type != 'null') {
+        } else if ($request->filled('type') && $request->type != '' && $request->type != 'null') {
             $query->where('type',  $request->type);
-        }
-        else{
-      
-        }
-   
-        // Keyword search
-        if ($request->filled('k') && $request->k != '' && $request->k != 'null') {
-            $query->where('name', 'LIKE', '%' . $request->k . '%')
-                ->orWhere('content', 'LIKE', '%' . $request->k . '%');
+        } else {
+
         }
 
-        // City filter
-        if ($request->filled('city') && $request->city !== '' && $request->city != 'null') {
-            $query->where('locality', $request->city);
-        }
-      
-        // Category filter
-        if ($request->filled('categories') && $request->categories !== '' && $request->categories != 'null') {
-            if(is_array($request->categories)){
-                $categories = $request->categories;
-            }
-            else{
-                $categories = explode(',', $request->categories);
-            }
-            $query->whereHas('categories', function ($query) use ($categories) {
-                $query->whereIn('id', $categories);
-            });
-        }
+        $property_query = $this->ShortcutFilterProperties($query,$request);
 
-       
-        // Bedrooms filter
-        if ($request->filled('bedrooms') && $request->bedrooms !== '' && $request->bedrooms != 'null') {
-            if(is_array($request->bedrooms)){
-                $bedrooms = $request->bedrooms;
-            }
-            else{
-                $bedrooms = explode(',', $request->bedrooms);
-            }
-            $query->whereIn('number_bedroom', $bedrooms);
-        }
-
-        // Ownership filter
-        if ($request->filled('ownership') && $request->ownership !== '' && $request->ownership != 'null') {
-            if(is_array($request->ownership)){
-                $ownership = $request->ownership;
-            }
-            else{
-                $ownership = explode(',', $request->ownership);
-            }
-            $query->whereIn('ownership', $ownership);
-        }
-
-        // Furnishing filter
-        if ($request->filled('furnishing') && $request->furnishing !== '' && $request->furnishing != 'null') {
-            $query->whereIn('furnishing', $request->furnishing);
-        }
-
-        // Budget filter
-        if (
-            $request->filled('min_price') && $request->filled('max_price') &&
-            is_numeric($request->min_price) && is_numeric($request->max_price)
-        ) {
-            $query->whereBetween('price', [$request->min_price, $request->max_price]);
-        }
-
-
-       
         // Other filters...
 
-        $properties = $query->get();
+        $properties = $property_query->get();
 
         if ($request->ajax()) {
             $html = view('front.shortcuts.properties.items', compact('properties'))->render();
             return response()->json(['html' => $html]);
         }
 
-  
+
 
         $builders = Investor::get();
         $cities = Property::groupBy('locality')->pluck('locality');
@@ -126,6 +64,51 @@ class FrontendController extends Controller
 
         return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders'));
     }
+
+
+
+
+    public function PropertiesForSale(Request $request) {
+        $query = Property::query()->where('type','sell')->where('moderation_status', 'approved');
+        $property_query = $this->ShortcutFilterProperties($query,$request);
+        $builders = Investor::get();
+        $cities = Property::groupBy('locality')->pluck('locality');
+        $categories = Category::where('status', 'published')->get();
+        $type = 'sell';
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders'.'type'));
+    }
+    public function PropertiesForRent(Request $request) {
+        $query = Property::query()->where('type','rent')->where('moderation_status', 'approved');
+        $property_query = $this->ShortcutFilterProperties($query,$request);
+        $builders = Investor::get();
+        $cities = Property::groupBy('locality')->pluck('locality');
+        $categories = Category::where('status', 'published')->get();
+        $type = 'rent';
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders'.'type'));
+    }
+    public function PropertiesForPlot(Request $request) {
+        $query = Property::query()->where('moderation_status', 'approved');
+        $property_query = $this->ShortcutFilterProperties($query,$request);
+        $builders = Investor::get();
+        $cities = Property::groupBy('locality')->pluck('locality');
+        $categories = Category::where('status', 'published')->get();
+        $type = 'plot';
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders'.'type'));
+    }
+    public function PropertiesForPg(Request $request) {
+        $query = Property::query()->where('type','sell')->where('moderation_status', 'approved');
+        $property_query = $this->ShortcutFilterProperties($query,$request);
+        $builders = Investor::get();
+        $cities = Property::groupBy('locality')->pluck('locality');
+        $categories = Category::where('status', 'published')->get();
+        $type = 'sell';
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders'.'type'));
+    }
+
+
+
+
+
 
     public function projects(Request $request)
     {
@@ -231,7 +214,7 @@ class FrontendController extends Controller
 
     public function searchProperties(Request $request)
     {
-    
+
         // // Keyword-based Search
         if ($request->filled('k') && $request->k != '') {
             $query = Property::query();
@@ -303,7 +286,7 @@ class FrontendController extends Controller
         // // Keyword-based Search
         if ($request->filled('k') && $request->k != '') {
             $query = Project::query();
-           
+
             // // Handle 'type' filters
             // if ($request->filled('type')) {
             //     $type = $request->type;
@@ -339,5 +322,67 @@ class FrontendController extends Controller
         }
 
         return collect();
+    }
+
+    function ShortcutFilterProperties($query,$request)
+    {
+        // Keyword search
+        if ($request->filled('k') && $request->k != '' && $request->k != 'null') {
+            $query->where('name', 'LIKE', '%' . $request->k . '%')
+                ->orWhere('content', 'LIKE', '%' . $request->k . '%');
+        }
+
+        // City filter
+        if ($request->filled('city') && $request->city !== '' && $request->city != 'null') {
+            $query->where('locality', $request->city);
+        }
+
+        // Category filter
+        if ($request->filled('categories') && $request->categories !== '' && $request->categories != 'null') {
+            if (is_array($request->categories)) {
+                $categories = $request->categories;
+            } else {
+                $categories = explode(',', $request->categories);
+            }
+            $query->whereHas('categories', function ($query) use ($categories) {
+                $query->whereIn('id', $categories);
+            });
+        }
+
+
+        // Bedrooms filter
+        if ($request->filled('bedrooms') && $request->bedrooms !== '' && $request->bedrooms != 'null') {
+            if (is_array($request->bedrooms)) {
+                $bedrooms = $request->bedrooms;
+            } else {
+                $bedrooms = explode(',', $request->bedrooms);
+            }
+            $query->whereIn('number_bedroom', $bedrooms);
+        }
+
+        // Ownership filter
+        if ($request->filled('ownership') && $request->ownership !== '' && $request->ownership != 'null') {
+            if (is_array($request->ownership)) {
+                $ownership = $request->ownership;
+            } else {
+                $ownership = explode(',', $request->ownership);
+            }
+            $query->whereIn('ownership', $ownership);
+        }
+
+        // Furnishing filter
+        if ($request->filled('furnishing') && $request->furnishing !== '' && $request->furnishing != 'null') {
+            $query->whereIn('furnishing', $request->furnishing);
+        }
+
+        // Budget filter
+        if (
+            $request->filled('min_price') && $request->filled('max_price') &&
+            is_numeric($request->min_price) && is_numeric($request->max_price)
+        ) {
+            $query->whereBetween('price', [$request->min_price, $request->max_price]);
+        }
+
+        return $query;
     }
 }

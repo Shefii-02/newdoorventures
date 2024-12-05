@@ -1,4 +1,4 @@
-<form action="{{ route('public.properties') }}" class="property" data-ajax-url="{{ route('searching-in-keywords') }}">
+<form action="{{ route('public.properties.sale') }}" class="property" data-ajax-url="{{ route('searching-in-keywords') }}">
     <input type="hidden" name="type" value="{{ 'sale' }}">
     <div class="col-lg-12">
         <div class="row align-items-center">
