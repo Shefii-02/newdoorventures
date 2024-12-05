@@ -4,6 +4,17 @@
     $project = $property->project->first();
 @endphp
 
+@push('header')
+    <style>
+        @media (min-width: 1280px) {
+            .container {
+                max-width: 1450px !important;
+            }
+        }
+    </style>
+@endpush
+
+
 @section('content')
 
     <section class="relative  mt-28 content" >
