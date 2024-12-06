@@ -83,8 +83,8 @@
                                                     </div>
 
                                                     <div class="px-3 mt-3">
-                                                        <a href="#"  data-id="{{ $property->id }}" data-type="property" 
-                                                            class="open-enquiry-modal text-theme btn btn-sm bg-trasparent border-theme">
+                                                        <a href=""  data-bs-toggle="modal" data-bs-target="#BookingModal"
+                                                            class=" text-theme btn btn-sm bg-trasparent border-theme">
                                                             <i class="mdi mdi-download me-2"></i>
                                                             {{ __('Download Brochure') }}
                                                         </a>
@@ -209,8 +209,8 @@
                                                             {!! $property->content !!}
                                                         </span>
                                                     </div>
-                                                    <a href="#"  data-id="{{ $property->id }}" data-type="property" 
-                                                        class="open-enquiry-modal text-white btn bg-primary mt-10">{{ __('Get Phone Number') }}</a>
+                                                    <a href="#"  data-bs-toggle="modal" data-bs-target="#BookingModal"
+                                                        class=" text-white btn bg-primary mt-10">{{ __('Get Phone Number') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -428,7 +428,7 @@
                                     ])
                                 </div>
                                 <div class="mt-4">
-                                    <a href="#" data-id="{{ $property->id }}" data-type="property"  class="w-full py-4 text-white btn bg-primary fs-5 open-enquiry-modal"><i
+                                    <a href="" data-bs-toggle="modal" data-bs-target="#BookingModal"  class="w-full py-4 text-white btn bg-primary fs-5"><i
                                             class="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
                                 </div>
 
