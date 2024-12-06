@@ -1,10 +1,10 @@
 @if ($properties->isNotEmpty())
     <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
-
         @foreach ($properties as $property)
             @if ($property->type == 'pg')
                 @include('front.shortcuts.properties.item-pg', compact('property'))
-            @elseif($property->category->name == 'plot and land')
+            @elseif($property->category->name == 'Plot and Land')
+   
                 @include('front.shortcuts.properties.item-plot', compact('property'))
             @elseif($property->type == 'rent')
                 @include('front.shortcuts.properties.item-rent', compact('property'))
