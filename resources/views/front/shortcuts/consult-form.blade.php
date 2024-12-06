@@ -1,26 +1,26 @@
 <form class="generic-form" id="contact-form" method="post" action="{{ route('public.send.consult') }}">
     @csrf
     <input type="hidden" value="{{ $type }}" name="type" id="type">
-    <input type="hidden" value="{{ $data->id }}" name="data_id" id="data_id">
+    <input type="hidden" value="{{ $property->id }}" name="data_id" id="data_id">
     <div class="p-6 space-y-3">
         <h3 class="bg-light bg-succs border-1 font-bold mb-4 mx-5 p-2 rounded text-center text-dark text-sm">{{ __('CALL: 9686607663') }}</h3>
         <div>
-            <input name="name" type="text" class="bg-white form-input dark:bg-slate-700"
+            <input name="name" type="text" class=" text-black bg-white form-input dark:bg-slate-700"
                 placeholder="{{ __('Name') }}">
         </div>
   
             <div>
-                <input name="phone" type="text" class="bg-white form-input dark:bg-slate-700"
+                <input name="phone" maxlength="10" type="text" class="bg-white text-black  form-input dark:bg-slate-700"
                     placeholder="{{ __('Phone') }} required">
             </div>
       
             <div>
-                <input name="email" type="email" class="bg-white form-input dark:bg-slate-700"
+                <input name="email" type="email" class="bg-white text-black  form-input dark:bg-slate-700"
                     placeholder="{{ __('Email') }}">
             </div>
        
         <div>
-            <input type="text" readonly class="text-gray-400 form-input d-none" disabled value="{{ $data->name }}">
+            <input type="text" readonly class="text-gray-400 text-black  form-input d-none" disabled value="{{ $data->name }}">
         </div>
         <div>
             <span>Are you Agent</span>

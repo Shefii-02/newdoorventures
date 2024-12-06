@@ -226,7 +226,7 @@ class FrontendController extends Controller
 
     public function page($slug)
     {
-        $page_id = Slug::where('key', $slug)->pluck('reference_id')->firstOrFail();
+        $page_id = Slug::where('key', $slug)->pluck('reference_id')->first() ?? abort(404);
         $page = Page::findOrFail($page_id);
 
         return view('front.page', compact('page'));
