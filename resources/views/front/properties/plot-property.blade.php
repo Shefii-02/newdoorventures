@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-    $project = $property->project->first();
+    // $project = $property->project->first();
 @endphp
 
 @push('header')
@@ -42,16 +42,16 @@
                                                             @endif
                                                         </span>
                                                         <span class="mt-2 fs-6">Developed by
-                                                            {{ $project->investor->name }}</span>
+                                                            {{ $property->project->investor->name }}</span>
                                                     </div>
                                                     <div class="px-3 col-lg-12 md:flex flex-column">
                                                         <div class="flex flex-column flex-column">
 
                                                             <div class=" mt-2">
-                                                                @if ($project)
+                                                                @if ($property->project)
                                                                     <p
                                                                         class="d-inline fw-bolder me-2  text-base text-theme">
-                                                                        {{ $project->name }}
+                                                                        {{ $property->project->name }}
                                                                     </p>
                                                                 @endif
 
