@@ -178,7 +178,7 @@
                 </div>
             </div>
             <div class="jump-header sticky top-34 z-999">
-                <ul class="flex-wrap justify-left inline-block w-full p-4  text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
+                <ul style="border-bottom-width:3px !important" class="flex-wrap justify-left inline-block w-full p-4  text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
                     x-data="{ isDragging: false, startX: 0, scrollLeft: 0 }"
                     x-on:mousedown="isDragging = true; startX = $event.pageX - $el.offsetLeft; scrollLeft = $el.scrollLeft;"
                     x-on:mousemove="if (isDragging) { $el.scrollLeft = scrollLeft - ($event.pageX - startX); }"
@@ -188,7 +188,7 @@
 
                     <li role="presentation" class="inline-block">
                         <button @click="scrollToSection('Overview')" :class="{ 'tab-active': activeTab === 'Overview' }"
-                            class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 tab-active"
+                            class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 tab-active"
                             id="overview-tab" data-tabs-target="#overview" type="button" role="tab"
                             aria-controls="overview" aria-selected="false">
                             Overview
@@ -198,7 +198,7 @@
                     <li role="presentation" class="inline-block">
                         <button @click="scrollToSection('MoreDetails')"
                             :class="{ 'tab-active': activeTab === 'MoreDetails' }"
-                            class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                            class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                             id="moredetails-tab" data-tabs-target="#moredetails" type="button" role="tab"
                             aria-controls="moredetails" aria-selected="true">
                             More Details
@@ -208,7 +208,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('AboutProject')"
                                 :class="{ 'tab-active': activeTab === 'AboutProject' }"
-                                class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="aboutproject-tab" data-tabs-target="#aboutproject" type="button" role="tab"
                                 aria-controls="aboutproject" aria-selected="false">
                                 About Project
@@ -219,7 +219,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('FurnishingDetails')"
                                 :class="{ 'tab-active': activeTab === 'FurnishingDetails' }"
-                                class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="FurnishingDetails-tab" data-tabs-target="#FurnishingDetails" type="button"
                                 role="tab" aria-controls="FurnishingDetails" aria-selected="false">
                                 Furnishing Details
@@ -231,7 +231,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Ameneties')"
                                 :class="{ 'tab-active': activeTab === 'Ameneties' }"
-                                class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="Ameneties-tab" data-tabs-target="#Ameneties" type="button" role="tab"
                                 aria-controls="Ameneties" aria-selected="false">
                                 Ameneties
@@ -243,7 +243,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Landmarks')"
                                 :class="{ 'tab-active': activeTab === 'Landmarks' }"
-                                class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="landmarks-tab" data-tabs-target="#landmarkssDetails" type="button" role="tab"
                                 aria-controls="landmarkssDetails" aria-selected="false">
                                 Landmarks
@@ -255,7 +255,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Location')"
                                 :class="{ 'tab-active': activeTab === 'location' }"
-                                class="w-full px-3 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="location-tab" data-tabs-target="#locationDetails" type="button" role="tab"
                                 aria-controls="locationDetails" aria-selected="false">
                                 Location

@@ -300,7 +300,7 @@
                         </div>
                     </div>
                     <div class="jump-header sticky top-0 z-1">
-                        <ul class="flex-wrap justify-left inline-block w-full p-4 text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
+                        <ul style="border-bottom-width:3px !important" class="flex-wrap justify-left inline-block w-full p-4 text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
                             x-data="{ isDragging: false, startX: 0, scrollLeft: 0 }"
                             x-on:mousedown="isDragging = true; startX = $event.pageX - $el.offsetLeft; scrollLeft = $el.scrollLeft;"
                             x-on:mousemove="if (isDragging) { $el.scrollLeft = scrollLeft - ($event.pageX - startX); }"
@@ -311,7 +311,7 @@
                             <li role="presentation" class="inline-block">
                                 <button @click="scrollToSection('Overview')"
                                     :class="{ 'tab-active': activeTab === 'Overview' }"
-                                    class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 tab-active"
+                                    class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 tab-active"
                                     id="overview-tab" data-tabs-target="#overview" type="button" role="tab"
                                     aria-controls="overview" aria-selected="false">
                                     Property Details
@@ -321,7 +321,7 @@
                                 <li role="presentation" class="inline-block">
                                     <button @click="scrollToSection('Ameneties')"
                                         :class="{ 'tab-active': activeTab === 'Ameneties' }"
-                                        class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                        class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                         id="Ameneties-tab" data-tabs-target="#Ameneties" type="button" role="tab"
                                         aria-controls="Ameneties" aria-selected="false">
                                         Common Amenities
@@ -332,7 +332,7 @@
                                 <li role="presentation" class="inline-block">
                                     <button @click="scrollToSection('FurnishingDetails')"
                                         :class="{ 'tab-active': activeTab === 'FurnishingDetails' }"
-                                        class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                        class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                         id="FurnishingDetails-tab" data-tabs-target="#FurnishingDetails" type="button"
                                         role="tab" aria-controls="FurnishingDetails" aria-selected="false">
                                         Food and Kitchen
@@ -344,7 +344,7 @@
                                 <li role="presentation" class="inline-block">
                                     <button @click="scrollToSection('Rules')"
                                         :class="{ 'tab-active': activeTab === 'Rules' }"
-                                        class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                        class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                         id="rules-tab" data-tabs-target="#Rules" type="button" role="tab"
                                         aria-controls="rules" aria-selected="true">
                                         Rules
@@ -356,7 +356,7 @@
                                 <li role="presentation" class="inline-block">
                                     <button @click="scrollToSection('Location')"
                                         :class="{ 'tab-active': activeTab === 'Location' }"
-                                        class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                        class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                         id="location-tab" data-tabs-target="#location" type="button" role="tab"
                                         aria-controls="location" aria-selected="true">
                                         Location Map
@@ -368,7 +368,7 @@
                                 <li role="presentation" class="inline-block">
                                     <button @click="scrollToSection('Similar')"
                                         :class="{ 'tab-active': activeTab === 'Similar' }"
-                                        class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                        class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                         id="similar-tab" data-tabs-target="#similar" type="button" role="tab"
                                         aria-controls="similar" aria-selected="true">
                                         Similar
