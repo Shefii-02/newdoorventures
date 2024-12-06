@@ -932,7 +932,7 @@
                         complete: function() {
                             "undefined" != typeof refreshRecaptcha && refreshRecaptcha(), a.removeClass("button-loading")
                         }
-                    })
+                    }) 
                 })), $(document).on("click", ".generic-form button[type=submit]", (function(e) {
                     var a = this;
                     e.preventDefault(), e.stopPropagation(), $(this).prop("disabled", !0).addClass("button-loading"), $.ajax({
