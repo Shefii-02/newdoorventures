@@ -179,6 +179,11 @@
                 transform: rotate(360deg);
             }
         }
+
+         
+        a.mt-5.text-white.rounded-md.bg-primary.btn-sm.btn.hover\:bg-secondary.open-enquiry-modal,a.text-white.btn.bg-primary.open-enquiry-modal,a.open-enquiry-modal.text-white.btn.bg-primary.mt-10,a.w-full.py-4.text-white.btn.bg-primary.fs-5.open-enquiry-modal{
+            overflow: hidden;
+        }
     </style>
 </head>
 
