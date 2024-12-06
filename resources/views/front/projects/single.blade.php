@@ -104,7 +104,7 @@
             </div>
 
             <div class="jump-header sticky top-0 z-999">
-                <ul class="flex-wrap justify-left inline-block w-full p-4 py-10 text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
+                <ul style="border-bottom-width:3px !important" class="flex-wrap justify-left inline-block w-full p-4 py-10 text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
                     x-data="{ isDragging: false, startX: 0, scrollLeft: 0 }"
                     x-on:mousedown="isDragging = true; startX = $event.pageX - $el.offsetLeft; scrollLeft = $el.scrollLeft;"
                     x-on:mousemove="if (isDragging) { $el.scrollLeft = scrollLeft - ($event.pageX - startX); }"
@@ -114,7 +114,7 @@
                     @if ($project->content)
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('About')" :class="{ 'tab-active': activeTab === 'About' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 tab-active"
+                                class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 tab-active"
                                 id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about"
                                 aria-selected="false">
                                 About
@@ -125,7 +125,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Configuration')"
                                 :class="{ 'tab-active': activeTab === 'Configuration' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="configuration-tab" data-tabs-target="#configuration" type="button" role="tab"
                                 aria-controls="configuration" aria-selected="true">
                                 Configuration
@@ -135,7 +135,7 @@
                     @if ($project->priceVariations->count())
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Price')" :class="{ 'tab-active': activeTab === 'Price' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="price-tab" data-tabs-target="#price" type="button" role="tab" aria-controls="price"
                                 aria-selected="false">
                                 Price
@@ -146,7 +146,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Ameneties')"
                                 :class="{ 'tab-active': activeTab === 'Ameneties' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="ameneties-tab" data-tabs-target="#amenetiesDetails" type="button" role="tab"
                                 aria-controls="amenetiesDetails" aria-selected="false">
                                 Ameneties
@@ -157,7 +157,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Master_Floor_Plans')"
                                 :class="{ 'tab-active': activeTab === 'Master_Floor_Plans' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="master_floor_plans" data-tabs-target="#master_floor_plans" type="button"
                                 role="tab" aria-controls="Master_Floor_Plans" aria-selected="false">
                                 Master & Floor Plans
@@ -168,7 +168,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Specifications')"
                                 :class="{ 'tab-active': activeTab === 'Specifications' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="specifications-tab" data-tabs-target="#specificationsDetails" type="button"
                                 role="tab" aria-controls="specificationsDetails" aria-selected="false">
                                 Specifications
@@ -179,7 +179,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Location')"
                                 :class="{ 'tab-active': activeTab === 'location' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="location-tab" data-tabs-target="#locationDetails" type="button" role="tab"
                                 aria-controls="locationDetails" aria-selected="false">
                                 Location
@@ -190,7 +190,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Landmarks')"
                                 :class="{ 'tab-active': activeTab === 'Landmarks' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="landmarks-tab" data-tabs-target="#landmarkssDetails" type="button" role="tab"
                                 aria-controls="landmarkssDetails" aria-selected="false">
                                 Landmarks
@@ -201,7 +201,7 @@
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('AboutDeveloper')"
                                 :class="{ 'tab-active': activeTab === 'AboutDeveloper' }"
-                                class="w-full px-6 py-2 text-base font-medium transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                                class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="about_developer-tab" data-tabs-target="#about_developer" type="button"
                                 role="tab" aria-controls="about_developer" aria-selected="false">
                                 About Developer

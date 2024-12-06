@@ -252,13 +252,17 @@ class FrontendController extends Controller
     {
         if ($request->type == 'projects' || $request->type  == 'new-launch') {
             $items = $this->searchProjects($request);
+            $route_name = 'projects';
         } else {
             // Fetch filtered properties
             $items = $this->searchProperties($request);
+            $route_name = 'properties';
         }
 
+       
+
         // Render the view with the items
-        return view('front.shortcuts.filters.search-suggestion', compact('items'))->render();
+        return view('front.shortcuts.filters.search-suggestion', compact('items','route_name'))->render();
     }
 
     public function searchProperties(Request $request)
