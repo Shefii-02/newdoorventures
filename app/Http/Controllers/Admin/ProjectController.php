@@ -455,7 +455,7 @@ class ProjectController extends Controller
                     unlink('images/'.$specValue['eXimagePath']);
                 }
             } else {
-                $path = $specValue['eXimagePath'];
+                $path = isset($specValue['eXimagePath']) ?? null;
             }
             $specification              = new ProjectSpecification();
             $specification->project_id    = $project->id;
