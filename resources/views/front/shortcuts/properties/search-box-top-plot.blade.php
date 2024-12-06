@@ -308,7 +308,7 @@
                     this.filters.max_price = urlParams.get('max_price') || null;
                     this.checkFilterState();
                     this.updateVisibility();
-                    this.applyFilters();
+                    // this.applyFilters();
                 },
 
                 updateVisibility() {
@@ -406,15 +406,15 @@
                         window.location.href = "{{ route('public.properties.pg') }}";
                         return;
                     } else if (this.filters.type == 'plot') {
-                        window.location.href = "{{ route('public.properties.plot') }}";
-                        return;
+                        // window.location.href = "{{ route('public.properties.plot') }}";
+                        // return;
                     } else {
                         // window.location.href = "{{ route('public.properties') }}";
                         return;
                     }
                     document.body.scrollTop = 0, document.documentElement.scrollTop = 0
                     const params = new URLSearchParams(this.filters).toString();
-                    var url = `{{ route('public.properties') }}?${params}`;
+                    var url = `{{ route('public.properties.plot') }}?${params}`;
                     fetch(url, {
                             headers: {
                                 'X-Requested-With': 'XMLHttpRequest'

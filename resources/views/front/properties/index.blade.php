@@ -69,7 +69,7 @@
                         'max_price' => request()->get('max_price') ?? '',
                     ])
                 @elseif(isset($type) && $type == 'plot')
-                    @include('front.shortcuts.properties.search-box-top', [
+                    @include('front.shortcuts.properties.search-box-top-plot', [
                         'id' => null,
                         'type' => request()->get('type') ?? isset($type) ? $type : '',
                         'mode' => request()->get('m') ?? $searchType,

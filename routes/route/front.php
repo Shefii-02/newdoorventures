@@ -23,5 +23,5 @@ Route::get('news/{slug}', [FrontendController::class, 'blogDetails'])->name('pub
 
 Route::post('searching-in-keywords', [FrontendController::class, 'searchingInKeywords'])->name('searching-in-keywords');
 Route::post('newsletter/subscribe', [FrontendController::class, 'blogDetails'])->name('newsletter.subscribe');
-Route::post('send/consultants', [FrontendController::class, 'blogDetails'])->name('public.send.consult');
+Route::post('send/consultants', [FrontendController::class, 'postConsult'])->name('public.send.consult');
 Route::get('{slug}', [FrontendController::class, 'page'])->name('public.page');

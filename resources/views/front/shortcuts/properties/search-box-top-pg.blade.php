@@ -297,7 +297,7 @@
                     // Populate the filters from the URL parameters
                     this.filters.k = urlParams.get('k') || '';
                     this.filters.city = urlParams.get('city') || 'null';
-                    this.filters.type = urlParams.get('type') || null;
+                    this.filters.type = `{{ isset($type) ? $type : '' }}`;
                     this.filters.purpose = this.getArrayFromUrlParam(urlParams, 'purpose');
                     this.filters.bedrooms = this.getArrayFromUrlParam(urlParams, 'bedrooms');
                     this.filters.ownership = this.getArrayFromUrlParam(urlParams, 'ownership');
@@ -406,8 +406,8 @@
                         return;
                     }
                     else if(this.filters.type == 'pg') {
-                        window.location.href = "{{ route('public.properties.pg') }}";
-                        return;
+                        // window.location.href = "{{ route('public.properties.pg') }}";
+                        // return;
                     }
                     else if(this.filters.type == 'plot') {
                         window.location.href = "{{ route('public.properties.plot') }}";
@@ -419,7 +419,7 @@
                     }
                     document.body.scrollTop = 0, document.documentElement.scrollTop = 0
                     const params = new URLSearchParams(this.filters).toString();
-                    var url = `{{ route('public.properties') }}?${params}`;
+                    var url = `{{ route('public.properties.pg') }}?${params}`;
                     fetch(url, {
                             headers: {
                                 'X-Requested-With': 'XMLHttpRequest'

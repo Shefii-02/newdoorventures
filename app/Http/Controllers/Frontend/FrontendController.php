@@ -74,7 +74,7 @@ class FrontendController extends Controller
         $property_query = $this->ShortcutFilterProperties($query, $request);
 
         $builders = Investor::get();
-        $cities = Property::where('type', 'sell')->groupBy('locality')->pluck('locality');
+        $cities = Property::where('type', 'sell')->where('moderation_status', 'approved')->groupBy('locality')->pluck('locality');
         $categories = Category::where('status', 'published')->get();
         $type = 'sell';
 
@@ -94,7 +94,7 @@ class FrontendController extends Controller
         $query = Property::query()->where('type', 'rent')->where('moderation_status', 'approved');
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders = Investor::get();
-        $cities = Property::where('type', 'rent')->groupBy('locality')->pluck('locality');
+        $cities = Property::where('type', 'rent')->where('moderation_status', 'approved')->groupBy('locality')->pluck('locality');
         $categories = Category::where('status', 'published')->get();
         $type = 'rent';
 
@@ -110,10 +110,15 @@ class FrontendController extends Controller
     }
     public function PropertiesForPlot(Request $request)
     {
-        $query = Property::query()->where('moderation_status', 'approved');
+        $category   = 'Plot and Land';
+        $query      = Property::query()->whereHas('categories', function ($query) use ($category) {
+                                    $query->where('name', $category);
+                                })->where('moderation_status', 'approved');
         $property_query = $this->ShortcutFilterProperties($query, $request);
-        $builders = Investor::get();
-        $cities = Property::groupBy('locality')->pluck('locality');
+        $builders   = Investor::get();
+        $cities     = Property::query()->whereHas('categories', function ($query) use ($category) {
+                                    $query->where('name', $category);
+                                })->where('moderation_status', 'approved')->groupBy('locality')->pluck('locality');
         $categories = Category::where('status', 'published')->get();
         $type = 'plot';
 
@@ -129,7 +134,7 @@ class FrontendController extends Controller
     }
     public function PropertiesForPg(Request $request)
     {
-        $query = Property::query()->where('type', 'sell')->where('moderation_status', 'approved');
+        $query = Property::query()->where('type', 'pg')->where('moderation_status', 'approved');
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders = Investor::get();
         $cities = Property::where('type','pg')->groupBy('locality')->pluck('locality');
@@ -157,15 +162,16 @@ class FrontendController extends Controller
         $query = Project::query();
 
         // Filters for projects...
+        $project_query = $this->ShortcutFilterProjects($query, $request);
 
-        $projects = $query->get();
+        $projects = $project_query->get();
 
         if ($request->ajax()) {
             $html = view('front.shortcuts.projects.items', compact('projects'))->render();
             return response()->json(['html' => $html]);
         }
 
-        $cities = Project::groupBy('locality')->pluck('locality');
+        $cities = Project::groupBy('locality')->whereNotnull('locality')->pluck('locality');
         $categories = Category::where('status', 'published')->get();
         $builders = Investor::get();
 
@@ -376,63 +382,112 @@ class FrontendController extends Controller
 
 
         // // City filter
-        // if ($request->filled('city') && $request->city !== '' && $request->city != 'null') {
-        //     $query->where('locality', $request->city);
-        // }
+        if ($request->filled('city') && $request->city !== '' && $request->city != 'null') {
+            $query->where('locality', $request->city);
+        }
 
 
         // Category filter
-        // if ($request->filled('categories') && $request->categories !== '' && $request->categories != 'null') {
-        //     if (is_array($request->categories)) {
-        //         $categories = $request->categories;
-        //     } else {
-        //         $categories = explode(',', $request->categories);
-        //     }
-        //     $query->whereHas('categories', function ($query) use ($categories) {
-        //         $query->whereIn('id', $categories);
-        //     });
-        // }
+        if ($request->filled('categories') && $request->categories !== '' && $request->categories != 'null') {
+            if (is_array($request->categories)) {
+                $categories = $request->categories;
+            } else {
+                $categories = explode(',', $request->categories);
+            }
+            $query->whereHas('categories', function ($query) use ($categories) {
+                $query->whereIn('id', $categories);
+            });
+        }
 
-        // dd($query->get());
 
         // Bedrooms filter
-        // if ($request->filled('bedrooms') && $request->bedrooms !== '' && $request->bedrooms != 'null') {
-        //     if (is_array($request->bedrooms)) {
-        //         $bedrooms = $request->bedrooms;
-        //     } else {
-        //         $bedrooms = explode(',', $request->bedrooms);
-        //     }
-        //     $query->whereIn('number_bedroom', $bedrooms);
-        // }
+        if ($request->filled('bedrooms') && $request->bedrooms !== '' && $request->bedrooms != 'null') {
+            if (is_array($request->bedrooms)) {
+                $bedrooms = $request->bedrooms;
+            } else {
+                $bedrooms = explode(',', $request->bedrooms);
+            }
+            $query->whereIn('number_bedroom', $bedrooms);
+        }
 
         // // Ownership filter
-        // if ($request->filled('ownership') && $request->ownership !== '' && $request->ownership != 'null') {
-        //     if (is_array($request->ownership)) {
-        //         $ownership = $request->ownership;
-        //     } else {
-        //         $ownership = explode(',', $request->ownership);
-        //     }
-        //     $query->whereIn('ownership', $ownership);
-        // }
+        if ($request->filled('ownership') && $request->ownership !== '' && $request->ownership != 'null') {
+            if (is_array($request->ownership)) {
+                $ownership = $request->ownership;
+            } else {
+                $ownership = explode(',', $request->ownership);
+            }
+            $query->whereIn('ownership', $ownership);
+        }
 
 
 
 
         // Furnishing filter
-        // if ($request->filled('furnishing') && $request->furnishing !== '' && $request->furnishing != 'null') {
-        //     $query->whereIn('furnishing', $request->furnishing);
-        // }
+        if ($request->filled('furnishing') && $request->furnishing !== '' && $request->furnishing != 'null') {
+            $query->whereIn('furnishing', $request->furnishing);
+        }
 
         // Budget filter
-        // if (
-        //     $request->filled('min_price') && $request->filled('max_price') &&
-        //     is_numeric($request->min_price) && is_numeric($request->max_price)
-        // ) {
-        //     $query->whereBetween('price', [$request->min_price, $request->max_price]);
-        // }
+        if (
+            $request->filled('min_price') && $request->filled('max_price') &&
+            is_numeric($request->min_price) && is_numeric($request->max_price)
+        ) {
+            $query->whereBetween('price', [$request->min_price, $request->max_price]);
+        }
 
 
 
         return $query;
     }
+    function ShortcutFilterProjects($query, $request)
+    {
+        // Keyword search
+        if ($request->filled('k') && $request->k != '' && $request->k != 'null') {
+            $query->where('name', 'LIKE', '%' . $request->k . '%')
+                ->orWhere('content', 'LIKE', '%' . $request->k . '%');
+        }
+
+
+        // // City filter
+        if ($request->filled('city') && $request->city !== '' && $request->city != 'null') {
+            $query->where('locality', $request->city);
+        }
+
+
+        // Category filter
+        if ($request->filled('categories') && $request->categories !== '' && $request->categories != 'null') {
+            if (is_array($request->categories)) {
+                $categories = $request->categories;
+            } else {
+                $categories = explode(',', $request->categories);
+            }
+            $query->whereHas('categories', function ($query) use ($categories) {
+                $query->whereIn('id', $categories);
+            });
+        }
+
+
+        // Budget filter
+        if (
+            $request->filled('min_price') && $request->filled('max_price') &&
+            is_numeric($request->min_price) && is_numeric($request->max_price)
+        ) {
+            $query->whereBetween('price', [$request->min_price, $request->max_price]);
+        }
+
+
+
+        return $query;
+    }
+
+
+
+
+    public function postConsult(Request $request){
+        dd($request->all());
+    }
+
+
+
 }

@@ -209,15 +209,21 @@
                         <h4 class="text-theme text-center">Please share your details</h4>
                     </div>
                     <button type="button" class="btn-close border-theme border-3 " data-bs-dismiss="modal"
-                        aria-label="Close"><i class="bi bi-x-lg"></i></button>
+                        aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path
+                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                        </svg>
+                    </button>
                 </div>
 
 
                 <div class="modal-body">
 
-                    <form action="">
+                    <form class="generic-form" action="{{ route('public.send.consult') }}" method="POST">
 
-
+                        @csrf
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" name="name" required id="floatingInputName"
                                 placeholder="">
@@ -271,8 +277,7 @@
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-theme text-light"
-                                data-bs-target="#exampleModalToggle2" data-bs-dismiss="modal"
-                                data-bs-toggle="modal">Submit</button>
+                                >Submit</button>
                         </div>
 
                     </form>
@@ -287,7 +292,13 @@
             <div class="modal-content modal-content border-3 border-theme modal-body rounded-3xl">
                 <div class="col-lg-12 text-end">
                     <button type="button" class="btn-close border-theme border-3 " data-bs-dismiss="modal"
-                        aria-label="Close"><i class="bi bi-x-lg"></i></button>
+                        aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path
+                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                        </svg>
+                    </button>
                 </div>
                 <div class="modal-body text-center">
 

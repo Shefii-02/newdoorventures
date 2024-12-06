@@ -3,7 +3,7 @@
         <div class="row align-items-center">
             <!-- Property Type Dropdown -->
             <div class="col-lg-4 mb-4 px-1">
-                <div x-data="{ filters: { type: '{{ isset($type) ? $type : 'null' }}'},}">
+                <div >
                     <div class="flex items-center space-x-3">
                         <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
                             class="border-theme px-3 py-2 rounded-s-2xl">
@@ -297,7 +297,7 @@
                     // Populate the filters from the URL parameters
                     this.filters.k = urlParams.get('k') || '';
                     this.filters.city = urlParams.get('city') || 'null';
-                    this.filters.type = urlParams.get('type') || null;
+                    this.filters.type = `{{ isset($type) ? $type : '' }}`;
                     this.filters.purpose = this.getArrayFromUrlParam(urlParams, 'purpose');
                     this.filters.bedrooms = this.getArrayFromUrlParam(urlParams, 'bedrooms');
                     this.filters.ownership = this.getArrayFromUrlParam(urlParams, 'ownership');
@@ -397,11 +397,11 @@
                         window.location.href = "{{ route('public.projects') }}";
                         return;
                     }
-                    else if(this.filters.type == 'sell') {
+                    else if(this.filters.type == 'sell' && `{{ isset($type) && $type != 'sell' }}`) {
                         window.location.href = "{{ route('public.properties.sale') }}";
                         return;
                     }
-                    else if(this.filters.type == 'rent') {
+                    else if(this.filters.type == 'rent'  && `{{ isset($type) && $type != 'rent' }}`) {
                         window.location.href = "{{ route('public.properties.rent') }}";
                         return;
                     }
@@ -413,10 +413,7 @@
                         window.location.href = "{{ route('public.properties.plot') }}";
                         return;
                     }
-                    else{
-                        // window.location.href = "{{ route('public.properties') }}";
-                        return;
-                    }
+                    
                     document.body.scrollTop = 0, document.documentElement.scrollTop = 0
                     const params = new URLSearchParams(this.filters).toString();
                     var url = `{{ route('public.properties') }}?${params}`;
