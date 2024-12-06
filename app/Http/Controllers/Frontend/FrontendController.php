@@ -470,12 +470,12 @@ class FrontendController extends Controller
 
 
         // Budget filter
-        if (
-            $request->filled('min_price') && $request->filled('max_price') &&
-            is_numeric($request->min_price) && is_numeric($request->max_price)
-        ) {
-            $query->whereBetween('price', [$request->min_price, $request->max_price]);
-        }
+        // if (
+        //     $request->filled('min_price') && $request->filled('max_price') &&
+        //     is_numeric($request->min_price) && is_numeric($request->max_price)
+        // ) {
+        //     $query->whereBetween('price', [$request->min_price, $request->max_price]);
+        // }
 
 
 
