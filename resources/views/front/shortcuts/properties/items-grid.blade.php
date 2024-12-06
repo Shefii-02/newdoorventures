@@ -6,7 +6,7 @@
                 @include('front.shortcuts.properties.item-pg', compact('property'))
             @elseif($property->category->name == 'plot and land')
                 @include('front.shortcuts.properties.item-plot', compact('property'))
-            @elseif($property->category->name == 'rent')
+            @elseif($property->type == 'rent')
                 @include('front.shortcuts.properties.item-rent', compact('property'))
             @else
                 @include('front.shortcuts.properties.item-sale', compact('property'))

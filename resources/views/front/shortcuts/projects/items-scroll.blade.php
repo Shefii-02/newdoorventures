@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="p-6">
-                    <a href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}" class="text-lg font-medium uppercase duration-500 ease-in-out hover:text-primary">
+                    <a href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}" class="text-md font-bold text-capitalize duration-500 ease-in-out hover:text-primary">
                         {!! $project->name !!}
                     </a>
                     @if($project->city )

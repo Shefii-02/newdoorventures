@@ -1,8 +1,9 @@
-<div role="button" class="p-2 overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
+<div role="button"
+    class="p-2 overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
     <div class="relative overflow-hidden">
-        <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}">
-            <img src="{{ asset('images/'.$property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'"
-                alt="{{ $property->name }}" class="rounded-xl duration-500 h-50">
+        <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug]) }}">
+            <img src="{{ asset('images/' . $property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'"
+                alt="{{ $property->name }}" class="rounded-xl duration-500 h-50 w-100">
         </a>
         {{-- <div class="absolute top-6 end-6">
             <button type="button"
@@ -29,58 +30,48 @@
             <span class="flex items-center py-1 ps-6 pe-4 text-white">
                 {{ $property->category->name }}
             </span>
-            <span class="label-success status-label text-capitalize">{!! $property->type_name !!}</span>
+            <span class="label-success status-label text-uppercase">{!! $property->type_name !!}</span>
         </div>
     </div>
 
     <div class="p-6 flex flex-column justify-content-between">
         <div class="truncate">
-            <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}"
-                class="text-lg font-medium uppercase duration-500 ease-in-out hover:text-primary"
+            <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug]) }}"
+                class="text-md font-bold text-capitaize duration-500 ease-in-out hover:text-primary"
                 title="{{ $property->name }}">
                 {!! $property->name !!}
             </a>
-
-
             <p class="truncate text-slate-600 dark:text-slate-300">
-                <span class="mdi mdi-map-marker-multiple">{{ $property->location}}{{-- $project->state->name --}}<br>
-                    {{ $property->city }}.</span>
+                <span class="mdi mdi-map-marker-multiple"></span> <span class="text-sm">{!! $property->location ? $property->location . '<br>' : '' !!}</span>
+                <span class="ms-4 text-sm">{{ $property->city }}.</span>
             </p>
-
         </div>
 
         <ul
-            class="flex items-center justify-between py-3 ps-0 mb-0 list-none border-b dark:border-gray-800">
-            @if ($numberBedrooms = $property->number_bedroom)
+            class="flex items-center justify-between px-3 border mt-3 bg-gray-200 rounded-2 mb-0 list-none border-b dark:border-gray-800">
+           
+            <li class="flex items-center me-2">
+                <i class="text-lg text-primary mdi mdi-bed-empty me-2"></i>
+                <span class="text-sm text-capitalize">
+                    {{ $property->occupancy_type }}
+                </span>
+            </li>
+
                 <li class="flex items-center me-2">
-                    <i class="text-2xl text-primary mdi mdi-bed-empty me-2"></i>
-                    <span>
-                        {{ $numberBedrooms == 1 ? __('1 Bed') : __(':number Beds', ['number' => $numberBedrooms]) }}
+                    <i class="text-lg text-primary mdi mdi-account-check me-2"></i>
+                    <span class="text-sm text-capitalize">
+                        {{ $property->available_for == 'any' ? 'Coed' : $property->available_for }}
                     </span>
                 </li>
-            @endif
+           
 
-            @if ($numberBathrooms = $property->number_bathroom)
-                <li class="flex items-center me-2">
-                    <i class="text-2xl text-primary mdi mdi-shower me-2"></i>
-                    <span>
-                        {{ $numberBathrooms == 1 ? __('1 Bath') : __(':number Baths', ['number' => $numberBathrooms]) }}
-                    </span>
-                </li>
-            @endif
-
-            @if ($property->square)
-                <li class="flex items-center me-2">
-                    <i class="text-2xl text-primary mdi mdi-arrow-collapse-all me-2"></i>
-                    <span>{{ $property->square_text }}</span>
-                </li>
-            @endif
         </ul>
-
+       
         <ul class="flex flex-wrap gap-3 items-center justify-between pt-4 ps-0 mb-0 list-none">
             <li>
-                <span class="text-slate-400">{{ __('Price') }}</span>
-                <p class="text-lg font-semibold">{{ shorten_price($property->price) }}
+                <span class="text-slate-400 text-sm">{{ __('Price') }}</span>
+                <p class="text-lg font-semibold">{{ shorten_price($property->price) }} <span
+                        class="text-sm">Onwards</span>
                     {{-- , $property->currency) --}}</p>
             </li>
             <li>
@@ -89,7 +80,7 @@
                     <i class="align-middle mdi mdi-phone me-2"></i> Contact us
                 </a>
             </li>
-          
+
         </ul>
     </div>
 </div>

@@ -1,8 +1,9 @@
-<div role="button" class="p-2 overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
+<div role="button"
+    class="p-2 overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
     <div class="relative overflow-hidden">
-        <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}">
-            <img src="{{ asset('images/'.$property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'"
-                alt="{{ $property->name }}" class="rounded-xl duration-500 h-50">
+        <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug]) }}">
+            <img src="{{ asset('images/' . $property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'"
+                alt="{{ $property->name }}" class="rounded-xl duration-500 h-50 w-100">
         </a>
         {{-- <div class="absolute top-6 end-6">
             <button type="button"
@@ -33,28 +34,30 @@
         </div>
     </div>
 
-    <div class="p-6 flex flex-column justify-content-between">
+    <div class="p-1 mt-3 flex flex-column justify-content-between">
         <div class="truncate">
             <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}"
-                class="text-lg font-medium uppercase duration-500 ease-in-out hover:text-primary"
+                class="text-md font-bold text-capitaize duration-500 ease-in-out hover:text-primary"
                 title="{{ $property->name }}">
                 {!! $property->name !!}
             </a>
-
-
             <p class="truncate text-slate-600 dark:text-slate-300">
-                {{ $property->location}}{{-- $project->state->name --}}<br>
-                    <span class="mdi mdi-map-marker-multiple">{{ $property->city }}.</span>
+                <span class="mdi mdi-map-marker-multiple"></span> <span class="text-sm">{!! $property->location ? $property->location .'<br>' : ''  !!}</span>
+                <span class="ms-4 text-sm">{{ $property->city }}.</span>
             </p>
-
+            @if($property->project->name)
+            <p class="truncate text-slate-600 dark:text-slate-300">
+                <span class="mdi mdi-bank-check text-medium font-bold"></span>  <span class="text-sm">Project :</span><span class="text-sm font-bold"> {{ $property->project->name }}</span>
+            </p>
+            @endif
         </div>
 
         <ul
-            class="flex items-center justify-between py-3 ps-0 mb-0 list-none border-b dark:border-gray-800">
+            class="flex items-center justify-between px-3 border mt-3 bg-gray-200 rounded-2 mb-0 list-none border-b dark:border-gray-800">
             @if ($numberBedrooms = $property->number_bedroom)
                 <li class="flex items-center me-2">
-                    <i class="text-2xl text-primary mdi mdi-bed-empty me-2"></i>
-                    <span>
+                    <i class="text-lg text-primary mdi mdi-bed-empty me-2"></i>
+                    <span class="text-sm">
                         {{ $numberBedrooms == 1 ? __('1 Bed') : __(':number Beds', ['number' => $numberBedrooms]) }}
                     </span>
                 </li>
@@ -62,24 +65,24 @@
 
             @if ($numberBathrooms = $property->number_bathroom)
                 <li class="flex items-center me-2">
-                    <i class="text-2xl text-primary mdi mdi-shower me-2"></i>
-                    <span>
+                    <i class="text-lg text-primary mdi mdi-shower me-2"></i>
+                    <span class="text-sm">
                         {{ $numberBathrooms == 1 ? __('1 Bath') : __(':number Baths', ['number' => $numberBathrooms]) }}
                     </span>
                 </li>
             @endif
 
-            @if ($property->square)
-                <li class="flex items-center me-2">
-                    <i class="text-2xl text-primary mdi mdi-arrow-collapse-all me-2"></i>
-                    <span>{{ $property->square_text }}</span>
-                </li>
-            @endif
+
+            <li class="flex items-center me-2">
+                <i class="text-lg text-primary mdi mdi-bed-king-outline me-2"></i>
+                <span class="text-sm text-capitalize">{{ str_replace('-',' ',$property->furnishing_status) ?? 0 }}</span>
+            </li>
+
         </ul>
 
-        <ul class="flex flex-wrap gap-3 items-center justify-between pt-4 ps-0 mb-0 list-none">
+        <ul class="flex flex-wrap gap-3 items-center justify-between pt-4 px-4 mb-0 list-none">
             <li>
-                <span class="text-slate-400">{{ __('Price') }}</span>
+                <span class="text-slate-400 text-sm">{{ __('Price') }}</span>
                 <p class="text-lg font-semibold">{{ shorten_price($property->price) }}
                     {{-- , $property->currency) --}}</p>
             </li>
@@ -89,7 +92,7 @@
                     <i class="align-middle mdi mdi-phone me-2"></i> Contact us
                 </a>
             </li>
-          
+
         </ul>
     </div>
 </div>

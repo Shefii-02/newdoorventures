@@ -2,7 +2,7 @@
     <div class="relative overflow-hidden">
         <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}">
             <img src="{{ asset('images/'.$property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'"
-                alt="{{ $property->name }}" class="rounded-xl duration-500 h-50">
+                alt="{{ $property->name }}" class="rounded-xl duration-500 h-50 w-100">
         </a>
         {{-- <div class="absolute top-6 end-6">
             <button type="button"

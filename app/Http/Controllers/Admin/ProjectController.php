@@ -451,7 +451,9 @@ class ProjectController extends Controller
         foreach ($specificationFields as $index => $specValue) {
             if (isset($specValue['image']) && $request->hasFile("specifications.$index.image")) {
                 $path = uploadFile($specValue['image'], 'projects');
-                unlink('images/'.$specValue['eXimagePath']);
+                if (file_exists('images/'.$specValue['eXimagePath'])) {
+                    unlink('images/'.$specValue['eXimagePath']);
+                }
             } else {
                 $path = $specValue['eXimagePath'];
             }

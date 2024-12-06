@@ -2,7 +2,7 @@
     <div class="relative overflow-hidden">
         <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}">
             <img src="{{ asset('images/'.$property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'"
-                alt="{{ $property->name }}" class="rounded-md duration-500 h-50">
+                alt="{{ $property->name }}" class="rounded-md duration-500 h-50 w-100">
         </a>
         {{-- <div class="absolute top-6 end-6">
             <button type="button"
@@ -42,11 +42,11 @@
             </a>
             <p class="truncate text-slate-600 dark:text-slate-300">
                 <span class="mdi mdi-map-marker-multiple"></span> <span class="text-sm">{!! $property->location ? $property->location .'<br>' : ''  !!}</span>
-                <span class="ms-4">{{ $property->city }}.</span>
+                <span class="ms-4 text-sm">{{ $property->city }}.</span>
             </p>
             @if($property->project->name)
             <p class="truncate text-slate-600 dark:text-slate-300">
-                <span class="mdi mdi-bank-check text-medium font-bold"> <span class="text-sm">Project :</span></span> {{ $property->project->name }}</span>
+                <span class="mdi mdi-bank-check text-medium font-bold"></span>  <span class="text-sm">Project :</span><span class="text-sm font-bold"> {{ $property->project->name }}</span>
             </p>
             @endif
         </div>
