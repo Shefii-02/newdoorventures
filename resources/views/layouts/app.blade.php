@@ -222,8 +222,9 @@
                 <div class="modal-body">
 
                     <form class="generic-form" action="{{ route('public.send.consult') }}" method="POST">
-
                         @csrf
+                        <input type="hidden" value="{{ isset($type) ? $type : '' }}" name="type" id="type">
+                        <input type="hidden" value="" name="data_id" id="data_id">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" name="name" required id="floatingInputName"
                                 placeholder="">

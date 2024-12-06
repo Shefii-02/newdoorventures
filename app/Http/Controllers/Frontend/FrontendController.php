@@ -12,6 +12,7 @@ use App\Models\Slug;
 use App\Models\Page;
 use App\Models\Configration;
 use App\Models\Advertisement;
+use App\Models\Consult;
 use App\Models\PgRules;
 
 use Illuminate\Routing\Controller;
@@ -112,13 +113,13 @@ class FrontendController extends Controller
     {
         $category   = 'Plot and Land';
         $query      = Property::query()->whereHas('categories', function ($query) use ($category) {
-                                    $query->where('name', $category);
-                                })->where('moderation_status', 'approved');
+            $query->where('name', $category);
+        })->where('moderation_status', 'approved');
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders   = Investor::get();
         $cities     = Property::query()->whereHas('categories', function ($query) use ($category) {
-                                    $query->where('name', $category);
-                                })->where('moderation_status', 'approved')->groupBy('locality')->pluck('locality');
+            $query->where('name', $category);
+        })->where('moderation_status', 'approved')->groupBy('locality')->pluck('locality');
         $categories = Category::where('status', 'published')->get();
         $type = 'plot';
 
@@ -137,7 +138,7 @@ class FrontendController extends Controller
         $query = Property::query()->where('type', 'pg')->where('moderation_status', 'approved');
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders = Investor::get();
-        $cities = Property::where('type','pg')->groupBy('locality')->pluck('locality');
+        $cities = Property::where('type', 'pg')->groupBy('locality')->pluck('locality');
         $categories = Category::where('status', 'published')->get();
         $type = 'pg';
 
@@ -484,28 +485,64 @@ class FrontendController extends Controller
 
 
 
-    public function postConsult(Request $request){
+    public function postConsult(Request $request)
+    { // Validate the input
         $request->validate([
-            'property_id' => 'required|exists:properties,id',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'message' => 'required|string|max:1000',
-        ], [
-            'property_id.required' => 'The property  is missing. Please try again.',
-            'property_id.exists' => 'The selected property does not exist.',
-            'name.required' => 'Your name is required.',
-            'name.max' => 'Your name must not exceed 255 characters.',
-            'email.required' => 'Your email address is required.',
-            'email.email' => 'Please provide a valid email address.',
-            'email.max' => 'Your email must not exceed 255 characters.',
-            'message.required' => 'A message is required to submit an enquiry.',
-            'message.max' => 'Your message must not exceed 1000 characters.',
+            'phone' => 'required|string|max:15',
+            'content' => 'nullable|string',
+            'project_id' => 'nullable|integer',
+            'property_id' => 'nullable|integer',
         ]);
 
-        
-        dd($request->all());
+        // Check for duplicate submission
+        $existingConsult = Consult::where('ip_address', $request->ip())
+            ->where(function ($query) use ($request) {
+                $query->where('property_id', $request->property_id)
+                    ->orWhere('project_id', $request->project_id);
+            })->first();
+
+        if ($existingConsult) {
+            return response()->json([
+                'error' => true,
+                'message' => 'You have already submitted a consultation request for this property/project.',
+            ]);
+        }
+
+        if ($request->type == 'property') {
+        }
+
+        // Save the consult record
+
+        try {
+            $lead              = new Consult();
+            $lead->name        = $request->name;
+            $lead->email       = $request->email;
+            $lead->phone       = $request->phone;
+            if ($request->type == 'project') {
+                $lead->project_id  = $request->data_id;
+            } else {
+                $lead->property_id  =   $request->data_id;
+            }
+
+            $lead->ip_address = $request->ip();
+            $lead->status = 'pending';
+            $lead->save();
+
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Your enquiry request has been submitted successfully!',
+                'data' => [
+                    'next_page' => null, // Or set a URL for redirection if needed
+                ],
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => 'An error occurred while submitting your request. Please try again later.',
+            ]);
+        }
     }
-
-
-
 }

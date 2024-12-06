@@ -16,7 +16,7 @@
         ]
     }'>
         @foreach($projects as $project)
-            <div role="button" class="p-3 overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
+            <div role="button" class="p-3 mb-3 mx-3 overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
                 <div class="relative overflow-hidden">
                     <a href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}">
                         <img src="{{ asset('images/'.$project->image) }}" alt="{{ $project->name }}" onerror="this.src='/themes/images/dummy-image.webp'" class="h-50 rounded-xl duration-500 ">

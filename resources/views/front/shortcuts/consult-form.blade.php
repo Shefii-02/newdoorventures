@@ -1,7 +1,7 @@
 <form class="generic-form" id="contact-form" method="post" action="{{ route('public.send.consult') }}">
     @csrf
-    <input type="hidden" value="{{ $type }}" name="type">
-    <input type="hidden" value="{{ $data->id }}" name="data_id">
+    <input type="hidden" value="{{ $type }}" name="type" id="type">
+    <input type="hidden" value="{{ $data->id }}" name="data_id" id="data_id">
     <div class="p-6 space-y-3">
         <h3 class="bg-light bg-succs border-1 font-bold mb-4 mx-5 p-2 rounded text-center text-dark text-sm">{{ __('CALL: 9686607663') }}</h3>
         <div>
