@@ -823,10 +823,10 @@
                                                     </div>
                                                     <div class="mt-3">
                                                         <div id="parking"
-                                                            class="mt-3 HideUnwantedSectionsInPlot HideUnwantedSectionsInPg HideUnwantedSectionsInPg">
-                                                            <h5 class="mt-3 font-medium">Reserved Parking</h5>
-                                                            <div class="">
-
+                                                            class="mt-3 ">
+                                                          
+                                                            <div class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg HideUnwantedSectionsInPg">
+                                                                <h5 class="mt-3 font-medium">Reserved Parking</h5>
                                                                 <div class="mb-2 flex gap-3 mt-3 justify-content-between">
                                                                     <label for="city"
                                                                         class="block mb-2 text-sm font-medium text-gray-500">Covered
@@ -879,8 +879,10 @@
                                                                     </div>
                                                                 </div>
 
+
+                                                            </div>
                                                                 <!-- Project  -->
-                                                                <div class="mb-2">
+                                                                <div class="mb-2 HideUnwantedSectionsInPg ShowWantedSectionsInPlot">
                                                                     <label for="projects"
                                                                         class="block mb-2 text-sm font-medium text-gray-900">Choose
                                                                         Project</label>
@@ -899,8 +901,6 @@
                                                                     </select>
                                                                 </div>
 
-
-                                                            </div>
                                                         </div>
                                                     </div>
 

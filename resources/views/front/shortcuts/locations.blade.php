@@ -1,5 +1,5 @@
-<h4 class="mb-2 text-3xl font-medium text-center">Most Desired Locations in  <span class="font-italic">Bangalore</span></h4>
-<p class="py-2 text-center text-gray-500">Discover the top neighborhoods, hotspots, and sought-after areas in Bangalore</p>
+<h4 class="mb-2 text-lg font-bold text-center">Most Desired Locations in  <span class="font-italic">Bangalore</span></h4>
+<p class="py-2 text-sm text-center text-gray-500">Discover the top neighborhoods, hotspots, and sought-after areas in Bangalore</p>
 <div class="relative flex justify-center my-5 mx-2">
     <div class="relative w-full">
         <!-- Slick Slider Wrapper -->

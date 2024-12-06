@@ -63,35 +63,37 @@
             <div class="px-3  ">
                 <div class="border-theme rounded flex  py-1" style="width: fit-content;">
                     <span
-                        class="text-dark font-medium text-sm  inline  dark:text-gray-400 text-capitalize px-2">{{ $property->number_bedroom }}
+                        class="text-dark font-medium text-sm  inline  dark:text-gray-400 text-capitalize px-2">{{ $property->number_bedroom ?? 0 }}
                         Beds</span>
                     <span
-                        class="text-dark font-medium  text-sm inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->number_bathroom }}
+                        class="text-dark font-medium  text-sm inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->number_bathroom ?? 0 }}
                         Baths</span>
                     <span
-                        class="text-dark font-medium  text-sm  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->balconies }}
+                        class="text-dark font-medium  text-sm  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->balconies ?? 0 }}
                         Balconies</span>
                     <span
-                        class="text-dark font-medium text-sm  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->covered_parking }}
+                        class="text-dark font-medium text-sm  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->covered_parking ?? 0 }}
                         Covered Parking</span>
                 </div>
             </div>
-            <div class="px-3  mt-4">
-                <div class="border-theme rounded flex " style="width: fit-content;">
-                    <span
-                        class="text-light text-sm  bg-theme font-medium  inline  dark:text-gray-400 text-uppercase px-2">RERA
-                        STATUS</span>
-                    <span
-                        class="text-theme text-sm   inline  dark:text-gray-400 text-uppercase border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->project->rera_status }}</span>
-                    <span
-                        class="text-theme text-sm font-medium  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">Registration
-                        No: {{ $property->project->rera_reg_no }}</span>
-                    <span
-                        class="text-theme text-sm   inline  dark:text-gray-400  border-2  border-end-0 border-top-0 border-bottom-0 px-2">Website:
-                        <a href="https://rera.karnataka.gov.in/">https://rera.karnataka.gov.in</a></span>
-                </div>
-            </div>
+            @if ($property->project->rera_status == 'registered')
+                <div class="px-3  mt-4">
+                    <div class="border-theme rounded flex " style="width: fit-content;">
+                        <span
+                            class="text-light text-sm  bg-theme font-medium  inline  dark:text-gray-400 text-uppercase px-2">RERA
+                            STATUS</span>
+                        <span
+                            class="text-theme text-sm   inline  dark:text-gray-400 text-uppercase border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->project->rera_status }}</span>
+                        <span
+                            class="text-theme text-sm font-medium  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">Registration
+                            No: {{ $property->project->rera_reg_no }}</span>
+                        <span
+                            class="text-theme text-sm   inline  dark:text-gray-400  border-2  border-end-0 border-top-0 border-bottom-0 px-2">Website:
+                            <a href="https://rera.karnataka.gov.in/">https://rera.karnataka.gov.in</a></span>
+                    </div>
 
+                </div>
+            @endif
 
 
             <div id="Overview" class="section" :class="{ 'active': activeSection === 'Overview' }">
@@ -267,52 +269,52 @@
                 <div class=" mt-4">
                     <div class="md:flex">
                         <div class=" lg:w-2/3 md:w-1/2 ">
-                           
-                                <div class="container-fluid mb-5" id="MoreDetails" class="section"
-                                    :class="{ 'active': activeSection === 'MoreDetails' }">
-                                    <div class="md:flex">
-                                        <div class="w-full p-1 ">
-                                            <div class="border-theme rounded-xl">
-                                                <div class="px-5 py-5">
-                                                    <h4 class="fs-5 font-bold me-2">More Details</h4>
-                                                    <div class="table-responsive mt-4">
-                                                        <table class="table ">
 
-                                                            @foreach ($property->customFields ?? [] as $customValue)
-                                                                <tr class="border-bottom-none">
-                                                                    <td class="text-gray-800 w-1/2">
-                                                                        {{ $customValue->name }}
-                                                                    </td>
-                                                                    <th>
-                                                                        {{ $customValue->value }}
-                                                                    </th>
-                                                                </tr>
-                                                            @endforeach
-                                                                <tr class="border-bottom-none">
-                                                                    <td class="text-gray-800 w-1/2">
-                                                                        {{ $property->construction_status == 'under-construction' ? 'Possession By:' : 'Age of construction' }} 
-                                                                    </td>
-                                                                    <th>
-                                                                        {{ $property->construction_status == 'under-construction' ?  $property->possession : $property->property_age . ' years' }}
-                                                                    </th>
-                                                                </tr>
+                            <div class="container-fluid mb-5" id="MoreDetails" class="section"
+                                :class="{ 'active': activeSection === 'MoreDetails' }">
+                                <div class="md:flex">
+                                    <div class="w-full p-1 ">
+                                        <div class="border-theme rounded-xl">
+                                            <div class="px-5 py-5">
+                                                <h4 class="fs-5 font-bold me-2">More Details</h4>
+                                                <div class="table-responsive mt-4">
+                                                    <table class="table ">
 
-                                                        </table>
-                                                        <div class="px-3 mt-8">
-                                                            <span>
-                                                                <span class="fw-bold">Description : </span>
-                                                                {!! $property->content !!}
-                                                            </span>
-                                                        </div>
-                                                        <a href=""
-                                                            class=" text-white btn bg-primary mt-10">{{ __('Get Phone Number') }}</a>
+                                                        @foreach ($property->customFields ?? [] as $customValue)
+                                                            <tr class="border-bottom-none">
+                                                                <td class="text-gray-800 w-1/2">
+                                                                    {{ $customValue->name }}
+                                                                </td>
+                                                                <th>
+                                                                    {{ $customValue->value }}
+                                                                </th>
+                                                            </tr>
+                                                        @endforeach
+                                                        <tr class="border-bottom-none">
+                                                            <td class="text-gray-800 w-1/2">
+                                                                {{ $property->construction_status == 'under-construction' ? 'Possession By:' : 'Age of construction' }}
+                                                            </td>
+                                                            <th>
+                                                                {{ $property->construction_status == 'under-construction' ? $property->possession : $property->property_age . ' years' }}
+                                                            </th>
+                                                        </tr>
+
+                                                    </table>
+                                                    <div class="px-3 mt-8">
+                                                        <span>
+                                                            <span class="fw-bold">Description : </span>
+                                                            {!! $property->content !!}
+                                                        </span>
                                                     </div>
+                                                    <a href=""
+                                                        class=" text-white btn bg-primary mt-10">{{ __('Get Phone Number') }}</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                    
+                            </div>
+
                             @if ($property->project_id && ($project = $property->project))
                                 <div class="container-fluid mb-5" id="AboutProject" class="section"
                                     :class="{ 'active': activeSection === 'AboutProject' }">
@@ -443,9 +445,9 @@
                                 </div>
                             @endif
 
-                           
 
-                          
+
+
                             @if ($property->facilities->groupBy('name')->count())
                                 <div class="container-fluid mb-5" id="Landmarks" class="section"
                                     :class="{ 'active': activeSection === 'Landmarks' }">

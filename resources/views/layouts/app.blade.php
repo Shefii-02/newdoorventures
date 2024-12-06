@@ -249,7 +249,7 @@
                                 </div>
                                 <div class="col-lg-6 d-flex gap-4  mb-3">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="dealer"
+                                        <input class="form-check-input" checked type="radio" name="dealer"
                                             id="flexRadioDefault1">
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             Yes

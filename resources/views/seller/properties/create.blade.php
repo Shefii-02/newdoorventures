@@ -1,52 +1,53 @@
 @extends('seller.layouts.master')
 
 @section('content')
-<div class="container">
+    <div class="container">
 
 
-    <nav class="flex" aria-label="Breadcrumb">
-        <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
-            <li class="inline-flex items-center">
-                <a href="{{ route('user.dashboard') }}"
-                    class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
-                    <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        viewBox="0 0 20 20">
-                        <path
-                            d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-                    </svg>
-                    Dashboard
-                </a>
-            </li>
-            <li>
-                <div class="flex items-center">
-                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 9 4-4-4-4" />
-                    </svg>
-                    <a href="{{ route('user.properties.index') }}"
-                        class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Properties</a>
-                </div>
-            </li>
-            <li aria-current="page">
-                <div class="flex items-center">
-                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 9 4-4-4-4" />
-                    </svg>
-                    <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Property Create</span>
-                </div>
-            </li>
-        </ol>
-    </nav>
-</div>
+        <nav class="flex" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                <li class="inline-flex items-center">
+                    <a href="{{ route('user.dashboard') }}"
+                        class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                        <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 20 20">
+                            <path
+                                d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+                        </svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 9 4-4-4-4" />
+                        </svg>
+                        <a href="{{ route('user.properties.index') }}"
+                            class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Properties</a>
+                    </div>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 9 4-4-4-4" />
+                        </svg>
+                        <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Property
+                            Create</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+    </div>
 
     <div x-data="stepper()" class="container bg-white rounded-lg shadow-lg p-6 mt-5">
         <div class="" x-data="formHandler()">
 
-            <form method="POST" @submit.prevent="submitForm" id="propertyFrom" action="{{ route('user.properties.store') }}"
-                enctype="multipart/form-data">
+            <form method="POST" @submit.prevent="submitForm" id="propertyFrom"
+                action="{{ route('user.properties.store') }}" enctype="multipart/form-data">
                 @csrf
             </form>
 
@@ -271,7 +272,8 @@
                                             <div class="text-start mt-2">
                                                 <button @click="isModalOpen2 = true" class="text-blue-600 underline"
                                                     role="button">
-                                                    Get Location details from outside   <span class="text-theme">How to?</span>
+                                                    Get Location details from outside <span class="text-theme">How
+                                                        to?</span>
                                                 </button>
                                             </div>
                                         </div>
@@ -306,8 +308,8 @@
                                                     <img src="{{ asset('images/general/address-getting.png') }}"
                                                         class="w-full rounded-lg mt-5"
                                                         alt="How To get latitude and longitude ">
-                                                        <a href="https://www.latlong.net/convert-address-to-lat-long.html"
-                                                target="_new" class="mt-3"><span>Click the link</span></a>
+                                                    <a href="https://www.latlong.net/convert-address-to-lat-long.html"
+                                                        target="_new" class="mt-3"><span>Click the link</span></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -505,7 +507,8 @@
                                                                     <input form="propertyFrom" class="sr-only peer"
                                                                         @if ($i == 1) checked @endif
                                                                         type="radio" value="{{ $i }}"
-                                                                        name="bathroom" id="bathroom_{{ $i }}">
+                                                                        name="bathroom"
+                                                                        id="bathroom_{{ $i }}">
                                                                     <label
                                                                         class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent"
                                                                         for="bathroom_{{ $i }}">{{ $i }}</label>
@@ -734,12 +737,11 @@
 
                                                         </div>
                                                     </div>
-                                                    <div id="parking"
-                                                        class="mt-3 HideUnwantedSectionsInPlot HideUnwantedSectionsInPg HideUnwantedSectionsInPg">
-                                                        <h5 class="mt-3 font-medium">Reserved Parking</h5>
-                                                        <div class="">
+                                                    <div id="parking" class="mt-3 ">
 
-                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between">
+                                                        <div class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
+                                                            <h5 class="mt-3 font-medium">Reserved Parking</h5>
+                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
                                                                     class="block mb-2 text-sm font-medium text-gray-500">Covered
                                                                     Parking</label>
@@ -764,7 +766,7 @@
 
                                                             </div>
                                                             <!-- Parking Area -->
-                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between">
+                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between  ">
                                                                 <label for="city"
                                                                     class="block mb-2 text-sm font-medium text-gray-500">Open
                                                                     Parking</label>
@@ -788,24 +790,25 @@
                                                                     </button>
                                                                 </div>
                                                             </div>
-                                                            <!-- Project  -->
-                                                            <div class="mb-2">
-                                                                <label for="projects" class="mt-3 font-medium ">Choose
-                                                                    Project</label>
-                                                                <select form="propertyFrom" name="project" id="projects"
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                                                    <option value="" selected>None of the below
-                                                                    </option>
-                                                                    @foreach ($projects ?? [] as $project_item)
-                                                                        <option value="{{ $project_item->id }}">
-                                                                            {{ $project_item->name }}</option>
-                                                                    @endforeach
-
-                                                                </select>
-                                                            </div>
-
 
                                                         </div>
+                                                        <!-- Project  -->
+                                                        <div class="mb-2 HideUnwantedSectionsInPg ShowWantedSectionsInPlot">
+                                                            <label for="projects" class="mt-3 font-medium ">Choose
+                                                                Project</label>
+                                                            <select form="propertyFrom" name="project" id="projects"
+                                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                                                <option value="" selected>None of the below
+                                                                </option>
+                                                                @foreach ($projects ?? [] as $project_item)
+                                                                    <option value="{{ $project_item->id }}">
+                                                                        {{ $project_item->name }}</option>
+                                                                @endforeach
+
+                                                            </select>
+                                                        </div>
+                                                        
+
                                                     </div>
 
                                                     <div id="availabiltyStaus" x-data="{ propertyType: 'ready-to-move', propertyStatus: '0-1', possessionDate: '' }"
@@ -1479,7 +1482,8 @@
                                             <div class="flex flex-col relative">
                                                 <div class="relative group border rounded-lg overflow-hidden">
                                                     <!-- Video Preview -->
-                                                    <video :src="video.url" controls class="w-30 h-30 object-cover">
+                                                    <video :src="video.url" controls
+                                                        class="w-30 h-30 object-cover">
                                                         Your browser does not support the video tag.
                                                     </video>
 

@@ -485,6 +485,24 @@ class FrontendController extends Controller
 
 
     public function postConsult(Request $request){
+        $request->validate([
+            'property_id' => 'required|exists:properties,id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string|max:1000',
+        ], [
+            'property_id.required' => 'The property  is missing. Please try again.',
+            'property_id.exists' => 'The selected property does not exist.',
+            'name.required' => 'Your name is required.',
+            'name.max' => 'Your name must not exceed 255 characters.',
+            'email.required' => 'Your email address is required.',
+            'email.email' => 'Please provide a valid email address.',
+            'email.max' => 'Your email must not exceed 255 characters.',
+            'message.required' => 'A message is required to submit an enquiry.',
+            'message.max' => 'Your message must not exceed 1000 characters.',
+        ]);
+
+        
         dd($request->all());
     }
 
