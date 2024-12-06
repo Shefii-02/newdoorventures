@@ -32,22 +32,21 @@
                             <div class="p-6 bg-white rounded-md shadow dark:bg-slate-900 dark:shadow-gray-700">
                                 <h3 class="mb-6 text-2xl font-medium leading-normal">Get in touch!</h3>
 
-                                <form method="post" action="https://stage.newdoorventures.in/contact/send"
-                                    class="contact-form">
-                                    <input type="hidden" name="_token" value="zk1WhKvRljtFrnxiXtFjE7b6iUP7vd46Zo1GgXPX"
-                                        autocomplete="off">
+                                <form method="post"  action="{{ route('public.contact.send') }}"
+                                    class="contact-form generic-form">
+                                    @csrf
                                     <p class="mb-0" id="error-msg"></p>
                                     <div id="simple-msg"></div>
                                     <div class="grid lg:grid-cols-12 lg:gap-6">
                                         <div class="mb-5 lg:col-span-6">
                                             <label class="form-label" for="name">Your Name:</label>
-                                            <input name="name" id="name" type="text" class="mt-2 form-input"
+                                            <input name="name" id="name" required type="text" class="mt-2 form-input"
                                                 placeholder="Name:">
                                         </div>
 
                                         <div class="mb-5 lg:col-span-6">
                                             <label class="form-label" for="email">Your Email:</label>
-                                            <input name="email" id="email" type="email" class="mt-2 form-input"
+                                            <input name="email" id="email" required type="email" class="mt-2 form-input"
                                                 placeholder="Email:">
                                         </div>
                                     </div>
@@ -55,7 +54,7 @@
                                     <div class="grid grid-cols-1">
                                         <div class="mb-5">
                                             <label class="form-label" for="subject">Your Question:</label>
-                                            <input name="subject" id="subject" class="mt-2 form-input"
+                                            <input name="subject" id="subject" required class="mt-2 form-input"
                                                 placeholder="Subject:">
                                         </div>
 
@@ -64,10 +63,6 @@
                                             <textarea name="content" id="content" class="mt-2 form-input textarea" placeholder="Message:"></textarea>
                                         </div>
                                     </div>
-
-
-
-
 
                                     <div class="contact-mb-3">
                                         <div class="contact-message contact-success-message" style="display: none"></div>

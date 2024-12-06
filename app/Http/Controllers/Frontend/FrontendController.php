@@ -13,6 +13,7 @@ use App\Models\Page;
 use App\Models\Configration;
 use App\Models\Advertisement;
 use App\Models\Consult;
+use App\Models\Contact;
 use App\Models\PgRules;
 
 use Illuminate\Routing\Controller;
@@ -259,10 +260,10 @@ class FrontendController extends Controller
             $route_name = 'properties';
         }
 
-       
+
 
         // Render the view with the items
-        return view('front.shortcuts.filters.search-suggestion', compact('items','route_name'))->render();
+        return view('front.shortcuts.filters.search-suggestion', compact('items', 'route_name'))->render();
     }
 
     public function searchProperties(Request $request)
@@ -531,6 +532,33 @@ class FrontendController extends Controller
             $lead->status = 'pending';
             $lead->save();
 
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Your enquiry request has been submitted successfully!',
+                'data' => [
+                    'next_page' => null, // Or set a URL for redirection if needed
+                ],
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => 'An error occurred while submitting your request. Please try again later.',
+            ]);
+        }
+    }
+
+    public function postContactForm(Request $request)
+    {
+        try {
+            $contact = new Contact();
+            $contact->name = $request->name;
+            $contact->email = $request->email;
+            $contact->phone = '1';
+            $contact->subject = $request->subject;
+            $contact->content = $request->content;
+            $contact->status = 'pending';
+            $contact->save();
 
             return response()->json([
                 'error' => false,
