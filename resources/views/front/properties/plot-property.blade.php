@@ -57,7 +57,7 @@
 
                                                                 @if ($property->city)
                                                                     <p
-                                                                        class="d-inline fw-bolder me-2 text-base text-theme text-capitalize {{ isset($project) ? 'border-2  border-end-0 border-top-0 border-bottom-0 ps-2' : '' }} ">
+                                                                        class="d-inline fw-bolder me-2 text-base text-theme text-capitalize {{ isset($property->project) ? 'border-2  border-end-0 border-top-0 border-bottom-0 ps-2' : '' }} ">
                                                                         {{ $property->locality . ',' }}
                                                                         {{ $property->city ? $property->city : 'Banglore' }}
 
@@ -114,7 +114,7 @@
                             More Details
                         </button>
                     </li>
-                    @if ($project)
+                    @if ($property->project)
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('AboutProject')"
                                 :class="{ 'tab-active': activeTab === 'AboutProject' }"
@@ -217,7 +217,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if ($project)
+                            @if ($property->project)
                                 <div class="container-fluid mb-5" id="AboutProject" class="section"
                                     :class="{ 'active': activeSection === 'AboutProject' }">
                                     <div class="md:flex">
@@ -228,8 +228,8 @@
                                                     <div class="row align-items-center">
                                                         <div class="col-lg-4 d-flex align-items-center">
                                                             <div class="p-3">
-                                                                <span>{{ $project->name }}</span>
-                                                                <span>by {{ $project->investor->name }}</span>
+                                                                <span>{{ $property->project->name }}</span>
+                                                                <span>by {{ $property->project->investor->name }}</span>
                                                             </div>
                                                         </div>
                                                         <div
@@ -238,9 +238,9 @@
                                                                 <span class="small text-gray-400 fw-bold">Price per sqft
                                                                 </span>
                                                                 <span>
-                                                                    {{ shorten_price($project->price_from / ($project->square > 0 ? $project->square : 1)) }}
+                                                                    {{ shorten_price($property->project->price_from / ($property->project->square > 0 ? $property->project->square : 1)) }}
                                                                     - 
-                                                                    {{ shorten_price($project->price_to / ($project->square > 0 ? $project->square : 1)) }}</span>
+                                                                    {{ shorten_price($property->project->price_to / ($property->project->square > 0 ? $property->project->square : 1)) }}</span>
                                                             </div>
                                                         </div>
                                                         <div
@@ -249,7 +249,7 @@
                                                                 <span class="small text-gray-400 fw-bold">Units
                                                                 </span>
                                                                 <span>
-                                                                    {{ $project->unit }} Units</span>
+                                                                    {{ $property->project->unit }} Units</span>
                                                             </div>
                                                         </div>
                                                     </div>
