@@ -236,7 +236,7 @@
                             <label for="floatingInputName">Email Id</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="mobile" required id="floatingInputNo"
+                            <input type="text" class="form-control" name="phone" maxlength="10" required id="floatingInputNo"
                                 placeholder="+91 Phone">
                             <label for="floatingInputNo">Mobile Number <small class="text-theme">(+91
                                     Phone)</small></label>
@@ -695,6 +695,26 @@
                 }
             }
         } catch (err) {}
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.open-enquiry-modal').on('click', function (event) {
+                event.preventDefault();
+                const id = $(this).data('id'); // Get the property ID from data-id
+                const type = $(this).data('type'); // Get the property name from data-name
+
+                // Set the property ID in the hidden input field
+                $('#data_id').val(id);
+                $('#type').val(type);
+
+                // Update the modal title dynamically
+                // $('#enquiryModalLabel').text(`Enquiry for ${propertyName}`);
+
+                // Show the modal
+                $('#BookingModal').modal('show');
+            });
+});
     </script>
 </body>
 

@@ -501,21 +501,18 @@ class FrontendController extends Controller
         ]);
 
         // Check for duplicate submission
-        $existingConsult = Consult::where('ip_address', $request->ip())
-            ->where(function ($query) use ($request) {
-                $query->where('property_id', $request->property_id)
-                    ->orWhere('project_id', $request->project_id);
-            })->first();
+        // $existingConsult = Consult::where('ip_address', $request->ip())
+        //     ->where(function ($query) use ($request) {
+        //         $query->where('property_id', $request->property_id)
+        //             ->orWhere('project_id', $request->project_id);
+        //     })->first();
 
-        if ($existingConsult) {
-            return response()->json([
-                'error' => true,
-                'message' => 'You have already submitted a consultation request for this property/project.',
-            ]);
-        }
-
-        if ($request->type == 'property') {
-        }
+        // if ($existingConsult) {
+        //     return response()->json([
+        //         'error' => true,
+        //         'message' => 'You have already submitted a consultation request for this property/project.',
+        //     ]);
+        // }
 
         // Save the consult record
 

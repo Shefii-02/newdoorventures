@@ -83,8 +83,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="px-3 mt-8">
-                                                    <a href="" data-bs-toggle="modal" data-bs-target="#BookingModal" 
-                                                        class=" text-theme btn btn-sm bg-trasparent border-theme">
+                                                    <a href="#" data-id="{{ $project->id }}" data-type="type" 
+                                                        class=" text-theme btn btn-sm bg-trasparent border-theme open-enquiry-modal">
                                                         <i class="mdi mdi-download me-2"></i>
                                                         {{ __('Download Brochure') }}
                                                     </a>
@@ -236,8 +236,9 @@
 
                                                     </div>
                                                     <div class="px-3 mt-8">
-                                                        <a href="" data-bs-toggle="modal" data-bs-target="#BookingModal" 
-                                                            class="text-sm text-white btn bg-primary">{{ __('Get Phone Number') }}</a>
+                                                        <a href="" data-id="{{ $project->id }}" data-type="type" 
+                                                           
+                                                            class="text-sm open-enquiry-modal text-white btn bg-primary">{{ __('Get Phone Number') }}</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -682,8 +683,9 @@
                                     @include('front.shortcuts.consult-form', ['type' => 'project', 'data' => $project])
                                 </div>
                                 <div class="mt-4">
-                                    <a href="" data-bs-toggle="modal" data-bs-target="#BookingModal"  class="w-full py-4 text-white btn bg-primary fs-5"><i
-                                            class="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
+                                    <a href="" data-id="{{ $project->id }}" data-type="type" 
+                                      class="w-full py-4 text-white btn bg-primary fs-5  open-enquiry-modal ">
+                                      <i lass="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
                                 </div>
 
                             </div>
