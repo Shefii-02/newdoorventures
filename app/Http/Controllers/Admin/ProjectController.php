@@ -448,7 +448,7 @@ class ProjectController extends Controller
     {
         ProjectSpecification::where('project_id', $project->id)->delete();
         $specificationFields = $request->specifications;
-        foreach ($specificationFields as $index => $specValue) {
+        foreach ($specificationFields ?? [] as $index => $specValue) {
             if (isset($specValue['image']) && $request->hasFile("specifications.$index.image")) {
                 $path = uploadFile($specValue['image'], 'projects');
                 if (file_exists('images/'.$specValue['eXimagePath'])) {
