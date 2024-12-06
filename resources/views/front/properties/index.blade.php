@@ -119,7 +119,6 @@
         </div>
     </div>
 
-
     <section class="relative">
         <div class="container">
             <div id="items-map" @class([
