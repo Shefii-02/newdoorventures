@@ -123,7 +123,7 @@
                             {"breakpoint": 480, "settings": {"slidesToShow": 1}}
                         ]
                     }'>
-                            @foreach ($property->images as $image)
+                            @foreach ($property->images ?? [] as $image)
                                 <div>
                                     <img src="{{ asset('images/' . $image) }}" class="w-100 rounded-3 object-cover" />
                                 </div>
@@ -219,7 +219,7 @@
                                                     <div class="row">
                                                         <h5 class="text-success font-bold mb-4"><u>Ameneties : </u></h5>
                                                         <div class="row">
-                                                            @foreach ($property->features as $key => $feature)
+                                                            @foreach ($property->features ?? [] as $key => $feature)
                                                                 <div class="col-lg-3 mb-3">
                                                                     <div class="d-flex  flex-warp items-center">
                                                                         <img src="{{ $feature->image_url }}"
@@ -242,7 +242,7 @@
                                                                 class="text-dark text-capitalize">{{ str_replace('-', ' ', $property->furnishing_status) }}</span>
                                                         </h5>
                                                         <div class="row">
-                                                            @foreach ($property->furnishing as $key => $furnish)
+                                                            @foreach ($property->furnishing ?? [] as $key => $furnish)
                                                                 <div class="col-lg-3 mb-3">
                                                                     <div class="d-flex  flex-warp items-center">
                                                                         <img src="{{ $furnish->image_url }}"
