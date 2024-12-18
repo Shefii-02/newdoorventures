@@ -136,13 +136,14 @@ class PropertyController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-
+        
         if (!permission_check('Property Delete')) {
             return abort(404);
         }
 
         if (auth('web')->user()->acc_type == 'superadmin') {
-            $property = Property::findOrFail($id);
+            $property = Property::withTrashed()->whereId($id)->first() ?? abort(404);
+   
             DB::beginTransaction();
             try {
                 foreach ($property->images  ?? [] as $imageLoc) {
@@ -161,7 +162,10 @@ class PropertyController extends Controller
                 // $property->delete();
                 DB::commit();
                 Session::flash('success_msg', 'Successfully Deleted');
-                return redirect()->route('admin.properties.index')->with('success_msg', 'Status updated deleted!');
+                if ($request->has('from') && $request->from == 'trash') {
+                    return redirect()->route('admin.trash.index')->with('success_msg', 'Property  deleted!');
+                }
+                return redirect()->route('admin.properties.index')->with('success_msg', 'Property deleted!');
             } catch (Exception $e) {
                 DB::rollBack();
                 // Return error response if something goes wrong
@@ -176,7 +180,7 @@ class PropertyController extends Controller
                 Property::where('id', $id)->delete();
                 DB::commit();
                 Session::flash('success_msg', 'Successfully Deleted');
-                return redirect()->route('admin.properties.index')->with('success_msg', 'Status updated deleted!');
+                return redirect()->route('admin.properties.index')->with('success_msg', 'Property deleted!');
             } catch (Exception $e) {
                 DB::rollBack();
                 // Return error response if something goes wrong

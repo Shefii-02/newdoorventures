@@ -319,11 +319,11 @@
                             </li>
                             @if ($property->features->count())
                                 <li role="presentation" class="inline-block">
-                                    <button @click="scrollToSection('Ameneties')"
-                                        :class="{ 'tab-active': activeTab === 'Ameneties' }"
+                                    <button @click="scrollToSection('Amenities')"
+                                        :class="{ 'tab-active': activeTab === 'Amenities' }"
                                         class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
-                                        id="Ameneties-tab" data-tabs-target="#Ameneties" type="button" role="tab"
-                                        aria-controls="Ameneties" aria-selected="false">
+                                        id="amenities-tab" data-tabs-target="#amenities" type="button" role="tab"
+                                        aria-controls="amenities" aria-selected="false">
                                         Common Amenities
                                     </button>
                                 </li>
@@ -388,8 +388,8 @@
 
 
                                     @if ($property->features->count())
-                                        <div class="container-fluid mb-5" id="Ameneties" class="section"
-                                            :class="{ 'active': activeSection === 'Ameneties' }">
+                                        <div class="container-fluid mb-5" id="amenities" class="section"
+                                            :class="{ 'active': activeSection === 'Amenities' }">
                                             <div class="md:flex">
                                                 <div class="w-full p-1 ">
                                                     <div class="border-theme rounded-xl">

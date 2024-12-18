@@ -39,7 +39,8 @@
                 @if (permission_check('Project Delete'))
                     <form method="POST" id="form_{{ $project->id }}"
                         action="{{ route('admin.projects.destroy', $project->id) }}">@csrf @method('DELETE')</form>
-                    <button form="form_{{ $project->id }}" type="submit"
+                    <button form="form_{{ $project->id }}" type="button"
+                        onclick="confirmDelete({{ $project->id }})"
                         class="mx-auto block hover:text-meta-1 ms-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-trash" viewBox="0 0 16 16">

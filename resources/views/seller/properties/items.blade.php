@@ -30,12 +30,12 @@
         <td class="px-2 py-1 text-center">
             @if ($property->status == 'rented' || $property->status == 'sold')
                 <span
-                    class="badge badge-pill text-capitalize fs-6 {{ $property->status == 'sold' || $property->status == 'rented' ? 'bg-theme' : '' }}  text-light ">
+                    class="badge badge-pill text-capitalize text-md {{ $property->status == 'sold' || $property->status == 'rented' ? 'bg-theme' : '' }}  text-light ">
                     {{ $property->status }}
                 </span>
             @else
                 <span
-                    class="badge badge-pill text-capitalize fs-6 {{ $property->moderation_status == 'approved' ? 'bg-success' : ($property->moderation_status == 'pending' ? 'bg-warning' : 'bg-primary') }}  text-light ">
+                    class="badge badge-pill text-capitalize text-md {{ $property->moderation_status == 'approved' ? 'bg-success' : ($property->moderation_status == 'pending' ? 'bg-warning' : 'bg-primary') }}  text-light ">
                     {{ $property->moderation_status }}
                 </span>
             @endif

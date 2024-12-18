@@ -2,64 +2,38 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Consult;
+use App\Models\Contact;
+use App\Models\GoogleAnalyticsTopDevice;
+use App\Models\GoogleAnalyticsTopLandingPage;
+use App\Models\GoogleAnalyticsTopReferrer;
+use App\Models\GoogleAnalyticsVisitor;
+use Vormkracht10\Analytics\Facades\Analytics;
+use Vormkracht10\Analytics\Period;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Account;
+use App\Models\Project;
+use App\Models\Property;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
-    }
+  
+        $totalPropertyLeads = Consult::count();
+        $totalProperties    = Property::count();
+        $totalProjects      = Project::count();
+        $totalAccounts      = Account::count();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Google Analytics
+        $totalViews  = Analytics::sessions(Period::months(100));
+        $last30DaysVisitors = GoogleAnalyticsVisitor::orderby('date', 'asc')->get();
+        $topDevices = GoogleAnalyticsTopDevice::all();
+        $topReferrers = GoogleAnalyticsTopReferrer::all();
+        $topLandingPages = GoogleAnalyticsTopLandingPage::all();
+        return view('admin.dashboard.index', 
+               compact('totalPropertyLeads','totalProperties','totalAccounts','totalProjects', 'topDevices', 'topReferrers', 
+                        'last30DaysVisitors', 'topLandingPages','totalViews'));
     }
 }

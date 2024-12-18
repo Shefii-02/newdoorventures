@@ -29,7 +29,7 @@
                 </span>
             </button>
             <!-- Hamburger Toggle BTN -->
-            <a class="block flex-shrink-0 lg:hidden" href="{{ route('admin.dashboard') }}">
+            <a class="block flex-shrink-0 lg:hidden" href="{{ route('admin.dashboard.index') }}">
                 <img src="{{ asset('images/general/logo-dark.png') }}" class="w-15 ms-3" alt="Logo" />
             </a>
         </div>

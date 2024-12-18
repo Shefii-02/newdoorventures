@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class AmenetiesController extends Controller
+class AmenitiesController extends Controller
 {
 
     public function __construct()
@@ -26,9 +26,9 @@ class AmenetiesController extends Controller
     public function index()
     {
         //
-        $ameneties = Feature::orderBy('id', 'desc')->get();
+        $amenities = Feature::orderBy('id', 'desc')->get();
 
-        return view('admin.ameneties.index', compact('ameneties'));
+        return view('admin.amenities.index', compact('amenities'));
     }
 
     /**
@@ -37,7 +37,7 @@ class AmenetiesController extends Controller
     public function create()
     {
         //
-        return view('admin.ameneties.form');
+        return view('admin.amenities.form');
     }
 
     /**
@@ -49,7 +49,7 @@ class AmenetiesController extends Controller
         DB::beginTransaction();
         try {
             $amenety = Feature::query()->create($request->input());
-            $result = uploadFiletoMedia($request->file('icon'), 'ameneties');
+            $result = uploadFiletoMedia($request->file('icon'), 'amenities');
             $amenety->icon = isset($result['media_id']) ? $result['media_id'] : null;
             $amenety->save();
             Db::commit();
@@ -61,7 +61,7 @@ class AmenetiesController extends Controller
         }
 
         Session::flash('success_msg', 'Successfully Added');
-        return  redirect()->route('admin.ameneties.index');
+        return  redirect()->route('admin.amenities.index');
     }
 
     /**
@@ -79,7 +79,7 @@ class AmenetiesController extends Controller
     {
         //
         $amenety = Feature::where('id', $id)->first() ?? abort(404);
-        return view('admin.ameneties.form', compact('amenety'));
+        return view('admin.amenities.form', compact('amenety'));
     }
 
     /**
@@ -101,7 +101,7 @@ class AmenetiesController extends Controller
 
             if($request->hasFile('icon')){
     
-                $result = uploadFiletoMedia($request->file('icon'), 'ameneties');
+                $result = uploadFiletoMedia($request->file('icon'), 'amenities');
                 $amenety->icon = isset($result['media_id']) ? $result['media_id'] : null;
             }
             $amenety->save();
@@ -115,7 +115,7 @@ class AmenetiesController extends Controller
         }
 
         Session::flash('success_msg', 'Successfully Updated');
-        return  redirect()->route('admin.ameneties.index');
+        return  redirect()->route('admin.amenities.index');
     }
 
     /**
@@ -138,6 +138,6 @@ class AmenetiesController extends Controller
             return redirect()->back();
         }
         Session::flash('success_msg', 'Successfully Deleted');
-        return  redirect()->route('admin.ameneties.index');
+        return  redirect()->route('admin.amenities.index');
     }
 }

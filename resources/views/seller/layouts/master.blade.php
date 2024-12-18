@@ -16,9 +16,9 @@
     @stack('header')
 
 
-    <link media="all" type="text/css" rel="stylesheet" href="{{ asset('themes/dashboard/core.css')}}">
-  
-   
+    <link media="all" type="text/css" rel="stylesheet" href="{{ asset('themes/dashboard/core.css') }}">
+
+
 
     <link href="{{ asset('images/backgrounds/favicon.png') }}" rel="shortcut icon">
 
@@ -69,8 +69,7 @@
         href="https://stage.newdoorventures.in/vendor/core/core/base/css/core.css?v=1.8.6">
 
 
-    <link href="{{ asset('themes/dashboard/style.css') }}"
-        rel="stylesheet">
+    <link href="{{ asset('themes/dashboard/style.css') }}" rel="stylesheet">
 
     <style>
         #nprogress {
@@ -298,14 +297,59 @@
         });
     </script>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('[data-slick]').slick();
-    });
-</script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('[data-slick]').slick();
+        });
+    </script>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "preventDuplicates": false,
+            "positionClass": "toast-top-right", // Toast position
+            "timeOut": "5000", // Timeout duration
+            "extendedTimeOut": "5000",
+        };
+
+        @if (session('success_msg'))
+            toastr.success("{{ session('success_msg') }}", "Success");
+        @elseif (session('failed_msg'))
+            toastr.error("{{ session('failed_msg') }}", "Error");
+        @elseif (session('info'))
+            toastr.info("{{ session('info') }}", "Info");
+        @elseif (session('warning'))
+            toastr.warning("{{ session('warning') }}", "Warning");
+        @endif
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript">
+        function confirmDelete(bannerId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You won\'t be able to revert this!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form if confirmed
+                    document.getElementById('form_' + bannerId).submit();
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

@@ -95,7 +95,7 @@ class Project extends BaseModel
             $project->features()->detach();
             $project->facilities()->detach();
             $project->properties()->update(['project_id' => 0]);
-            $project->metadata()->delete();
+            // $project->metadata()->delete();
         });
     }
 

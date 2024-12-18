@@ -28,6 +28,19 @@
         href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
     @stack('header')
+    <style>
+        button.swal2-cancel.swal2-styled {
+            background: #ff0000;
+        }
+
+        button.swal2-deny.swal2-styled {
+            background: #808080;
+        }
+
+        button.swal2-confirm.swal2-styled {
+            background: #008000;
+        }
+    </style>
 </head>
 
 <body x-data="{ page: 'crm', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
@@ -58,63 +71,87 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
 
 
     <script defer src="{{ asset('assets/admin/bundle.js') }}"></script>
-    <script src="https://cdn.tiny.cloud/1/{{ env('TinyKey') }}/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/{{ env('TinyKey') }}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
     @stack('footer')
-    <!-- Place the following <script>
-        and < textarea > tags your HTML 's <body> --> 
-            <script >
-            tinymce.init({
-                selector: '.tinyeditor',
-                plugins: [
-                    // Core editing features
-                    'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media',
-                    'searchreplace', 'table', 'visualblocks', 'wordcount',
-                    // Your account includes a free trial of TinyMCE premium features
-                    // Try the most popular premium features until Dec 17, 2024:
-                    // 'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker',
-                    // 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage',
-                    // 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags',
-                    // 'autocorrect', 'typography', 'inlinecss', 'markdown',
-                    // Early access to document converters
-                    // 'importword', 'exportword', 'exportpdf'
-                ],
-                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                tinycomments_mode: 'embedded',
-                tinycomments_author: 'Author name',
-                mergetags_list: [{
-                        value: 'First.Name',
-                        title: 'First Name'
-                    },
-                    {
-                        value: 'Email',
-                        title: 'Email'
-                    },
-                ],
-                ai_request: (request, respondWith) => respondWith.string(() => Promise.reject(
-                    'See docs to implement AI Assistant')),
-            });
+
+    <script>
+        tinymce.init({
+            selector: '.tinyeditor',
+            plugins: [
+                // Core editing features
+                'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media',
+                'searchreplace', 'table', 'visualblocks', 'wordcount',
+
+            ],
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [{
+                    value: 'First.Name',
+                    title: 'First Name'
+                },
+                {
+                    value: 'Email',
+                    title: 'Email'
+                },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject(
+                'See docs to implement AI Assistant')),
+        });
     </script>
-    <!-- Check for Flash Messages and Trigger Toasts -->
-    @if (session('success_msg'))
-        <script>
-            toastr.success("{{ session('success_msg') }}");
-        </script>
-    @elseif (session('failed_msg'))
-        <script>
-            toastr.error("{{ session('failed_msg') }}");
-        </script>
-    @endif
 
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
         $(document).ready(function() {
             $('[data-slick]').slick();
         });
+    </script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "preventDuplicates": false,
+            "positionClass": "toast-top-right", // Toast position
+            "timeOut": "5000", // Timeout duration
+            "extendedTimeOut": "5000",
+        };
+
+        @if (session('success_msg'))
+            toastr.success("{{ session('success_msg') }}", "Success");
+        @elseif (session('failed_msg'))
+            toastr.error("{{ session('failed_msg') }}", "Error");
+        @elseif (session('info'))
+            toastr.info("{{ session('info') }}", "Info");
+        @elseif (session('warning'))
+            toastr.warning("{{ session('warning') }}", "Warning");
+        @endif
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(Idd) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You won\'t be able to revert this!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form if confirmed
+                    document.getElementById('form_' + Idd).submit();
+                }
+            });
+        }
     </script>
 
 </body>

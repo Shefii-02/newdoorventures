@@ -149,12 +149,12 @@
                     @endif
                     @if ($project->features->count())
                         <li role="presentation" class="inline-block">
-                            <button @click="scrollToSection('Ameneties')"
-                                :class="{ 'tab-active': activeTab === 'Ameneties' }"
+                            <button @click="scrollToSection('Amenities')"
+                                :class="{ 'tab-active': activeTab === 'Amenities' }"
                                 class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
-                                id="ameneties-tab" data-tabs-target="#amenetiesDetails" type="button" role="tab"
-                                aria-controls="amenetiesDetails" aria-selected="false">
-                                Ameneties
+                                id="amenities-tab" data-tabs-target="#amenitiesDetails" type="button" role="tab"
+                                aria-controls="amenitiesDetails" aria-selected="false">
+                                amenities
                             </button>
                         </li>
                     @endif
@@ -357,13 +357,13 @@
 
 
                             @if ($project->features->count())
-                                <div class="container-fluid mb-5" id="Ameneties" class="section"
-                                    :class="{ 'active': activeSection === 'Ameneties' }">
+                                <div class="container-fluid mb-5" id="amenities" class="section"
+                                    :class="{ 'active': activeSection === 'Amenities' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
                                             <div class="border-theme rounded-xl">
                                                 <div class="px-3 py-5">
-                                                    <h4 class="fs-5  font-bold me-2 mb-3">Ameneties </h4>
+                                                    <h4 class="fs-5  font-bold me-2 mb-3">amenities </h4>
                                                     <div class="px-3">
                                                         <div class="row align-items-center">
                                                             @foreach ($project->features ?? [] as $featureItem)

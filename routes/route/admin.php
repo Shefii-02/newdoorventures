@@ -12,21 +12,14 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers\Admin'], function () {
-    Route::get('dashboard', function () {
-        return view('admin.dashboard.index');
-    })->name('dashboard');
+   
+  
 
-    Route::get('profile', [ProfileController::class,'index'])->name('profile');
-    Route::post('profile/update', 'ProfileController@updateProfile')->name('profile.update');
-    Route::post('profile/update-password', 'ProfileController@changePassword')->name('profile.changePassword');
-    
-
-
-    // Route::resource('dashboard', DashboardController::class)->names('dashboard');
+    Route::resource('dashboard', DashboardController::class)->names('dashboard');
     Route::resource('properties', PropertyController::class)->names('properties');
     Route::resource('projects', ProjectController::class)->names('projects');
     Route::resource('builders', BuilderController::class)->names('builders');
-    Route::resource('ameneties', AmenetiesController::class)->names('ameneties');
+    Route::resource('amenities', AmenitiesController::class)->names('amenities');
     Route::resource('landmark', LandmarksController::class)->names('landmark');
     Route::resource('furnishing', FurnishingController::class)->names('furnishing');
     Route::resource('rules', RulesController::class)->names('rules');
@@ -42,8 +35,13 @@ Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.'
     Route::resource('categories', CategoriesController::class)->names('categories');
     Route::post('consults/update-status/{id}', 'App\Http\Controllers\Admin\ConsultsController@updateStatus')->name('admin.consults.updateStatus');
     Route::post('contact/update-status/{id}', 'App\Http\Controllers\Admin\ConsultsController@updateStatus')->name('admin.consults.updateStatus');
-
+    Route::resource('blogs', BlogPostController::class)->names('blogs');
+    Route::resource('blog-category', BlogCategoryController::class)->names('blogs-category');
     Route::resource('trash', TrashController::class)->names('trash');
     
+    Route::get('profile', [ProfileController::class,'index'])->name('profile');
+    Route::post('profile/update', 'ProfileController@updateProfile')->name('profile.update');
+    Route::post('profile/update-password', 'ProfileController@changePassword')->name('profile.changePassword');
     
+
 });

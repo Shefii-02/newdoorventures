@@ -6,7 +6,7 @@
       <div
           class="flex items-center justify-between gap-2 px-6 py-5.5 border-0 border-end-3 lg:py-5.5 bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
           <div class="d-flex flex item items-center">
-              <a href="{{ route('admin.dashboard') }}" class="text-md">
+              <a href="{{ route('admin.dashboard.index') }}" class="text-md">
                   <img class="h-12.5" src="{{ asset('images/general/logo-dark.png') }}" alt="Logo" />
               </a>
               <span class="text-sm ms-2 fw-bold">NEW DOOR VENTURES</span>
@@ -26,7 +26,7 @@
 
       <div class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
           <!-- Sidebar Menu -->
-          <nav class="mt-5 px-4  lg:px-6" x-data="{ selected: $persist('Dashboard'),page: $persist('') }">
+          <nav class="mt-5 px-4  lg:px-6" x-data="{ selected: $persist('Dashboard'), page: $persist('') }">
               <!-- Menu Group -->
               <div>
                   <h3 class="mb-4 ml-4 text-sm font-medium text-bodydark2">MENU</h3>
@@ -35,7 +35,7 @@
                       <!-- Menu Item Dashboard -->
                       <li>
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                              href="{{ route('admin.dashboard') }}"
+                              href="{{ route('admin.dashboard.index') }}"
                               @click="selected = (selected === 'Dashboard' ? '':'Dashboard')"
                               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Dashboard') }">
                               <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -64,10 +64,14 @@
                                   href="{{ route('admin.properties.index') }}"
                                   @click="selected = (selected === 'Properties' ? '':'Properties')"
                                   :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Properties') }">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-check" viewBox="0 0 16 16">
-                                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514"/>
-                                    <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
-                                    <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                      fill="currentColor" class="bi bi-building-check" viewBox="0 0 16 16">
+                                      <path
+                                          d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514" />
+                                      <path
+                                          d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z" />
+                                      <path
+                                          d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z" />
                                   </svg>
                                   Properties
                               </a>
@@ -81,9 +85,12 @@
                                   href="{{ route('admin.projects.index') }}"
                                   @click="selected = (selected === 'Projects' ? '':'Projects')"
                                   :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Projects') }">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-buildings" viewBox="0 0 16 16">
-                                    <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022M6 8.694 1 10.36V15h5zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5z"/>
-                                    <path d="M2 11h1v1H2zm2 0h1v1H4zm-2 2h1v1H2zm2 0h1v1H4zm4-4h1v1H8zm2 0h1v1h-1zm-2 2h1v1H8zm2 0h1v1h-1zm2-2h1v1h-1zm0 2h1v1h-1zM8 7h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zM8 5h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zm0-2h1v1h-1z"/>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                      fill="currentColor" class="bi bi-buildings" viewBox="0 0 16 16">
+                                      <path
+                                          d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022M6 8.694 1 10.36V15h5zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5z" />
+                                      <path
+                                          d="M2 11h1v1H2zm2 0h1v1H4zm-2 2h1v1H2zm2 0h1v1H4zm4-4h1v1H8zm2 0h1v1h-1zm-2 2h1v1H8zm2 0h1v1h-1zm2-2h1v1h-1zm0 2h1v1h-1zM8 7h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zM8 5h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zm0-2h1v1h-1z" />
                                   </svg>
                                   Projects
                               </a>
@@ -97,8 +104,10 @@
                                   href="{{ route('admin.builders.index') }}"
                                   @click="selected = (selected === 'Builders' ? '':'Builders')"
                                   :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Builders') }">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-gear" viewBox="0 0 16 16">
-                                    <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                      fill="currentColor" class="bi bi-person-gear" viewBox="0 0 16 16">
+                                      <path
+                                          d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
                                   </svg>
                                   Builders
                               </a>
@@ -112,8 +121,10 @@
                                   href="{{ route('admin.accounts.index') }}"
                                   @click="selected = (selected === 'Accounts' ? '':'Accounts')"
                                   :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Accounts') }">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
-                                    <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                      fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                                      <path
+                                          d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
                                   </svg>
                                   Accounts
                               </a>
@@ -127,8 +138,10 @@
                                   href="{{ route('admin.consults.index') }}"
                                   @click="selected = (selected === 'Consults' ? '':'Consults')"
                                   :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Consults') }">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
-                                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"/>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                      fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                                      <path
+                                          d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z" />
                                   </svg>
                                   Leads
                               </a>
@@ -141,9 +154,12 @@
                                   href="{{ route('admin.contact.index') }}"
                                   @click="selected = (selected === 'Contact' ? '':'Contact')"
                                   :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Contact') }">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-vcard" viewBox="0 0 16 16">
-                                    <path d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5M9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8m1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5"/>
-                                    <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96q.04-.245.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 1 1 12z"/>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                      fill="currentColor" class="bi bi-person-vcard" viewBox="0 0 16 16">
+                                      <path
+                                          d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5M9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8m1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5" />
+                                      <path
+                                          d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96q.04-.245.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 1 1 12z" />
                                   </svg>
                                   Contact Form
                               </a>
@@ -155,11 +171,11 @@
                               <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                                   href="#" @click.prevent="selected = (selected === 'Setup' ? '':'Setup')"
                                   :class="{
-                                      'bg-graydark dark:bg-meta-4': (selected === 'Setup') 
+                                      'bg-graydark dark:bg-meta-4': (selected === 'Setup')
                                   }">
                                   {{-- || (
                                     page === 'categories' ||
-                                    page === 'ameneties' ||
+                                    page ===  'amenities' ||
                                     page === 'landmarks' ||
                                     page === 'furnishing' ||
                                     page === 'rules' ||
@@ -210,20 +226,19 @@
                               <!-- Dropdown Menu Start -->
                               <div class="translate transform overflow-hidden"
                                   :class="(selected === 'Setup') ? 'block' : 'hidden'">
-                                  <ul class="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6" >
+                                  <ul class="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
                                       <li>
                                           <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                                href="{{ route('admin.categories.index') }}"
-                                                @click="page = (page === 'categories' ? '' : 'categories')"
-                                                :class="page === 'categories' && '!text-white'"
-                                                >Categories
+                                              href="{{ route('admin.categories.index') }}"
+                                              @click="page = (page === 'categories' ? '' : 'categories')"
+                                              :class="page === 'categories' && '!text-white'">Categories
                                           </a>
                                       </li>
                                       <li>
                                           <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                              href="{{ route('admin.ameneties.index') }}"
-                                              @click="page = (page === 'ameneties' ? '' : 'ameneties')"
-                                              :class="page === 'ameneties' && '!text-white'">Ameneties
+                                              href="{{ route('admin.amenities.index') }}"
+                                              @click="page = (page ===  'amenities' ? '' :  'amenities')"
+                                              :class="page ===  'amenities' && '!text-white'">Amenities
                                           </a>
                                       </li>
                                       <li>
@@ -286,14 +301,106 @@
                                   :class="{
                                       'bg-graydark dark:bg-meta-4': (selected === 'Newsletters')
                                   }">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-hearts" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z"/>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                      fill="currentColor" class="bi bi-person-hearts" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd"
+                                          d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z" />
                                   </svg>
                                   Newsletters
                               </a>
                           </li>
                       @endif
                       <!-- Menu Item Newsletters -->
+                      
+                      @if (permission_check('Blogs Manage'))
+                          <li>
+                              <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+                                  href="#" @click.prevent="selected = (selected === 'Blogs' ? '':'Blogs')"
+                                  :class="{
+                                      'bg-graydark dark:bg-meta-4': (selected === 'Blogs') || (
+                                          page === 'list' ||
+                                          page === 'kanban')
+                                  }">
+                                  <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18"
+                                      fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <g clip-path="url(#clip0_130_9728)">
+                                          <path
+                                              d="M3.45928 0.984375H1.6874C1.04053 0.984375 0.478027 1.51875 0.478027 2.19375V3.96563C0.478027 4.6125 1.0124 5.175 1.6874 5.175H3.45928C4.10615 5.175 4.66865 4.64063 4.66865 3.96563V2.16562C4.64053 1.51875 4.10615 0.984375 3.45928 0.984375ZM3.3749 3.88125H1.77178V2.25H3.3749V3.88125Z"
+                                              fill="" />
+                                          <path
+                                              d="M7.22793 3.71245H16.8748C17.2123 3.71245 17.5217 3.4312 17.5217 3.06558C17.5217 2.69995 17.2404 2.4187 16.8748 2.4187H7.22793C6.89043 2.4187 6.58105 2.69995 6.58105 3.06558C6.58105 3.4312 6.89043 3.71245 7.22793 3.71245Z"
+                                              fill="" />
+                                          <path
+                                              d="M3.45928 6.75H1.6874C1.04053 6.75 0.478027 7.28437 0.478027 7.95937V9.73125C0.478027 10.3781 1.0124 10.9406 1.6874 10.9406H3.45928C4.10615 10.9406 4.66865 10.4062 4.66865 9.73125V7.95937C4.64053 7.28437 4.10615 6.75 3.45928 6.75ZM3.3749 9.64687H1.77178V8.01562H3.3749V9.64687Z"
+                                              fill="" />
+                                          <path
+                                              d="M16.8748 8.21252H7.22793C6.89043 8.21252 6.58105 8.49377 6.58105 8.8594C6.58105 9.22502 6.86231 9.47815 7.22793 9.47815H16.8748C17.2123 9.47815 17.5217 9.1969 17.5217 8.8594C17.5217 8.5219 17.2123 8.21252 16.8748 8.21252Z"
+                                              fill="" />
+                                          <path
+                                              d="M3.45928 12.8531H1.6874C1.04053 12.8531 0.478027 13.3875 0.478027 14.0625V15.8344C0.478027 16.4813 1.0124 17.0438 1.6874 17.0438H3.45928C4.10615 17.0438 4.66865 16.5094 4.66865 15.8344V14.0625C4.64053 13.3875 4.10615 12.8531 3.45928 12.8531ZM3.3749 15.75H1.77178V14.1188H3.3749V15.75Z"
+                                              fill="" />
+                                          <path
+                                              d="M16.8748 14.2875H7.22793C6.89043 14.2875 6.58105 14.5687 6.58105 14.9344C6.58105 15.3 6.86231 15.5812 7.22793 15.5812H16.8748C17.2123 15.5812 17.5217 15.3 17.5217 14.9344C17.5217 14.5687 17.2123 14.2875 16.8748 14.2875Z"
+                                              fill="" />
+                                      </g>
+                                      <defs>
+                                          <clipPath id="clip0_130_9728">
+                                              <rect width="18" height="18" fill="white" />
+                                          </clipPath>
+                                      </defs>
+                                  </svg>
+
+                                  Blogs
+
+                                  <svg class="absolute right-4 top-1/2 -translate-y-1/2 fill-current"
+                                      :class="{ 'rotate-180': (selected === 'Blogs') }" width="20"
+                                      height="20" viewBox="0 0 20 20" fill="none"
+                                      xmlns="http://www.w3.org/2000/svg">
+                                      <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                                          fill="" />
+                                  </svg>
+                              </a>
+
+                              <!-- Dropdown Menu Start -->
+                              <div class="translate transform overflow-hidden"
+                                  :class="(selected === 'Blogs') ? 'block' : 'hidden'">
+                                  <ul class="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
+                                      <li>
+                                          <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                              href="{{ route('admin.blogs-category.index') }}"
+                                              :class="page === 'blog-category' && '!text-white'">Category
+                                          </a>
+                                      </li>
+                                      <li>
+                                          <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                              href="{{ route('admin.blogs.index') }}"
+                                              :class="page === 'blogs' && '!text-white'">Post</a>
+                                      </li>
+                                  </ul>
+                              </div>
+                              <!-- Dropdown Menu End -->
+                          </li>
+                      @endif
+                      @if (permission_check('Trash'))
+                          <!-- Menu Item Activity Logs -->
+                          <li>
+                              <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+                                  href="{{ route('admin.trash.index') }}"
+                                  @click="selected = (selected === 'Trash' ? '':'Trash')"
+                                  :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Trash') }">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                      fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                      <path
+                                          d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                      <path
+                                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                  </svg>
+                                  Trash
+                              </a>
+                          </li>
+                          <!-- Menu Item Activity Logs -->
+                      @endif
                       @if (permission_check('Activity Logs'))
                           <!-- Menu Item Activity Logs -->
                           <li>
@@ -308,22 +415,6 @@
                                           fill="" />
                                   </svg>
                                   Activity Logs
-                              </a>
-                          </li>
-                          <!-- Menu Item Activity Logs -->
-                      @endif
-                      @if (permission_check('Trash'))
-                          <!-- Menu Item Activity Logs -->
-                          <li>
-                              <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                                  href="{{ route('admin.trash.index') }}"
-                                  @click="selected = (selected === 'Trash' ? '':'Trash')"
-                                  :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Trash') }">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                  </svg>
-                                  Trash
                               </a>
                           </li>
                           <!-- Menu Item Activity Logs -->

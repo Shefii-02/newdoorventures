@@ -30,7 +30,7 @@
         </th>
         <td class="px-2 py-1 text-center">
             <span
-                class="badge badge-pill text-capitalize fs-6 {{ $property->moderation_status == 'approved' ? 'bg-success' : ($property->moderation_status == 'pending' ? 'bg-warning' : 'bg-danger') }}  text-light ">
+                class="badge badge-pill text-capitalize text-md {{ $property->moderation_status == 'approved' ? 'bg-success' : ($property->moderation_status == 'pending' ? 'bg-warning' : 'bg-danger') }}  text-light ">
                 {{ $property->moderation_status }}
             </span>
         </td>
@@ -58,7 +58,8 @@
                 @if (permission_check('Property Delete'))
                     <form method="POST" id="form_{{ $property->id }}"
                         action="{{ route('admin.properties.destroy', $property->id) }}">@csrf @method('DELETE')</form>
-                    <button form="form_{{ $property->id }}" type="submit"
+                    <button form="form_{{ $property->id }}" type="button"
+                        onclick="confirmDelete({{ $property->id }})"
                         class="mx-auto block hover:text-meta-1 ms-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-trash" viewBox="0 0 16 16">

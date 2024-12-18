@@ -274,7 +274,7 @@ if (!function_exists('permission_check')) {
 
     function permission_check($permission)
     {
-        $permissions_for_officeAdmin = ['Property List', 'Property Show', 'Property Edit', 'Property Delete', 'Project List', 'Project Add', 'Project Edit', 'Project Delete', 'Builder List', 'Builder Add', 'Builder Edit', 'Builder Delete', 'Account List', 'Account Approvel', 'Leads Attend', 'Enquiry Attend', 'Setup Manage', 'Newsletters', 'Activity Logs'];
+        $permissions_for_officeAdmin = ['Property List', 'Property Show', 'Property Edit', 'Property Delete', 'Project List', 'Project Add', 'Project Edit', 'Project Delete', 'Builder List', 'Builder Add', 'Builder Edit', 'Builder Delete', 'Account List', 'Account Approvel', 'Leads Attend', 'Enquiry Attend', 'Setup Manage', 'Newsletters', 'Activity Logs','Blogs Manage'];
         $permission_for_marketing = ['Property List', 'Property Show', 'Property Edit', 'Project List', 'Project Add', 'Project Edit', 'Builder List', 'Builder Add', 'Builder Edit', 'Account Approvel', 'Leads Attend', 'Enquiry Attend'];
         if (auth('web')->check()) {
             $account_type  = auth('web')->user()->acc_type;

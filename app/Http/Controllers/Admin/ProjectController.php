@@ -292,6 +292,8 @@ class ProjectController extends Controller
             $this->projectCategoryService($request, $project);
 
             DB::commit();
+            Session::flash('success_msg', 'Successfully Updated');
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Successfully Updated',
@@ -310,7 +312,7 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id,Request $request)
     {
         //
 
@@ -320,7 +322,9 @@ class ProjectController extends Controller
         }
 
         if (auth('web')->user()->acc_type == 'superadmin') {
-            $project = Project::findOrFail($id);
+            
+            $project = Project::withTrashed()->whereId($id)->first() ?? abort(404);
+    
             DB::beginTransaction();
             try {
                 foreach ($project->images  ?? [] as $imageLoc) {
@@ -344,7 +348,11 @@ class ProjectController extends Controller
                 // $property->delete();
                 DB::commit();
                 Session::flash('success_msg', 'Successfully Deleted');
-                return redirect()->route('admin.properties.index')->with('success_msg', 'Status updated deleted!');
+                if ($request->has('from') && $request->from == 'trash') {
+                    return redirect()->route('admin.trash.index')->with('success_msg', 'Project  deleted!');
+                }
+
+                return redirect()->route('admin.projects.index')->with('success_msg', 'Project deleted!');
             } catch (Exception $e) {
                 DB::rollBack();
                 // Return error response if something goes wrong
@@ -359,7 +367,7 @@ class ProjectController extends Controller
                 Project::where('id', $id)->delete();
                 DB::commit();
                 Session::flash('success_msg', 'Successfully Deleted');
-                return redirect()->route('admin.properties.index')->with('success_msg', 'Status updated deleted!');
+                return redirect()->route('admin.projects.index')->with('success_msg', 'Project deleted!');
             } catch (Exception $e) {
                 DB::rollBack();
                 // Return error response if something goes wrong
