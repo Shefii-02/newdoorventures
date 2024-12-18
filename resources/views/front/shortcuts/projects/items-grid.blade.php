@@ -44,7 +44,7 @@
                                 <p class="text-lg font-semibold">{{ __(':from - :to', ['from' => shorten_price($project->price_from), 'to' => shorten_price($project->price_to)]) }}</p>
                             </li>
                             <li>
-                                <a href="/contact" data-id="{{ $project->id }}" data-type="project"  class="mt-5 text-white rounded-md bg-primary btn-sm btn hover:bg-secondary open-enquiry-modal">
+                                <a href="/contact" data-id="{{ $project->id }}" data-type="project"  class="mt-5 text-white rounded-md bg-primary btn-sm btn hover:bg-secondary popup-contact-modal-form">
                                     <i class="align-middle mdi mdi-phone me-2"></i> Contact us
                                 </a>
                             </li>

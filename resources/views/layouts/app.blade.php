@@ -15,13 +15,25 @@
         name="viewport" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>New Door Ventures</title>
-    properties:1 <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <link href="{{ asset('images/backgrounds/favicon.png') }}" rel="shortcut icon">
-    {{-- {!! BaseHelper::googleFonts(
-        'https://fonts.googleapis.com/css2?family=' .
-            urlencode(theme_option('primary_font', 'League Spartan')) .
-            ':wght@300;400;500;600;700&display=swap',
-    ) !!} --}}
+  
+    <style>
+        .slick-prev, .slick-next{
+            top: 30% !important;
+        }
+        .slick-prev:before, .slick-next:before {
+            font-family: 'slick';
+            font-size: 40px !important;
+            line-height: 1;
+            position: relative;
+            left: -10px;
+            opacity: 2 !important;
+            color: #ffbf11 !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
 
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -182,7 +194,7 @@
         }
 
          
-        a.mt-5.text-white.rounded-md.bg-primary.btn-sm.btn.hover\:bg-secondary.open-enquiry-modal,a.text-white.btn.bg-primary.open-enquiry-modal,a.open-enquiry-modal.text-white.btn.bg-primary.mt-10,a.w-full.py-4.text-white.btn.bg-primary.fs-5.open-enquiry-modal,a.text-theme.btn.btn-sm.bg-trasparent.border-theme.open-enquiry-modal{
+        a.mt-5.text-white.rounded-md.bg-primary.btn-sm.btn.hover\:bg-secondary.popup-contact-modal-form,a.text-white.btn.bg-primary.popup-contact-modal-form,a.popup-contact-modal-form.text-white.btn.bg-primary.mt-10,a.w-full.py-4.text-white.btn.bg-primary.fs-5.popup-contact-modal-form,a.text-theme.btn.btn-sm.bg-trasparent.border-theme.popup-contact-modal-form{
             overflow: hidden;
         }
     </style>
@@ -705,7 +717,7 @@
 
     <script>
         $(document).ready(function () {
-            $('.open-enquiry-modal').on('click', function (event) {
+            $('.popup-contact-modal-form').on('click', function (event) {
                 event.preventDefault();
                 const id = $(this).data('id'); // Get the property ID from data-id
                 const type = $(this).data('type'); // Get the property name from data-name

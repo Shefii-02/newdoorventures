@@ -84,7 +84,7 @@
 
                                                     <div class="px-3 mt-3">
                                                         <a href="#"  data-id="{{ $property->id }}" data-type="property" 
-                                                            class="open-enquiry-modal text-theme btn btn-sm bg-trasparent border-theme">
+                                                            class="popup-contact-modal-form text-theme btn btn-sm bg-trasparent border-theme">
                                                             <i class="mdi mdi-download me-2"></i>
                                                             {{ __('Download Brochure') }}
                                                         </a>
@@ -210,7 +210,7 @@
                                                         </span>
                                                     </div>
                                                     <a href="#"  data-id="{{ $property->id }}" data-type="property" 
-                                                        class="open-enquiry-modal text-white btn bg-primary mt-10">{{ __('Get Phone Number') }}</a>
+                                                        class="popup-contact-modal-form text-white btn bg-primary mt-10">{{ __('Get Phone Number') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -428,7 +428,7 @@
                                     ])
                                 </div>
                                 <div class="mt-4">
-                                    <a href="#" data-id="{{ $property->id }}" data-type="property"  class="w-full py-4 text-white btn bg-primary fs-5 open-enquiry-modal"><i
+                                    <a href="#" data-id="{{ $property->id }}" data-type="property"  class="w-full py-4 text-white btn bg-primary fs-5 popup-contact-modal-form"><i
                                             class="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
                                 </div>
 

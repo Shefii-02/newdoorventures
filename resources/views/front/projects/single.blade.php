@@ -88,7 +88,7 @@
                                                 </div>
                                                 <div class="px-3 mt-8">
                                                     <a href="#" data-id="{{ $project->id }}" data-type="type"
-                                                        class=" text-theme btn btn-sm bg-trasparent border-theme open-enquiry-modal">
+                                                        class=" text-theme btn btn-sm bg-trasparent border-theme popup-contact-modal-form">
                                                         <i class="mdi mdi-download me-2"></i>
                                                         {{ __('Download Brochure') }}
                                                     </a>
@@ -152,9 +152,9 @@
                             <button @click="scrollToSection('Amenities')"
                                 :class="{ 'tab-active': activeTab === 'Amenities' }"
                                 class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
-                                id="amenities-tab" data-tabs-target="#amenitiesDetails" type="button" role="tab"
-                                aria-controls="amenitiesDetails" aria-selected="false">
-                                amenities
+                                id="Amenities-tab" data-tabs-target="#Amenities" type="button" role="tab"
+                                aria-controls="Amenities" aria-selected="false">
+                                Amenities
                             </button>
                         </li>
                     @endif
@@ -242,7 +242,7 @@
                                                     </div>
                                                     <div class="px-3 mt-8">
                                                         <a href="" data-id="{{ $project->id }}" data-type="type"
-                                                            class="text-sm open-enquiry-modal text-white btn bg-primary">{{ __('Get Phone Number') }}</a>
+                                                            class="text-sm popup-contact-modal-form text-white btn bg-primary">{{ __('Get Phone Number') }}</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -357,13 +357,13 @@
 
 
                             @if ($project->features->count())
-                                <div class="container-fluid mb-5" id="amenities" class="section"
+                                <div class="container-fluid mb-5" id="Amenities" class="section"
                                     :class="{ 'active': activeSection === 'Amenities' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
                                             <div class="border-theme rounded-xl">
                                                 <div class="px-3 py-5">
-                                                    <h4 class="fs-5  font-bold me-2 mb-3">amenities </h4>
+                                                    <h4 class="fs-5  font-bold me-2 mb-3">Amenities </h4>
                                                     <div class="px-3">
                                                         <div class="row align-items-center">
                                                             @foreach ($project->features ?? [] as $featureItem)
@@ -641,10 +641,11 @@
                                                 <div class="mx-3 mt-10 mb-5">
                                                     <h4 class="fs-5  font-bold me-2   ">About the Builder -
                                                         {{ $project->investor->name }}</h4>
+
                                                     <div class="">
                                                         <div class="px-3 col-lg-12 md:p-4">
                                                             <div class="text-slate-600 ck-content dark:text-gray-200 mt-2">
-                                                                {!! $project->investor->content !!}
+                                                                {!! $project->investor->description !!}
                                                             </div>
                                                             <div class="row justify-content-center mt-5">
                                                                 <div class="col-lg-3">
@@ -695,7 +696,7 @@
                                 </div>
                                 <div class="mt-4">
                                     <a href="" data-id="{{ $project->id }}" data-type="type"
-                                        class="w-full py-4 text-white btn bg-primary fs-5  open-enquiry-modal ">
+                                        class="w-full py-4 text-white btn bg-primary fs-5  popup-contact-modal-form ">
                                         <i lass="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
                                 </div>
 

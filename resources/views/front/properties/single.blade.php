@@ -169,7 +169,7 @@
                                     </div>
                                     <div class="px-3 mt-8">
                                         <a href="#" data-id="{{ $property->id }}" data-type="property" 
-                                            class=" text-white btn bg-primary open-enquiry-modal">{{ __('Get Phone Number') }}</a>
+                                            class=" text-white btn bg-primary popup-contact-modal-form">{{ __('Get Phone Number') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -232,9 +232,9 @@
                             <button @click="scrollToSection('Amenities')"
                                 :class="{ 'tab-active': activeTab === 'Amenities' }"
                                 class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
-                                id="amenities-tab" data-tabs-target="#amenities" type="button" role="tab"
-                                aria-controls="amenities" aria-selected="false">
-                                amenities
+                                id="Amenities-tab" data-tabs-target="#Amenities" type="button" role="tab"
+                                aria-controls="Amenities" aria-selected="false">
+                                Amenities
                             </button>
                         </li>
                     @endif
@@ -307,7 +307,7 @@
                                                         </span>
                                                     </div>
                                                     <a href="#" data-id="{{ $property->id }}" data-type="property" 
-                                                        class="open-enquiry-modal text-white btn bg-primary mt-10">{{ __('Get Phone Number') }}</a>
+                                                        class="popup-contact-modal-form text-white btn bg-primary mt-10">{{ __('Get Phone Number') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -407,13 +407,13 @@
                                 </div>
                             @endif
                             @if ($property->features->count())
-                                <div class="container-fluid mb-5" id="amenities" class="section"
+                                <div class="container-fluid mb-5" id="Amenities" class="section"
                                     :class="{ 'active': activeSection === 'Amenities' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
                                             <div class="border-theme rounded-xl">
                                                 <div class="px-3 py-5">
-                                                    <h4 class="fs-5  font-bold me-2">amenities </h4>
+                                                    <h4 class="fs-5  font-bold me-2">Amenities </h4>
                                                     <div class="row align-items-center px-3">
                                                         @foreach ($property->features ?? [] as $featureItem)
                                                             <div class="col-lg-3 d-flex align-items-center">
@@ -583,7 +583,7 @@
                                 </div>
                                 <div class="mt-4">
                                     <a href="#"  data-id="{{ $property->id }}" data-type="property" 
-                                        class="w-full py-4 text-white btn bg-primary fs-5 open-enquiry-modal"><i
+                                        class="w-full py-4 text-white btn bg-primary fs-5 popup-contact-modal-form"><i
                                             class="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
                                 </div>
 

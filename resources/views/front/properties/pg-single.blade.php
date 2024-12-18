@@ -291,7 +291,7 @@
                                           
                                             <div class="px-3 mt-5">
                                                 <a href="#" data-id="{{ $property->id }}" data-type="property" 
-                                                    class="btn-sm text-white btn bg-primary open-enquiry-modal">{{ __('Get Phone Number') }}</a>
+                                                    class="btn-sm text-white btn bg-primary popup-contact-modal-form">{{ __('Get Phone Number') }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -563,7 +563,7 @@
                                             @include('front.shortcuts.consult-form', ['type' => 'property', 'data' => $property])
                                         </div>
                                         <div class="mt-4">
-                                            <a href="#" data-id="{{ $property->id }}" data-type="property"  class="w-full py-4 text-white btn bg-primary fs-5 open-enquiry-modal"><i
+                                            <a href="#" data-id="{{ $property->id }}" data-type="property"  class="w-full py-4 text-white btn bg-primary fs-5 popup-contact-modal-form"><i
                                                     class="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
                                         </div>
 
