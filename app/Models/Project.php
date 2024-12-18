@@ -15,12 +15,15 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Arr;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * @method static \Botble\RealEstate\QueryBuilders\ProjectBuilder<static> query()
  */
 class Project extends BaseModel
 {
     protected $table = 're_projects';
+    use SoftDeletes;
 
     protected $fillable = [
         'name',

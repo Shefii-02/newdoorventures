@@ -6048,3 +6048,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus+label {
     border-bottom-right-radius: 1.5rem !important;
     border-bottom-left-radius: 1.5rem !important;
 }
+
+.jump-header .tab-active {
+    color: #cba641 !important; 
+}

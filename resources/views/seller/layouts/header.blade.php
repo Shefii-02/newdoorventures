@@ -1,7 +1,9 @@
 <header class="d-flex justify-content-between align-items-center mb-3 bg-dark rounded-2xl">
 
     <div class="logo p-2 w-20 ms-2">
-        <img src="{{ asset('images/general/logo-light-3.png') }}" alt="New Door Ventures">
+        <a href="{{ route('user.dashboard') }}">
+            <img src="{{ asset('images/general/logo-light-3.png') }}" alt="New Door Ventures">
+        </a>
     </div>
 
     <div class="d-flex align-items-center gap-4 ">

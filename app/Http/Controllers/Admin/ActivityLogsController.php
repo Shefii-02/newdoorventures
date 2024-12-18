@@ -8,13 +8,22 @@ use Illuminate\Http\Request;
 
 class ActivityLogsController extends Controller
 {
+
+    public function __construct()
+    {
+        // Check permission inside the constructor
+        if (!permission_check('Activity Logs')) {
+            abort(404); // Return a 404 error if permission is not available
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
-        $activities = AccountActivityLog::orderBy('created_at', 'desc')->paginate(10);
+        $activities = AccountActivityLog::orderBy('created_at', 'desc')->paginate(50);
 
         return view('admin.activity.index',compact('activities'));
     }

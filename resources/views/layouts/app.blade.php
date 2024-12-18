@@ -14,8 +14,9 @@
     <meta content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=1"
         name="viewport" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>New Door Ventures</title>
 
-
+    <link href="{{ asset('images/backgrounds/favicon.png') }}" rel="shortcut icon">
     {{-- {!! BaseHelper::googleFonts(
         'https://fonts.googleapis.com/css2?family=' .
             urlencode(theme_option('primary_font', 'League Spartan')) .

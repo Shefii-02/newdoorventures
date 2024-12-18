@@ -42,7 +42,7 @@ class AccountPropertyController extends Controller
     public function __construct(
 
         //     protected AccountInterface $accountRepository,
-            // protected PropertyInterface $propertyRepository,
+        // protected PropertyInterface $propertyRepository,
         //     protected AccountActivityLogInterface $activityLogRepository,
         //     protected UploadsManager $uploadManager
 
@@ -68,10 +68,10 @@ class AccountPropertyController extends Controller
 
     public function index(Request $request)
     {
-       
+
         $user = auth('account')->user();
 
-        $query = Property::orderBy('created_at','desc')->where('author_id', $user->id);
+        $query = Property::orderBy('created_at', 'desc')->where('author_id', $user->id);
 
         // Apply search filter
         if ($request->has('search') && $request->search != '') {
@@ -137,7 +137,7 @@ class AccountPropertyController extends Controller
         // StorePropertyCategoryService $propertyCategoryService,
         // SaveFacilitiesService $saveFacilitiesService,
         // SaveRulesInformation $saveRulesInformation
-      
+
     ) {
 
 
@@ -222,7 +222,12 @@ class AccountPropertyController extends Controller
             $property->occupancy_type   = $request->has('occupancy_type') ? $request->occupancy_type : '';
             $property->available_for    = $request->has('available_for') ? $request->available_for : '';
             $property->plot_area        = $request->plot_area ?? '';
-            $property->moderation_status = $request->has('moderation_status') ? $request->moderation_status : 'draft';
+            if (auth('account')->user()->auto_approvel == 1 && $request->moderation_status != 'draft') {
+                $property->moderation_status = 'approved';
+            } else {
+                $property->moderation_status = $request->has('moderation_status') ? $request->moderation_status : 'draft';
+            }
+
             if ($request->mode == 'sell') {
                 $property->status       = 'selling';
             } else {
@@ -332,9 +337,9 @@ class AccountPropertyController extends Controller
         $property = Property::where([
             'id' => $id,
             'author_id' => auth('account')->id(),
-            
+
         ])->first() ?? abort(404);
-        
+
 
         if (! $property) {
             abort(404);
@@ -379,7 +384,7 @@ class AccountPropertyController extends Controller
         $property = Property::where([
             'id' => $id,
             'author_id' => auth('account')->id(),
-            
+
         ])->first() ?? abort(404);
 
         if (! $property) {
@@ -525,7 +530,7 @@ class AccountPropertyController extends Controller
                     $property->status       = 'rented';
                     $property->moderation_status = 'rented';
                 } elseif ($request->property_status == 'not_available') {
-              
+
                     $property->status       = 'not_available';
                     $property->moderation_status = 'not_available';
                 } else {
@@ -535,10 +540,17 @@ class AccountPropertyController extends Controller
 
             if ($old_type != $request->mode || $request->property_status == 'pending') {
 
-                $property->moderation_status = 'pending';
+                if (auth('account')->user()->auto_approvel == 1) {
+                    $property->moderation_status = 'approved';
+                } else {
+                    $property->moderation_status = 'pending';
+                }
             }
 
-            
+
+
+
+
             $property->save();
 
 
@@ -601,8 +613,6 @@ class AccountPropertyController extends Controller
                 'message' => 'Successfully Updated',
                 'redirect' => route('user.properties.index')
             ]);
-
-
         } catch (\Exception $e) {
 
             DB::rollBack();
@@ -641,7 +651,7 @@ class AccountPropertyController extends Controller
         $property = Property::where([
             'id' => $id,
             'author_id' => auth('account')->id(),
-            
+
         ])->first() ?? abort(404);
 
 
@@ -661,15 +671,15 @@ class AccountPropertyController extends Controller
             ->setMessage(__('Delete property successfully!'));
     }
 
-   
-     
+
+
     protected function saveCustomFields(Property $property, array $customFields = []): void
     {
 
         $customFields = CustomFieldValue::formatCustomFields($customFields);
 
         DB::table('re_custom_field_values')->where('reference_type', 'App\Models\Property')->where('reference_id', $property->id)->delete();
-        
+
         $property->customFields()->saveMany($customFields);
     }
 
@@ -711,7 +721,8 @@ class AccountPropertyController extends Controller
         }
     }
 
-    protected function propertyCategoryService($request,Property $property){
+    protected function propertyCategoryService($request, Property $property)
+    {
         $categories = $request->input('categories', []);
         if (is_array($categories)) {
             if ($categories) {
@@ -729,7 +740,7 @@ class AccountPropertyController extends Controller
         $filePaths = []; // Array to store file paths with keys
 
         // Loop through each file
-        foreach ($files ??[] as $index => $file) {
+        foreach ($files ?? [] as $index => $file) {
 
             // $fileName = auth('account')->user()->id . '-' . time() . '-' . Str::slug(File::basename($file->getClientOriginalName())) . '.' . $file->getClientOriginalExtension();
 
@@ -766,8 +777,4 @@ class AccountPropertyController extends Controller
         parse_str($parsedUrl['query'] ?? '', $queryParams);
         return $queryParams['v'] ?? false; // Return video ID if it exists, or false otherwise
     }
-
-
-
-
 }

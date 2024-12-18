@@ -1,17 +1,17 @@
-<div role="button" class="p-2 mb-3 overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
+<div role="button"
+    class="p-2 mb-3 overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
     <div class="relative overflow-hidden">
-        <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}">
-            <img src="{{ asset('images/'.$property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'"
+        <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug]) }}">
+            <img src="{{ asset('images/' . $property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'"
                 alt="{{ $property->name }}" class="rounded-md duration-500 h-50 w-100">
         </a>
-        {{-- <div class="absolute top-6 end-6">
-            <button type="button"
-                class="text-lg text-red-600 bg-white rounded-full shadow btn btn-icon dark:bg-slate-900 dark:shadow-gray-700 add-to-wishlist"
-                aria-label="{{ __('Add to wishlist') }}" data-box-type="property"
-                data-id="{{ $property->id }}">
-                <i class="mdi mdi-heart-outline"></i>
-            </button>
-        </div> --}}
+        <div class="absolute top-6 end-6">
+            <div
+                class="flex items-center justify-center content-center p-2 pt-2.5 bg-gray-700 rounded-md bg-opacity-60 text-white text-sm">
+                <i class="leading-none mdi mdi-eye me-1"></i>
+                <span class="leading-none small">{{ $property->view ?? 0 }}</span>
+            </div>
+        </div>
         @if ($property->images && ($imagesCount = count($property->images)))
             <div class="absolute top-6 start-6">
                 <div
@@ -35,19 +35,20 @@
 
     <div class="p-6 flex flex-column justify-content-between">
         <div class="truncate">
-            <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}"
+            <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug]) }}"
                 class="text-md font-bold text-capitaize duration-500 ease-in-out hover:text-primary"
                 title="{{ $property->name }}">
                 {!! $property->name !!}
             </a>
             <p class="truncate text-slate-600 dark:text-slate-300">
-                <span class="mdi mdi-map-marker-multiple"></span> <span class="text-sm">{!! $property->location ? $property->location .'<br>' : ''  !!}</span>
+                <span class="mdi mdi-map-marker-multiple"></span> <span class="text-sm">{!! $property->location ? $property->location . '<br>' : '' !!}</span>
                 <span class="ms-4 text-sm">{{ $property->city }}.</span>
             </p>
-            @if($property->project->name)
-            <p class="truncate text-slate-600 dark:text-slate-300">
-                <span class="mdi mdi-bank-check text-medium font-bold"></span>  <span class="text-sm">Project :</span><span class="text-sm font-bold"> {{ $property->project->name }}</span>
-            </p>
+            @if ($property->project->name)
+                <p class="truncate text-slate-600 dark:text-slate-300 d-none">
+                    <span class="mdi mdi-bank-check text-medium font-bold"></span> <span class="text-sm">Project
+                        :</span><span class="text-sm font-bold"> {{ $property->project->name }}</span>
+                </p>
             @endif
         </div>
 
@@ -71,12 +72,12 @@
                 </li>
             @endif
 
-        
-                <li class="flex items-center me-2">
-                    <i class="text-lg text-primary mdi mdi-arrow-collapse-all me-2"></i>
-                    <span class="text-sm">{{ $property->square ?? 0 }} Sq.ft</span>
-                </li>
-       
+
+            <li class="flex items-center me-2">
+                <i class="text-lg text-primary mdi mdi-arrow-collapse-all me-2"></i>
+                <span class="text-sm">{{ $property->square ?? 0 }} Sq.ft</span>
+            </li>
+
         </ul>
 
         <ul class="flex flex-wrap gap-3 items-center justify-between pt-4 ps-0 mb-0 list-none">
@@ -86,12 +87,12 @@
                     {{-- , $property->currency) --}}</p>
             </li>
             <li>
-                <a href="/contact" data-id="{{ $property->id }}" data-type="property" 
+                <a href="/contact" data-id="{{ $property->id }}" data-type="property"
                     class="mt-5 text-white rounded-md bg-primary btn-sm btn hover:bg-secondary open-enquiry-modal">
                     <i class="align-middle mdi mdi-phone me-2"></i> Contact us
                 </a>
             </li>
-          
+
         </ul>
     </div>
 </div>

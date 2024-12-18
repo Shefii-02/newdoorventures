@@ -8,6 +8,16 @@ use App\Models\Newsletter;
 
 class NewslettersController extends Controller
 {
+
+    public function __construct()
+    {
+        // Check permission inside the constructor
+        if (!permission_check('Newsletters')) {
+            abort(404); // Return a 404 error if permission is not available
+        }
+    }
+    
+
     /**
      * Display a listing of the resource.
      */

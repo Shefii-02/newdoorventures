@@ -70,6 +70,11 @@ class ConsultsController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        if(!permission_check('Leads Attend')){
+            return abort(404);
+        }
+
         $consult = Consult::findOrFail($id);
         $consult->update($request->only('status'));
 

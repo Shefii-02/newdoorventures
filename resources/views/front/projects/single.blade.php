@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
- 
+
     $unit_variation = $project->configration->where('name', 'Unit Variants')->first();
     $towers_and_blocks = $project->configration->where('name', 'Towers and Blocks')->first();
 @endphp
@@ -13,6 +13,7 @@
                 max-width: 1450px !important;
             }
         }
+        
     </style>
 @endpush
 
@@ -22,7 +23,10 @@
     <section class="relative mt-36">
         <div class="container" data-property-id="{{ $project->id }}" x-data="scrollSpy()" x-init="init()">
             @include('front.shortcuts.properties.slider', [
-               'item' => $project,'youtube_video' => $project->youtube_video_url,'property_type' => 'project'])
+                'item' => $project,
+                'youtube_video' => $project->youtube_video_url,
+                'property_type' => 'project',
+            ])
             <div class="container-fluid ">
                 <div class="md:flex">
                     <div class="w-full p-1 ">
@@ -83,7 +87,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="px-3 mt-8">
-                                                    <a href="#" data-id="{{ $project->id }}" data-type="type" 
+                                                    <a href="#" data-id="{{ $project->id }}" data-type="type"
                                                         class=" text-theme btn btn-sm bg-trasparent border-theme open-enquiry-modal">
                                                         <i class="mdi mdi-download me-2"></i>
                                                         {{ __('Download Brochure') }}
@@ -104,7 +108,8 @@
             </div>
 
             <div class="jump-header sticky top-0 z-999">
-                <ul style="border-bottom-width:3px !important" class="flex-wrap justify-left inline-block w-full p-4 py-10 text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
+                <ul style="border-bottom-width:3px !important"
+                    class="flex-wrap justify-left inline-block w-full p-4 py-10 text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
                     x-data="{ isDragging: false, startX: 0, scrollLeft: 0 }"
                     x-on:mousedown="isDragging = true; startX = $event.pageX - $el.offsetLeft; scrollLeft = $el.scrollLeft;"
                     x-on:mousemove="if (isDragging) { $el.scrollLeft = scrollLeft - ($event.pageX - startX); }"
@@ -236,8 +241,7 @@
 
                                                     </div>
                                                     <div class="px-3 mt-8">
-                                                        <a href="" data-id="{{ $project->id }}" data-type="type" 
-                                                           
+                                                        <a href="" data-id="{{ $project->id }}" data-type="type"
                                                             class="text-sm open-enquiry-modal text-white btn bg-primary">{{ __('Get Phone Number') }}</a>
                                                     </div>
                                                 </div>
@@ -278,7 +282,7 @@
                                                                             <div
                                                                                 class="w-100 text-center flex justify-center">
                                                                                 <img
-                                                                                    src="{{ asset('images/'.$listingConfig->image->url) }}">
+                                                                                    src="{{ asset('images/' . $listingConfig->image->url) }}">
                                                                             </div>
                                                                         </td>
                                                                         <td class="text-gray-800 text-center">
@@ -407,9 +411,13 @@
                                         }'>
                                                         @foreach ($project->master_plan_images ?? [] as $master_image)
                                                             @if ($master_image != null || $master_image != '')
-                                                                <div class="p-2" role="button">
-                                                                    <img src="{{ asset('images/'.$master_image) }}"
-                                                                        class="w-100">
+                                                                <div class="p-2 relative" role="button">
+                                                                    <a href="{{ asset('images/' . $master_image) }}"
+                                                                        class=" inset-0 lightbox"
+                                                                        data-group="lightbox-pt-images-master-{{ $project->id }}">
+                                                                        <img src="{{ asset('images/' . $master_image) }}"
+                                                                            class="w-100">
+                                                                    </a>
                                                                 </div>
                                                             @endif
                                                         @endforeach
@@ -434,7 +442,7 @@
                                                                 <tr class="border-bottom-none">
                                                                     <td
                                                                         class="text-gray-800 text-center w-20 flex justify-content-center items-center">
-                                                                        <img src="{{ asset('images/'.$spec->image) }}"
+                                                                        <img src="{{ asset('images/' . $spec->image) }}"
                                                                             class="w-48 text-center rounded-2 h-10 mt-2">
                                                                     </td>
                                                                     <td class="text-gray-800 text-left p-2">
@@ -577,9 +585,9 @@
 
                                                 <div class="grid gap-4 lg:grid-cols-2 sm:grid-cols-1 dark:bg-black-900">
                                                     @foreach ($project->facilities->groupBy('name') ?? [] as $key => $facilities)
-                                                        <div class="dark:bg-slate-900 border-theme rounded-lg shadow-lg" role="button"
-                                                            x-data="{ expanded: false }" @mouseenter="expanded = true"
-                                                            @mouseleave="expanded = false">
+                                                        <div class="dark:bg-slate-900 border-theme rounded-lg shadow-lg"
+                                                            role="button" x-data="{ expanded: false }"
+                                                            @mouseenter="expanded = true" @mouseleave="expanded = false">
                                                             <div class="flex items-start justify-content-between p-3">
                                                                 <span class="fw-bold">{{ $key }}</span>
                                                                 <span>
@@ -680,12 +688,15 @@
                         <div class=" mt-8 lg:w-1/3 md:w-1/2 md:p-4 md:mt-0">
                             <div class="sticky top-1/4" style="z-index:99">
                                 <div class="mb-2 rounded-2xl shadow bg-theme dark:bg-slate-800 dark:shadow-gray-700">
-                                    @include('front.shortcuts.consult-form', ['type' => 'project', 'data' => $project])
+                                    @include('front.shortcuts.consult-form', [
+                                        'type' => 'project',
+                                        'data' => $project,
+                                    ])
                                 </div>
                                 <div class="mt-4">
-                                    <a href="" data-id="{{ $project->id }}" data-type="type" 
-                                      class="w-full py-4 text-white btn bg-primary fs-5  open-enquiry-modal ">
-                                      <i lass="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
+                                    <a href="" data-id="{{ $project->id }}" data-type="type"
+                                        class="w-full py-4 text-white btn bg-primary fs-5  open-enquiry-modal ">
+                                        <i lass="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
                                 </div>
 
                             </div>
@@ -701,9 +712,9 @@
                                 <div class="relative bg-white rounded-lg shadow-lg p-0"
                                     style="width: 500px; height: 350px;">
                                     <!-- Advertisement Image -->
-                                
-                                    <img src="{{ asset('images/'.$advertisement->image) }}" alt="Advertisement" 
-                                        class="w-full h-full  rounded-lg"> 
+
+                                    <img src="{{ asset('images/' . $advertisement->image) }}" alt="Advertisement"
+                                        class="w-full h-full  rounded-lg">
                                     <!-- Close Button -->
                                     <button @click="showModal = false; document.body.style.overflow = 'auto'"
                                         class="absolute top-0 end-0 text-white bg-theme bg-opacity-75 rounded-full p-2 hover:bg-opacity-100 focus:outline-none">

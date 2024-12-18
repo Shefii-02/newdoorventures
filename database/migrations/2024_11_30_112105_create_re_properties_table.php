@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('period', 30)->default('month');
             $table->string('status', 60)->default('selling');
             $table->unsignedBigInteger('author_id')->nullable();
-            $table->string('author_type')->default('Botble\\\\ACL\\\\Models\\\\User');
+            $table->string('author_type')->default('App\\\\Models\\\\User');
             $table->string('moderation_status', 60)->default('pending');
             $table->string('furnishing_status', 60)->nullable();
             $table->string('construction_status', 60)->nullable();
@@ -71,6 +71,7 @@ return new class extends Migration
             $table->string('occupancy_type', 60)->nullable()->comment('single,double,capsule');
             $table->string('available_for', 60)->nullable()->comment('boys,girls,both');
             $table->string('plot_area', 120)->nullable();
+            $table->softDeletes();
         });
     }
 

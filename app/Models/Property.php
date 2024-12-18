@@ -10,6 +10,8 @@ use App\Enums\PropertyPeriodEnum;
 use App\Enums\PropertyStatusEnum;
 use App\Enums\PropertyTypeEnum;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,6 +25,7 @@ use App\Models\MediaFile;
 class Property extends BaseModel
 {
     protected $table = 're_properties';
+    use SoftDeletes;
 
     protected $fillable = [
         'name',

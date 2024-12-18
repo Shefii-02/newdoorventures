@@ -1,8 +1,6 @@
 @extends('admin.layouts.master')
 
 @section('content')
- 
-
     <div class="row">
         <div class="col-lg-3">
 
@@ -19,8 +17,10 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <h4 class="text-black fs-20 font-bold mb-3">{{ $property->author->name }}</h4>
-                        <span class="mt-2 text-bold mb-3"><a href="mailto:{{ $property->author->email }}">{{ $property->author->email }}</a></span>
-                        <span class="mt-2 text-bold"><a href="tel:{{ $property->author->phone }}">{{ $property->author->phone }}</a></span>
+                        <span class="mt-2 text-bold mb-3"><a
+                                href="mailto:{{ $property->author->email }}">{{ $property->author->email }}</a></span>
+                        <span class="mt-2 text-bold"><a
+                                href="tel:{{ $property->author->phone }}">{{ $property->author->phone }}</a></span>
                     </div>
                 </div>
             </div>
@@ -52,55 +52,56 @@
             <div class="col-md-12 mb-3">
                 <div class="card shadow">
                     <div class="card-body">
-                            <p><strong>Current Property Status:</strong>
-                                <span
-                                    class="badge text-capitalize bg-{{ $property->moderation_status == 'approved' ? 'success' : 'warning' }}">
-                                    {{ $property->moderation_status == 'approved' ? $property->status : $property->moderation_status }}
-                                </span>
-                            </p>
+                        <p><strong>Current Property Status:</strong>
+                            <span
+                                class="badge text-capitalize bg-{{ $property->moderation_status == 'approved' ? 'success' : 'warning' }}">
+                                {{ $property->moderation_status == 'approved' ? $property->status : $property->moderation_status }}
+                            </span>
+                        </p>
                     </div>
                 </div>
             </div>
+            @if (permission_check('Property Edit'))
+                <div class="col-md-12 mb-3">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <form action="{{ route('admin.properties.update', $property->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <div class="">
+                                    <strong class="mb-3">Status:</strong>
+                                    <div class="d-flex gap-4 mt-3 flex-wrap">
+                                        <div class="form-check">
+                                            <input type="radio" disabled id="statusUnread" name="moderation_status"
+                                                value="pending" class="form-check-input"
+                                                {{ $property->moderation_status === 'pending' ? 'checked' : '' }}>
+                                            <label for="statusUnread" class="form-check-label">Pending</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" id="statusSuspended" name="moderation_status"
+                                                value="suspended" class="form-check-input"
+                                                {{ $property->moderation_status === 'suspended' ? 'checked' : '' }}>
+                                            <label for="statusSuspended" class="form-check-label">Suspended</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" id="statusApproved" name="moderation_status"
+                                                value="approved" class="form-check-input"
+                                                {{ $property->moderation_status === 'approved' ? 'checked' : '' }}>
+                                            <label for="statusApproved" class="form-check-label">Approved</label>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 col-lg-12">
+                                        <button type="submit"
+                                            class="bg-success text-white px-4 py-2 rounded btn-block w-full">Save</button>
+                                    </div>
 
-            <div class="col-md-12 mb-3">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <form action="{{ route('admin.properties.update', $property->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="">
-                                <strong class="mb-3">Status:</strong>
-                                <div class="d-flex gap-4 mt-3 flex-wrap">
-                                    <div class="form-check">
-                                        <input type="radio" disabled id="statusUnread" name="moderation_status"
-                                            value="pending" class="form-check-input"
-                                            {{ $property->moderation_status === 'pending' ? 'checked' : '' }}>
-                                        <label for="statusUnread" class="form-check-label">Pending</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="radio" id="statusSuspended" name="moderation_status" value="suspended"
-                                            class="form-check-input"
-                                            {{ $property->moderation_status === 'suspended' ? 'checked' : '' }}>
-                                        <label for="statusSuspended" class="form-check-label">Suspended</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="radio" id="statusApproved" name="moderation_status" value="approved"
-                                            class="form-check-input"
-                                            {{ $property->moderation_status === 'approved' ? 'checked' : '' }}>
-                                        <label for="statusApproved" class="form-check-label">Approved</label>
-                                    </div>
+
                                 </div>
-                                <div class="mt-4 col-lg-12">
-                                    <button type="submit" class="bg-success text-white px-4 py-2 rounded btn-block w-full">Save</button>
-                                </div>        
-    
-    
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
+            @endif
 
 
         </div>
@@ -141,10 +142,7 @@
                                 <p>{!! $property->content !!}</p>
                                 </p>
                                 <div class=" mt-4">
-
                                     <div class="row">
-
-
                                         <!-- Room Details -->
                                         <div class="col-md-12 mb-3">
                                             <div class="card shadow">
@@ -323,7 +321,7 @@
 
 
 
-       {{-- <div class="d-none">
+    {{-- <div class="d-none">
         <!-- ===== property List Start ===== -->
         <div class="col-span-12">
             <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -391,21 +389,4 @@
             </div>
         </div>
     </div> --}}
-    
-    
-    
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-

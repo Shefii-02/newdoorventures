@@ -17,6 +17,10 @@ class AccountsController extends Controller
      */
     public function index()
     {
+        if (!permission_check('Account List'))
+        {
+            return abort(404);
+        }
         //
         $accounts = Account::orderBy('status', 'desc')->get();
 
@@ -44,7 +48,6 @@ class AccountsController extends Controller
      */
     public function show(string $id)
     {
-
         //
         $account = Account::findOrFail($id);
         return view('admin.accounts.modal-content', compact('account'));
@@ -63,11 +66,16 @@ class AccountsController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!permission_check('Account Approvel'))
+        {
+            return abort(404);
+        }
       
         $account = Account::findOrFail($id);
-     
         $account->update($request->only('status'));
-    
+        $account->is_staff     = $request->has('is_staff') ? $request->is_staff : 0;
+        $account->auto_approvel= $request->has('is_staff') ? $request->is_staff : 0;
+        $account->save();
        
         return redirect()->route('admin.accounts.index')->with('success', 'status updated successfully!');
     }
@@ -78,5 +86,6 @@ class AccountsController extends Controller
     public function destroy(string $id)
     {
         //
+
     }
 }

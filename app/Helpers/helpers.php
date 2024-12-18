@@ -71,12 +71,12 @@ if (!function_exists('deleteFilefromMedia')) {
     function deleteFilefromMedia($id)
     {
 
-        $media = MediaFile::where('id',$id)->first();
-        
+        $media = MediaFile::where('id', $id)->first();
+
         if ($media) {
-            if ($media->url && Storage::disk('public')->exists('images/'.$media->url)) {
-     
-                Storage::disk('public')->delete('images/'.$media->url);
+            if ($media->url && Storage::disk('public')->exists('images/' . $media->url)) {
+
+                Storage::disk('public')->delete('images/' . $media->url);
             }
         }
 
@@ -266,5 +266,37 @@ if (!function_exists('setting')) {
         ];
 
         return $settings[$key] ?? $default;
+    }
+}
+
+
+if (!function_exists('permission_check')) {
+
+    function permission_check($permission)
+    {
+        $permissions_for_officeAdmin = ['Property List', 'Property Show', 'Property Edit', 'Property Delete', 'Project List', 'Project Add', 'Project Edit', 'Project Delete', 'Builder List', 'Builder Add', 'Builder Edit', 'Builder Delete', 'Account List', 'Account Approvel', 'Leads Attend', 'Enquiry Attend', 'Setup Manage', 'Newsletters', 'Activity Logs'];
+        $permission_for_marketing = ['Property List', 'Property Show', 'Property Edit', 'Project List', 'Project Add', 'Project Edit', 'Builder List', 'Builder Add', 'Builder Edit', 'Account Approvel', 'Leads Attend', 'Enquiry Attend'];
+        if (auth('web')->check()) {
+            $account_type  = auth('web')->user()->acc_type;
+            if ($account_type == 'marketing') {
+                if (in_array($permission, $permission_for_marketing)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } elseif ($account_type == 'office_admin') {
+                if (in_array($permission, $permissions_for_officeAdmin)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } elseif ($account_type == 'superadmin' || $account_type == 'developer') {
+                return true;
+            } else {
+                return true;;
+            }
+        } else {
+            return false;
+        }
     }
 }

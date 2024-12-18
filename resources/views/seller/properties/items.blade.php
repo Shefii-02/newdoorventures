@@ -24,12 +24,30 @@
             <span class="text-sm">{{ $property->views }}</span>
         </td>
         <td class="px-2 py-1 text-center">
-            <span class="badge badge-pill text-capitalize fs-6 {{ $property->moderation_status == 'approved' ? 'bg-success' : (($property->moderation_status == 'pending') ? 'bg-warning' :  'bg-primary')  }}  text-light ">
-                {{ $property->moderation_status }}
-            </span>
+            @if($property->status == 'rented' ||  $property->status == 'sold')
+                <span class="badge badge-pill text-capitalize fs-6 {{ ($property->status == 'sold' || $property->status == 'rented') ? 'bg-theme' : ''  }}  text-light ">
+                    {{ $property->status }}
+                </span>
+            @else
+                <span class="badge badge-pill text-capitalize fs-6 {{ $property->moderation_status == 'approved' ? 'bg-success' : (($property->moderation_status == 'pending') ? 'bg-warning' :  'bg-primary')  }}  text-light ">
+                    {{ $property->moderation_status }}
+                </span>
+            @endif
         </td>
         <td class="px-2 py-1 text-center">
+            @if($property->status != 'rented' &&  $property->status != 'sold')
             <a href="{{ route('user.properties.edit',$property->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+            @else
+            <div x-data>
+                <span role="button"
+                    @click="alert('The process is completed. if you need restore Please contact our representative.')" 
+                    class="font-bold text-success dark:text-blue-500 hover:underline"
+                >
+                    Completed
+                </span>
+            </div>
+            
+            @endif
         </td>
     </tr>
 @endforeach

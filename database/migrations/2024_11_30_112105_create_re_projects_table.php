@@ -32,7 +32,7 @@ return new class extends Migration
             $table->unsignedBigInteger('city_id')->nullable();
             $table->string('status', 60)->default('selling');
             $table->unsignedBigInteger('author_id')->nullable();
-            $table->string('author_type')->default('Botble\\\\ACL\\\\Models\\\\User');
+            $table->string('author_type')->default('App\\\\Models\\\\User');
             $table->timestamps();
             $table->string('latitude', 25)->nullable();
             $table->string('longitude', 25)->nullable();
@@ -58,6 +58,7 @@ return new class extends Migration
             $table->text('locality')->nullable();
             $table->text('sub_locality')->nullable();
             $table->text('landmark')->nullable();
+            $table->softDeletes();
         });
     }
 

@@ -10,6 +10,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [LoginController::class, 'login'])->name('admin.login.submit');
     Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
 });
+
 Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers\Admin'], function () {
     Route::get('dashboard', function () {
         return view('admin.dashboard.index');
@@ -19,7 +20,8 @@ Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.'
     Route::post('profile/update', 'ProfileController@updateProfile')->name('profile.update');
     Route::post('profile/update-password', 'ProfileController@changePassword')->name('profile.changePassword');
     
-    
+
+
     // Route::resource('dashboard', DashboardController::class)->names('dashboard');
     Route::resource('properties', PropertyController::class)->names('properties');
     Route::resource('projects', ProjectController::class)->names('projects');
@@ -41,5 +43,7 @@ Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.'
     Route::post('consults/update-status/{id}', 'App\Http\Controllers\Admin\ConsultsController@updateStatus')->name('admin.consults.updateStatus');
     Route::post('contact/update-status/{id}', 'App\Http\Controllers\Admin\ConsultsController@updateStatus')->name('admin.consults.updateStatus');
 
+    Route::resource('trash', TrashController::class)->names('trash');
+    
     
 });

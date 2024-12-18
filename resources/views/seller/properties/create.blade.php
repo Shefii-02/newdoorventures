@@ -150,7 +150,7 @@
                             </div>
 
                             <!-- Type Selection -->
-                            <div class="d-none">
+                            <div class="">
                                 <h6 class="mb-3 mt-3 font-medium">What kind of property do you have?<sup
                                         class="text-danger fs-4">*</sup></h6>
                                 <div class="flex flex-wrap ">
@@ -423,7 +423,7 @@
                                                     class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
                                                     Name</label>
                                             </div>
-                                            <div class="relative z-0 w-full mb-3 group">
+                                            <div class="relative z-0 w-full mb-3 group d-none">
                                                 <input form="propertyFrom" name="unit_info" type="text"
                                                     autocomplete="off" id="unit-info"
                                                     class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -1907,7 +1907,7 @@
                         // Set types for Sell and Rent modes
                         if (mode === 'sell' || mode === 'rent') {
                             // Commercial
-                            this.types = ['Residential'];
+                            this.types = ['Residential','Commercial'];
                         } else if (mode === 'pg') {
                             this.types = ['Residential'];
                             ShowWantedSectionInPg();

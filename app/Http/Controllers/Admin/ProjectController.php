@@ -31,6 +31,11 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
+        if (!permission_check('Project List'))
+        {
+            return abort(404);
+        }
+
         //
         $query = Project::orderBy('created_at', 'desc');
         if ($request->has('search') && $request->search != '') {
@@ -57,6 +62,11 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        if (!permission_check('Project Add'))
+        {
+            return abort(404);
+        }
+
         //
         $configration = Configration::query()->select(['id', 'name'])->get();
         $facilities   = Facility::query()->select(['id', 'name'])->get();
@@ -72,7 +82,11 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
 
-   
+        if (!permission_check('Project Add'))
+        {
+            return abort(404);
+        }
+
         DB::beginTransaction();
         try {
             $videos[] = $request->input('videos') ?? [];
@@ -154,6 +168,12 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
+
+        if (!permission_check('Project Edit'))
+        {
+            return abort(404);
+        }
+
         //
         $project      = Project::where('id', $id)->first() ?? abort(404);
         $configration = Configration::query()->select(['id', 'name'])->get();
@@ -169,6 +189,12 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
+        if (!permission_check('Project Edit'))
+        {
+            return abort(404);
+        }
+
         DB::beginTransaction();
 
         try {
@@ -287,6 +313,64 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         //
+
+        if (!permission_check('Project Delete'))
+        {
+            return abort(404);
+        }
+
+        if (auth('web')->user()->acc_type == 'superadmin') {
+            $project = Project::findOrFail($id);
+            DB::beginTransaction();
+            try {
+                foreach ($project->images  ?? [] as $imageLoc) {
+                    $imagePath = public_path('images/' . $imageLoc);
+                    if (file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                }
+
+                FacilityDistance::where('reference_id', $project->id)->delete();
+                DB::table('re_custom_field_values')->where('reference_type', 'App\Models\Project')->where('reference_id', $project->id)->delete();
+                ConfigrationDetail::where('reference_id', $project->id)
+                            ->where('reference_type', 'App\Models\Project')
+                            ->delete();
+                ProjectSpecification::where('project_id', $project->id)->delete();
+                ProjectPriceVariations::where('project_id', $project->id)->delete();
+                $project->categories()->detach();
+                $project->features()->detach();
+                
+                $project->forceDelete();
+                // $property->delete();
+                DB::commit();
+                Session::flash('success_msg', 'Successfully Deleted');
+                return redirect()->route('admin.properties.index')->with('success_msg', 'Status updated deleted!');
+            } catch (Exception $e) {
+                DB::rollBack();
+                // Return error response if something goes wrong
+                return response()->json([
+                    'status' => 'failed_msg',
+                    'message' => $e->getMessage(),
+                ], 500);
+            }
+        } else {
+            DB::beginTransaction();
+            try {
+                Project::where('id', $id)->delete();
+                DB::commit();
+                Session::flash('success_msg', 'Successfully Deleted');
+                return redirect()->route('admin.properties.index')->with('success_msg', 'Status updated deleted!');
+            } catch (Exception $e) {
+                DB::rollBack();
+                // Return error response if something goes wrong
+                return response()->json([
+                    'status' => 'failed_msg',
+                    'message' => $e->getMessage(),
+                ], 500);
+            }
+        }
+
+
     }
 
 

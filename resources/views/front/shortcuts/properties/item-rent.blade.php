@@ -46,7 +46,7 @@
                 <span class="ms-4 text-sm">{{ $property->city }}.</span>
             </p>
             @if($property->project->name)
-            <p class="truncate text-slate-600 dark:text-slate-300">
+            <p class="truncate text-slate-600 dark:text-slate-300 d-none">
                 <span class="mdi mdi-bank-check text-medium font-bold"></span>  <span class="text-sm">Project :</span><span class="text-sm font-bold"> {{ $property->project->name }}</span>
             </p>
             @endif

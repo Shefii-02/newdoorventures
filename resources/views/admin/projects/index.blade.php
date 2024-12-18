@@ -11,10 +11,12 @@
                             Projects List
                         </h2>
                         <div class="relative">
-                            <a class="bg-primary bg-warning hover:bg-opacity-90 inline-flex items-center justify-center px-6 py-2 rounded-md text-center text-sm text-white"
-                                href="{{ route('admin.projects.create') }}">
-                                Create
-                            </a>
+                            @if (permission_check('Project Add'))
+                                <a class="bg-primary bg-warning hover:bg-opacity-90 inline-flex items-center justify-center px-6 py-2 rounded-md text-center text-sm text-white"
+                                    href="{{ route('admin.projects.create') }}">
+                                    Create
+                                </a>
+                            @endif
                         </div>
                     </div>
 

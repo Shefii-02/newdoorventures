@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('manage_supers')->default(false);
             $table->text('permissions')->nullable();
             $table->timestamp('last_login')->nullable();
+            $table->string('acc_type', 120)->default('staff')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

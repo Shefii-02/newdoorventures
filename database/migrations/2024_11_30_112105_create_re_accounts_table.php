@@ -35,6 +35,9 @@ return new class extends Migration
             $table->unsignedBigInteger('state_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
             $table->string('status', 10)->nullable()->default('0');
+            $table->dateTime('last_login')->nullable();
+            $table->boolean('is_staff')->nullable()->default(0);
+            $table->boolean('auto_approvel')->nullable()->default(0);
         });
     }
 

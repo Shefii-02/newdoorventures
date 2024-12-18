@@ -14,6 +14,11 @@ class BuilderController extends Controller
 
    public function index(Request $request)
    {
+        if (!permission_check('Builder List'))
+        {
+            return abort(404);
+        }
+
        $builders = Investor::orderBy('created_at', 'desc')->get();
 
        return view('admin.builders.index',compact('builders'));
@@ -25,6 +30,11 @@ class BuilderController extends Controller
    public function create()
    {
        //
+        if (!permission_check('Builder Add'))
+        {
+            return abort(404);
+        }
+
        return view('admin.builders.form');
    }
 
@@ -33,6 +43,11 @@ class BuilderController extends Controller
     */
    public function store(Request $request)
    {
+        if (!permission_check('Builder Add'))
+        {
+            return abort(404);
+        }
+
        //
        DB::beginTransaction();
        try {
@@ -62,6 +77,11 @@ class BuilderController extends Controller
     */
    public function edit(string $id)
    {
+        if (!permission_check('Builder Edit'))
+        {
+            return abort(404);
+        }
+
        //
        $builder=Investor::where('id', $id)->first()  ?? abort(404);
        return view('admin.builders.form', compact('builder'));
@@ -72,6 +92,11 @@ class BuilderController extends Controller
     */
    public function update(Request $request, string $id)
    {
+        if (!permission_check('Builder Edit'))
+        {
+            return abort(404);
+        }
+
        //
        $builder=Investor::where('id', $id)->first() ?? abort(404);
        DB::beginTransaction();
@@ -97,6 +122,11 @@ class BuilderController extends Controller
     */
    public function destroy(Request $request, string $id)
    {
+        if (!permission_check('Builder Delete'))
+        {
+            return abort(404);
+        }
+
        //
        Investor::where('id', $id)->delete() ?? abort(404);
      

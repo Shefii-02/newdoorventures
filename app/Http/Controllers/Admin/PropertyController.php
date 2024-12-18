@@ -125,7 +125,6 @@ class PropertyController extends Controller
     public function update(Request $request, string $id)
     {
         //
-
         $consult = Property::findOrFail($id);
         $consult->update($request->only('moderation_status'));
 
@@ -137,34 +136,55 @@ class PropertyController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-        $property = Property::findOrFail($id);
-        DB::beginTransaction();
-        try {
-            foreach ($property->images  ?? [] as $imageLoc) {
-                $imagePath = public_path('images/' . $imageLoc);
-                if (file_exists($imagePath)) {
-                    unlink($imagePath);
+
+        if (!permission_check('Property Delete')) {
+            return abort(404);
+        }
+
+        if (auth('web')->user()->acc_type == 'superadmin') {
+            $property = Property::findOrFail($id);
+            DB::beginTransaction();
+            try {
+                foreach ($property->images  ?? [] as $imageLoc) {
+                    $imagePath = public_path('images/' . $imageLoc);
+                    if (file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
                 }
+
+                FacilityDistance::where('reference_id', $property->id)->delete();
+                RuleDetails::where('reference_id', $property->id)->delete();
+                DB::table('re_custom_field_values')->where('reference_type', 'App\Models\Property')->where('reference_id', $property->id)->delete();
+                DB::table('re_property_categories')->where('property_id', $id)->delete();
+                DB::table('re_property_furnishing')->where('property_id', $id)->delete();
+                $property->forceDelete();
+                // $property->delete();
+                DB::commit();
+                Session::flash('success_msg', 'Successfully Deleted');
+                return redirect()->route('admin.properties.index')->with('success_msg', 'Status updated deleted!');
+            } catch (Exception $e) {
+                DB::rollBack();
+                // Return error response if something goes wrong
+                return response()->json([
+                    'status' => 'failed_msg',
+                    'message' => $e->getMessage(),
+                ], 500);
             }
-            
-            FacilityDistance::where('reference_id', $property->id)->delete();
-            RuleDetails::where('reference_id', $property->id)->delete();
-            DB::table('re_custom_field_values')->where('reference_type', 'App\Models\Property')->where('reference_id', $property->id)->delete();
-            DB::table('re_property_categories')->where('property_id', $id)->delete();
-            DB::table('re_property_furnishing')->where('property_id', $id)->delete();
-            $property->delete();
-            DB::commit();
-            Session::flash('success_msg', 'Successfully Deleted');
-            return redirect()->route('admin.properties.index')->with('success_msg', 'Status updated deleted!');
-
-
-        } catch (Exception $e) {
-            DB::rollBack();
-            // Return error response if something goes wrong
-            return response()->json([
-                'status' => 'failed_msg',
-                'message' => $e->getMessage(),
-            ], 500);
+        } else {
+            DB::beginTransaction();
+            try {
+                Property::where('id', $id)->delete();
+                DB::commit();
+                Session::flash('success_msg', 'Successfully Deleted');
+                return redirect()->route('admin.properties.index')->with('success_msg', 'Status updated deleted!');
+            } catch (Exception $e) {
+                DB::rollBack();
+                // Return error response if something goes wrong
+                return response()->json([
+                    'status' => 'failed_msg',
+                    'message' => $e->getMessage(),
+                ], 500);
+            }
         }
     }
 }

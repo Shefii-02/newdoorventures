@@ -201,8 +201,7 @@ class FrontendController extends Controller
     {
         $project = Project::where('slug', $slug)->where('unique_id', $uid)->first() ?? abort(404);
         $configurations = Configration::get();
-        $advertisement = Advertisement::where('status', 1)->limit(1)->inRandomOrder()->first();
-
+        $advertisement = Advertisement::inRandomOrder()->first();
         return view('front.projects.single', compact('project', 'configurations', 'advertisement'));
     }
 

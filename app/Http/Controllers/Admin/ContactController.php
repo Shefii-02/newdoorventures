@@ -61,6 +61,9 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!permission_check('Enquiry Attend')){
+            return abort(404);
+        }
         $consult = Contact::findOrFail($id);
         $consult->update($request->only('status'));
 

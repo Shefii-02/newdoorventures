@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Session;
 
 class CategoriesController extends Controller
 {
+
+    public function __construct()
+    {
+        // Check permission inside the constructor
+        if (!permission_check('Setup Manage')) {
+            abort(404); // Return a 404 error if permission is not available
+        }
+    }
+    
     /**
      * Display a listing of the resource.
      */

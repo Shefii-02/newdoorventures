@@ -34,6 +34,23 @@
 
     <div class="container card overflow-x-auto shadow-md sm:rounded-lg mt-3">
         <div class="relative p-5 ">
+            <div x-data="{ selectedTab: 'sell', searchQuery: '' }">
+                <div class="flex space-x-4 mb-4">
+                   
+                    <button
+                        @click="selectedTab = 'sell'; fetchProperties('sell', searchQuery)"
+                        :class="selectedTab === 'sell' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
+                        class="px-4 py-2 rounded">Sell</button>
+                    <button
+                        @click="selectedTab = 'rent'; fetchProperties('rent', searchQuery)"
+                        :class="selectedTab === 'rent' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
+                        class="px-4 py-2 rounded">Rent</button>
+                    <button
+                        @click="selectedTab = 'pg'; fetchProperties('pg', searchQuery)"
+                        :class="selectedTab === 'pg' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
+                        class="px-4 py-2 rounded">PG</button>
+                </div>
+            </div>
             <div class="pb-4 flex justify-between">
                 <label for="table-search" class="sr-only">Search</label>
                 <div class="relative mt-1">

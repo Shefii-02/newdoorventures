@@ -1,5 +1,5 @@
 <div>
-    <h3 class="text-lg font-bold mb-4">Consult Details</h3>
+    <h3 class="text-lg font-bold mb-4">Lead Details</h3>
     <form action="{{ route('admin.consults.update', $consult->id) }}" method="POST">
         @csrf
         @method('PUT')

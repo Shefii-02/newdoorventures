@@ -150,7 +150,7 @@
                             </div>
 
                             <!-- Type Selection -->
-                            <div class="d-none">
+                            <div class="">
                                 <h6 class="mb-3 mt-3 font-medium">What kind of property do you have?<sup
                                         class="text-danger fs-4">*</sup></h6>
                                 <div class="flex flex-wrap ">
