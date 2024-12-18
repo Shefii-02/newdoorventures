@@ -78,18 +78,48 @@ class AccountPropertyController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%$search%")
-                    ->orWhere('location', 'LIKE', "%$search%")
-                    ->orWhere('type', 'LIKE', "%$search%");
+                    ->orWhere('location', 'LIKE', "%$search%");
             });
         }
 
-        $properties = $query->paginate(30);
+        if ($request->has('status') && $request->status != '') {
+            $status = $request->status;
+            if ($status == 'completed') {
+                $query->where(function ($q) {
+                    $q->where('status', 'sold')
+                        ->orWhere('status', 'rented');
+                });
+            } else {
+                $query->where(function ($q) use ($status) {
+                    $q->where('moderation_status', $status);
+                });
+            }
+        } else {
+            $query->where(function ($q) {
+                $q->where('moderation_status', 'approved');
+            });
+        }
+
+        if($request->has('type') && $request->type != 'all'){
+            $type = $request->type;
+            $query->where(function ($q) use ($type) {
+                $q->where('type', $type);
+            });
+        }
+
+        $properties = $query->get();
+
+        // if ($request->ajax()) {
+        //     $rows = view('seller.properties.items', compact('properties'))->render();
+        //     $pagination = view('seller.properties.pagination', compact('properties'))->render();
+        //     return response()->json(['rows' => $rows, 'pagination' => $pagination]);
+        // }
 
         if ($request->ajax()) {
-            $rows = view('seller.properties.items', compact('properties'))->render();
-            $pagination = view('seller.properties.pagination', compact('properties'))->render();
-            return response()->json(['rows' => $rows, 'pagination' => $pagination]);
+
+            return view('seller.properties.items', compact('properties'))->render();
         }
+
 
         return view('seller.properties.index', compact('properties'));
     }

@@ -15,7 +15,7 @@
         name="viewport" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>New Door Ventures</title>
-
+    properties:1 <meta name="apple-mobile-web-app-capable" content="yes">
     <link href="{{ asset('images/backgrounds/favicon.png') }}" rel="shortcut icon">
     {{-- {!! BaseHelper::googleFonts(
         'https://fonts.googleapis.com/css2?family=' .
