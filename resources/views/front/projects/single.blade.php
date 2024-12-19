@@ -4,6 +4,8 @@
 
     $unit_variation = $project->configration->where('name', 'Unit Variants')->first();
     $towers_and_blocks = $project->configration->where('name', 'Towers and Blocks')->first();
+    $sell_properties = $project->properties->where('type', 'sell');
+    $rent_properties = $project->properties->where('type', 'rent');
 @endphp
 
 @push('header')
@@ -42,7 +44,7 @@
                                                         @endif
                                                     </span>
                                                     <span class="mt-2 fs-6">Developed by
-                                                        {{ $project->investor->name }}</span>
+                                                        {{ $project->investor ? $project->investor->name : '---' }}</span>
                                                 </div>
                                                 <div class="px-3 col-lg-12 md:flex flex-column">
                                                     <div class="flex flex-column flex-column">
@@ -265,7 +267,6 @@
                                 </div>
                             @endif
                             @if ($project->configration->count())
-    
                                 <div class="container-fluid mb-5 section" id="Configuration"
                                     :class="{ 'active': activeSection === 'Configuration' }">
                                     <div class="md:flex">
@@ -277,23 +278,22 @@
                                                         <table class="table table-bordered border-xl border-2">
                                                             @foreach ($project->configration ?? [] as $listingConfig)
                                                                 {{-- @if ($option = $project->configration()->where('name', $listingConfig->name)->first()->pivot) --}}
-                                                                    <tr class="border-bottom-none">
-                                                                        <td class="text-gray-800 text-center p-3">
-                                                                            <div
-                                                                                class="w-100 text-center flex justify-center">
-                                                                                <img
-                                                                                    src="{{ asset('images/' . $listingConfig->image->url) }}">
-                                                                            </div>
-                                                                        </td>
-                                                                        <td class="text-gray-800 text-center">
-                                                                            <span
-                                                                                class="text-sm dark:text-white">{{ $listingConfig->name }}</span>
-                                                                        </td>
-                                                                        <td class="text-center">
-                                                                            <span
-                                                                                class="text-sm dark:text-white">{{ $listingConfig->pivot->distance ?? '--' }}</span>
-                                                                        </td>
-                                                                    </tr>
+                                                                <tr class="border-bottom-none">
+                                                                    <td class="text-gray-800 text-center p-3">
+                                                                        <div class="w-100 text-center flex justify-center">
+                                                                            <img
+                                                                                src="{{ asset('images/' . $listingConfig->image->url) }}">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="text-gray-800 text-center">
+                                                                        <span
+                                                                            class="text-sm dark:text-white">{{ $listingConfig->name }}</span>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <span
+                                                                            class="text-sm dark:text-white">{{ $listingConfig->pivot->distance ?? '--' }}</span>
+                                                                    </td>
+                                                                </tr>
                                                                 {{-- @endif --}}
                                                             @endforeach
                                                         </table>
@@ -397,18 +397,18 @@
                                                     </h4>
                                                     <div
                                                         data-slick='{
-                                            "slidesToShow": 2,
-                                            "slidesToScroll": 1,
-                                            "arrows": true,
-                                            "dots": false,
-                                            "loop":true,
-                                            "infinite": true,
-                                            "responsive": [
-                                                {"breakpoint": 1024, "settings": {"slidesToShow": 3}},
-                                                {"breakpoint": 768, "settings": {"slidesToShow": 2}},
-                                                {"breakpoint": 480, "settings": {"slidesToShow": 1}}
-                                            ]
-                                        }'>
+                                                            "slidesToShow": 2,
+                                                            "slidesToScroll": 1,
+                                                            "arrows": true,
+                                                            "dots": false,
+                                                            "loop":true,
+                                                            "infinite": true,
+                                                            "responsive": [
+                                                                {"breakpoint": 1024, "settings": {"slidesToShow": 3}},
+                                                                {"breakpoint": 768, "settings": {"slidesToShow": 2}},
+                                                                {"breakpoint": 480, "settings": {"slidesToShow": 1}}
+                                                            ]
+                                                        }'>
                                                         @foreach ($project->master_plan_images ?? [] as $master_image)
                                                             @if ($master_image != null || $master_image != '')
                                                                 <div class="p-2 relative" role="button">
@@ -461,53 +461,84 @@
                                 </div>
                             @endif
 
-                            @if ($project->construction_status != 'new_launch')
-                                <div class="container-fluid mb-5">
-                                    <div class="md:flex">
-                                        <div class="w-full p-1 ">
-                                            <div class="border-theme rounded-xl">
-                                                <div class="px-5 py-5">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <div class="card border-0 text-center">
-                                                                <div
-                                                                    class="flex flex-col justify-center items-center border-3 border-bottom-0 border-top-0 border-start-0">
-                                                                    <img class="w-10 mb-2"
-                                                                        src="{{ asset('assets/icons/For-Sale.gif') }}"
-                                                                        alt="Project Location">
-                                                                    <span
-                                                                        class="text-medium font-bold ">{{ $project->resale_properties }}
-                                                                        Resale</span>
-                                                                    <span
-                                                                        class="text-sm text-gray-500 text-decoration-underline">
-                                                                        Properties in this project</span>
-                                                                </div>
+                            {{-- @if ($project->construction_status != 'ready_to_move') --}}
+                            <div class="container-fluid mb-5">
+                                <div class="md:flex">
+                                    <div class="w-full p-1 ">
+                                        <div class="border-theme rounded-xl">
+                                            <div class="px-5 py-5">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="card border-0 text-center">
+                                                            <div
+                                                                class="flex flex-col justify-center items-center border-3 border-bottom-0 border-top-0 border-start-0">
+                                                                <img class="w-10 mb-2"
+                                                                    src="{{ asset('assets/icons/For-Sale.gif') }}"
+                                                                    alt="Resale">
+                                                                    
+                                                                <span
+                                                                    class="text-medium font-bold ">{{ $sell_properties->count() }}
+                                                                    Resale</span>
+                                                                <a href="#sell-related" class="text-sm text-gray-500 text-decoration-underline">
+                                                                    Properties in this project</a>
                                                             </div>
                                                         </div>
-
-                                                        <div class="col-lg-6">
-                                                            <div class="card border-0 text-center">
-                                                                <div class="flex flex-col justify-center items-center">
-                                                                    <img class="w-10 mb-2"
-                                                                        src="{{ asset('assets/icons/For-Rent.gif') }}"
-                                                                        alt="Project Location">
-                                                                    <span
-                                                                        class="text-medium font-bold ">{{ $project->rent_properties }}
-                                                                        Rental</span>
-                                                                    <span
-                                                                        class="text-sm text-gray-500 text-decoration-underline">
-                                                                        Properties in this project</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
                                                     </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="card border-0 text-center">
+                                                            <div class="flex flex-col justify-center items-center">
+                                                                <img class="w-10 mb-2"
+                                                                    src="{{ asset('assets/icons/For-Rent.gif') }}"
+                                                                    alt="Rental">
+                                                                <span
+                                                                    class="text-medium font-bold ">{{ $rent_properties->count() }}
+                                                                    Rental</span>
+                                                                <a href="#rent-related" class="text-sm text-gray-500 text-decoration-underline">
+                                                                    Properties in this project</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            </div>
+                            <div class="container-fluid mb-5" id="sell-related">
+                                <div class="md:flex">
+                                    <div class="w-full p-1 ">
+                                        <div class="border-theme rounded-xl">
+                                            <div class="px-3 py-5">
+                                                <h4 class="fs-5  font-bold me-2 ">{{ __('Resale Properties in this project') }}
+                                                </h4>
+                                            </div>
+                                            <div class="px-2">
+                                                @include('front.shortcuts.properties.items-scroll-related', ['properties' => $sell_properties])
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid mb-5" id="rent-related">
+                                <div class="md:flex">
+                                    <div class="w-full p-1 ">
+                                        <div class="border-theme rounded-xl">
+                                            <div class="px-3 py-5">
+                                                <h4 class="fs-5  font-bold me-2 ">{{ __('Rental Properties in this project') }}
+                                                </h4>
+                                            </div>
+                                            <div class="px-2">
+                                                @include('front.shortcuts.properties.items-scroll-related', ['properties' => $rent_properties])
+                                        
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- @endif --}}
                             @if ($project->latitude && $project->longitude)
                                 <div class="container-fluid mb-5 section" id="Location"
                                     :class="{ 'active': activeSection === 'Location' }">
@@ -522,14 +553,14 @@
                                                     <div class="property-street-map"
                                                         data-popup-id="#street-map-popup-template"
                                                         data-center="{{ json_encode([$project->latitude, $project->longitude]) }}"
-                                                        data-map-icon="{{ $project->type }}: {{ __(':from - :to', ['from' => shorten_price($project->price_from), 'to' => shorten_price($project->price_to)]) }}"
+                                                        data-map-icon="{{ $project->name }}: {{ __(':from - :to', ['from' => shorten_price($project->price_from), 'to' => shorten_price($project->price_to)]) }}"
                                                         style="height: 300px;">
                                                         <div class="hidden property-template-popup-map">
                                                             <table width="100%">
                                                                 <tr class="border-bottom-none">
                                                                     <td width="90">
                                                                         <div class="blii"><img
-                                                                                src="{{ $project->image_thumb }}"
+                                                                                src="{{ url('images/' . $project->image_thumb) }}"
                                                                                 width="80"
                                                                                 alt="{{ $project->name }}">
                                                                             <div class="status">{!! $project->mode !!}
@@ -551,11 +582,11 @@
                                                                                 <span class="px-2">
                                                                                     <i
                                                                                         class="mdi mdi-home-silo-outline"></i>
-                                                                                    <i>{{ isset($towers_and_blocks) ? $towers_and_blocks->distance : '--' }}</i>
+                                                                                    <i>{{ isset($towers_and_blocks) ? $towers_and_blocks->pivot->distance : '--' }}</i>
                                                                                 </span>
                                                                                 <span>
                                                                                     <i class="mdi mdi-home-switch"></i>
-                                                                                    <i>{{ isset($unit_variation) ? $unit_variation->distance : '--' }}</i>
+                                                                                    <i>{{ isset($unit_variation) ? $unit_variation->pivot->distance : '--' }}</i>
                                                                                 </span>
                                                                             </div>
                                                                         </div>
@@ -630,8 +661,10 @@
                                     </div>
                                 </div>
                             @endif
+                            
+                           
 
-                            @if ($project->content)
+                            @if ($project->investor)
                                 <div class="container-fluid mb-5 section" id="AboutDeveloper"
                                     :class="{ 'active': activeSection === 'AboutDeveloper' }">
                                     <div class="md:flex">

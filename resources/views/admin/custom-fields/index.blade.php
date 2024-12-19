@@ -63,10 +63,10 @@
                         <div class="w-2/12 xl:w-3/12">
                             <span class="font-medium">Name</span>
                         </div>
-                        <div class="w-2/12 xl:w-3/12 d-none">
+                        <div class="w-2/12 xl:w-3/12 ">
                             <span class="font-medium">Sale</span>
                         </div>
-                        <div class="w-2/12 xl:w-3/12 d-none">
+                        <div class="w-2/12 xl:w-3/12 ">
                             <span class="font-medium">Rent</span>
                         </div>
                         <div class="w-2/12 xl:w-3/12 d-none">
@@ -82,32 +82,33 @@
                 <div class="p-4 md:p-6 xl:p-7.5">
                     <div class="flex flex-col gap-7">
                         @foreach ($customfileds as $customfiled)
+            
                             <div class="flex justify-between items-center gap-3">
                                 <div class="w-2/12 xl:w-3/12">
                                     <div class="flex items-center gap-4">
                                         <span class="hidden font-medium xl:block">{{ $customfiled->name }}</span>
                                     </div>
                                 </div>
-                                <div class="w-2/12 xl:w-3/12 d-none">
+                                <div class="w-2/12 xl:w-3/12 ">
                                     <div class="flex items-center gap-4">
                                         <span
-                                            class="inline-block text-capitalize rounded {{ $customfiled->has_sell == 0 ? 'bg-red' : 'bg-success' }} px-2.5 py-0.5 text-sm font-medium text-white">
-                                            {{ $customfiled->has_sale == 1 ? 'Available' : 'Not Available' }}
+                                            class="inline-block text-capitalize rounded {{ $customfiled->has_sell == 0 ? 'text-red' : 'text-success' }} px-2.5 py-0.5 text-sm font-sm ">
+                                            {{ $customfiled->has_sell == 1 ? 'Available' : 'Not Available' }}
                                         </span>
                                     </div>
                                 </div>
-                                <div class="w-2/12 xl:w-3/12 d-none">
+                                <div class="w-2/12 xl:w-3/12 ">
                                     <div class="flex items-center gap-4">
                                         <span
-                                            class="inline-block text-capitalize rounded {{ $customfiled->has_rent == 0 ? 'bg-red' : 'bg-success' }} px-2.5 py-0.5 text-sm font-medium text-white">
+                                            class="inline-block text-capitalize rounded {{ $customfiled->has_rent == 0 ? 'text-red' : 'text-success' }} px-2.5 py-0.5 text-sm font-sm ">
                                             {{ $customfiled->has_rent == 1 ? 'Available' : 'Not Available' }}
                                         </span>
                                     </div>
                                 </div>
-                                <div class="w-2/12 xl:w-3/12 d-none">
+                                <div class="w-2/12 xl:w-3/12  d-none">
                                     <div class="flex items-center gap-4">
                                         <span
-                                            class="inline-block text-capitalize rounded {{ $customfiled->has_pg == 0 ? 'bg-red' : 'bg-success' }} px-2.5 py-0.5 text-sm font-medium text-white">
+                                            class="inline-block text-capitalize rounded {{ $customfiled->has_pg == 0 ? 'text-red' : 'text-success' }} px-2.5 py-0.5 text-sm font-sm ">
                                             {{ $customfiled->has_pg == 1 ? 'Available' : 'Not Available' }}
                                         </span>
                                     </div>

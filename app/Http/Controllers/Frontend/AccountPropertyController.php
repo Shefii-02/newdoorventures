@@ -245,6 +245,7 @@ class AccountPropertyController extends Controller
             $property->property_age     = $request->property_age;
             $property->possession       = $request->possession;
             $property->ownership        = $request->ownership;
+            $property->other_rooms      = $request->has('other_rooms') && count($request->other_rooms) > 0 ? implode(',',$request->other_rooms) : null; 
             $property->all_include      = $request->has('all_include') ? 1 : 0;
             $property->tax_include      = $request->has('tax_include') ? 1 : 0;
             $property->negotiable       = $request->has('negotiable') ? 1 : 0;
@@ -252,6 +253,8 @@ class AccountPropertyController extends Controller
             $property->occupancy_type   = $request->has('occupancy_type') ? $request->occupancy_type : '';
             $property->available_for    = $request->has('available_for') ? $request->available_for : '';
             $property->plot_area        = $request->plot_area ?? '';
+            $property->open_sides       = $request->open_sides;
+
             if (auth('account')->user()->auto_approvel == 1 && $request->moderation_status != 'draft') {
                 $property->moderation_status = 'approved';
             } else {
@@ -265,11 +268,15 @@ class AccountPropertyController extends Controller
             }
             $property->save();
 
+            if($request->furnishing_status =='furnished'){
+                $furnishingIds = Furnishing::whereStatus()->pluck('id');
+                $request->merge(['furnishing' => $furnishingIds]);
+            }
 
             $property->features()->sync($request->input('amenities', []));
-            if ($request->furnishing_status != 'unfurnished') {
+            // if ($request->furnishing_status != 'unfurnished') {
                 $property->furnishing()->sync($request->input('furnishing', []));
-            }
+            // }
 
             $this->saveCustomFields($property, $request->input('custom_fields', [])); //moredetail
 
@@ -538,6 +545,8 @@ class AccountPropertyController extends Controller
             $property->property_age     = $request->property_age;
             $property->possession       = $request->possession;
             $property->ownership        = $request->ownership;
+            $property->open_sides       = $request->open_sides;
+            $property->other_rooms      = $request->has('other_rooms') && count($request->other_rooms) > 0 ? implode(',',$request->other_rooms) : null; 
             $property->all_include      = $request->has('all_include') ? 1 : 0;
             $property->tax_include      = $request->has('tax_include') ? 1 : 0;
             $property->negotiable       = $request->has('negotiable') ? 1 : 0;
@@ -576,18 +585,21 @@ class AccountPropertyController extends Controller
                     $property->moderation_status = 'pending';
                 }
             }
-
-
-
-
-
             $property->save();
 
-
             $property->features()->sync($request->input('amenities', []));
-            if ($request->furnishing_status != 'unfurnished') {
-                $property->furnishing()->sync($request->input('furnishing', []));
+
+            if($request->furnishing_status =='furnished'){
+         
+                $furnishingIds = Furnishing::whereStatus('published')->pluck('id');
+          
+                $request->merge(['furnishing' => $furnishingIds]);
             }
+
+            // if ($request->furnishing_status != 'unfurnished') {
+                $property->furnishing()->sync($request->input('furnishing', []));
+            // }
+           
 
 
             $this->saveCustomFields($property, $request->input('custom_fields', [])); //moredetail
@@ -775,7 +787,7 @@ class AccountPropertyController extends Controller
             // $fileName = auth('account')->user()->id . '-' . time() . '-' . Str::slug(File::basename($file->getClientOriginalName())) . '.' . $file->getClientOriginalExtension();
 
             $folderPath = 'properties';
-            $result = uploadFile($file, $folderPath, 'public');
+            $result = uploadFile($file, $folderPath, 'public', true);
 
             if (isset($result)) {
                 $paths =  $result;

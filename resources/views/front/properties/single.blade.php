@@ -120,13 +120,13 @@
                                                 <div class="col-lg-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Developer</h4>
-                                                        <span>{{ $property->project->investor->name }}</span>
+                                                        <span>{{ $property->project && $property->project->investor ? $property->project->investor->name : '---' }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Project</h4>
-                                                        <span>{{ $property->project->name }}</span>
+                                                        <span>{{ $property->project->name ?? '---' }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3">
@@ -331,7 +331,7 @@
                                                                 <span
                                                                     class="fw-bold text-sm">{{ $property->project->name }}</span>
                                                                 <span class="text-sm">by
-                                                                    {{ $property->project->investor->name }}</span>
+                                                                    {{ $property->project && $property->project->investor ? $property->project->investor->name : '' }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-2">
@@ -524,7 +524,7 @@
                                                         data-popup-id="#street-map-popup-template"
                                                         data-center="{{ json_encode([$property->latitude, $property->longitude]) }}"
                                                         {{-- ->label() --}}
-                                                        data-map-icon="{{ $property->type }}: {{ shorten_price($property->price) }}"
+                                                        data-map-icon="{{ $property->name }}: {{ shorten_price($property->price) }}"
                                                         style="height: 300px;">
                                                         <div class="hidden property-template-popup-map">
                                                             <table width="100%">
@@ -534,7 +534,7 @@
                                                                                 src="{{ asset($property->image_thumb) }}"
                                                                                 width="80"
                                                                                 alt="{{ $property->name }}">
-                                                                            <div class="status">{!! $property->mode !!}
+                                                                            <div class="status text-white">{!! $property->mode !!}
                                                                             </div>
                                                                         </div>
                                                                     </td>

@@ -41,7 +41,7 @@
                                                         @endif
                                                     </span>
                                                     <span class="mt-2 fs-6">Developed by
-                                                        {{ $property->project->investor->name }}</span>
+                                                        {{ $property->project && $property->project->investor ? $property->project->investor->name : '---' }}</span>
                                                 </div>
                                                 <div class="px-3 col-lg-12 md:flex flex-column">
                                                     <div class="flex flex-column flex-column">
@@ -233,7 +233,7 @@
                                                         <div class="col-lg-4 d-flex align-items-center">
                                                             <div class="p-3">
                                                                 <span>{{ $property->project->name }}</span>
-                                                                <span>by {{ $property->project->investor->name }}</span>
+                                                                <span>by {{ $property->project && $property->project->investor ? $property->project->investor->name : '' }}</span>
                                                             </div>
                                                         </div>
                                                         <div

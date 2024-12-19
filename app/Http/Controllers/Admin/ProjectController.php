@@ -430,7 +430,7 @@ class ProjectController extends Controller
             // $fileName = auth('account')->user()->id . '-' . time() . '-' . Str::slug(File::basename($file->getClientOriginalName())) . '.' . $file->getClientOriginalExtension();
 
             $folderPath = 'projects';
-            $result = uploadFile($file, $folderPath, 'public');
+            $result = uploadFile($file, $folderPath, 'public', true);
 
             if (isset($result)) {
                 $paths =  $result;
@@ -544,7 +544,6 @@ class ProjectController extends Controller
         ProjectSpecification::where('project_id', $project->id)->delete();
         $specificationFields = $request->specifications;
         foreach ($specificationFields ?? [] as $index => $specValue) {
-
             // if (isset($specValue['image']) && $request->hasFile("specifications.$index.image")) {
             //     $path = uploadFile($specValue['image'], 'projects');
             //     if (file_exists('images/'.$specValue['eXimagePath'])) {

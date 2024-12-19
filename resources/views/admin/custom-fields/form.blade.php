@@ -82,7 +82,7 @@
                                 <span class="text-sm text-red-600">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-lg-6  mt-4 d-none">
+                        <div class="col-lg-6  mt-4">
 
                             <div class="form-group mb-3 col-md-4">
                                 <label class="form-check form-switch">
@@ -104,7 +104,7 @@
                                 </label>
                             </div>
 
-                            <div class="form-group mb-3 col-md-4">
+                            <div class="form-group mb-3 col-md-4 d-none">
                                 <label class="form-check form-switch">
                                     <input name="has_pg" type="hidden" value="0">
                                     <input class="form-check-input" name="has_pg" type="checkbox" value="1"

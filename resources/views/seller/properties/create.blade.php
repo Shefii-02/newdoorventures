@@ -1,9 +1,46 @@
 @extends('seller.layouts.master')
+@push('header')
+    <style>
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s ease-in-out;
+        }
 
+        .loader-overlay.hidden {
+            display: none;
+        }
+
+        .spinner {
+            border: 8px solid rgba(255, 255, 255, 0.3);
+            border-top: 8px solid white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+@endpush
 @section('content')
     <div class="container">
-
-
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
@@ -103,7 +140,9 @@
                 </ul>
             </div>
 
-
+            <div id="loader" class="loader-overlay hidden">
+                <div class="spinner"></div>
+            </div>
             <!-- Step Content -->
             <div class="lg:w-3/4 w-full lg:pl-6">
 
@@ -406,208 +445,281 @@
                                 <h4 class="fw-bold text-dark fs-3 mt-2">Better your property score, greater your visibility
                                 </h4>
                             </div>
-                            <div class="container">
+                            <div class="col-lg-12">
                                 <div class="row">
-                                    <div class="mb-5 col-lg-6">
-                                        <div class="mx-2 mb-5 card p-3">
-                                            <!-- Property Name -->
-                                            <h5 class="mt-3 mb-2 font-medium">Property Name<sup
-                                                    class="text-danger fs-4">*</sup>
-                                            </h5>
-                                            <div class="relative z-0 w-full mb-3 group">
-                                                <input form="propertyFrom" name="property_name" type="text"
-                                                    autocomplete="off" id="name"
-                                                    class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                                    placeholder=" " />
-                                                <label for="name"
-                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                                                    Name</label>
+                                    <div class="col-lg-12">
+                                        <div class="mx-2 mb-5">
+                                            <div class="row">
+                                                <div
+                                                    class="col-lg-6 HideUnwantedSectionsInPg ShowWantedSectionInSell ShowWantedSectionInRent">
+                                                    <!-- Project  -->
+                                                    <div class="mb-2">
+                                                        <label for="projects" class="mt-3 font-medium mb-2 ">Choose
+                                                            Project</label>
+                                                        <select form="propertyFrom" name="project" id="projects"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                                            <option value="" selected>None of the below
+                                                            </option>
+                                                            @foreach ($projects ?? [] as $project_item)
+                                                                <option value="{{ $project_item->id }}">
+                                                                    {{ $project_item->name }}</option>
+                                                            @endforeach
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <!-- Property Name -->
+                                                    <div class="relative z-0 w-full mb-3 group">
+                                                        <label for="projects" class="mt-3 font-medium mb-2 ">Property
+                                                            heighlight name <sup class="text-danger fs-4">*</sup></label>
+                                                        <input form="propertyFrom" name="property_name" type="text"
+                                                            autocomplete="off" id="name"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                                            placeholder=" "
+                                                            placeholder="Like Example: 2BHK for remt or 3 BHK for sale ,...." />
+
+                                                    </div>
+                                                </div>
+
                                             </div>
-                                            <div class="relative z-0 w-full mb-3 group d-none">
-                                                <input form="propertyFrom" name="unit_info" type="text"
-                                                    autocomplete="off" id="unit-info"
-                                                    class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                                    placeholder="Like Example: 2BHK or 3 BHK,...." />
-                                                <label for="unit-info"
-                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                                                    Unit info</label>
+                                            <div class="col-lg-6 HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
+                                                <div class="relative z-0 w-full mb-3 group ">
+                                                    <input form="propertyFrom" name="unit_info" type="text"
+                                                        autocomplete="off" id="unit-info"
+                                                        class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+                                                    <label for="unit-info"
+                                                        class="absolute fs-3 text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                        Flat/Villa No</label>
+                                                </div>
                                             </div>
+
                                             <div id="room-section"
                                                 class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
-                                                <h5 class="mt-3 font-medium">Add Room Details</h5>
-                                                <!-- Bedrooms Section -->
-                                                <div class="section" x-data="addOtherBedrooms()">
+                                                <h5 class="mt-3 fs-3 text-black font-bold">Room Details</h5>
+                                                <div class="my-3 card bg-body p-3">
+                                                    <!-- Bedrooms Section -->
+                                                    <div class="section" x-data="addOtherBedrooms()">
 
-                                                    <h6 class="mt-3">No. of Bedrooms<sup
-                                                            class="text-danger fs-4">*</sup>
-                                                    </h6>
-                                                    <div class="mt-3">
-                                                        <ul class="flex flex-wrap gap-3">
-                                                            @for ($i = 1; $i < 5; $i++)
-                                                                <li class="relative mb-1">
-                                                                    <input form="propertyFrom" class="sr-only peer"
-                                                                        @if ($i == 1) checked @endif
-                                                                        type="radio" value="{{ $i }}"
-                                                                        name="room" id="room_{{ $i }}">
-                                                                    <label
-                                                                        class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent"
-                                                                        for="room_{{ $i }}">{{ $i }}</label>
-                                                                </li>
-                                                            @endfor
-                                                            <li class="relative mb-1">
-                                                                <template x-if="!showInput && !addedOption">
-                                                                    <label @click="showInput = true"
-                                                                        class="mx-1 px-3 flex items-center py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="16" height="16"
-                                                                            fill="currentColor" class="bi bi-plus"
-                                                                            viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                                                                        </svg>
-                                                                        Add Other
-                                                                    </label>
-                                                                </template>
-                                                                <template x-if="showInput">
-                                                                    <div class="flex items-center gap-2">
-                                                                        <input type="number" form="propertyFrom"
-                                                                            x-model="newOption" placeholder="Enter value"
-                                                                            class="border border-gray-300 p-2 rounded-md w-20 text-sm focus:ring-blue-500 focus:border-blue-500">
-                                                                        <button @click="addOption"
-                                                                            class="px-3 py-1 bg-green-500 text-white text-sm rounded-md hover:bg-green-600">Done</button>
-                                                                    </div>
-                                                                </template>
-                                                                <template x-if="addedOption">
-                                                                    <div class="flex items-center gap-2 relative mb-1">
-                                                                        <input class="sr-only peer" form="propertyFrom"
-                                                                            type="radio" x-bind:value="addedOption"
-                                                                            name="room" id="room_other" checked>
-                                                                        <label x-text="addedOption"
-                                                                            class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent"
-                                                                            for="room_other"></label>
-                                                                        <span class="text-blue-500 cursor-pointer"
-                                                                            @click="editOption"><i
-                                                                                class="fas fa-edit"></i></span>
-                                                                    </div>
-                                                                </template>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Bathrooms Section -->
-                                                <div class="section" x-data="addOtherBathrooms()">
-                                                    <h6 class="mt-3">No. of Bathrooms<sup
-                                                            class="text-danger fs-4">*</sup>
-                                                    </h6>
-                                                    <div class="mt-3">
-                                                        <ul class="flex flex-wrap gap-3">
-                                                            @for ($i = 1; $i < 5; $i++)
-                                                                <li class="relative mb-1">
-                                                                    <input form="propertyFrom" class="sr-only peer"
-                                                                        @if ($i == 1) checked @endif
-                                                                        type="radio" value="{{ $i }}"
-                                                                        name="bathroom"
-                                                                        id="bathroom_{{ $i }}">
-                                                                    <label
-                                                                        class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent"
-                                                                        for="bathroom_{{ $i }}">{{ $i }}</label>
-                                                                </li>
-                                                            @endfor
-                                                            <li class="relative mb-1">
-                                                                <template x-if="!showInput && !addedOption">
-                                                                    <label @click="showInput = true"
-                                                                        class="mx-1 px-3 flex items-center py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="16" height="16"
-                                                                            fill="currentColor" class="bi bi-plus"
-                                                                            viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                                                                        </svg>
-                                                                        Add Other
-                                                                    </label>
-                                                                </template>
-                                                                <template x-if="showInput">
-                                                                    <div class="flex items-center gap-2">
-                                                                        <input type="number" x-model="newOption"
-                                                                            placeholder="Enter value"
-                                                                            class="border border-gray-300 p-2 rounded-md w-20 text-sm focus:ring-blue-500 focus:border-blue-500">
-                                                                        <button @click="addOption"
-                                                                            class="px-3 py-1 bg-green-500 text-white text-sm rounded-md hover:bg-green-600">Done</button>
-                                                                    </div>
-                                                                </template>
-                                                                <template x-if="addedOption">
-                                                                    <div class="flex items-center gap-2 relative mb-1">
+                                                        <h6 class="mt-3">No. of Bedrooms<sup
+                                                                class="text-danger fs-4">*</sup>
+                                                        </h6>
+                                                        <div class="mt-3">
+                                                            <ul class="flex flex-wrap gap-3">
+                                                                @for ($i = 1; $i < 5; $i++)
+                                                                    <li class="relative mb-1">
                                                                         <input form="propertyFrom" class="sr-only peer"
-                                                                            type="radio" x-bind:value="addedOption"
-                                                                            name="bathroom" id="bathroom_other" checked>
-                                                                        <label x-text="addedOption"
+                                                                            @if ($i == 1) checked @endif
+                                                                            type="radio" value="{{ $i }}"
+                                                                            name="room" id="room_{{ $i }}">
+                                                                        <label
                                                                             class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent"
-                                                                            for="bathroom_other"></label>
-                                                                        <span class="text-blue-500 cursor-pointer"
-                                                                            @click="editOption"><i
-                                                                                class="fas fa-edit"></i></span>
-                                                                    </div>
-                                                                </template>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Balconies Section -->
-                                                <div class="section" x-data="addOtherBalconies()">
-                                                    <h6 class="mt-3">Balconies<sup class="text-danger fs-4">*</sup></h6>
-                                                    <div class="mt-3">
-                                                        <ul class="flex flex-wrap gap-3">
-                                                            @for ($i = 0; $i < 4; $i++)
+                                                                            for="room_{{ $i }}">{{ $i }}</label>
+                                                                    </li>
+                                                                @endfor
                                                                 <li class="relative mb-1">
-                                                                    <input form="propertyFrom" class="sr-only peer"
-                                                                        @if ($i == 0) checked @endif
-                                                                        type="radio" value="{{ $i }}"
-                                                                        name="balconie"
-                                                                        id="balconie_{{ $i }}">
-                                                                    <label
-                                                                        class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent"
-                                                                        for="balconie_{{ $i }}">{{ $i }}</label>
+                                                                    <template x-if="!showInput && !addedOption">
+                                                                        <label @click="showInput = true"
+                                                                            class="mx-1 px-3 flex items-center py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="16" height="16"
+                                                                                fill="currentColor" class="bi bi-plus"
+                                                                                viewBox="0 0 16 16">
+                                                                                <path
+                                                                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                                            </svg>
+                                                                            Add Other
+                                                                        </label>
+                                                                    </template>
+                                                                    <template x-if="showInput">
+                                                                        <div class="flex items-center gap-2">
+                                                                            <input type="number" form="propertyFrom"
+                                                                                x-model="newOption"
+                                                                                placeholder="Enter value"
+                                                                                class="border border-gray-300 p-2 rounded-md w-20 text-sm focus:ring-blue-500 focus:border-blue-500">
+                                                                            <button @click="addOption"
+                                                                                class="px-3 py-1 bg-green-500 text-white text-sm rounded-md hover:bg-green-600">Done</button>
+                                                                        </div>
+                                                                    </template>
+                                                                    <template x-if="addedOption">
+                                                                        <div class="flex items-center gap-2 relative mb-1">
+                                                                            <input class="sr-only peer"
+                                                                                form="propertyFrom" type="radio"
+                                                                                x-bind:value="addedOption"
+                                                                                name="room" id="room_other" checked>
+                                                                            <label x-text="addedOption"
+                                                                                class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent"
+                                                                                for="room_other"></label>
+                                                                            <span class="text-blue-500 cursor-pointer"
+                                                                                @click="editOption"><i
+                                                                                    class="fas fa-edit"></i></span>
+                                                                        </div>
+                                                                    </template>
                                                                 </li>
-                                                            @endfor
-                                                            <li class="relative mb-1">
-                                                                <template x-if="!showInput && !addedOption">
-                                                                    <label @click="showInput = true"
-                                                                        class="mx-1 px-3 flex items-center py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="16" height="16"
-                                                                            fill="currentColor" class="bi bi-plus"
-                                                                            viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                                                                        </svg>
-                                                                        Add Other
-                                                                    </label>
-                                                                </template>
-                                                                <template x-if="showInput">
-                                                                    <div class="flex items-center gap-2">
-                                                                        <input type="number" x-model="newOption"
-                                                                            placeholder="Enter value"
-                                                                            class="border border-gray-300 p-2 rounded-md w-20 text-sm focus:ring-blue-500 focus:border-blue-500">
-                                                                        <button @click="addOption"
-                                                                            class="px-3 py-1 bg-green-500 text-white text-sm rounded-md hover:bg-green-600">Done</button>
-                                                                    </div>
-                                                                </template>
-                                                                <template x-if="addedOption">
-                                                                    <div class="flex items-center gap-2 relative mb-1">
+                                                            </ul>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <!-- Bathrooms Section -->
+                                                    <div class="section" x-data="addOtherBathrooms()">
+                                                        <h6 class="mt-3">No. of Bathrooms<sup
+                                                                class="text-danger fs-4">*</sup>
+                                                        </h6>
+                                                        <div class="mt-3">
+                                                            <ul class="flex flex-wrap gap-3">
+                                                                @for ($i = 1; $i < 5; $i++)
+                                                                    <li class="relative mb-1">
                                                                         <input form="propertyFrom" class="sr-only peer"
-                                                                            type="radio" x-bind:value="addedOption"
-                                                                            name="balconie" id="balconie_other" checked>
-                                                                        <label x-text="addedOption"
+                                                                            @if ($i == 1) checked @endif
+                                                                            type="radio" value="{{ $i }}"
+                                                                            name="bathroom"
+                                                                            id="bathroom_{{ $i }}">
+                                                                        <label
                                                                             class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent"
-                                                                            for="balconie_other"></label>
-                                                                        <span class="text-blue-500 cursor-pointer"
-                                                                            @click="editOption"><i
-                                                                                class="fas fa-edit"></i></span>
-                                                                    </div>
-                                                                </template>
+                                                                            for="bathroom_{{ $i }}">{{ $i }}</label>
+                                                                    </li>
+                                                                @endfor
+                                                                <li class="relative mb-1">
+                                                                    <template x-if="!showInput && !addedOption">
+                                                                        <label @click="showInput = true"
+                                                                            class="mx-1 px-3 flex items-center py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="16" height="16"
+                                                                                fill="currentColor" class="bi bi-plus"
+                                                                                viewBox="0 0 16 16">
+                                                                                <path
+                                                                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                                            </svg>
+                                                                            Add Other
+                                                                        </label>
+                                                                    </template>
+                                                                    <template x-if="showInput">
+                                                                        <div class="flex items-center gap-2">
+                                                                            <input type="number" x-model="newOption"
+                                                                                placeholder="Enter value"
+                                                                                class="border border-gray-300 p-2 rounded-md w-20 text-sm focus:ring-blue-500 focus:border-blue-500">
+                                                                            <button @click="addOption"
+                                                                                class="px-3 py-1 bg-green-500 text-white text-sm rounded-md hover:bg-green-600">Done</button>
+                                                                        </div>
+                                                                    </template>
+                                                                    <template x-if="addedOption">
+                                                                        <div class="flex items-center gap-2 relative mb-1">
+                                                                            <input form="propertyFrom"
+                                                                                class="sr-only peer" type="radio"
+                                                                                x-bind:value="addedOption"
+                                                                                name="bathroom" id="bathroom_other"
+                                                                                checked>
+                                                                            <label x-text="addedOption"
+                                                                                class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent"
+                                                                                for="bathroom_other"></label>
+                                                                            <span class="text-blue-500 cursor-pointer"
+                                                                                @click="editOption"><i
+                                                                                    class="fas fa-edit"></i></span>
+                                                                        </div>
+                                                                    </template>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Balconies Section -->
+                                                    <div class="section" x-data="addOtherBalconies()">
+                                                        <h6 class="mt-3">Balconies<sup class="text-danger fs-4">*</sup>
+                                                        </h6>
+                                                        <div class="mt-3">
+                                                            <ul class="flex flex-wrap gap-3">
+                                                                @for ($i = 0; $i < 4; $i++)
+                                                                    <li class="relative mb-1">
+                                                                        <input form="propertyFrom" class="sr-only peer"
+                                                                            @if ($i == 0) checked @endif
+                                                                            type="radio" value="{{ $i }}"
+                                                                            name="balconie"
+                                                                            id="balconie_{{ $i }}">
+                                                                        <label
+                                                                            class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent"
+                                                                            for="balconie_{{ $i }}">{{ $i }}</label>
+                                                                    </li>
+                                                                @endfor
+                                                                <li class="relative mb-1">
+                                                                    <template x-if="!showInput && !addedOption">
+                                                                        <label @click="showInput = true"
+                                                                            class="mx-1 px-3 flex items-center py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="16" height="16"
+                                                                                fill="currentColor" class="bi bi-plus"
+                                                                                viewBox="0 0 16 16">
+                                                                                <path
+                                                                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                                            </svg>
+                                                                            Add Other
+                                                                        </label>
+                                                                    </template>
+                                                                    <template x-if="showInput">
+                                                                        <div class="flex items-center gap-2">
+                                                                            <input type="number" x-model="newOption"
+                                                                                placeholder="Enter value"
+                                                                                class="border border-gray-300 p-2 rounded-md w-20 text-sm focus:ring-blue-500 focus:border-blue-500">
+                                                                            <button @click="addOption"
+                                                                                class="px-3 py-1 bg-green-500 text-white text-sm rounded-md hover:bg-green-600">Done</button>
+                                                                        </div>
+                                                                    </template>
+                                                                    <template x-if="addedOption">
+                                                                        <div class="flex items-center gap-2 relative mb-1">
+                                                                            <input form="propertyFrom"
+                                                                                class="sr-only peer" type="radio"
+                                                                                x-bind:value="addedOption"
+                                                                                name="balconie" id="balconie_other"
+                                                                                checked>
+                                                                            <label x-text="addedOption"
+                                                                                class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent"
+                                                                                for="balconie_other"></label>
+                                                                            <span class="text-blue-500 cursor-pointer"
+                                                                                @click="editOption"><i
+                                                                                    class="fas fa-edit"></i></span>
+                                                                        </div>
+                                                                    </template>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Other Rooms Section -->
+                                                    <div class="section">
+                                                        <h6 class="mt-3">Other Rooms (optional)</h6>
+                                                        <ul class="flex flex-wrap gap-3 mt-3">
+
+                                                            <li class="relative">
+                                                                <input form="propertyFrom" class="sr-only peer"
+                                                                    type="checkbox" id="pooja" name="other_rooms[]"
+                                                                    value="pooja-room">
+                                                                <label for="pooja"
+                                                                    class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent">Pooja
+                                                                    Room</label>
+                                                            </li>
+                                                            <li class="relative">
+                                                                <input form="propertyFrom" class="sr-only peer"
+                                                                    type="checkbox" id="study" name="other_rooms[]"
+                                                                    value="study-room">
+                                                                <label for="study"
+                                                                    class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent">Study
+                                                                    Room</label>
+                                                            </li>
+                                                            <li class="relative">
+                                                                <input form="propertyFrom" class="sr-only peer"
+                                                                    type="checkbox" id="servent" name="other_rooms[]"
+                                                                    value="servent-room">
+                                                                <label for="servent"
+                                                                    class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent">Servent
+                                                                    Room</label>
+                                                            </li>
+                                                            <li class="relative">
+                                                                <input form="propertyFrom" class="sr-only peer"
+                                                                    type="checkbox" id="store" name="other_rooms[]"
+                                                                    value="store-room">
+                                                                <label for="store"
+                                                                    class="mx-1 px-3 py-1 bg-white border border-gray-300 rounded-5 cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent">Store
+                                                                    Room</label>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -616,7 +728,7 @@
                                             <div id="floor-section"
                                                 class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg ">
                                                 <div class="section">
-                                                    <h5 class="mt-3 mb-3 font-medium">Floor Details</h5>
+                                                    <h5 class="mt-3 mb-3 fs-3 text-black font-bold">Floor Details</h5>
                                                     <h6 class="mb-3 font-medium">Total no of floors and your floor
                                                         details </h6>
 
@@ -626,8 +738,8 @@
                                                         <div class="mb-2">
                                                             <div class="relative flex">
                                                                 <input form="propertyFrom" name="total_floor"
-                                                                    type="number"
-                                                                    autocomplete="off" id="total_floor" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                                                    type="number" autocomplete="off" id="total_floor"
+                                                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                                                     class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
                                                                     placeholder=" " />
                                                                 <label for="total_floor"
@@ -641,7 +753,8 @@
                                                         <div class="mb-2 ">
                                                             <div class="relative">
                                                                 <input form="propertyFrom" name="available_floor"
-                                                                    autocomplete="off" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                                                    autocomplete="off"
+                                                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                                                     type="number" id="available_floor"
                                                                     class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
                                                                     placeholder=" " />
@@ -656,168 +769,209 @@
                                             </div>
                                             <div id="property-area-section ">
                                                 <div class="section">
-                                                    <h5 class="mt-3 font-medium HideUnwantedSectionsInPg">Add Area Details
+                                                    <h5 class="mt-3 fs-3 text-black fw-bold HideUnwantedSectionsInPg">
+                                                        Area Details
                                                     </h5>
                                                     <div class="mt-3">
                                                         <div class="ShowWantedSectionsInPlot HideUnwantedSectionsInPg"
                                                             style="display: none">
                                                             <!-- Plot Area Input -->
-                                                            <div class="mb-2 ">
-                                                                <div class="relative">
-                                                                    <input form="propertyFrom" name="plot_area"
-                                                                        autocomplete="off" type="text" id="plot_area" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                                                        class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
-                                                                        placeholder=" " />
-                                                                    <label for="plot_area"
-                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Plot
-                                                                        Area</label>
-                                                                    <div
-                                                                        class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
-                                                                        Sq.ft
+                                                            <div class="mb-2 col-lg-6">
+                                                                <div class="mb-2 ">
+                                                                    <div class="relative">
+                                                                        <input form="propertyFrom" name="plot_area"
+                                                                            autocomplete="off" type="text"
+                                                                            id="plot_area"
+                                                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                                                            class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
+                                                                            placeholder=" " />
+                                                                        <label for="plot_area"
+                                                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Plot
+                                                                            Area</label>
+                                                                        <div
+                                                                            class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
+                                                                            Sq.ft
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-2 col-lg-6 mt-3">
+                                                                <h5 class="mt-3 fs-3 text-black font-bold">Boundary Wall
+                                                                </h5>
+                                                                <!-- Open Sides  -->
+                                                                <div
+                                                                    class="mb-2 flex gap-3 mt-3 justify-content-between  ">
+                                                                    <label for="city"
+                                                                        class="block mb-2 text-sm font-medium text-gray-500">
+                                                                        No of Open Sides</label>
+                                                                    <div x-data="{ count: 1 }"
+                                                                        class="flex items-center space-x-2">
+                                                                        <!-- Minus Button -->
+                                                                        <button @click="if (count > 1) count--"
+                                                                            class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                            -
+                                                                        </button>
+
+                                                                        <!-- Display Counter -->
+                                                                        <span class="text-md font-bold"
+                                                                            x-text="count"></span>
+                                                                        <input type="hidden" form="propertyFrom"
+                                                                            :value="count" name="open_sides">
+
+                                                                        <!-- Plus Button -->
+                                                                        <button @click="count++"
+                                                                            class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                            +
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div
-                                                            class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-2 gap-2 HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
+                                                            class="col-lg-12 HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
+                                                            <div class="row">
+                                                                <!-- Carpet Area Input -->
+                                                                <div class="mb-2 col-lg-6">
+                                                                    <div class="relative">
+                                                                        <input form="propertyFrom" name="carpet_area"
+                                                                            autocomplete="off" type="text"
+                                                                            id="carpet_area"
+                                                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                                                            class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
+                                                                            placeholder=" " />
+                                                                        <label for="carpet_area"
+                                                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                            Carpet
+                                                                            Area<sup
+                                                                                class="text-danger fs-4">*</sup></label>
+                                                                        <div
+                                                                            class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
+                                                                            Sq.ft
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
-                                                            <!-- Carpet Area Input -->
-                                                            <div class="mb-2">
-                                                                <div class="relative">
-                                                                    <input form="propertyFrom" name="carpet_area"
-                                                                        autocomplete="off" type="text"
-                                                                        id="carpet_area" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                                                        class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
-                                                                        placeholder=" " />
-                                                                    <label for="carpet_area"
-                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                                                                        Carpet
-                                                                        Area<sup class="text-danger fs-4">*</sup></label>
-                                                                    <div
-                                                                        class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
-                                                                        Sq.ft
+                                                                <!-- Built-up Area Input -->
+                                                                <div class="mb-2 d-none col-lg-6">
+                                                                    <div class="relative">
+                                                                        <input form="propertyFrom" name="built_up_area"
+                                                                            autocomplete="off" type="text"
+                                                                            id="built_up_area"
+                                                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                                                            class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
+                                                                            placeholder=" " />
+                                                                        <label for="built_up_area"
+                                                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                            Built-up Area</label>
+                                                                        <div
+                                                                            class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
+                                                                            Sq.ft
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Super Built-up Area Input -->
+                                                                <div class="mb-2 col-lg-6">
+                                                                    <div class="relative">
+                                                                        <input form="propertyFrom"
+                                                                            name="super_built_up_area" autocomplete="off"
+                                                                            type="text" id="super_built_up_area"
+                                                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                                                            class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
+                                                                            placeholder=" " />
+                                                                        <label for="super_built_up_area"
+                                                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Super
+                                                                            Built-up Area</label>
+                                                                        <div
+                                                                            class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
+                                                                            Sq.ft
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Built-up Area Input -->
-                                                            <div class="mb-2 d-none">
-                                                                <div class="relative">
-                                                                    <input form="propertyFrom" name="built_up_area"
-                                                                        autocomplete="off" type="text"
-                                                                        id="built_up_area" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                                                        class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
-                                                                        placeholder=" " />
-                                                                    <label for="built_up_area"
-                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                                                                        Built-up Area</label>
-                                                                    <div
-                                                                        class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
-                                                                        Sq.ft
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <!-- Super Built-up Area Input -->
-                                                            <div class="mb-2 ">
-                                                                <div class="relative">
-                                                                    <input form="propertyFrom" name="super_built_up_area"
-                                                                        autocomplete="off" type="text"
-                                                                        id="super_built_up_area" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                                                        class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
-                                                                        placeholder=" " />
-                                                                    <label for="super_built_up_area"
-                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Super
-                                                                        Built-up Area</label>
-                                                                    <div
-                                                                        class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
-                                                                        Sq.ft
-                                                                    </div>
-                                                                </div>
-                                                            </div>
 
                                                         </div>
                                                     </div>
                                                     <div id="parking" class="mt-3 ">
 
-                                                        <div class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
-                                                            <h5 class="mt-3 font-medium">Reserved Parking</h5>
-                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
-                                                                <label for="city"
-                                                                    class="block mb-2 text-sm font-medium text-gray-500">Covered
-                                                                    Parking</label>
-                                                                <div x-data="{ count: 0 }"
-                                                                    class="flex items-center space-x-2">
-                                                                    <!-- Minus Button -->
-                                                                    <button @click="if (count > 0) count--"
-                                                                        class="border fw-bold px-2 rounded rounded-5 text-theme">
-                                                                        -
-                                                                    </button>
+                                                        <div
+                                                            class="col-lg-12 HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
+                                                            <h5 class="mt-3 fs-3 text-black font-bold">Reserved Parking
+                                                            </h5>
+                                                            <div class="row1">
+                                                                <div class="mb-2 col-lg-6">
 
-                                                                    <!-- Display Counter -->
-                                                                    <span class="text-md font-bold" x-text="count"></span>
-                                                                    <input type="hidden" form="propertyFrom"
-                                                                        :value="count" name="covered_parking">
-                                                                    <!-- Plus Button -->
-                                                                    <button @click="count++"
-                                                                        class="border fw-bold px-2 rounded rounded-5 text-theme">
-                                                                        +
-                                                                    </button>
+                                                                    <div
+                                                                        class="mb-2 flex gap-3 mt-3 justify-content-between ">
+                                                                        <label for="city"
+                                                                            class="block mb-2 text-sm font-medium text-gray-500">Covered
+                                                                            Parking</label>
+                                                                        <div x-data="{ count: 0 }"
+                                                                            class="flex items-center space-x-2">
+                                                                            <!-- Minus Button -->
+                                                                            <button @click="if (count > 0) count--"
+                                                                                class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                                -
+                                                                            </button>
+
+                                                                            <!-- Display Counter -->
+                                                                            <span class="text-md font-bold"
+                                                                                x-text="count"></span>
+                                                                            <input type="hidden" form="propertyFrom"
+                                                                                :value="count"
+                                                                                name="covered_parking">
+                                                                            <!-- Plus Button -->
+                                                                            <button @click="count++"
+                                                                                class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                                +
+                                                                            </button>
+                                                                        </div>
+
+                                                                    </div>
                                                                 </div>
+                                                                <div class="mb-2 col-lg-6">
+                                                                    <!-- Parking Area -->
+                                                                    <div
+                                                                        class="mb-2 flex gap-3 mt-3 justify-content-between  ">
+                                                                        <label for="city"
+                                                                            class="block mb-2 text-sm font-medium text-gray-500">Open
+                                                                            Parking</label>
+                                                                        <div x-data="{ count: 0 }"
+                                                                            class="flex items-center space-x-2">
+                                                                            <!-- Minus Button -->
+                                                                            <button @click="if (count > 0) count--"
+                                                                                class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                                -
+                                                                            </button>
 
-                                                            </div>
-                                                            <!-- Parking Area -->
-                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between  ">
-                                                                <label for="city"
-                                                                    class="block mb-2 text-sm font-medium text-gray-500">Open
-                                                                    Parking</label>
-                                                                <div x-data="{ count: 0 }"
-                                                                    class="flex items-center space-x-2">
-                                                                    <!-- Minus Button -->
-                                                                    <button @click="if (count > 0) count--"
-                                                                        class="border fw-bold px-2 rounded rounded-5 text-theme">
-                                                                        -
-                                                                    </button>
+                                                                            <!-- Display Counter -->
+                                                                            <span class="text-md font-bold"
+                                                                                x-text="count"></span>
+                                                                            <input type="hidden" form="propertyFrom"
+                                                                                :value="count"
+                                                                                name="open_parking">
 
-                                                                    <!-- Display Counter -->
-                                                                    <span class="text-md font-bold" x-text="count"></span>
-                                                                    <input type="hidden" form="propertyFrom"
-                                                                        :value="count" name="open_parking">
-
-                                                                    <!-- Plus Button -->
-                                                                    <button @click="count++"
-                                                                        class="border fw-bold px-2 rounded rounded-5 text-theme">
-                                                                        +
-                                                                    </button>
+                                                                            <!-- Plus Button -->
+                                                                            <button @click="count++"
+                                                                                class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                                +
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
                                                         </div>
-                                                        <!-- Project  -->
-                                                        <div class="mb-2 HideUnwantedSectionsInPg ShowWantedSectionsInPlot">
-                                                            <label for="projects" class="mt-3 font-medium ">Choose
-                                                                Project</label>
-                                                            <select form="propertyFrom" name="project" id="projects"
-                                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                                                <option value="" selected>None of the below
-                                                                </option>
-                                                                @foreach ($projects ?? [] as $project_item)
-                                                                    <option value="{{ $project_item->id }}">
-                                                                        {{ $project_item->name }}</option>
-                                                                @endforeach
-
-                                                            </select>
-                                                        </div>
-                                                        
-
                                                     </div>
 
                                                     <div id="availabiltyStaus" x-data="{ propertyType: 'ready-to-move', propertyStatus: '0-1', possessionDate: '' }"
                                                         class="mb-5 mx-2 HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
                                                         <!-- Availability Status -->
                                                         <div class="col-lg-12 mb-3 ">
-                                                            <h5 class="mb-2 mt-3 font-medium">Availability Status<sup
-                                                                    class="text-danger fs-4">*</sup></h5>
+                                                            <h5 class="mb-2 mt-3 font-bold text-black fs-3">
+                                                                Availability Status<sup class="text-danger fs-4">*</sup>
+                                                            </h5>
                                                         </div>
 
                                                         <div class="">
@@ -931,9 +1085,9 @@
 
                                                 <!-- Occupancy -->
                                                 <div class="col-lg-12 mb-3">
-                                                    <h5 class="mb-2 mt-3 font-medium">Occupancy Type <sup
+                                                    <h5 class="mb-2 my-3  font-bold fs-3 text-black">Occupancy Type <sup
                                                             class="text-danger fs-4">*</sup></h5>
-                                                    <div class="flex items-center flex-wrap gap-3">
+                                                    <div class="flex items-center flex-wrap gap-3 my-3">
                                                         <div class="flex items-center">
                                                             <input type="radio" form="propertyFrom" id="single"
                                                                 name="occupancy_type" value="single" checked
@@ -968,9 +1122,9 @@
 
                                                 <!-- Available For -->
                                                 <div class="col-lg-12 mb-3">
-                                                    <h5 class="mb-3 mt-3 font-medium">Available For <sup
+                                                    <h5 class="mb-2 my-3 font-bold fs-3 text-black">Available For <sup
                                                             class="text-danger fs-4">*</sup></h5>
-                                                    <div class="flex items-center flex-wrap gap-4">
+                                                    <div class="flex items-center flex-wrap gap-4  my-3">
                                                         <div class="flex items-center">
                                                             <input type="radio" form="propertyFrom" id="male"
                                                                 name="available_for" value="male" checked
@@ -990,19 +1144,20 @@
                                                                 name="available_for" value="any"
                                                                 class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                                             <label for="any"
-                                                                class="ml-2 text-sm font-medium text-gray-900">Boys &
-                                                                Girls</label>
+                                                                class="ml-2 text-sm font-medium text-gray-900">
+                                                                Boys & Girls (Coed)</label>
                                                         </div>
                                                     </div>
                                                 </div>
 
 
                                                 <!-- Rules  -->
-                                                <div class="col-lg-12 mb-3 ">
-                                                    <h5 class="mb-3 mt-3 font-medium">Rules & Informations<sup
-                                                            class="text-danger fs-4">*</sup></h5>
+                                                <div class="col-lg-12 my-4 ">
+                                                    <h5 class="mb-2 mt-3 font-bold fs-3 text-black">
+                                                        Rules & Informations<sup class="text-danger fs-4">*</sup>
+                                                    </h5>
                                                 </div>
-                                                <div class="relative col-lg-12  card p-3">
+                                                <div class="relative col-lg-12 mt-3 card p-3">
                                                     <div class="row">
                                                         @foreach ($pg_rules as $Rkey => $ruleItem)
                                                             @if ($ruleItem->type == 'text')
@@ -1061,22 +1216,44 @@
                                                             @endif
                                                         @endforeach
                                                     </div>
-
                                                 </div>
-
                                             </div>
-
-
                                         </div>
                                     </div>
-                                    <div class="mb-5 col-lg-6">
-                                        <div class="mx-2 mb-5 card p-3">
-                                            <div x-data="{ furnishingStatus: 'furnished' }" class="mb-5 mx-2">
+                                    <div class=" col-lg-12">
+                                        <div class="">
+                                            <div class="mb-5 mx-2">
                                                 <div class="section">
 
-                                                    <div id="MoreaboutDetails" class="HideUnwantedSectionsInPlot">
-                                                        <h5 class="mt-3 font-medium">More about Details</h5>
-                                                        <div class="mt-3  ">
+                                                    <div id="MoreaboutDetails"
+                                                        class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
+                                                        <h5 class="mt-3 font-bold text-black fs-3">More about details</h5>
+                                                        <div class="my-4 card p-3 bg-body">
+                                                            <div class="col-lg-12 mt-2">
+                                                                <div class="row">
+                                                                    @foreach ($customFields ?? [] as $key => $option_item)
+                                                                        <div
+                                                                            class="col-md-6 more-details {{ $option_item->has_rent ? 'ShowWantedSectionInRent' : 'HideUnwantedSectionsInRent' }} {{ $option_item->has_sell ? 'ShowWantedSectionInSell' : 'HideUnwantedSectionsInSell' }} ">
+                                                                            <div class="relative z-0  mb-3 group  ">
+                                                                                <input form="propertyForm"
+                                                                                    name="custom_fields[{{ $key }}][name]"
+                                                                                    type="hidden" />
+                                                                                <input form="propertyFrom"
+                                                                                    name="custom_fields[{{ $key }}][value]"
+                                                                                    type="text" autocomplete="off"
+                                                                                    id="more-info-{{ $key }}"
+                                                                                    class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+                                                                                <label for="more-info-{{ $key }}"
+                                                                                    class="absolute fs-3 t dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-body dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                                    {{ $option_item->name }}</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        {{-- <div class="mt-3  ">
                                                             <div x-data="{
                                                                 customFields: [{ selected: '', value: '' }],
                                                                 addField() {
@@ -1146,23 +1323,23 @@
                                                                     </button>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
-                                                    <div id="furnishing" class="HideUnwantedSectionsInPlot">
-                                                        <h5 class="mt-3 font-medium">Furnishing Details</h5>
-
-                                                        <div class="mt-3 ">
-
+                                                    <div x-data="{ furnishingStatus: 'unfurnished' }" id="furnishing"
+                                                        class="HideUnwantedSectionsInPlot">
+                                                        <h5 class="mt-3 font-bold text-black fs-3">Furnishing Details</h5>
+                                                        <div class="mt-3 card p-3">
                                                             <!-- Radio Buttons for Furnishing Status -->
                                                             <div class="flex flex-wrap">
                                                                 <div class="flex items-center me-4 mb-2">
                                                                     <input form="propertyFrom" type="radio"
-                                                                        value="furnished" name="furnishing_status"
-                                                                        x-model="furnishingStatus" id="furnished-radio"
+                                                                        value="unfurnished" name="furnishing_status"
+                                                                        x-model="furnishingStatus" id="unfurnished-radio"
                                                                         class="w-3 h-3 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
-                                                                    <label for="furnished-radio"
-                                                                        class="ms-2 fs-5 font-medium text-gray dark:text-gray">Furnished</label>
+                                                                    <label for="unfurnished-radio"
+                                                                        class="ms-2 fs-5 font-medium text-gray dark:text-gray">Unfurnished</label>
                                                                 </div>
+
                                                                 <div class="flex items-center me-4 mb-2">
                                                                     <input form="propertyFrom" type="radio"
                                                                         value="semi-furnished" name="furnishing_status"
@@ -1174,20 +1351,22 @@
                                                                 </div>
                                                                 <div class="flex items-center me-4 mb-2">
                                                                     <input form="propertyFrom" type="radio"
-                                                                        value="unfurnished" name="furnishing_status"
-                                                                        x-model="furnishingStatus" id="unfurnished-radio"
+                                                                        value="furnished" name="furnishing_status"
+                                                                        x-model="furnishingStatus" id="furnished-radio"
                                                                         class="w-3 h-3 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
-                                                                    <label for="unfurnished-radio"
-                                                                        class="ms-2 fs-5 font-medium text-gray dark:text-gray">Unfurnished</label>
+                                                                    <label for="furnished-radio"
+                                                                        class="ms-2 fs-5 font-medium text-gray dark:text-gray">Furnished</label>
                                                                 </div>
+
                                                             </div>
 
                                                             <!-- Conditionally Display Content for Furnishing Status -->
-                                                            <div x-show="furnishingStatus === 'furnished' || furnishingStatus === 'semi-furnished'"
-                                                                class="mt-2 border-top pb-2">
+                                                            {{-- furnishingStatus === 'furnished' || --}}
+                                                            <div x-show="furnishingStatus === 'semi-furnished'"
+                                                                class="mt-2 border-top bg-body card p-3">
                                                                 <div class="row mt-3 ">
                                                                     @foreach ($furnishing ?? [] as $key_0 => $furnish_items)
-                                                                        <div class="col-lg-6">
+                                                                        <div class="col-lg-4">
                                                                             <div class="flex items-center flex-wrap mb-4">
                                                                                 <input name="furnishing[]" type="checkbox"
                                                                                     value="{{ $furnish_items->id }}"
@@ -1216,11 +1395,11 @@
                                                     </div>
 
                                                     <div id="amenities">
-                                                        <h5 class="mt-3 font-medium">Amenities</h5>
-                                                        <div class="mt-3   ">
+                                                        <h5 class="mt-3 font-bold text-black fs-3">Amenities</h5>
+                                                        <div class="mt-3 card p-3 bg-body">
                                                             <div class="row mt-3 ">
                                                                 @foreach ($features ?? [] as $feature_item)
-                                                                    <div class="col-lg-6">
+                                                                    <div class="col-lg-4">
                                                                         <div class="flex items-center mb-4">
                                                                             <input name="amenities[]" form="propertyFrom"
                                                                                 type="checkbox"
@@ -1243,8 +1422,8 @@
 
 
                                                     <div id="NearestLandmarks">
-                                                        <h5 class="mt-3 font-medium">Nearest Landmarks</h5>
-                                                        <div class="mt-3  " x-data="{
+                                                        <h5 class="mt-3 font-bold text-black fs-3">Nearest Landmarks</h5>
+                                                        <div class="mt-3 bg-body card p-3 " x-data="{
                                                             facilities: [{ id: '', distance: '' }],
                                                             addFacility() {
                                                                 this.facilities.push({ id: '', distance: '' });
@@ -1258,7 +1437,8 @@
                                                             <!-- Dynamic Facility List -->
                                                             <template x-for="(facility, index) in facilities"
                                                                 :key="index">
-                                                                <div class="flex items-center space-x-4 mb-4">
+                                                                <div
+                                                                    class="flex items-center space-x-4 mb-4 position-relative">
                                                                     <!-- Facility Select Box -->
                                                                     <div class="w-1/2">
                                                                         <select form="propertyFrom"
@@ -1326,8 +1506,8 @@
                     <div x-show="currentStep === 3" class="space-y-4 mt-2">
                         <div class="mb-5 mx-2">
                             <div class="section">
-                                <h5 class="mt-3 font-medium">Add photos of your property</h5>
-                                <h6 class="mt-3 font-medium">
+                                <h5 class="mt-3 font-bold text-black fs-3">Add photos of your property</h5>
+                                <h6 class="mt-3 font-bold">
                                     A picture is worth a thousand words. 87% of buyers look at photos before buying
                                 </h6>
 
@@ -1393,7 +1573,8 @@
                             <div x-data="{ isModalOpen: false }" class="section mt-5">
                                 <div
                                     class="block w-full md:w-2/3 lg:w-1/2 mx-auto p-6 mt-3 border-dashed border-2 border-gray-300 rounded-lg bg-gray-100 shadow hover:bg-gray-50">
-                                    <h5 class="font-medium text-lg text-gray-700 text-center">Add YouTube Videos of Your
+                                    <h5 class="mt-3 font-bold text-black fs-3 text-gray-700 text-center">Add YouTube
+                                        Videos of Your
                                         Property</h5>
                                     <h6 class="mt-3 font-medium text-sm text-gray-600 text-center">
                                         A video is worth a thousand pictures. Properties with videos get higher page views.
@@ -1512,7 +1693,8 @@
 
 
                             <div class="mt-5">
-                                <h6 class="font-medium">Ownership<sup class="text-danger fs-4">*</sup></h6>
+                                <h6 class="mt-3 font-bold text-black fs-3">Ownership<sup
+                                        class="text-danger fs-4">*</sup></h6>
                                 <ul class="flex gap-5 mt-3">
                                     <li class="relative">
                                         <input form="propertyFrom" class="sr-only peer" checked type="radio"
@@ -1542,9 +1724,9 @@
                             </div>
 
                             <div class="mt-5">
-                                <h6 class="mb-3 fs-3 fw-bold text-thme">Price Details</h6>
+                                <h6 class="mt-3 font-bold text-black fs-3">Price Details</h6>
                                 <div class="bg-white shadow rounded-lg">
-                                    <h5 class="font-medium mb-3">Enter Price<sup class="text-danger fs-4">*</sup></h5>
+                                    <h5 class="font-medium my-3 ">Enter Price<sup class="text-danger fs-4">*</sup></h5>
                                     <input form="propertyFrom" max="999999999" type="number" id="priceInput"
                                         min="0" class="border p-2 rounded w-1/2" autocomplete="off"
                                         placeholder="Enter price" oninput="convertToWords()" name="price" />
@@ -1570,14 +1752,15 @@
                             </div>
 
                             <div class="mt-5">
-                                <h6 class="font-medium">What makes your property unique?</h6>
+                                <h6 class="mt-3 font-bold text-black fs-3">What makes your property unique?</h6>
                                 <textarea form="propertyFrom" name="unique_info" rows="4" autocomplete="off"
                                     class="block w-full mt-2 p-2 border rounded-lg" placeholder="Write your thoughts here..."></textarea>
                             </div>
 
 
                             <div class="mt-5">
-                                <h6 class="font-medium">Mark as moderation status <sup class="text-danger fs-4">*</sup>
+                                <h6 class="mt-3 font-bold text-black fs-3">Mark as moderation status <sup
+                                        class="text-danger fs-4">*</sup>
                                 </h6>
                                 <ul class="flex gap-5 mt-3">
                                     <li class="relative">
@@ -1779,7 +1962,7 @@
                     addImages(event) {
                         const files = event.target.files || event.dataTransfer.files;
                         Array.from(files).forEach(file => {
-                            if (file.size <= 10 * 1024 * 1024 && file.type.startsWith('image/')) {
+                            if (file.size <= 2 * 1024 * 1024 && file.type.startsWith('image/')) {
                                 const fileObject = {
                                     url: URL.createObjectURL(file), // Blob URL for preview
                                     file: file, // The actual file object for uploading
@@ -1787,6 +1970,8 @@
                                 };
                                 this.images.push(fileObject);
                                 this.files.push(file); // Store the file object for uploading
+                            } else {
+                                alert('Image not allowed to be more than 2 MB');
                             }
                         });
                     },
@@ -1908,10 +2093,19 @@
                         // Set types for Sell and Rent modes
                         if (mode === 'sell' || mode === 'rent') {
                             // Commercial
-                            this.types = ['Residential','Commercial'];
+                            this.types = ['Residential', 'Commercial'];
+                            this.toggleSections('more-details', 'none');
+                            if (mode === 'sell') {
+                                this.toggleSections('ShowWantedSectionInSell', 'block');
+                            } else if (mode === 'rent') {
+                                this.toggleSections('ShowWantedSectionInRent', 'block');
+                            }
+
                         } else if (mode === 'pg') {
                             this.types = ['Residential'];
                             ShowWantedSectionInPg();
+                            this.toggleSections('more-details', 'none');
+                            this.toggleSections('ShowWantedSectionInPg', 'block');
                         }
 
                         // Set categories based on the default type
@@ -1932,6 +2126,14 @@
                             this.selectedCategory(this.categories[0].name);
                         } else {
                             this.currentCategory = null;
+                        }
+                    },
+                    // Utility function to toggle visibility of sections
+                    toggleSections(className, displayStyle) {
+                        console.log(className, displayStyle)
+                        const elements = document.querySelectorAll(`.${className}`);
+                        for (const el of elements) {
+                            el.style.display = displayStyle;
                         }
                     },
 
@@ -1970,8 +2172,6 @@
                 for (let el3 of document.querySelectorAll('.HideUnwantedSectionsInPg')) el3.style.display = 'none';
             }
         </script>
-
-
 
         {{-- location form --}}
         <script>
@@ -2108,6 +2308,9 @@
                     toastType: '', // Type of toast (success/error)
 
                     async submitForm() {
+                        // Show loader
+                        this.toggleLoader(true);
+
                         // Reset validation errors before submitting
                         this.validationErrors = [];
                         this.errorMessage = '';
@@ -2145,6 +2348,17 @@
                             this.errorMessage = error.message || 'An error occurred during form submission';
                             this.responseMessage = ''; // Clear success messages
                             this.showToastMessage(this.errorMessage, 'error');
+                        } finally {
+                            // Hide loader
+                            this.toggleLoader(false);
+                        }
+                    },
+                    toggleLoader(show) {
+                        const loader = document.getElementById('loader');
+                        if (show) {
+                            loader.classList.remove('hidden');
+                        } else {
+                            loader.classList.add('hidden');
                         }
                     },
 
@@ -2160,7 +2374,7 @@
                                 </ul>
                             `;
                         } else {
-                            this.toastMessage = message;
+                            this.toastMessage = message + ':(';
                         }
 
                         this.showToast = true;

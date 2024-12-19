@@ -498,7 +498,7 @@
                 try {
                     var B = {
                             defaultTabId: null,
-                            activeClasses: "text-white bg-primary",
+                            activeClasses: "text-white2 bg-primary1",
                             inactiveClasses: "hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800",
                             onShow: function() {}
                         },
@@ -542,8 +542,8 @@
                                         o = this.getTab(t);
                                     (o !== this._activeTab || a) && (this._items.map((function(t) {
                                         var e, i;
-                                        t !== o && ((e = t.triggerEl.classList).remove.apply(e, c(n._options.activeClasses.split(" "))), (i = t.triggerEl.classList).add.apply(i, c(n._options.inactiveClasses.split(" "))), t.targetEl.classList.add("hidden"), t.triggerEl.setAttribute("aria-selected", !1))
-                                    })), (e = o.triggerEl.classList).add.apply(e, c(this._options.activeClasses.split(" "))), (i = o.triggerEl.classList).remove.apply(i, c(this._options.inactiveClasses.split(" "))), o.triggerEl.setAttribute("aria-selected", !0), o.targetEl.classList.remove("hidden"), this._setActiveTab(o), this._options.onShow(this, o))
+                                        t !== o && ((e = t.triggerEl.classList).remove.apply(e, c(n._options.activeClasses.split(" "))), (i = t.triggerEl.classList).add.apply(i, c(n._options.inactiveClasses.split(" "))), t.targetEl.classList.add("hidden1"), t.triggerEl.setAttribute("aria-selected", !1))
+                                    })), (e = o.triggerEl.classList).add.apply(e, c(this._options.activeClasses.split(" "))), (i = o.triggerEl.classList).remove.apply(i, c(this._options.inactiveClasses.split(" "))), o.triggerEl.setAttribute("aria-selected", !0), o.targetEl.classList.remove("hidden1"), this._setActiveTab(o), this._options.onShow(this, o))
                                 }
                             }])
                         }();
@@ -632,12 +632,12 @@
                             }, {
                                 key: "show",
                                 value: function() {
-                                    this._targetEl.classList.add("flex"), this._targetEl.classList.remove("hidden"), this._targetEl.setAttribute("aria-modal", "true"), this._targetEl.setAttribute("role", "dialog"), this._targetEl.removeAttribute("aria-hidden"), this._createBackdrop(), this._isHidden = !1, this._options.onShow(this)
+                                    this._targetEl.classList.add("flex"), this._targetEl.classList.remove("hidden1"), this._targetEl.setAttribute("aria-modal", "true"), this._targetEl.setAttribute("role", "dialog"), this._targetEl.removeAttribute("aria-hidden"), this._createBackdrop(), this._isHidden = !1, this._options.onShow(this)
                                 }
                             }, {
                                 key: "hide",
                                 value: function() {
-                                    this._targetEl.classList.add("hidden"), this._targetEl.classList.remove("flex"), this._targetEl.setAttribute("aria-hidden", "true"), this._targetEl.removeAttribute("aria-modal"), this._targetEl.removeAttribute("role"), this._destroyBackdropEl(), this._isHidden = !0, this._options.onHide(this)
+                                    this._targetEl.classList.add("hidden1"), this._targetEl.classList.remove("flex"), this._targetEl.setAttribute("aria-hidden", "true"), this._targetEl.removeAttribute("aria-modal"), this._targetEl.removeAttribute("role"), this._destroyBackdropEl(), this._isHidden = !0, this._options.onHide(this)
                                 }
                             }])
                         }();

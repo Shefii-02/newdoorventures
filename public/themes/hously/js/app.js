@@ -565,7 +565,7 @@ try {
 try {
     const Default = {
         defaultTabId: null,
-        activeClasses: 'text-white bg-primary',
+        activeClasses: 'text-white2 bg-primary1',
         inactiveClasses: 'hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800',
         onShow: () => {},
     }

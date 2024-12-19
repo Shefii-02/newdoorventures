@@ -71,6 +71,8 @@ return new class extends Migration
             $table->string('occupancy_type', 60)->nullable()->comment('single,double,capsule');
             $table->string('available_for', 60)->nullable()->comment('boys,girls,both');
             $table->string('plot_area', 120)->nullable();
+            $table->text('other_rooms')->nullable();
+            $table->integer('open_sides')->nullable()->default(0);
             $table->softDeletes();
         });
     }

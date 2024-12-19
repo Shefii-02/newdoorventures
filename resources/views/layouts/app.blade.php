@@ -629,7 +629,7 @@
         }
     </script>
 
-    <script>
+    {{-- <script>
         function scrollSpy() {
             return {
                 activeSection: null,
@@ -650,7 +650,7 @@
 
                         // Activate the section when its midpoint is near the middle of the viewport
                         if (sectionMidpoint >= viewportHeight * 0.4 && sectionMidpoint <= viewportHeight * 0.6) {
-                            this.activeSection = section.id;
+                            // this.activeSection = section.id;
                         }
                     });
                 },
@@ -669,54 +669,54 @@
                 }
             };
         }
-    </script> 
+    </script>  --}}
     <script>
-        // function scrollSpy() {
-        //     return {
-        //         activeSection: null,
-        //         activeTab: null,
-        //         offset: 190,
-        //         init() {
-        //             // Set default active tab
-        //             this.activeTab = 'Overview';
-        //             this.detectSectionInView();
+        function scrollSpy() {
+            return {
+                activeSection: null,
+                activeTab: null,
+                offset: 190,
+                init() {
+                    // Set default active tab
+                    this.activeTab = 'Overview';
+                    this.detectSectionInView();
     
-        //             // Add scroll event listener
-        //             window.addEventListener('scroll', this.detectSectionInView.bind(this));
-        //         },
-        //         detectSectionInView() {
-        //             const sections = document.querySelectorAll('.section');
-        //             let viewportTop = window.pageYOffset;
+                    // Add scroll event listener
+                    window.addEventListener('scroll', this.detectSectionInView.bind(this));
+                },
+                detectSectionInView() {
+                    const sections = document.querySelectorAll('.section');
+                    let viewportTop = window.pageYOffset;
 
-        //             sections.forEach(section => {
-        //                 const sectionTop = section.offsetTop - this.offset;
-        //                 const sectionBottom = section.offsetTop + section.offsetHeight - this.offset;
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop - this.offset;
+                        const sectionBottom = section.offsetTop + section.offsetHeight - this.offset;
                 
-        //                 // Check if the viewport top is within the section boundaries
-        //                 if (viewportTop >= sectionTop && viewportTop < sectionBottom) {
+                        // Check if the viewport top is within the section boundaries
+                        if (viewportTop >= sectionTop && viewportTop < sectionBottom) {
                 
-        //                     this.activeSection = section.id;
-        //                     this.activeTab = section.id; // Update the active tab based on the section in view
-        //                 }
-        //             });
-        //         },
-        //         scrollToSection(sectionId) {
-        //             const section = document.getElementById(sectionId);
-        //             const yOffset = -this.offset;
+                            this.activeSection = section.id;
+                            this.activeTab = section.id; // Update the active tab based on the section in view
+                        }
+                    });
+                },
+                scrollToSection(sectionId) {
+                    const section = document.getElementById(sectionId);
+                    const yOffset = -this.offset;
     
-        //             const yPosition = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    const yPosition = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
     
-        //             window.scrollTo({
-        //                 top: yPosition,
-        //                 behavior: 'smooth'
-        //             });
+                    window.scrollTo({
+                        top: yPosition,
+                        behavior: 'smooth'
+                    });
     
-        //             // Manually set active tab on click
-        //             this.activeTab = sectionId;
-        //             this.activeSection = sectionId;
-        //         }
-        //     };
-        // }
+                    // Manually set active tab on click
+                    this.activeTab = sectionId;
+                    this.activeSection = sectionId;
+                }
+            };
+        }
     </script>
     
 

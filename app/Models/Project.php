@@ -130,9 +130,9 @@ class Project extends BaseModel
         return $this->hasMany(Property::class, 'project_id');
     }
 
-    public function investor(): BelongsTo
+    public function investor()
     {
-        return $this->belongsTo(Investor::class)->withDefault();
+        return $this->hasOne(Investor::class,'id','investor_id');
     }
 
     public function features(): BelongsToMany

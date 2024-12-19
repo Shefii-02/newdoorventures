@@ -3,42 +3,118 @@
 use App\Models\Currency;
 use Illuminate\Support\Facades\Storage;
 use App\Models\MediaFile;
+use Spatie\Image\Image;
+use Spatie\Image\Enums\AlignPosition;
+use Spatie\Image\Enums\Unit;
+use Spatie\Image\Enums\Fit;
 
 if (!function_exists('uploadFile')) {
     /**
-     * Handle file upload.
+     * Handle file upload with optional watermark using Spatie Image package.
      *
      * @param  \Illuminate\Http\UploadedFile  $file
      * @param  string  $destinationPath
      * @param  string  $disk
+     * @param  bool    $watermark
      * @return string|null
      */
-    function uploadFile($file, $destinationPath, $disk = 'public')
+    function uploadFile($file, $destinationPath, $disk = 'public', $watermark = false)
     {
         if ($file && $file->isValid()) {
             // Generate a unique filename
             $filename = uniqid() . '-' . time() . '.' . $file->getClientOriginalExtension();
 
-            // Store the file on the specified disk
-            $path = $file->storeAs('images/' . $destinationPath, $filename, $disk);
+            // Define storage paths
+            $storagePath = storage_path('app/images/' . $destinationPath);
+            $publicPath = public_path('images/' . $destinationPath);
 
-            // Return the path of the uploaded file
-            return str_replace('images/', '', $path);
+            // Create directory if it doesn't exist
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath, 0755, true);
+            }
+
+            // Process the image
+            $image = Image::load($file->getRealPath());
+
+            // Apply watermark if enabled
+            if ($watermark) {
+                $logoPath = public_path('themes/images/Water-Mark.png'); // Make sure the path is correct
+                // Make sure the watermark image exists
+                if (file_exists($logoPath)) {
+                    // Apply watermark at the center
+                    $image->watermark(
+                        $logoPath,
+                        AlignPosition::Center,
+                        width: 50,
+                        widthUnit: Unit::Percent,
+                        height: 50,
+                        heightUnit: Unit::Percent
+                    );
+                }
+                // Save the image with watermark
+                $image->save($publicPath . '/' . $filename, $disk);
+            } else {
+                $path = $file->storeAs($storagePath, $filename, $disk);
+                // Save the image normally without watermark
+                // $file->move($publicPath, $filename); // This saves the file directly in the public directory
+            }
+
+            // Return the relative path of the uploaded file (without 'images/')
+            return  $destinationPath . '/' . $filename;
         }
 
         return null;
     }
 }
-if (!function_exists('uploadFiletoMedia')) {
 
-    function uploadFiletoMedia($file, $destinationPath, $disk = 'public')
+if (!function_exists('uploadFiletoMedia')) {
+    /**
+     * Handle file upload to media with optional watermark using Spatie Image package.
+     *
+     * @param  \Illuminate\Http\UploadedFile  $file
+     * @param  string  $destinationPath
+     * @param  string  $disk
+     * @param  bool    $watermark
+     * @return array|null
+     */
+    function uploadFiletoMedia($file, $destinationPath, $disk = 'public', $watermark = false)
     {
         if ($file && $file->isValid()) {
             // Generate a unique filename
             $filename = uniqid() . '-' . time() . '.' . $file->getClientOriginalExtension();
 
-            // Store the file on the specified disk
-            $path = $file->storeAs('images/' . $destinationPath, $filename, $disk);
+            // Define storage path
+            $storagePath = storage_path('app/images/' . $destinationPath);
+            $publicPath = public_path('images/' . $destinationPath);
+
+            // Create directory if it doesn't exist
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath, 0755, true);
+            }
+
+            // Process the image
+            $image = Image::load($file->getRealPath());
+
+            // Apply watermark if enabled
+            if ($watermark) {
+                $logoPath = public_path('themes/images/Water-Mark.png'); // Make sure the path is correct
+                // Make sure the watermark image exists
+                if (file_exists($logoPath)) {
+                    // Apply watermark at the center
+                    $image->watermark(
+                        $logoPath,
+                        AlignPosition::Center,
+                        width: 50,
+                        widthUnit: Unit::Percent,
+                        height: 50,
+                        heightUnit: Unit::Percent
+                    );
+                }
+                // Save the image to the public directory (watermarked version)
+                $path = $image->save($storagePath . '/' . $filename);
+            } else {
+                $path = $file->storeAs($storagePath, $filename, $disk);
+            }
 
             // Prepare data for insertion
             $mediaData = [
@@ -64,6 +140,68 @@ if (!function_exists('uploadFiletoMedia')) {
         return null;
     }
 }
+
+
+// if (!function_exists('uploadFile')) {
+//     /**
+//      * Handle file upload.
+//      *
+//      * @param  \Illuminate\Http\UploadedFile  $file
+//      * @param  string  $destinationPath
+//      * @param  string  $disk
+//      * @return string|null
+//      */
+//     function uploadFile($file, $destinationPath, $disk = 'public',$watermark = false)
+//     {
+//         if ($file && $file->isValid()) {
+//             // Generate a unique filename
+//             $filename = uniqid() . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+//             // Store the file on the specified disk
+//             $path = $file->storeAs('images/' . $destinationPath, $filename, $disk);
+
+//             // Return the path of the uploaded file
+//             return str_replace('images/', '', $path);
+//         }
+
+//         return null;
+//     }
+// }
+// if (!function_exists('uploadFiletoMedia')) {
+
+//     function uploadFiletoMedia($file, $destinationPath, $disk = 'public',$watermark = false)
+//     {
+//         if ($file && $file->isValid()) {
+//             // Generate a unique filename
+//             $filename = uniqid() . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+//             // Store the file on the specified disk
+//             $path = $file->storeAs('images/' . $destinationPath, $filename, $disk);
+
+//             // Prepare data for insertion
+//             $mediaData = [
+//                 'user_id'    => auth()->id() ?? 0, // Optional: Associate with logged-in user
+//                 'name'       => $file->getClientOriginalName(),
+//                 'alt'        => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME), // Optional alt text
+//                 'folder_id'  => 0, // Set the appropriate folder ID if needed
+//                 'mime_type'  => $file->getClientMimeType(),
+//                 'size'       => $file->getSize(),
+//                 'url'        => str_replace('images/', '', $path),
+//                 'options'    => null, // Add any additional options or metadata
+//                 'created_at' => now(),
+//                 'updated_at' => now(),
+//             ];
+
+//             // Insert data into the database
+//             $mediaId = MediaFile::insertGetId($mediaData);
+
+//             // Return file information or media ID
+//             return ['media_id' => $mediaId, 'file_path' => str_replace('images/', '', $path)];
+//         }
+
+//         return null;
+//     }
+// }
 
 
 if (!function_exists('deleteFilefromMedia')) {
@@ -274,7 +412,7 @@ if (!function_exists('permission_check')) {
 
     function permission_check($permission)
     {
-        $permissions_for_officeAdmin = ['Property List', 'Property Show', 'Property Edit', 'Property Delete', 'Project List', 'Project Add', 'Project Edit', 'Project Delete', 'Builder List', 'Builder Add', 'Builder Edit', 'Builder Delete', 'Account List', 'Account Approvel', 'Leads Attend', 'Enquiry Attend', 'Setup Manage', 'Newsletters', 'Activity Logs','Blogs Manage'];
+        $permissions_for_officeAdmin = ['Property List', 'Property Show', 'Property Edit', 'Property Delete', 'Project List', 'Project Add', 'Project Edit', 'Project Delete', 'Builder List', 'Builder Add', 'Builder Edit', 'Builder Delete', 'Account List', 'Account Approvel', 'Leads Attend', 'Enquiry Attend', 'Setup Manage', 'Newsletters', 'Activity Logs', 'Blogs Manage'];
         $permission_for_marketing = ['Property List', 'Property Show', 'Property Edit', 'Project List', 'Project Add', 'Project Edit', 'Builder List', 'Builder Add', 'Builder Edit', 'Account Approvel', 'Leads Attend', 'Enquiry Attend'];
         if (auth('web')->check()) {
             $account_type  = auth('web')->user()->acc_type;
