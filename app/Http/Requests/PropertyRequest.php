@@ -94,13 +94,13 @@ class PropertyRequest extends FormRequest
     {
         // Collecting all the validation errors in a readable format
         $errors = $validator->errors()->all();
-        //logs
-        Log::error('Property  error');
-        Log::error($validator);
-        Log::error($errors);
+
+        // Logging a message and the validation errors
+        Log::error('Validation failed: Property error');
+        Log::error('Validation Errors: ' . json_encode($errors));
 
 
- 
+
 
         // Throw a custom response with all errors
         throw new HttpResponseException(response()->json([
