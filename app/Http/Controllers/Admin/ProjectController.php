@@ -73,7 +73,9 @@ class ProjectController extends Controller
         $categories   = Category::get();
         $builders     = Investor::get();
         $features     = Feature::get();
-        return view('admin.projects.form', compact('configration', 'facilities', 'categories', 'builders', 'features'));
+        $specifications = DB::table('specifications')->orderBy('display_order','asc')->get();
+    
+        return view('admin.projects.form', compact('configration', 'facilities', 'categories', 'builders', 'features','specifications'));
     }
 
     /**
@@ -181,7 +183,8 @@ class ProjectController extends Controller
         $categories   = Category::get();
         $builders     = Investor::get();
         $features     = Feature::get();
-        return view('admin.projects.form', compact('configration', 'facilities', 'categories', 'builders', 'features', 'project'));
+        $specifications = DB::table('specifications')->orderBy('display_order','asc')->get();
+        return view('admin.projects.form', compact('configration', 'facilities', 'categories', 'builders', 'features', 'project','specifications'));
     }
 
     /**
@@ -541,18 +544,19 @@ class ProjectController extends Controller
         ProjectSpecification::where('project_id', $project->id)->delete();
         $specificationFields = $request->specifications;
         foreach ($specificationFields ?? [] as $index => $specValue) {
-            if (isset($specValue['image']) && $request->hasFile("specifications.$index.image")) {
-                $path = uploadFile($specValue['image'], 'projects');
-                if (file_exists('images/'.$specValue['eXimagePath'])) {
-                    unlink('images/'.$specValue['eXimagePath']);
-                }
-            } else {
-                $path = isset($specValue['eXimagePath']) ?? null;
-            }
+
+            // if (isset($specValue['image']) && $request->hasFile("specifications.$index.image")) {
+            //     $path = uploadFile($specValue['image'], 'projects');
+            //     if (file_exists('images/'.$specValue['eXimagePath'])) {
+            //         unlink('images/'.$specValue['eXimagePath']);
+            //     }
+            // } else {
+            //     $path = isset($specValue['eXimagePath']) ?? null;
+            // }
             $specification              = new ProjectSpecification();
             $specification->project_id    = $project->id;
-            $specification->name          = null;
-            $specification->image        = $path;
+            $specification->name          = $specValue['name'];;
+            $specification->image        = $specValue['image'];
             $specification->description    = $specValue['description'];
             $specification->save();
         }
