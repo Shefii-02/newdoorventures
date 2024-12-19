@@ -35,7 +35,7 @@
                     Have questions? Get in touch!
                 </h3>
                 <p class="max-w-xl mx-auto text-slate-400">
-                    A great platform to buy, sell, and rent your properties without any agent or commissions.
+                    A great platform to buy, sell, and rent your properties
                 </p>
                 <div class="mt-6">
                     <a href="{{ url('contact') }}" class="text-white rounded-md bg-primary btn hover:bg-secondary">

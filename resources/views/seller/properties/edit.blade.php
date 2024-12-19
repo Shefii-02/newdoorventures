@@ -704,7 +704,7 @@
                                                         <div class="mb-2">
                                                             <div class="relative">
                                                                 <input form="propertyFrom" name="total_floor"
-                                                                    min="0" max="50" type="number"
+                                                                    type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                                                     autocomplete="off" id="total_floor"
                                                                     value="{{ $property->number_floor ?? 0 }}"
                                                                     class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
@@ -719,8 +719,8 @@
                                                         <div class="mb-2">
                                                             <div class="relative">
                                                                 <input form="propertyFrom" name="available_floor"
-                                                                    autocomplete="off" type="number" min="0"
-                                                                    max="50" id="available_floor"
+                                                                    autocomplete="off" type="number" 
+                                                                    id="available_floor" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                                                     value="{{ $property->available_floor ?? 0 }}"
                                                                     class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
                                                                     placeholder=" " />
@@ -745,11 +745,12 @@
                                                                 <div class="relative">
                                                                     <input form="propertyFrom" name="plot_area"
                                                                         autocomplete="off" type="text" id="plot_area"
-                                                                        value="{{ $property->plot_area }}"
+                                                                        value="{{ $property->plot_area }}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                                                         class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
                                                                         placeholder=" " />
                                                                     <label for="plot_area"
-                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Plot
+                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                        Plot
                                                                         Area</label>
                                                                     <div
                                                                         class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
@@ -768,11 +769,12 @@
                                                                     <input form="propertyFrom" name="carpet_area"
                                                                         autocomplete="off" type="text"
                                                                         id="carpet_area"
-                                                                        value="{{ $property->carpet_area ?? 0 }}"
+                                                                        value="{{ $property->carpet_area ?? 0 }}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                                                         class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
                                                                         placeholder=" " />
                                                                     <label for="carpet_area"
-                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Carpet
+                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                        Carpet
                                                                         Area<sup class="text-danger fs-4">*</sup></label>
                                                                     <div
                                                                         class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
@@ -786,12 +788,13 @@
                                                                 <div class="relative">
                                                                     <input form="propertyFrom" name="built_up_area"
                                                                         autocomplete="off" type="text"
-                                                                        id="built_up_area"
+                                                                        id="built_up_area" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                                                         value="{{ $property->built_up_area ?? 0 }}"
                                                                         class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
                                                                         placeholder=" " />
                                                                     <label for="built_up_area"
-                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Built-up
+                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                        Built-up
                                                                         Area</label>
                                                                     <div
                                                                         class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
@@ -806,11 +809,12 @@
                                                                     <input form="propertyFrom" name="super_built_up_area"
                                                                         value="{{ $property->square ?? 0 }}"
                                                                         autocomplete="off" type="text"
-                                                                        id="super_built_up_area"
+                                                                        id="super_built_up_area" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                                                         class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
                                                                         placeholder=" " />
                                                                     <label for="super_built_up_area"
-                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Super
+                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                        Super
                                                                         Built-up Area</label>
                                                                     <div
                                                                         class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
@@ -1197,12 +1201,7 @@
                                                         ];
                                                     })
                                                     ->toArray();
-                                                // $customFieldJson = str_replace(
-                                                //     '"',
-                                                //     "'",
-                                                //     json_encode($customFieldList ?? []),
-                                                // );
-                                                // $customFieldJson = json_encode($customFieldList ?? []);
+                                                
                                             @endphp
 
 
@@ -1426,11 +1425,7 @@
                                                                 ];
                                                             })
                                                             ->toArray();
-                                                        // $facilitiesJson = str_replace(
-                                                        //     '"',
-                                                        //     "'",
-                                                        //     json_encode($facilitiesList),
-                                                        // );
+                                                       
 
                                                     @endphp
 
@@ -2257,9 +2252,9 @@
                 return {
                     // Backend data
                     modes: {
-                        sell: @json($has_sell),
-                        rent: @json($has_rent),
-                        pg: @json($has_pg),
+                        sell: @json($has_sell ?? []),
+                        rent: @json($has_rent ?? []),
+                        pg: @json($has_pg ?? []),
                     },
                     types: [], // Available types based on mode
                     categories: [], // Available categories based on mode and type
@@ -2405,7 +2400,7 @@
                         this.locationSelected = true;
                         this.formFilled = true;
                         // Store selected location in localStorage
-                        localStorage.setItem('selectedLocation', JSON.stringify(this.form));
+                        // localStorage.setItem('selectedLocation', JSON.stringify(this.form));
                     },
                     checkForm() {
                         this.formFilled = this.form.city && this.form.locality && this.form.sub_locality;
@@ -2413,11 +2408,11 @@
                     // Retrieve location from localStorage if exists
                     init2() {
 
-                        const storedLocation = localStorage.getItem('selectedLocation');
-                        if (storedLocation) {
-                            this.form = JSON.parse(storedLocation);
-                            this.formFilled = true;
-                            this.locationSelected = true;
+                        // const storedLocation = localStorage.getItem('selectedLocation');
+                        // if (storedLocation) {
+                        //     this.form = JSON.parse(storedLocation);
+                        //     this.formFilled = true;
+                        //     this.locationSelected = true;
                         }
                     }
                 };

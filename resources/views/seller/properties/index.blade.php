@@ -70,8 +70,8 @@
                 <div class="">
                     <div class="relative py-5 ">
 
-                        <div class="pb-4 flex justify-between">
-                            <div class="pb-4 flex gap-4">
+                        <div class="pb-4 flex justify-between items-center">
+                            <div class=" flex gap-4">
                                 <div class="relative mt-1">
                                     <div
                                         class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -103,7 +103,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <a class="btn btn-info rounded-2xl px-3 p-0 m-2  bg-theme text-white hover:text-dark"
+                            <a class="bg-theme btn btn-info hover:text-dark m-2 p-0 px-3 py-2 rounded-2xl text-white"
                                 href="{{ route('user.properties.create') }}"><i class="bi"></i> Create</a>
                         </div>
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
