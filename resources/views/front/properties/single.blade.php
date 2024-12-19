@@ -189,8 +189,8 @@
                     <li role="presentation" class="inline-block">
                         <button @click="scrollToSection('Overview')" :class="{ 'tab-active': activeTab === 'Overview' }"
                             class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 tab-active"
-                            id="overview-tab" data-tabs-target="#overview" type="button" role="tab"
-                            aria-controls="overview" aria-selected="false">
+                            id="Overview-tab" data-tabs-target="#Overview" type="button" role="tab"
+                            aria-controls="Overview" aria-selected="false">
                             Overview
                         </button>
                     </li>
@@ -198,9 +198,9 @@
                     <li role="presentation" class="inline-block">
                         <button @click="scrollToSection('MoreDetails')"
                             :class="{ 'tab-active': activeTab === 'MoreDetails' }"
-                            class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
-                            id="moredetails-tab" data-tabs-target="#moredetails" type="button" role="tab"
-                            aria-controls="moredetails" aria-selected="true">
+                            class="w-full px-3 py-2  text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                            id="MoreDetails-tab" data-tabs-target="#MoreDetails" type="button" role="tab"
+                            aria-controls="MoreDetails" aria-selected="true">
                             More Details
                         </button>
                     </li>
@@ -209,8 +209,8 @@
                             <button @click="scrollToSection('AboutProject')"
                                 :class="{ 'tab-active': activeTab === 'AboutProject' }"
                                 class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
-                                id="aboutproject-tab" data-tabs-target="#aboutproject" type="button" role="tab"
-                                aria-controls="aboutproject" aria-selected="false">
+                                id="AboutProject-tab" data-tabs-target="#AboutProject" type="button" role="tab"
+                                aria-controls="AboutProject" aria-selected="false">
                                 About Project
                             </button>
                         </li>
@@ -244,8 +244,8 @@
                             <button @click="scrollToSection('Landmarks')"
                                 :class="{ 'tab-active': activeTab === 'Landmarks' }"
                                 class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
-                                id="landmarks-tab" data-tabs-target="#landmarkssDetails" type="button" role="tab"
-                                aria-controls="landmarkssDetails" aria-selected="false">
+                                id="Landmarks-tab" data-tabs-target="#Landmarks" type="button" role="tab"
+                                aria-controls="Landmarks" aria-selected="false">
                                 Landmarks
                             </button>
                         </li>
@@ -254,10 +254,10 @@
                     @if ($property->latitude && $property->longitude)
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Location')"
-                                :class="{ 'tab-active': activeTab === 'location' }"
+                                :class="{ 'tab-active': activeTab === 'Location' }"
                                 class="w-full px-3 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
-                                id="location-tab" data-tabs-target="#locationDetails" type="button" role="tab"
-                                aria-controls="locationDetails" aria-selected="false">
+                                id="Location-tab" data-tabs-target="#Location" type="button" role="tab"
+                                aria-controls="Location" aria-selected="false">
                                 Location
                             </button>
                         </li>
@@ -270,7 +270,7 @@
                     <div class="md:flex">
                         <div class=" lg:w-2/3 md:w-1/2 ">
 
-                            <div class="container-fluid mb-5" id="MoreDetails" class="section"
+                            <div class="container-fluid mb-5 section" id="MoreDetails" 
                                 :class="{ 'active': activeSection === 'MoreDetails' }">
                                 <div class="md:flex">
                                     <div class="w-full p-1 ">
@@ -316,7 +316,7 @@
                             </div>
 
                             @if ($property->project_id && ($project = $property->project))
-                                <div class="container-fluid mb-5" id="AboutProject" class="section"
+                                <div class="container-fluid mb-5 section" id="AboutProject" 
                                     :class="{ 'active': activeSection === 'AboutProject' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -380,7 +380,7 @@
                                 </div>
                             @endif
                             @if ($property->furnishing->count() > 0)
-                                <div class="container-fluid mb-5" id="FurnishingDetails" class="section"
+                                <div class="container-fluid mb-5 section" id="FurnishingDetails" 
                                     :class="{ 'active': activeSection === 'FurnishingDetails' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -407,7 +407,7 @@
                                 </div>
                             @endif
                             @if ($property->features->count())
-                                <div class="container-fluid mb-5" id="Amenities" class="section"
+                                <div class="container-fluid mb-5 section" id="Amenities" 
                                     :class="{ 'active': activeSection === 'Amenities' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -449,7 +449,7 @@
 
 
                             @if ($property->facilities->groupBy('name')->count())
-                                <div class="container-fluid mb-5" id="Landmarks" class="section"
+                                <div class="container-fluid mb-5 section" id="Landmarks" 
                                     :class="{ 'active': activeSection === 'Landmarks' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1">
@@ -510,7 +510,7 @@
                             @endif
 
                             @if ($property->latitude && $property->longitude)
-                                <div class="container-fluid mb-5" id="Location" class="section"
+                                <div class="container-fluid mb-5 section" id="Location" 
                                     :class="{ 'active': activeSection === 'Location' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">

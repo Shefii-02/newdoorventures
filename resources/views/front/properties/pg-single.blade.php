@@ -388,7 +388,7 @@
 
 
                                     @if ($property->features->count())
-                                        <div class="container-fluid mb-5" id="amenities" class="section"
+                                        <div class="container-fluid mb-5 section" id="amenities" 
                                             :class="{ 'active': activeSection === 'Amenities' }">
                                             <div class="md:flex">
                                                 <div class="w-full p-1 ">
@@ -416,7 +416,7 @@
                                     @endif
 
                                     @if ($property->furnishing->count() > 0)
-                                        <div class="container-fluid mb-5" id="FurnishingDetails" class="section"
+                                        <div class="container-fluid mb-5 section" id="FurnishingDetails" 
                                             :class="{ 'active': activeSection === 'FurnishingDetails' }">
                                             <div class="md:flex">
                                                 <div class="w-full p-1 ">
@@ -447,7 +447,7 @@
 
 
                                     @if ($property->pg_rules->count())
-                                        <div class="container-fluid mb-5" id="Rules" class="section"
+                                        <div class="container-fluid mb-5 section" id="Rules"
                                             :class="{ 'active': activeSection === 'Rules' }">
                                             <div class="md:flex">
                                                 <div class="w-full p-1 ">
@@ -483,7 +483,7 @@
 
 
                                     @if ($property->latitude && $property->longitude)
-                                        <div class="container-fluid mb-5" id="Location" class="section"
+                                        <div class="container-fluid mb-5 section" id="Location" 
                                             :class="{ 'active': activeSection === 'Location' }">
                                             <div class="md:flex">
                                                 <div class="w-full p-1 ">
@@ -539,7 +539,7 @@
 
 
                                     {{-- @if ($relatedProperties->count())
-                                        <div class="container-fluid mb-5" id="similar" class="section"
+                                        <div class="container-fluid mb-5 section" id="similar" 
                                             :class="{ 'active': activeSection === 'Similar' }">
                                             <div class="md:flex">
                                                 <div class="w-full p-1 ">

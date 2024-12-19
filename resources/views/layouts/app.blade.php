@@ -17,12 +17,15 @@
     <title>New Door Ventures</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link href="{{ asset('images/backgrounds/favicon.png') }}" rel="shortcut icon">
-  
+
     <style>
-        .slick-prev, .slick-next{
+        .slick-prev,
+        .slick-next {
             top: 30% !important;
         }
-        .slick-prev:before, .slick-next:before {
+
+        .slick-prev:before,
+        .slick-next:before {
             font-family: 'slick';
             font-size: 40px !important;
             line-height: 1;
@@ -193,8 +196,12 @@
             }
         }
 
-         
-        a.mt-5.text-white.rounded-md.bg-primary.btn-sm.btn.hover\:bg-secondary.popup-contact-modal-form,a.text-white.btn.bg-primary.popup-contact-modal-form,a.popup-contact-modal-form.text-white.btn.bg-primary.mt-10,a.w-full.py-4.text-white.btn.bg-primary.fs-5.popup-contact-modal-form,a.text-theme.btn.btn-sm.bg-trasparent.border-theme.popup-contact-modal-form{
+
+        a.mt-5.text-white.rounded-md.bg-primary.btn-sm.btn.hover\:bg-secondary.popup-contact-modal-form,
+        a.text-white.btn.bg-primary.popup-contact-modal-form,
+        a.popup-contact-modal-form.text-white.btn.bg-primary.mt-10,
+        a.w-full.py-4.text-white.btn.bg-primary.fs-5.popup-contact-modal-form,
+        a.text-theme.btn.btn-sm.bg-trasparent.border-theme.popup-contact-modal-form {
             overflow: hidden;
         }
     </style>
@@ -254,8 +261,8 @@
                             <label for="floatingInputName">Email Id</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="phone" maxlength="10" required id="floatingInputNo"
-                                placeholder="+91 Phone">
+                            <input type="text" class="form-control" name="phone" maxlength="10" required
+                                id="floatingInputNo" placeholder="+91 Phone">
                             <label for="floatingInputNo">Mobile Number <small class="text-theme">(+91
                                     Phone)</small></label>
                             <p class="text-theme text-start d-none">This number will be verified</p>
@@ -295,8 +302,7 @@
                             </label>
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-theme text-light"
-                                >Submit</button>
+                            <button type="submit" class="btn btn-theme text-light">Submit</button>
                         </div>
 
                     </form>
@@ -663,7 +669,56 @@
                 }
             };
         }
+    </script> 
+    <script>
+        // function scrollSpy() {
+        //     return {
+        //         activeSection: null,
+        //         activeTab: null,
+        //         offset: 190,
+        //         init() {
+        //             // Set default active tab
+        //             this.activeTab = 'Overview';
+        //             this.detectSectionInView();
+    
+        //             // Add scroll event listener
+        //             window.addEventListener('scroll', this.detectSectionInView.bind(this));
+        //         },
+        //         detectSectionInView() {
+        //             const sections = document.querySelectorAll('.section');
+        //             let viewportTop = window.pageYOffset;
+
+        //             sections.forEach(section => {
+        //                 const sectionTop = section.offsetTop - this.offset;
+        //                 const sectionBottom = section.offsetTop + section.offsetHeight - this.offset;
+                
+        //                 // Check if the viewport top is within the section boundaries
+        //                 if (viewportTop >= sectionTop && viewportTop < sectionBottom) {
+                
+        //                     this.activeSection = section.id;
+        //                     this.activeTab = section.id; // Update the active tab based on the section in view
+        //                 }
+        //             });
+        //         },
+        //         scrollToSection(sectionId) {
+        //             const section = document.getElementById(sectionId);
+        //             const yOffset = -this.offset;
+    
+        //             const yPosition = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    
+        //             window.scrollTo({
+        //                 top: yPosition,
+        //                 behavior: 'smooth'
+        //             });
+    
+        //             // Manually set active tab on click
+        //             this.activeTab = sectionId;
+        //             this.activeSection = sectionId;
+        //         }
+        //     };
+        // }
     </script>
+    
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
@@ -716,8 +771,8 @@
     </script>
 
     <script>
-        $(document).ready(function () {
-            $('.popup-contact-modal-form').on('click', function (event) {
+        $(document).ready(function() {
+            $('body').on('click', '.popup-contact-modal-form', function(event) {
                 event.preventDefault();
                 const id = $(this).data('id'); // Get the property ID from data-id
                 const type = $(this).data('type'); // Get the property name from data-name
@@ -732,7 +787,7 @@
                 // Show the modal
                 $('#BookingModal').modal('show');
             });
-});
+        });
     </script>
 </body>
 

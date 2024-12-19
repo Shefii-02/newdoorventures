@@ -6050,5 +6050,6 @@ ul.ks-cboxtags li input[type="checkbox"]:focus+label {
 }
 
 .jump-header .tab-active {
+    background-color: transparent !important;
     color: #cba641 !important; 
 }

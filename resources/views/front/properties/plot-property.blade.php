@@ -17,84 +17,81 @@
 
 @section('content')
 
-    <section class="relative  mt-28 content" >
-        <div class="container" data-property-id="{{ $property->id }}" x-data="scrollSpy()"
-            x-init="init()">
-          
-                @include('front.shortcuts.properties.slider', [
-                    'item' => $property,
-                    'youtube_video' => $property->youtube_video_url ?? '',
-                    'property_type' => 'property',
-                ])
-                <div class="container-fluid ">
-                    <div class="md:flex">
-                        <div class="w-full p-1 ">
-                            <div class="border-theme rounded-b-xl border-top-0">
-                                <div class="px-5 py-5">
-                                    <div class="col-lg-12">
-                                        <div class="row">
-                                            <div class="px-3 col-lg-9 ">
-                                                <div class=" align-items-top">
-                                                    <div class="px-3 col-lg-12 mt-3 md:flex flex-column">
-                                                        <span class="fw-bold fs-1 text-theme">
-                                                            @if ($property->price)
-                                                                {{ shorten_price($property->price) }}
+    <section class="relative  mt-28 content">
+        <div class="container" data-property-id="{{ $property->id }}" x-data="scrollSpy()" x-init="init()">
+
+            @include('front.shortcuts.properties.slider', [
+                'item' => $property,
+                'youtube_video' => $property->youtube_video_url ?? '',
+                'property_type' => 'property',
+            ])
+            <div class="container-fluid ">
+                <div class="md:flex">
+                    <div class="w-full p-1 ">
+                        <div class="border-theme rounded-b-xl border-top-0">
+                            <div class="px-5 py-5">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="px-3 col-lg-9 ">
+                                            <div class=" align-items-top">
+                                                <div class="px-3 col-lg-12 mt-3 md:flex flex-column">
+                                                    <span class="fw-bold fs-1 text-theme">
+                                                        @if ($property->price)
+                                                            {{ shorten_price($property->price) }}
+                                                        @endif
+                                                    </span>
+                                                    <span class="mt-2 fs-6">Developed by
+                                                        {{ $property->project->investor->name }}</span>
+                                                </div>
+                                                <div class="px-3 col-lg-12 md:flex flex-column">
+                                                    <div class="flex flex-column flex-column">
+
+                                                        <div class=" mt-2">
+                                                            @if ($property->project)
+                                                                <p class="d-inline fw-bolder me-2  text-base text-theme">
+                                                                    {{ $property->project->name }}
+                                                                </p>
                                                             @endif
-                                                        </span>
-                                                        <span class="mt-2 fs-6">Developed by
-                                                            {{ $property->project->investor->name }}</span>
-                                                    </div>
-                                                    <div class="px-3 col-lg-12 md:flex flex-column">
-                                                        <div class="flex flex-column flex-column">
 
-                                                            <div class=" mt-2">
-                                                                @if ($property->project)
-                                                                    <p
-                                                                        class="d-inline fw-bolder me-2  text-base text-theme">
-                                                                        {{ $property->project->name }}
-                                                                    </p>
-                                                                @endif
+                                                            @if ($property->city)
+                                                                <p
+                                                                    class="d-inline fw-bolder me-2 text-base text-theme text-capitalize {{ isset($property->project) ? 'border-2  border-end-0 border-top-0 border-bottom-0 ps-2' : '' }} ">
+                                                                    {{ $property->locality . ',' }}
+                                                                    {{ $property->city ? $property->city : 'Banglore' }}
 
-                                                                @if ($property->city)
-                                                                    <p
-                                                                        class="d-inline fw-bolder me-2 text-base text-theme text-capitalize {{ isset($property->project) ? 'border-2  border-end-0 border-top-0 border-bottom-0 ps-2' : '' }} ">
-                                                                        {{ $property->locality . ',' }}
-                                                                        {{ $property->city ? $property->city : 'Banglore' }}
+                                                                </p>
+                                                            @endif
 
-                                                                    </p>
-                                                                @endif
-
-                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="p-3 flex gap-5">
-                                                            <div class="ms-3">
-                                                                <span class="">Plot Area<br><span
-                                                                        class="fw-bold ">{{ $property->plot_area }}.sqft</span></span>
-                                                            </div>
-
-                                                            <div class=" ms-3">
-                                                                <span class="">Transaction Type<br><span
-                                                                        class="fw-bold text-capitalize">{{ str_replace('_',' ',$property->construction_status) }}</span></span>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="px-3 mt-3">
-                                                        <a href="#"  data-id="{{ $property->id }}" data-type="property" 
-                                                            class="popup-contact-modal-form text-theme btn btn-sm bg-trasparent border-theme">
-                                                            <i class="mdi mdi-download me-2"></i>
-                                                            {{ __('Download Brochure') }}
-                                                        </a>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-12">
+                                                    <div class="p-3 flex gap-5">
+                                                        <div class="ms-3">
+                                                            <span class="">Plot Area<br><span
+                                                                    class="fw-bold ">{{ $property->plot_area }}.sqft</span></span>
+                                                        </div>
+
+                                                        <div class=" ms-3">
+                                                            <span class="">Transaction Type<br><span
+                                                                    class="fw-bold text-capitalize">{{ str_replace('_', ' ', $property->construction_status) }}</span></span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="px-3 mt-3">
+                                                    <a href="#" data-id="{{ $property->id }}" data-type="property"
+                                                        class="popup-contact-modal-form text-theme btn btn-sm bg-trasparent border-theme">
+                                                        <i class="mdi mdi-download me-2"></i>
+                                                        {{ __('Download Brochure') }}
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div class="text-end col-lg-3">
-                                                <span class="text-sm">Posted on
-                                                    {{ date('M d, Y', strtotime($property->created_at)) }}</span>
-                                            </div>
+                                        </div>
+                                        <div class="text-end col-lg-3">
+                                            <span class="text-sm">Posted on
+                                                {{ date('M d, Y', strtotime($property->created_at)) }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -102,10 +99,16 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
             <div class="jump-header sticky top-0 z-999">
-                <ul style="border-bottom-width:3px !important" class="flex-wrap justify-left inline-block w-full p-4 py-10 text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab" x-data="{ isDragging: false, startX: 0, scrollLeft: 0 }" x-on:mousedown="isDragging = true; startX = $event.pageX - $el.offsetLeft; scrollLeft = $el.scrollLeft;" x-on:mousemove="if (isDragging) { $el.scrollLeft = scrollLeft - ($event.pageX - startX); }" x-on:mouseup="isDragging = false" x-on:mouseleave="isDragging = false" id="searchTab" data-tabs-toggle="#search-filter" role="tablist"
-                    >
+                <ul style="border-bottom-width:3px !important"
+                    class="flex-wrap justify-left inline-block w-full p-4 py-10 text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
+                    x-data="{ isDragging: false, startX: 0, scrollLeft: 0 }"
+                    x-on:mousedown="isDragging = true; startX = $event.pageX - $el.offsetLeft; scrollLeft = $el.scrollLeft;"
+                    x-on:mousemove="if (isDragging) { $el.scrollLeft = scrollLeft - ($event.pageX - startX); }"
+                    x-on:mouseup="isDragging = false" x-on:mouseleave="isDragging = false" id="searchTab"
+                    data-tabs-toggle="#search-filter" role="tablist">
                     <li role="presentation" class="inline-block">
                         <button @click="scrollToSection('Overview')" :class="{ 'tab-active': activeTab === 'Overview' }"
                             class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 tab-active"
@@ -137,15 +140,15 @@
                         </li>
                     @endif
                     {{-- @if ($relatedProperties->count()) --}}
-                        <li role="presentation" class="inline-block">
-                            <button @click="scrollToSection('SimilarPlots')"
-                                :class="{ 'tab-active': activeTab === 'SimilarPlots' }"
-                                class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
-                                id="SimilarPlots-tab" data-tabs-target="#SimilarPlots" type="button" role="tab"
-                                aria-controls="SimilarPlots" aria-selected="false">
-                                Similar Plots
-                            </button>
-                        </li>
+                    <li role="presentation" class="inline-block">
+                        <button @click="scrollToSection('SimilarPlots')"
+                            :class="{ 'tab-active': activeTab === 'SimilarPlots' }"
+                            class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                            id="SimilarPlots-tab" data-tabs-target="#SimilarPlots" type="button" role="tab"
+                            aria-controls="SimilarPlots" aria-selected="false">
+                            Similar Plots
+                        </button>
+                    </li>
                     {{-- @endif --}}
                     @if ($property->facilities->groupBy('name')->count())
                         <li role="presentation" class="inline-block">
@@ -160,7 +163,8 @@
                     @endif
                     @if ($property->latitude && $property->longitude)
                         <li role="presentation" class="inline-block">
-                            <button @click="scrollToSection('Location')" :class="{ 'tab-active': activeTab === 'Location' }"
+                            <button @click="scrollToSection('Location')"
+                                :class="{ 'tab-active': activeTab === 'Location' }"
                                 class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="Location-tab" data-tabs-target="#Location" type="button" role="tab"
                                 aria-controls="Location" aria-selected="false">
@@ -175,7 +179,7 @@
                 <div class=" mt-4">
                     <div class="md:flex">
                         <div class=" lg:w-2/3 md:w-1/2 ">
-                            <div class="container-fluid mb-5" id="Overview" class="section"
+                            <div class="container-fluid mb-5 section" id="Overview"
                                 :class="{ 'active': activeSection === 'Overview' }">
                                 <div class="md:flex">
                                     <div class="w-full p-1 ">
@@ -209,7 +213,7 @@
                                                             {!! $property->content !!}
                                                         </span>
                                                     </div>
-                                                    <a href="#"  data-id="{{ $property->id }}" data-type="property" 
+                                                    <a href="#" data-id="{{ $property->id }}" data-type="property"
                                                         class="popup-contact-modal-form text-white btn bg-primary mt-10">{{ __('Get Phone Number') }}</a>
                                                 </div>
                                             </div>
@@ -218,7 +222,7 @@
                                 </div>
                             </div>
                             @if ($property->project)
-                                <div class="container-fluid mb-5" id="AboutProject" class="section"
+                                <div class="container-fluid mb-5 section" id="AboutProject"
                                     :class="{ 'active': activeSection === 'AboutProject' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -239,7 +243,7 @@
                                                                 </span>
                                                                 <span>
                                                                     {{ shorten_price($property->project->price_from / ($property->project->square > 0 ? $property->project->square : 1)) }}
-                                                                    - 
+                                                                    -
                                                                     {{ shorten_price($property->project->price_to / ($property->project->square > 0 ? $property->project->square : 1)) }}</span>
                                                             </div>
                                                         </div>
@@ -261,7 +265,7 @@
                             @endif
 
                             @if ($property->features->count())
-                                <div class="container-fluid mb-5" id="amenities" class="section"
+                                <div class="container-fluid mb-5 section" id="amenities"
                                     :class="{ 'active': activeSection === 'Amenities' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -287,7 +291,7 @@
                             @endif
 
                             {{-- @if ($relatedProperties->count())
-                                <div class="container-fluid mb-5" id="SimilarPlots" class="section"
+                                <div class="container-fluid mb-5 section" id="SimilarPlots" 
                                     :class="{ 'active': activeSection === 'SimilarPlots' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -305,7 +309,7 @@
 
 
                             @if ($property->facilities->groupBy('name')->count())
-                                <div class="container-fluid mb-5" id="Landmarks" class="section"
+                                <div class="container-fluid mb-5 section" id="Landmarks"
                                     :class="{ 'active': activeSection === 'Landmarks' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1">
@@ -367,7 +371,7 @@
 
 
                             @if ($property->latitude && $property->longitude)
-                                <div class="container-fluid mb-5" id="Location" class="section"
+                                <div class="container-fluid mb-5 section" id="Location"
                                     :class="{ 'active': activeSection === 'Location' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -390,7 +394,7 @@
                                                                                 src="{{ $property->image_thumb }}"
                                                                                 width="80"
                                                                                 alt="{{ $property->name }}">
-                                                                            
+
                                                                         </div>
                                                                     </td>
                                                                     <td>
@@ -404,7 +408,7 @@
                                                                             <div>{{ $property->city_name }}</div>
                                                                             <div class="ltr:flex">
                                                                                 <span> {{ $property->square_text }}</span>
-                                                                               
+
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -428,7 +432,8 @@
                                     ])
                                 </div>
                                 <div class="mt-4">
-                                    <a href="#" data-id="{{ $property->id }}" data-type="property"  class="w-full py-4 text-white btn bg-primary fs-5 popup-contact-modal-form"><i
+                                    <a href="#" data-id="{{ $property->id }}" data-type="property"
+                                        class="w-full py-4 text-white btn bg-primary fs-5 popup-contact-modal-form"><i
                                             class="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
                                 </div>
 
