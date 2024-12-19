@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Log;
 
 class PropertyRequest extends FormRequest
 {
@@ -93,6 +94,13 @@ class PropertyRequest extends FormRequest
     {
         // Collecting all the validation errors in a readable format
         $errors = $validator->errors()->all();
+        //logs
+        Log::error('Property  error');
+        Log::error($validator);
+        Log::error($errors);
+
+
+ 
 
         // Throw a custom response with all errors
         throw new HttpResponseException(response()->json([
