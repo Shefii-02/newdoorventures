@@ -37,16 +37,16 @@ class PropertyRequest extends FormRequest
             'number_bathroom' => 'nullable|numeric|min:0|max:100000',
             'number_floor' => 'nullable|numeric|min:0|max:100000',
             'price' => 'required|numeric|min:0',
-            'latitude' => [
-                'nullable',
-                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/',
-                'max:20',
-            ],
-            'longitude' => [
-                'nullable',
-                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/',
-                'max:20',
-            ],
+            // 'latitude' => [
+            //     'nullable',
+            //     'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/',
+            //     'max:20',
+            // ],
+            // 'longitude' => [
+            //     'nullable',
+            //     'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/',
+            //     'max:20',
+            // ],
             // 'status' => 'nullable|string',
         ];
     }
@@ -70,8 +70,8 @@ class PropertyRequest extends FormRequest
             'price.required' => 'Price is required.',
             'price.numeric' => 'Price must be a valid number.',
             'price.min' => 'Price must be at least 0.',
-            'latitude.regex' => 'Latitude must be a valid coordinate.',
-            'longitude.regex' => 'Longitude must be a valid coordinate.',
+            // 'latitude.regex' => 'Latitude must be a valid coordinate.',
+            // 'longitude.regex' => 'Longitude must be a valid coordinate.',
         ];
     }
 
@@ -80,14 +80,14 @@ class PropertyRequest extends FormRequest
      *
      * @return array
      */
-    public function attributes(): array
-    {
-        return [
-            'property_name' => 'property name',
-            'description' => 'property description',
-            'price' => 'property price',
-        ];
-    }
+    // public function attributes(): array
+    // {
+    //     return [
+    //         'property_name' => 'property name',
+    //         'description' => 'property description',
+    //         'price' => 'property price',
+    //     ];
+    // }
 
     protected function failedValidation(Validator $validator)
     {
