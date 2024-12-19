@@ -13,7 +13,6 @@
                 max-width: 1450px !important;
             }
         }
-        
     </style>
 @endpush
 
@@ -224,7 +223,7 @@
                     <div class="md:flex">
                         <div class=" lg:w-2/3 md:w-1/2 ">
                             @if ($project->content)
-                                <div class="container-fluid mb-5 section" id="About" 
+                                <div class="container-fluid mb-5 section" id="About"
                                     :class="{ 'active': activeSection === 'About' }">
                                     <div class="">
                                         <div class="w-full p-1 pb-5">
@@ -266,7 +265,8 @@
                                 </div>
                             @endif
                             @if ($project->configration->count())
-                                <div class="container-fluid mb-5 section" id="Configuration" 
+    
+                                <div class="container-fluid mb-5 section" id="Configuration"
                                     :class="{ 'active': activeSection === 'Configuration' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -275,8 +275,8 @@
                                                     <h4 class="fs-5  font-bold me-2 ">Configuration</h4>
                                                     <div class="table-responsive mt-4">
                                                         <table class="table table-bordered border-xl border-2">
-                                                            @foreach ($configrations ?? [] as $listingConfig)
-                                                                @if ($option = $project->configration->where('name', $listingConfig->name)->first()->pivot)
+                                                            @foreach ($project->configration ?? [] as $listingConfig)
+                                                                {{-- @if ($option = $project->configration()->where('name', $listingConfig->name)->first()->pivot) --}}
                                                                     <tr class="border-bottom-none">
                                                                         <td class="text-gray-800 text-center p-3">
                                                                             <div
@@ -291,10 +291,10 @@
                                                                         </td>
                                                                         <td class="text-center">
                                                                             <span
-                                                                                class="text-sm dark:text-white">{{ $option->distance ?? '--' }}</span>
+                                                                                class="text-sm dark:text-white">{{ $listingConfig->pivot->distance ?? '--' }}</span>
                                                                         </td>
                                                                     </tr>
-                                                                @endif
+                                                                {{-- @endif --}}
                                                             @endforeach
                                                         </table>
 
@@ -306,7 +306,7 @@
                                 </div>
                             @endif
                             @if ($project->priceVariations->count())
-                                <div class="container-fluid mb-5 section" id="Price" 
+                                <div class="container-fluid mb-5 section" id="Price"
                                     :class="{ 'active': activeSection === 'Price' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -357,7 +357,7 @@
 
 
                             @if ($project->features->count())
-                                <div class="container-fluid mb-5 section" id="Amenities" 
+                                <div class="container-fluid mb-5 section" id="Amenities"
                                     :class="{ 'active': activeSection === 'Amenities' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -387,7 +387,7 @@
                             @endif
 
                             @if ($project->master_plan_images)
-                                <div class="container-fluid mb-5 section" id="Master_Floor_Plans" 
+                                <div class="container-fluid mb-5 section" id="Master_Floor_Plans"
                                     :class="{ 'active': activeSection === 'Master_Floor_Plans' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -429,7 +429,7 @@
                                 </div>
                             @endif
                             @if ($project->specifications->count())
-                                <div class="container-fluid mb-5 section" id="Specifications" 
+                                <div class="container-fluid mb-5 section" id="Specifications"
                                     :class="{ 'active': activeSection === 'Specifications' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -509,7 +509,7 @@
                                 </div>
                             @endif
                             @if ($project->latitude && $project->longitude)
-                                <div class="container-fluid mb-5 section" id="Location" 
+                                <div class="container-fluid mb-5 section" id="Location"
                                     :class="{ 'active': activeSection === 'Location' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -571,7 +571,7 @@
                                 </div>
                             @endif
                             @if ($project->facilities->groupBy('name')->count())
-                                <div class="container-fluid mb-5 section" id="Landmarks" 
+                                <div class="container-fluid mb-5 section" id="Landmarks"
                                     :class="{ 'active': activeSection === 'Landmarks' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1">
@@ -632,7 +632,7 @@
                             @endif
 
                             @if ($project->content)
-                                <div class="container-fluid mb-5 section" id="AboutDeveloper" 
+                                <div class="container-fluid mb-5 section" id="AboutDeveloper"
                                     :class="{ 'active': activeSection === 'AboutDeveloper' }">
                                     <div class="md:flex">
 
