@@ -534,13 +534,13 @@
                                                         class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
                                                     <label for="unit-info"
                                                         class="absolute fs-3 text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                                                        Flat/Villa No</label>
+                                                        Flat/Villa/Building No</label>
                                                 </div>
                                             </div>
 
 
                                             <div id="room-section"
-                                                class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
+                                                class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg HideUnwantedSectionsInCommercial">
                                                 <h5 class="my-4 fs-3 text-black font-bold">Room Details</h5>
                                                 <div class="my-3 card bg-body p-3">
                                                     <!-- Bedrooms Section -->
@@ -809,6 +809,134 @@
                                                                     Room</label>
                                                             </li>
                                                         </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="inside-section"
+                                                class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg  ShowWantedSectionsInCommercial">
+                                                <h5 class="mt-3 fs-3 text-black font-bold">Inside Details</h5>
+                                                <div class="my-3 card bg-body p-3">
+                                                    <div class="row1">
+                                                        <div
+                                                            class="col-lg-6 HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
+                                                            <div class="relative z-0 w-full mb-3 group ">
+                                                                <input form="propertyFrom" name="pantry" type="text"
+                                                                    autocomplete="off" id="pantry"
+                                                                    value="{{ $property->pantry }}"
+                                                                    class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+                                                                <label for="pantry"
+                                                                    class="absolute fs-3 text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                    Pantry</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 col-lg-6">
+                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
+                                                                <label for="city"
+                                                                    class="block mb-2 text-sm font-medium text-gray-500">
+                                                                    Washroom
+                                                                </label>
+                                                                <div x-data="{ count: {{ $property->washroom }} }"
+                                                                    class="flex items-center space-x-2">
+                                                                    <!-- Minus Button -->
+                                                                    <button @click="if (count > 0) count--"
+                                                                        class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                        -
+                                                                    </button>
+
+                                                                    <!-- Display Counter -->
+                                                                    <span class="text-md font-bold" x-text="count"></span>
+                                                                    <input type="hidden" form="propertyFrom"
+                                                                        :value="count" name="washroom">
+                                                                    <!-- Plus Button -->
+                                                                    <button @click="count++"
+                                                                        class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                        +
+                                                                    </button>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 col-lg-6">
+                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
+                                                                <label for="city"
+                                                                    class="block mb-2 text-sm font-medium text-gray-500">
+                                                                    Cabin
+                                                                </label>
+                                                                <div x-data="{ count: {{ $property->cabin }} }"
+                                                                    class="flex items-center space-x-2">
+                                                                    <!-- Minus Button -->
+                                                                    <button @click="if (count > 0) count--"
+                                                                        class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                        -
+                                                                    </button>
+
+                                                                    <!-- Display Counter -->
+                                                                    <span class="text-md font-bold" x-text="count"></span>
+                                                                    <input type="hidden" form="propertyFrom"
+                                                                        :value="count" name="cabin">
+                                                                    <!-- Plus Button -->
+                                                                    <button @click="count++"
+                                                                        class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                        +
+                                                                    </button>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 col-lg-6">
+                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
+                                                                <label for="city"
+                                                                    class="block mb-2 text-sm font-medium text-gray-500">
+                                                                    Seats
+                                                                </label>
+                                                                <div x-data="{ count: {{ $property->seats }} }"
+                                                                    class="flex items-center space-x-2">
+                                                                    <!-- Minus Button -->
+                                                                    <button @click="if (count > 0) count--"
+                                                                        class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                        -
+                                                                    </button>
+
+                                                                    <!-- Display Counter -->
+                                                                    <span class="text-md font-bold" x-text="count"></span>
+                                                                    <input type="hidden" form="propertyFrom"
+                                                                        :value="count" name="seats">
+                                                                    <!-- Plus Button -->
+                                                                    <button @click="count++"
+                                                                        class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                        +
+                                                                    </button>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 col-lg-6">
+                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
+                                                                <label for="city"
+                                                                    class="block mb-2 text-sm font-medium text-gray-500">
+                                                                    Units on Floor
+                                                                </label>
+                                                                <div x-data="{ count: {{ $property->units_on_floor }} }"
+                                                                    class="flex items-center space-x-2">
+                                                                    <!-- Minus Button -->
+                                                                    <button @click="if (count > 0) count--"
+                                                                        class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                        -
+                                                                    </button>
+
+                                                                    <!-- Display Counter -->
+                                                                    <span class="text-md font-bold" x-text="count"></span>
+                                                                    <input type="hidden" form="propertyFrom"
+                                                                        :value="count" name="units_on_floor">
+                                                                    <!-- Plus Button -->
+                                                                    <button @click="count++"
+                                                                        class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                        +
+                                                                    </button>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1541,7 +1669,8 @@
                                                                     @foreach ($furnishing ?? [] as $key_0 => $furnish_items)
                                                                         <div class="col-lg-4">
                                                                             <div class="flex items-center mb-4">
-                                                                                <input name="furnishing[]" type="checkbox"
+                                                                                <input name="furnishing[]"
+                                                                                    type="checkbox"
                                                                                     @if (in_array($furnish_items->id, $property->furnishing->pluck('id')->toArray())) checked @endif
                                                                                     value="{{ $furnish_items->id }}"
                                                                                     id="furnish_checkbox_{{ $key_0 }}"
@@ -2533,6 +2662,14 @@
                             ShowWantedSectionInPg();
                         } else {
                             ShowHiddenSections();
+                            if (this.currentType === 'Residential' && categoryName != 'Plot and Land') {
+                                this.toggleSections('ShowWantedSectionsInCommercial', 'none');
+                                this.toggleSections('HideUnwantedSectionsInCommercial', 'block');
+                            } else if (this.currentType === 'Commercial' && categoryName != 'Plot and Land') {
+
+                                this.toggleSections('HideUnwantedSectionsInCommercial', 'none');
+                                this.toggleSections('ShowWantedSectionsInCommercial', 'block');
+                            }
                         }
                     },
                 };
@@ -2805,13 +2942,6 @@
             function initAutocomplete() {
                 const input = document.getElementById("location");
 
-                // const options = {
-                //     strictBounds: false,
-                //     types: ['address'],
-                //     componentRestrictions: {
-                //         country: 'IN', // Restrict to India
-                //     }
-                // };
 
                 // Coordinates for Bangalore center
                 const center = {

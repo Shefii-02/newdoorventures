@@ -24,10 +24,14 @@
         <td class="px-2 py-1 text-center">
             <span class="text-sm">{{ $property->leads_count ?? 0 }}</span>
         </td>
+       
         <td class="px-2 py-1 text-center">
             <span class="text-sm">{{ $property->views }}</span>
-        </td>
+        </td> 
         <td class="px-2 py-1 text-center">
+            <span class="text-sm">{!! dateTimeFormat($property->created_at) ?? 0 !!}</span>
+        </td>
+        {{-- <td class="px-2 py-1 text-center">
             @if ($property->status == 'rented' || $property->status == 'sold')
                 <span
                     class="badge badge-pill text-capitalize text-md {{ $property->status == 'sold' || $property->status == 'rented' ? 'bg-theme' : '' }}  text-light ">
@@ -39,7 +43,7 @@
                     {{ $property->moderation_status }}
                 </span>
             @endif
-        </td>
+        </td> --}}
         <td class="px-2 py-1 text-center">
             @if ($property->status != 'rented' && $property->status != 'sold')
                 <a href="{{ route('user.properties.edit', $property->id) }}"

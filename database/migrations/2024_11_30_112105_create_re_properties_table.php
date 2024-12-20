@@ -73,6 +73,11 @@ return new class extends Migration
             $table->string('plot_area', 120)->nullable();
             $table->text('other_rooms')->nullable();
             $table->integer('open_sides')->nullable()->default(0);
+            $table->string('pantry', 120)->nullable();
+            $table->integer('washroom')->nullable()->default(0);
+            $table->integer('cabin')->nullable()->default(0);
+            $table->integer('seats')->nullable()->default(0);
+            $table->integer('units_on_floor')->nullable()->default(0);
             $table->softDeletes();
         });
     }

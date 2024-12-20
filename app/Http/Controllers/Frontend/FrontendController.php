@@ -186,6 +186,10 @@ class FrontendController extends Controller
         $recent_properties = $this->recentlyViewedProperties();
         $rules = PgRules::get();
 
+        $property->increment('views');
+
+
+
         if ($property->category && $property->category->name == 'Plot and Land') {
             return view('front.properties.plot-property', compact('property', 'recent_properties'));
         }
@@ -200,6 +204,7 @@ class FrontendController extends Controller
     public function projectDetails($uid, $slug)
     {
         $project = Project::where('slug', $slug)->where('unique_id', $uid)->first() ?? abort(404);
+        $project->increment('views');
         $configurations = Configration::get();
         $advertisement = Advertisement::inRandomOrder()->first();
         return view('front.projects.single', compact('project', 'configurations', 'advertisement'));

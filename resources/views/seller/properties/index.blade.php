@@ -128,8 +128,11 @@
                                         Views
                                     </th>
                                     <th class="px-6 py-3 text-dark fw-bold">
-                                        Status
+                                        Created at
                                     </th>
+                                    {{-- <th class="px-6 py-3 text-dark fw-bold">
+                                        Status
+                                    </th> --}}
                                     <th class="px-6 py-3 text-dark fw-bold">
                                         Action
                                     </th>

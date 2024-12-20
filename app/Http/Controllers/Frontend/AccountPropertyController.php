@@ -254,6 +254,11 @@ class AccountPropertyController extends Controller
             $property->available_for    = $request->has('available_for') ? $request->available_for : '';
             $property->plot_area        = $request->plot_area ?? '';
             $property->open_sides       = $request->open_sides;
+            $property->pantry           = $request->pantry ?? '';
+            $property->washroom         = $request->washroom ?? 0;
+            $property->cabin            = $request->cabin ?? 0;
+            $property->seats            = $request->seats ?? 0;
+            $property->units_on_floor   = $request->units_on_floor ?? 0;
 
             if (auth('account')->user()->auto_approvel == 1 && $request->moderation_status != 'draft') {
                 $property->moderation_status = 'approved';
@@ -554,6 +559,12 @@ class AccountPropertyController extends Controller
             $property->occupancy_type   = $request->has('occupancy_type') ? $request->occupancy_type : '';
             $property->available_for    = $request->has('available_for') ? $request->available_for : '';
             $property->plot_area        = $request->plot_area ?? '';
+            $property->pantry           = $request->pantry ?? '';
+            $property->washroom         = $request->washroom ?? 0;
+            $property->cabin            = $request->cabin ?? 0;
+            $property->seats            = $request->seats ?? 0;
+            $property->units_on_floor   = $request->units_on_floor ?? 0;
+
             if ($request->mode == 'sell') {
                 if ($request->property_status == 'sold') {
                     $property->status       = 'sold';

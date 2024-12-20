@@ -9,7 +9,7 @@
             <div
                 class="flex items-center justify-center content-center p-2 pt-2.5 bg-gray-700 rounded-md bg-opacity-60 text-white text-sm">
                 <i class="leading-none mdi mdi-eye me-1"></i>
-                <span class="leading-none small">{{ $property->view ?? 0 }}</span>
+                <span class="leading-none small">{{ $property->views ?? 0 }}</span>
             </div>
         </div>
         @if ($property->images && ($imagesCount = count($property->images)))
