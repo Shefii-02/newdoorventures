@@ -20,6 +20,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->use([
         
         ]);
+
+        $middleware->validateCsrfTokens(except: [
+            'account/properties/*',
+            'admin/projects/*',
+        ]);
         //
     })
     ->withSchedule(function (Schedule $schedule) {
