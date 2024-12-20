@@ -22,8 +22,8 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->validateCsrfTokens(except: [
-            'account/properties/*',
-            'admin/projects/*',
+            'account/*',
+            'admin/*',
         ]);
         //
     })
