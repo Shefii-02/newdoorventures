@@ -1373,9 +1373,9 @@
                                                                         <div
                                                                             class="col-md-6 more-details {{ $option_item->has_rent ? 'ShowWantedSectionInRent' : 'HideUnwantedSectionsInRent' }} {{ $option_item->has_sell ? 'ShowWantedSectionInSell' : 'HideUnwantedSectionsInSell' }} ">
                                                                             <div class="relative z-0  mb-3 group  ">
-                                                                                <input form="propertyForm"
+                                                                                <input  form="propertyFrom"
                                                                                     name="custom_fields[{{ $key }}][name]"
-                                                                                    type="hidden" />
+                                                                                    type="hidden" value="{{ $option_item->name }}" />
                                                                                 <input form="propertyFrom"
                                                                                     name="custom_fields[{{ $key }}][value]"
                                                                                     type="text" autocomplete="off"

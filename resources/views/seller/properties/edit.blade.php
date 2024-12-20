@@ -1480,7 +1480,6 @@
                                                 class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
                                                 <h5 class="my-4 fs-3 text-black font-bold">More about Details</h5>
                                                 <div class="mt-3 card p-3 bg-body">
-
                                                     <div class="col-lg-12 mt-2">
                                                         <div class="row">
                                                             @foreach ($customFields ?? [] as $key => $option_item)
@@ -1492,9 +1491,9 @@
                                                                 <div
                                                                     class="col-md-6 more-details {{ $option_item->has_rent ? 'ShowWantedSectionInRent' : 'HideUnwantedSectionsInRent' }} {{ $option_item->has_sell ? 'ShowWantedSectionInSell' : 'HideUnwantedSectionsInSell' }} ">
                                                                     <div class="relative z-0  mb-3 group  ">
-                                                                        <input form="propertyForm"
+                                                                        <input form="propertyFrom"
                                                                             name="custom_fields[{{ $key }}][name]"
-                                                                            type="hidden" />
+                                                                            type="hidden" value="{{$option_item->name}}" />
                                                                         <input form="propertyFrom"
                                                                             name="custom_fields[{{ $key }}][value]"
                                                                             type="text" autocomplete="off"
