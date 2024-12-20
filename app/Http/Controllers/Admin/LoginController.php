@@ -23,7 +23,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if(auth('web')->check()){
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard.index');
         }
         else{
             return view('admin.auth.login'); // Login form view
