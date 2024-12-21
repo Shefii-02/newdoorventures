@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\PropertyController;
 
 Route::prefix('admin')->group(function () {
     Route::get('/', [LoginController::class, 'showLoginForm'])->name('admin.index');
@@ -14,11 +15,12 @@ Route::prefix('admin')->group(function () {
 Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers\Admin'], function () {
 
     Route::resource('dashboard', DashboardController::class)->names('dashboard');
+
+    Route::get('properties/approved', [PropertyController::class, 'approved'])->name('properties.approved');
+    Route::get('properties/suspended', [PropertyController::class, 'suspended'])->name('properties.suspended'); 
+    Route::get('properties/sold-rented', [PropertyController::class, 'soldRented'])->name('properties.sold-rented');
     Route::resource('properties', PropertyController::class)->names('properties');
 
-    Route::post('properties/approved', [LoginController::class, 'approved'])->name('properties.approved');
-    Route::post('properties/suspended', [LoginController::class, 'suspended'])->name('properties.suspended'); 
-    Route::post('properties/sold-rented', [LoginController::class, 'soldRented'])->name('properties.sold-rented');
     
     Route::resource('projects', ProjectController::class)->names('projects');
     Route::resource('builders', BuilderController::class)->names('builders');
