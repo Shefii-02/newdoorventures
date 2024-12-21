@@ -55,9 +55,9 @@
         <!-- Form Container -->
         <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div class="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                <h3 class="font-medium text-black dark:text-dark">
+                <h2 class="text-title-sm2 font-bold text-black dark:text-white">
                     {{ isset($project) ? 'Edit project' : 'Create a project' }}
-                </h3>
+                </h2>
             </div>
             <div class="" x-data="formHandler()">
                 <div x-show="showToast" x-transition
@@ -563,7 +563,7 @@
                             <div class="px-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <h4 class="card-title"> Unit Price </h4>
+                                        <h4 class=" font-bold text-black dark:text-white"> Unit Price </h4>
                                     </div>
 
                                     <div class="card-body">
@@ -708,7 +708,7 @@
                             <div class="px-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <h4 class="card-title">Landmarks </h4>
+                                        <h4 class="font-bold text-black dark:text-white">Landmarks </h4>
                                     </div>
 
                                     <div class="card-body">
@@ -844,7 +844,7 @@
                             <div class="px-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <h4 class="card-title"> Configration </h4>
+                                        <h4 class="font-bold text-black dark:text-white"> Configration </h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -888,7 +888,7 @@
                             <div class="px-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <h4 class="card-title">Specifications</h4>
+                                        <h4 class="font-bold text-black dark:text-white">Specifications</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -1140,7 +1140,7 @@
                             <div class="px-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <h4 class="card-title"> Amenities </h4>
+                                        <h4 class="font-bold text-black dark:text-white"> Amenities </h4>
                                     </div>
 
                                     <div class="card-body">

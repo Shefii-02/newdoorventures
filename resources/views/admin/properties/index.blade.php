@@ -50,8 +50,24 @@
                     </div>
 
                 </div>
+
                 <div class="conatiner">
-                    <label for="table-search" class="sr-only">Search</label>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ route('admin.properties') }}">Pending</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.properties.approved') }}">Approved</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.properties.suspended') }}">Suspended</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.properties.sold-rented') }}">Sold/Rented</a>
+                        </li>
+                    </ul>
+
+                    {{-- <label for="table-search" class="sr-only">Search</label>
                     <div class="relative mt-1 px-3">
                         <div
                             class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center px-4 mt-2.5  pointer-events-none">
@@ -65,7 +81,7 @@
                             class="block pt-2 ps-5 p-2 text-sm  border border-gray-300 rounded-lg w-1/2 bg-gray-50 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Search for properties">
 
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="container card overflow-x-auto shadow-md sm:rounded-lg mt-3">
                     <div class="relative">

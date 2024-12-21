@@ -58,8 +58,128 @@ class PropertyController extends Controller
         }
 
 
+        return view('admin.properties.pending', compact('properties'));
+    }
+
+    public function approved(Request $request)
+    {
+        $query = Property::orderByRaw("
+        CASE 
+            WHEN moderation_status = 'pending' THEN 1
+            WHEN moderation_status = 'approved' THEN 2
+            WHEN moderation_status = 'suspended' THEN 3
+            ELSE 4
+        END
+    ");
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%$search%")
+                    ->orWhere('location', 'LIKE', "%$search%")
+                    ->orWhere('type', 'LIKE', "%$search%")
+                    ->orWhere('moderation_status', 'LIKE', "%$search%");
+            });
+            // $query->whereHas('account', function ($q) use ($search) {
+            //     $q->where('first_name', 'LIKE', "%$search%")
+            //     ->orWhere('last_name', 'LIKE', "%$search%");
+            // });
+        }
+
+        $properties = $query->paginate(10);
+
+        if ($request->ajax()) {
+            $rows = view('admin.properties.items', compact('properties'))->render();
+            $pagination = view('admin.properties.pagination', compact('properties'))->render();
+            return response()->json(['rows' => $rows, 'pagination' => $pagination]);
+        }
+
+
         return view('admin.properties.index', compact('properties'));
     }
+
+
+    public function suspended(Request $request)
+    {
+        $query = Property::orderByRaw("
+                                        CASE 
+                                            WHEN moderation_status = 'pending' THEN 1
+                                            WHEN moderation_status = 'approved' THEN 2
+                                            WHEN moderation_status = 'suspended' THEN 3
+                                            ELSE 4
+                                        END
+                                    ");
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%$search%")
+                    ->orWhere('location', 'LIKE', "%$search%")
+                    ->orWhere('type', 'LIKE', "%$search%")
+                    ->orWhere('moderation_status', 'LIKE', "%$search%");
+            });
+            // $query->whereHas('account', function ($q) use ($search) {
+            //     $q->where('first_name', 'LIKE', "%$search%")
+            //     ->orWhere('last_name', 'LIKE', "%$search%");
+            // });
+        }
+
+        $properties = $query->paginate(10);
+
+        if ($request->ajax()) {
+            $rows = view('admin.properties.items', compact('properties'))->render();
+            $pagination = view('admin.properties.pagination', compact('properties'))->render();
+            return response()->json(['rows' => $rows, 'pagination' => $pagination]);
+        }
+
+
+        return view('admin.properties.index', compact('properties'));
+    }
+
+
+    public function soldRented(Request $request)
+    {
+        $query = Property::orderByRaw("
+                                        CASE 
+                                            WHEN moderation_status = 'pending' THEN 1
+                                            WHEN moderation_status = 'approved' THEN 2
+                                            WHEN moderation_status = 'suspended' THEN 3
+                                            ELSE 4
+                                        END
+                                    ");
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%$search%")
+                    ->orWhere('location', 'LIKE', "%$search%")
+                    ->orWhere('type', 'LIKE', "%$search%")
+                    ->orWhere('moderation_status', 'LIKE', "%$search%");
+            });
+            // $query->whereHas('account', function ($q) use ($search) {
+            //     $q->where('first_name', 'LIKE', "%$search%")
+            //     ->orWhere('last_name', 'LIKE', "%$search%");
+            // });
+        }
+
+        $properties = $query->paginate(10);
+
+        if ($request->ajax()) {
+            $rows = view('admin.properties.items', compact('properties'))->render();
+            $pagination = view('admin.properties.pagination', compact('properties'))->render();
+            return response()->json(['rows' => $rows, 'pagination' => $pagination]);
+        }
+
+
+        return view('admin.properties.index', compact('properties'));
+    }
+
+
+
+
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -136,14 +256,16 @@ class PropertyController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-        
+
         if (!permission_check('Property Delete')) {
             return abort(404);
         }
 
         if (auth('web')->user()->acc_type == 'superadmin') {
-            $property = Property::withTrashed()->whereId($id)->first() ?? abort(404);
-   
+            $property = Property::withTrashed()
+                ->with('author')
+                ->whereId($id)
+                ->first() ?? abort(404);
             DB::beginTransaction();
             try {
                 foreach ($property->images  ?? [] as $imageLoc) {

@@ -12,11 +12,14 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers\Admin'], function () {
-   
-  
 
     Route::resource('dashboard', DashboardController::class)->names('dashboard');
     Route::resource('properties', PropertyController::class)->names('properties');
+
+    Route::post('properties/approved', [LoginController::class, 'approved'])->name('properties.approved');
+    Route::post('properties/suspended', [LoginController::class, 'suspended'])->name('properties.suspended'); 
+    Route::post('properties/sold-rented', [LoginController::class, 'soldRented'])->name('properties.sold-rented');
+    
     Route::resource('projects', ProjectController::class)->names('projects');
     Route::resource('builders', BuilderController::class)->names('builders');
     Route::resource('amenities', AmenitiesController::class)->names('amenities');

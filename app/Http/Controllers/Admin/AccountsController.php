@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\Property;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +23,11 @@ class AccountsController extends Controller
             return abort(404);
         }
         //
-        $accounts = Account::orderBy('status', 'desc')->get();
+        $pending_accounts   = Account::where('status','pending')->orderBy('created_at', 'desc')->get();
+        $approved_accounts  = Account::where('status','approved')->orderBy('created_at', 'desc')->get();
+        $suspended_accounts = Account::where('status','suspended')->orderBy('created_at', 'desc')->get();
 
-        return view('admin.accounts.index',compact('accounts'));
+        return view('admin.accounts.index',compact('pending_accounts','approved_accounts','suspended_accounts'));
     }
 
     /**
@@ -83,9 +86,52 @@ class AccountsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id,Request $request)
     {
         //
+
+        if (!permission_check('Account Delete'))
+        {
+            return abort(404);
+        }
+
+        if (auth('web')->user()->acc_type == 'superadmin') {
+            
+            $account = Account::withTrashed()->whereId($id)->first() ?? abort(404);
+            DB::beginTransaction();
+            try {
+                
+                Property::where('author_id', $account->id)->delete();
+                $account->delete();
+
+                DB::commit();
+                Session::flash('success_msg', 'Successfully Deleted');
+                if ($request->has('from') && $request->from == 'trash') {
+                    return redirect()->route('admin.trash.index')->with('success_msg', 'Account  deleted!');
+                }
+                return redirect()->back()->with('success_msg', 'Account deleted!');
+            } catch (Exception $e) {
+                DB::rollBack();
+                Session::flash('failed_msg', $e->getMessage());
+                // Return error response if something goes wrong
+                return redirect()->back();
+            }
+        } else {
+     
+            DB::beginTransaction();
+            try {
+                $account = Account::withTrashed()->whereId($id)->first() ?? abort(404);
+                Property::where('author_id', $account->id)->delete();
+                $account->delete();
+                DB::commit();
+                Session::flash('success_msg', 'Successfully Deleted');
+                return redirect()->back()->with('success_msg', 'Account deleted!');
+            } catch (Exception $e) {
+                DB::rollBack();
+                Session::flash('failed_msg', $e->getMessage());
+                return redirect()->back();
+            }
+        }
 
     }
 }

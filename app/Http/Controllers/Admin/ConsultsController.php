@@ -17,9 +17,9 @@ class ConsultsController extends Controller
     public function index()
     {
         //
-        $consults = Consult::orderBy('status', 'desc')->get();
-
-        return view('admin.consults.index', compact('consults'));
+        $consults_unreaded = Consult::where('status','unread')->orderBy('status', 'desc')->paginate(50);
+        $consults_attended = Consult::where('status','attended')->orderBy('status', 'desc')->paginate(50);
+        return view('admin.consults.index', compact('consults_unreaded','consults_attended'));
     }
 
     /**

@@ -10,11 +10,13 @@ class CheckAccountStatus
 {
     public function handle(Request $request, Closure $next)
     {
-       
         if (auth('account')->user() && (auth('account')->user()->status === "pending" || auth('account')->user()->status == ""  )) {
+            return redirect()->route('user.pending');
+        }
+        else if (auth('account')->user() && (auth('account')->user()->status === "suspended" || auth('account')->user()->status == ""  )) {
            
 
-            return redirect()->route('public.account.pending');
+            return redirect()->route('user.suspended');
 
         }
 

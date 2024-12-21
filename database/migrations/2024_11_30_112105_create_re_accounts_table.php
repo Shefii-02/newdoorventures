@@ -38,6 +38,7 @@ return new class extends Migration
             $table->dateTime('last_login')->nullable();
             $table->boolean('is_staff')->nullable()->default(0);
             $table->boolean('auto_approvel')->nullable()->default(0);
+            $table->softDeletes();
         });
     }
 

@@ -145,3 +145,35 @@
         </div>
     </div>
 @endsection
+
+
+@push('footer')
+<script>
+    function imageHandler(initialUrl) {
+            return {
+                image: null,
+                imageUrl: initialUrl || '',
+                handleFileUpload(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        // Validate file size (100KB = 102400 bytes)
+                        const maxSize = 1024 * 100; // 100KB in bytes
+                        if (file.size > maxSize) {
+                            alert('File size must not exceed 100KB. Please choose a smaller file.');
+                            event.target.value = ''; // Reset the file input
+                            return;
+                        }
+                        this.image = file;
+                        this.imageUrl = URL.createObjectURL(file);
+                    }
+                },
+                removeImage() {
+                    this.image = null;
+                    this.imageUrl = '';
+                    this.$refs.fileInput.value = ''; // Reset the file input
+                }
+            };
+        }
+</script>
+
+@endpush

@@ -52,7 +52,6 @@
                                     <p class="mt-6 text-gray-300">Welcome to Bangalore's unparalleled real estate
                                         destination,
                                         the premier hub with exclusive listings for your dream home or investment.</p>
-                                    <a class="text-light mt-2 dark:text-black" href="www.newdoorventures.co.in" target="_new">www.newdoorventures.co.in</a>
                                 </div>
                                 <div class="lg:col-span-2 md:col-span-3">
                                     <div class="tracking-[1px] text-gray-100 font-semibold">Company</div>
@@ -205,7 +204,8 @@
                     <div class="grid items-center gap-6 md:grid-cols-2">
                         <div class="text-center md:text-start">
                             <p class="mb-0 text-gray-300">
-                                © 2024 New Door Ventures. All right reserved.
+                                © 2024 New Door Ventures. All right reserved. 
+                                <a class="text-theme mt-2 dark:text-black" href="www.newdoorventures.co.in" target="_new">www.newdoorventures.co.in</a>
                             </p>
                         </div>
 

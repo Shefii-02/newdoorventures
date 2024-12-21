@@ -4,7 +4,7 @@
          <!-- ===== Data Stats Start ===== -->
          <div class="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
              <div>
-                 <h2 class="text-title-sm2 font-bold text-black dark:text-white">
+                 <h2 class="text-title-sm2 font-bold text-black dark:text-black">
                      This Website Overview
                  </h2>
              </div>
@@ -17,7 +17,7 @@
                  class="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
                  <div class="flex items-end justify-between">
                      <div>
-                         <h3 class="mb-4 text-title-lg font-bold text-black dark:text-white">
+                         <h3 class="mb-4 text-title-lg font-bold text-black dark:text-black">
                              {{ number_format($totalPropertyLeads) ?? 0 }}
                          </h3>
                          <p class="font-medium">Total Leads</p>
@@ -32,7 +32,7 @@
                  class="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
                  <div class="flex items-end justify-between">
                      <div>
-                         <h3 class="mb-4 text-title-lg font-bold text-black dark:text-white">
+                         <h3 class="mb-4 text-title-lg font-bold text-black dark:text-black">
                              {{ number_format($totalProperties) ?? 0 }}
                          </h3>
                          <p class="font-medium">Total Properties</p>
@@ -46,7 +46,7 @@
                  class="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
                  <div class="flex items-end justify-between">
                      <div>
-                         <h3 class="mb-4 text-title-lg font-bold text-black dark:text-white">
+                         <h3 class="mb-4 text-title-lg font-bold text-black dark:text-black">
                              {{ number_format($totalProjects) ?? 0 }}
                          </h3>
                          <p class="font-medium">Total Projects</p>
@@ -59,7 +59,7 @@
                  class="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
                  <div class="flex items-end justify-between">
                      <div>
-                         <h3 class="mb-4 text-title-lg font-bold text-black dark:text-white">
+                         <h3 class="mb-4 text-title-lg font-bold text-black dark:text-black">
                              {{ number_format($totalAccounts) ?? 0 }}
                          </h3>
                          <p class="font-medium">Total Accounts</p>
@@ -78,7 +78,7 @@
                      class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-2 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
                      <div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                          <div>
-                             <h4 class="text-title-sm2 font-bold text-black dark:text-white">
+                             <h4 class="text-title-sm2 font-bold text-black dark:text-black">
                                  Visitor Analystics
                              </h4>
                          </div>
@@ -91,13 +91,13 @@
                      <div class="flex flex-col text-center xsm:flex-row">
                          <div class="border-stroke py-2 dark:border-strokedark xsm:w-1/2 xsm:border-r">
                              <p class="font-medium">Total Leads</p>
-                             <h4 class="mt-1 text-title-sm font-bold text-black dark:text-white">
+                             <h4 class="mt-1 text-title-sm font-bold text-black dark:text-black">
                                  {{ number_format($totalPropertyLeads) }}
                              </h4>
                          </div>
                          <div class="py-2 xsm:w-1/2">
                              <p class="font-medium">Total Visitors</p>
-                             <h4 class="mt-1 text-title-sm font-bold text-black dark:text-white">
+                             <h4 class="mt-1 text-title-sm font-bold text-black dark:text-black">
                                  {{ number_format($totalViews ?? 0) }}
                              </h4>
                          </div>
@@ -113,7 +113,7 @@
                      class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-5">
                      <div class="mb-3 justify-between gap-4 sm:flex">
                          <div>
-                             <h4 class="text-xl font-bold text-black dark:text-white">
+                             <h4 class="text-xl font-bold text-black dark:text-black">
                                  Used Devices
                              </h4>
                          </div>
@@ -127,7 +127,7 @@
                              <div class="w-full px-8 sm:w-1/2">
                                  <div class="flex w-full items-center">
                                      <span class="mr-2 block h-3 w-full max-w-3 rounded-full bg-primary"></span>
-                                     <p class="flex w-full justify-between text-sm font-medium text-black dark:text-white">
+                                     <p class="flex w-full justify-between text-sm font-medium text-black dark:text-black">
                                          <span class="text-capitalize"> {{ $device->device_category }} </span>
                                          <span> {{ number_format($device->user_count) }} </span>
                                      </p>
@@ -148,7 +148,7 @@
                      class="mb-4 rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:mb-6 md:p-6 xl:p-7.5 2xl:mb-7.5">
                      <div class="mb-7 flex items-center justify-between">
                          <div>
-                             <h3 class="text-xl font-bold text-black dark:text-white">
+                             <h3 class="text-xl font-bold text-black dark:text-black">
                                  Top Pages
                              </h3>
                          </div>
@@ -197,7 +197,7 @@
                      class="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
                      <div class="mb-7 flex items-center justify-between">
                          <div>
-                             <h3 class="text-xl font-bold text-black dark:text-white">
+                             <h3 class="text-xl font-bold text-black dark:text-black">
                                  Top Sources
                              </h3>
                          </div>

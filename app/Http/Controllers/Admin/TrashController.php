@@ -29,7 +29,7 @@ class TrashController extends Controller
     {
 
         $projects   = Project::withTrashed()->whereNotNull('deleted_at')->get();
-        $properties = Property::withTrashed()->whereNotNull('deleted_at')->get();
+        $properties = Property::withTrashed()->whereHas('author')->whereNotNull('deleted_at')->get();
 
         return view('admin.trash.index', compact('projects', 'properties'));
     }

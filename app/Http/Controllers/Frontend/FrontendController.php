@@ -12,6 +12,7 @@ use App\Models\Slug;
 use App\Models\Page;
 use App\Models\Configration;
 use App\Models\Advertisement;
+use App\Models\BlogPost;
 use App\Models\Consult;
 use App\Models\Contact;
 use App\Models\PgRules;
@@ -28,7 +29,7 @@ class FrontendController extends Controller
 
         $featured_project           = Project::get();
         $recent_viwed_properties    = $this->recentlyViewedProperties();
-        $latest_blogs               = Post::limit(4)->get();
+        $latest_blogs               = BlogPost::orderBy('created_at','desc')->limit(3)->get();
 
         return view('front.index', compact('categories', 'featured_properties_rent', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
     }
@@ -217,14 +218,14 @@ class FrontendController extends Controller
 
     public function blogList()
     {
-        $blogs = Post::get();
+        $blogs = BlogPost::get();
         return view('front.news.index', compact('blogs'));
     }
 
     public function blogDetails($slug)
     {
-        $blog = Post::where('slug', $slug)->firstOrFail();
-        $blogs = Post::get();
+        $blog = BlogPost::where('slug', $slug)->firstOrFail();
+        $blogs = BlogPost::where('slug','!=',$slug)->get();
 
         return view('front.news.single', compact('blog', 'blogs'));
     }
@@ -533,7 +534,7 @@ class FrontendController extends Controller
             }
 
             $lead->ip_address = $request->ip();
-            $lead->status = 'pending';
+            $lead->status = 'unread';
             $lead->save();
 
 
@@ -561,7 +562,7 @@ class FrontendController extends Controller
             $contact->phone = '1';
             $contact->subject = $request->subject;
             $contact->content = $request->content;
-            $contact->status = 'pending';
+            $contact->status = 'unread';
             $contact->save();
 
             return response()->json([

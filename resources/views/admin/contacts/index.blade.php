@@ -55,6 +55,7 @@
                         <div class="w-2/12 text-left"><span class="font-medium">Email</span></div>
                         <div class="w-2/12 text-center"><span class="font-medium">Question</span></div>
                         <div class="w-2/12 text-center"><span class="font-medium">Status</span></div>
+                        <div class="w-2/12 text-center"><span class="font-medium">Created at</span></div>
                         <div class="w-2/12 text-center"><span class="font-medium">Actions</span></div>
                     </div>
                 </div>
@@ -78,6 +79,9 @@
                                         class="inline-block text-capitalize rounded px-2.5 py-0.5 text-sm font-medium text-white {{ $enquiry->status === 'unread' ? 'bg-red' : 'bg-success' }}">
                                         {{ $enquiry->status }}
                                     </span>
+                                </div>
+                                <div class="w-2/12 text-center">
+                                    <span class="font-medium">{!! dateTimeFormat($enquiry->created_at) !!}</span>
                                 </div>
                                 <div class="w-2/12 text-center">
                                     <div class="flex justify-center">

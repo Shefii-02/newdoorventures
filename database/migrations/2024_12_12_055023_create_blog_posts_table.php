@@ -17,6 +17,7 @@ return new class extends Migration
             $table->mediumText('title')->nullable();
             $table->mediumText('slug')->nullable();
             $table->mediumText('image')->nullable();
+            $table->integer('views')->default(0)->nullable();
             $table->longText('description')->nullable();
             $table->boolean('status')->default(0);
             $table->foreign('category_id')->references('id')->on('blog_categories')->onDelete('cascade');

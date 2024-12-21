@@ -9,19 +9,35 @@ use App\Http\Controllers\Frontend\ProfileController;
 use App\Models\Property;
 use Illuminate\Support\Facades\DB;
 
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-
-Route::prefix('account')->group(function () {
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('user.login');
-    Route::post('/login', [LoginController::class, 'login'])->name('user.login.submit');
-    Route::get('/register', [LoginController::class, 'showRegisterForm'])->name('user.register');
-    Route::post('/register', [LoginController::class, 'register'])->name('user.register.submit');
-    Route::post('/logout', [LoginController::class, 'logout'])->name('user.logout');
-    Route::get('/forget-password', [LoginController::class, 'showRestForm'])->name('user.forget-password');
-    Route::post('/forget-password', [LoginController::class, 'SendRestForm'])->name('user.forget-password.send');
+Route::get('login2', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('user.login');
+Route::post('/login', [LoginController::class, 'login'])->name('user.login.submit');
+Route::get('/register', [LoginController::class, 'showRegisterForm'])->name('user.register');
+Route::post('/register', [LoginController::class, 'register'])->name('user.register.submit');
+Route::post('/logout', [LoginController::class, 'logout'])->name('user.logout');
+Route::get('/forget-password', [LoginController::class, 'showRestForm'])->name('user.forget-password');
+Route::post('/forget-password', [LoginController::class, 'SendRestForm'])->name('user.forget-password.send');
 
 
-    Route::middleware(['auth:account'])->group(function () {
+// Route::prefix('account')->group(function () {
+Route::group(['middleware' => ['auth:account'], 'prefix' => 'account'], function () {
+    Route::get('/', function () {
+        if (auth('account')->check()) {
+            return redirect()->route('user.dashboard');
+        } else {
+            return redirect()->route('user.login');
+        }
+    });
+
+    Route::get('/pending', function () {
+        return view('seller.notification');
+    })->name('user.pending');
+    Route::get('/suspended', function () {
+        return view('seller.notification');
+    })->name('user.suspended');
+
+
+    Route::middleware(['check.account.status'])->group(function () {
         Route::get('/dashboard', function () {
             $leads = DB::table('re_consults as consults')
                 ->join('re_properties as property', 'consults.property_id', '=', 'property.id')

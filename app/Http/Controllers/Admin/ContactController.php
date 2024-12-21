@@ -17,7 +17,7 @@ class ContactController extends Controller
     public function index()
     {
         //
-        $enquirys = Contact::orderBy('status', 'desc')->get();
+        $enquirys = Contact::orderBy('status', 'desc')->paginate('2');
 
         return view('admin.contacts.index',compact('enquirys'));
     }

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Casts\SafeContent;
 use App\Models\BaseModel;
-use Botble\Base\Supports\Avatar;
+
 use App\Facades\RvMedia;
 use App\Models\MediaFile;
 use Botble\RealEstate\Enums\ReviewStatusEnum;
@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 // use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Account extends BaseModel implements
     AuthenticatableContract,
@@ -39,6 +40,7 @@ class Account extends BaseModel implements
     use MustVerifyEmail;
     // use HasApiTokens;
     use Notifiable;
+    use SoftDeletes;
 
     protected $table = 're_accounts';
 
@@ -91,19 +93,19 @@ class Account extends BaseModel implements
     {
         static::deleting(function (Account $account) {
             $account->activityLogs()->delete();
-            $account->transactions()->delete();
-            $account->reviews()->delete();
-            $account->packages()->detach();
+            // $account->transactions()->delete();
+            // $account->reviews()->delete();
+            // $account->packages()->detach();
         });
 
-        static::deleting(function (Account $account) {
-            $folder = Storage::path($account->upload_folder);
-            if (File::isDirectory($folder) && Str::endsWith($account->upload_folder, '/' . $account->username)) {
-                File::deleteDirectory($folder);
-            }
+        // static::deleting(function (Account $account) {
+        //     $folder = Storage::path($account->upload_folder);
+        //     if (File::isDirectory($folder) && Str::endsWith($account->upload_folder, '/' . $account->username)) {
+        //         File::deleteDirectory($folder);
+        //     }
 
-            $account->reviews()->delete();
-        });
+        //     $account->reviews()->delete();
+        // });
     }
 
     public function sendPasswordResetNotification($token): void

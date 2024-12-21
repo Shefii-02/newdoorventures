@@ -5,14 +5,14 @@
             style="background-image: url('https://hously.archielite.com/storage/backgrounds/02.jpg')"></div>
 
         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black z-2" id="particles-snow"><canvas
-                class="particles-js-canvas-el"  style="width: 100%; height: 100%;"></canvas></div>
+                class="particles-js-canvas-el" style="width: 100%; height: 100%;"></canvas></div>
         <div class="container z-3">
             <div class="flex justify-center">
                 <div
                     class="login-form max-w-[400px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md">
                     <a href="{{ route('public.index') }}"><img
-                            src="{{ asset('/images/general/logo-authentication-page.png') }}"
-                            class="mx-auto" width="64" height="64" alt="New Door Ventures"></a>
+                            src="{{ asset('/images/general/logo-authentication-page.png') }}" class="mx-auto" width="64"
+                            height="64" alt="New Door Ventures"></a>
                     <h5 class="my-6 text-xl font-semibold text-center">Admin Login Panel</h5>
                     <form class="text-start" action="{{ route('admin.login.submit') }}" method="post">
                         @csrf
@@ -21,17 +21,17 @@
                                 <label class="fs-6" for="email">Email Address:</label>
                                 <input id="email" name="email" type="email"
                                     class="form-control form-input dark:bg-slate-800 mt-1" placeholder="name@example.com">
-                                    @error('email')
+                                @error('email')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                                    
+
                             </div>
 
                             <div class="mb-4">
                                 <label class="fs-6" for="password">Password:</label>
                                 <input id="password" name="password" type="password"
                                     class="form-control form-input dark:bg-slate-800 mt-1" placeholder="Password">
-                                    @error('password')
+                                @error('password')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>

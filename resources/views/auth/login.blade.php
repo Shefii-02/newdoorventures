@@ -21,12 +21,19 @@
                                 <label class="font-medium" for="email">Email Address:</label>
                                 <input id="email" name="email" type="email"
                                     class="form-control form-input dark:bg-slate-800 mt-1" placeholder="name@example.com">
+                                    @error('email')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                                
                             </div>
 
                             <div class="mb-4">
                                 <label class="font-medium" for="password">Password:</label>
                                 <input id="password" name="password" type="password"
                                     class="form-control form-input dark:bg-slate-800 mt-1" placeholder="Password">
+                                    @error('password')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="flex justify-between mb-4">
