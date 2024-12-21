@@ -156,8 +156,8 @@
                 handleFileUpload(event) {
                     const file = event.target.files[0];
                     if (file) {
-                        // Validate file size (100KB = 102400 bytes)
-                        const maxSize = 1024 * 100; // 100KB in bytes
+                        // Validate file size (150KB = 102400 bytes)
+                        const maxSize = 1024 * 150; // 150KB in bytes
                         if (file.size > maxSize) {
                             alert('File size must not exceed 100KB. Please choose a smaller file.');
                             event.target.value = ''; // Reset the file input

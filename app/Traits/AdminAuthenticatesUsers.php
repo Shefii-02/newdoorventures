@@ -93,7 +93,8 @@ trait AdminAuthenticatesUsers
 
         return $request->wantsJson()
             ? new Response('', 204)
-            : redirect()->intended($this->redirectPath());
+            : redirect('/admin');
+            // : redirect()->intended($this->redirectPath());
     }
 
     protected function authenticated(Request $request, Authenticatable $user)
