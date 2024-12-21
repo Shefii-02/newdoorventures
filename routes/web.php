@@ -12,7 +12,7 @@ require __DIR__ . '/auth.php';
 Route::get('/mail', function () {
     try {
         Mail::raw('Hello World!', function ($message) {
-            $message->to('kayega3547@rabitex.com') // Set the recipient's email address
+            $message->to('shefii.indigital@gmail.com') // Set the recipient's email address
                     ->subject('Test Email');          // Set the subject of the email
         });
     
