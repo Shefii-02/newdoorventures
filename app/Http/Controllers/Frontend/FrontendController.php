@@ -29,15 +29,23 @@ class FrontendController extends Controller
 
         $featured_project           = Project::get();
         $recent_viwed_properties    = $this->recentlyViewedProperties();
-        $latest_blogs               = BlogPost::orderBy('created_at','desc')->limit(3)->get();
+        $latest_blogs               = BlogPost::orderBy('created_at', 'desc')->limit(3)->get();
 
         return view('front.index', compact('categories', 'featured_properties_rent', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
     }
 
     public function properties(Request $request)
     {
-        $query = Property::query()->where('moderation_status', 'approved');
-        if ($request->filled('type') && $request->type == 'plot') {
+        $query = Property::query()->where('moderation_status', 'approved')
+            ->where(function ($q) {
+                $q->where('status', "selling")
+                    ->orWhere('status', "renting");
+            });
+
+        if ($request->filled('type') && $request->type == 'commercial') {
+            $mode  = $request->type;
+            $query->where('mode',  $mode);
+        } else if ($request->filled('type') && $request->type == 'plot') {
             $plot  = 'Plot and Land';
             $query->whereHas('categories', function ($query) use ($plot) {
                 $query->where('name', $plot);
@@ -54,6 +62,13 @@ class FrontendController extends Controller
         $properties = $property_query->get();
 
         if ($request->ajax()) {
+
+            if ($request->has('tab') && $request->tab == 'sale') {
+                $property_query = $property_query->where('type', 'sell');
+            } else if ($request->has('tab') && $request->tab == 'sale') {
+                $property_query = $property_query->where('type', 'rent');
+            }
+
             $html = view('front.shortcuts.properties.items', compact('properties'))->render();
             return response()->json(['html' => $html]);
         }
@@ -68,19 +83,23 @@ class FrontendController extends Controller
     }
 
 
-
-
     public function PropertiesForSale(Request $request)
     {
-        $query = Property::query()->where('type', 'sell')->where('moderation_status', 'approved');
+        $query = Property::query()->where('type', 'sell')->where('status', 'selling')->where('moderation_status', 'approved');
 
         $property_query = $this->ShortcutFilterProperties($query, $request);
 
         $builders = Investor::get();
-        $cities = Property::where('type', 'sell')->where('moderation_status', 'approved')->groupBy('locality')->pluck('locality');
-        $categories = Category::where('status', 'published')->get();
-        $type = 'sell';
+        $cities = Property::where('type', 'sell')
+            ->where('moderation_status', 'approved')
+            ->where(function ($q) {
+                $q->where('status', "selling")
+                    ->orWhere('status', "renting");
+            })
+            ->groupBy('locality')->pluck('locality');
 
+        $categories = Category::where('status', 'published')->where('has_sell', 1)->get();
+        $type = 'sell';
 
         $properties = $property_query->get();
 
@@ -94,11 +113,18 @@ class FrontendController extends Controller
     }
     public function PropertiesForRent(Request $request)
     {
-        $query = Property::query()->where('type', 'rent')->where('moderation_status', 'approved');
+        $query = Property::query()->where('type', 'rent')->where('status', 'renting')->where('moderation_status', 'approved');
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders = Investor::get();
-        $cities = Property::where('type', 'rent')->where('moderation_status', 'approved')->groupBy('locality')->pluck('locality');
-        $categories = Category::where('status', 'published')->get();
+        $cities = Property::where('type', 'rent')
+            ->where('moderation_status', 'approved')
+            ->where(function ($q) {
+                $q->where('status', "selling")
+                    ->orWhere('status', "renting");
+            })
+            ->groupBy('locality')
+            ->pluck('locality');
+        $categories = Category::where('status', 'published')->where('has_rent', 1)->get();
         $type = 'rent';
 
 
@@ -114,14 +140,28 @@ class FrontendController extends Controller
     public function PropertiesForPlot(Request $request)
     {
         $category   = 'Plot and Land';
-        $query      = Property::query()->whereHas('categories', function ($query) use ($category) {
-            $query->where('name', $category);
-        })->where('moderation_status', 'approved');
+        $query      = Property::query()
+            ->whereHas('categories', function ($query) use ($category) {
+                $query->where('name', $category);
+            })
+            ->where('moderation_status', 'approved')
+            ->where(function ($q) {
+                $q->where('status', "selling")
+                    ->orWhere('status', "renting");
+            });
+
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders   = Investor::get();
-        $cities     = Property::query()->whereHas('categories', function ($query) use ($category) {
-            $query->where('name', $category);
-        })->where('moderation_status', 'approved')->groupBy('locality')->pluck('locality');
+        $cities     = Property::query()
+            ->whereHas('categories', function ($query) use ($category) {
+                $query->where('name', $category);
+            })
+            ->where('moderation_status', 'approved')
+            ->where(function ($q) {
+                $q->where('status', "selling")
+                    ->orWhere('status', "renting");
+            })
+            ->groupBy('locality')->pluck('locality');
         $categories = Category::where('status', 'published')->get();
         $type = 'plot';
 
@@ -137,13 +177,19 @@ class FrontendController extends Controller
     }
     public function PropertiesForPg(Request $request)
     {
-        $query = Property::query()->where('type', 'pg')->where('moderation_status', 'approved');
+        $query = Property::query()->where('type', 'pg')->where('status', 'renting')->where('moderation_status', 'approved');
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders = Investor::get();
-        $cities = Property::where('type', 'pg')->groupBy('locality')->pluck('locality');
+        $cities = Property::where('type', 'pg')
+            ->where('moderation_status', 'approved')
+            ->where(function ($q) {
+                $q->where('status', "selling")
+                    ->orWhere('status', "renting");
+            })
+            ->groupBy('locality')->pluck('locality');
         $categories = Category::where('status', 'published')->get();
-        $type = 'pg';
 
+        $type = 'pg';
 
         $properties = $property_query->get();
 
@@ -156,7 +202,44 @@ class FrontendController extends Controller
     }
 
 
+    public function PropertiesForCommercial(Request $request)
+    {
 
+        $query          = Property::query()->where('mode', 'commercial')
+            ->where('moderation_status', 'approved')
+            ->where(function ($q) {
+                $q->where('status', "selling")
+                    ->orWhere('status', "renting");
+            });
+        $property_query = $this->ShortcutFilterProperties($query, $request);
+        $builders       = Investor::get();
+        $cities         = Property::where('mode', 'commercial')
+            ->where('moderation_status', 'approved')
+            ->where(function ($q) {
+                $q->where('status', "selling")
+                    ->orWhere('status', "renting");
+            })
+            ->groupBy('locality')
+            ->pluck('locality');
+
+        $categories     = Category::where('status', 'published')->where('has_commercial', 1)->get();
+        $type           = 'commercial';
+
+        if (($request->has('tab') && $request->tab == 'sale') || $request->has('type') && $request->type == 'commercial-sale')  {
+            $property_query = $property_query->where('type', 'sell');
+        } else if (($request->has('tab') && $request->tab == 'rent') || $request->has('type') && $request->type == 'commercial-rent') {
+            $property_query = $property_query->where('type', 'rent');
+        }
+
+        $properties = $property_query->get();
+
+        if ($request->ajax()) {
+            $html = view('front.shortcuts.properties.items', compact('properties'))->render();
+            return response()->json(['html' => $html]);
+        }
+     
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type'));
+    }
 
 
 
@@ -189,7 +272,16 @@ class FrontendController extends Controller
 
         $property->increment('views');
 
+        if($property->mode == 'Commercial'){
+            if ($property->category && $property->category->name == 'Plot and Land') {
+                return view('front.properties.commercial-plot-property', compact('property', 'recent_properties'));
+            }
 
+            return match ($property->type) {
+                'sell', 'rent' => view('front.properties.commercial-rent-sale-single', compact('property', 'recent_properties')),
+                default => abort(404),
+            };
+        }
 
         if ($property->category && $property->category->name == 'Plot and Land') {
             return view('front.properties.plot-property', compact('property', 'recent_properties'));
@@ -225,7 +317,7 @@ class FrontendController extends Controller
     public function blogDetails($slug)
     {
         $blog = BlogPost::where('slug', $slug)->firstOrFail();
-        $blogs = BlogPost::where('slug','!=',$slug)->get();
+        $blogs = BlogPost::where('slug', '!=', $slug)->get();
 
         return view('front.news.single', compact('blog', 'blogs'));
     }

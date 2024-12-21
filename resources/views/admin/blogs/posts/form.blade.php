@@ -91,7 +91,7 @@
                             <label for="image"
                                 class="block mt-3 cursor-pointer bg-gray-50 border-2 border-dashed border-gray-300 p-4 rounded-lg text-center text-sm text-gray-500 hover:bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400">
                                 <span>Click to upload Desktop Image</span><br>
-                                <span class="small">Recommended resolution 1080 x 550 with Max size 150kb</span>
+                                <span class="small">Recommended resolution 800 x 400 with Max size 150kb</span>
                                 <small></small>
                                 <input type="file" id="image" name="image" class="hidden"
                                     @change="handleFileUpload">
@@ -159,7 +159,7 @@
                         // Validate file size (150KB = 102400 bytes)
                         const maxSize = 1024 * 150; // 150KB in bytes
                         if (file.size > maxSize) {
-                            alert('File size must not exceed 100KB. Please choose a smaller file.');
+                            alert('File size must not exceed 150KB. Please choose a smaller file.');
                             event.target.value = ''; // Reset the file input
                             return;
                         }

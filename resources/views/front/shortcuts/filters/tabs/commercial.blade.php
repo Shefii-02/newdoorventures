@@ -1,4 +1,4 @@
-<form action="{{ route('public.properties') }}"
+<form action="{{ route('public.properties.commercial') }}"
     data-ajax-url="{{ route('searching-in-keywords') }}">
     <input type="hidden" name="type" value="{{ $type }}">
     <input type="hidden" name="m" value="{{ 'commercial' }}">
@@ -37,7 +37,8 @@
 
             <div x-show="openCommercial" x-transition x-cloak>
                 <div class="col-span-12">
-                    @include("front.shortcuts.filters.property-type", ['type' => $type, 'categories' => $categories])
+            
+                    @include("front.shortcuts.filters.property-type", ['type' => $type, 'categories' => $categories->where('has_commercial',1)])
                 </div>
 
                 <div class="mt-3">

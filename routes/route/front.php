@@ -13,6 +13,8 @@ Route::get('properties/sale', [FrontendController::class, 'PropertiesForSale'])-
 Route::get('properties/rent', [FrontendController::class, 'PropertiesForRent'])->name('public.properties.rent');
 Route::get('properties/plot', [FrontendController::class, 'PropertiesForPlot'])->name('public.properties.plot');
 Route::get('properties/pg', [FrontendController::class, 'PropertiesForPg'])->name('public.properties.pg');
+Route::get('properties/commercial', [FrontendController::class, 'PropertiesForCommercial'])->name('public.properties.commercial');
+
 
 Route::get('projects', [FrontendController::class, 'projects'])->name('public.projects');
 Route::get('projects/{uid}/{slug}', [FrontendController::class, 'projectDetails'])->name('public.project_single');

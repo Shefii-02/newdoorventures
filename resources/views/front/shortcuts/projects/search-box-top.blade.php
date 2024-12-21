@@ -3,27 +3,46 @@
         <div class="row align-items-center">
             <!-- Property Type Dropdown -->
             <div class="col-lg-4 mb-4 px-1">
-                <div >
+                <div>
                     <div class="flex items-center space-x-3">
-                        <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
+                        {{-- <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
                             class="border-theme px-3 py-2 rounded-s-2xl">
-                            <option value="null" >Properties</option>
+                            <option value="null">Properties</option>
                             <option {{ isset($type) && $type == 'sell' ? 'selected' : '' }} value="sell">Sale</option>
                             <option {{ isset($type) && $type == 'rent' ? 'selected' : '' }} value="rent">Rent</option>
                             <option value="pg">PG</option>
-                            <option  value="plot">Plot</option>
+                            <option value="plot">Plot</option>
                             <option value="projects">Projects</option>
+                        </select> --}}
+                        <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
+                            class="border-theme px-3 py-2 rounded-s-2xl text-black">
+                            <option value="projects">Projects</option>
+                            <optgroup label="Residential" class="text-dark">
+                                <option value="null">All Residential</option>
+                                <option {{ isset($type) && $type == 'sell' ? 'selected' : '' }} value="sell">Sale
+                                </option>
+                                <option {{ isset($type) && $type == 'rent' ? 'selected' : '' }} value="rent">Rent
+                                </option>
+                                <option value="pg">PG</option>
+                                <option value="plot">Plot</option>
+                            </optgroup>
+                            <optgroup label="Commercial" class="text-dark">
+                                <option value="all-commercial">All Commercial</option>
+                                <option value="commercial-sale">Sale</option>
+                                <option value="commercial-rent">Rent</option>
+                            </optgroup>
+                         
                         </select>
                         <input type="text" x-model="filters.k" @input="applyFilters()"
-                            class="border-theme px-3 py-1.5 w-full rounded-e-2xl" placeholder="Search for properties">
+                            class="border-theme px-3 py-1.5 w-full rounded-e-2xl text-black" placeholder="Search for properties">
                     </div>
                 </div>
             </div>
-   
+
             <!-- City Dropdown -->
             <div class="col-lg-2 mb-4 px-1">
                 <select x-model="filters.city" @change="applyFilters()"
-                    class="w-full border-theme px-3 py-2 rounded-2xl">
+                    class="w-full border-theme px-3 py-2 rounded-2xl text-black">
                     <option value="null" selected>Locality</option>
                     <template x-for="city in cities" :key="city">
                         <option :value="city" x-text="city"></option>
@@ -60,7 +79,7 @@
                         </div>
                     </template>
 
-               
+
                     <!-- Budget -->
                     <template x-if="showFilters.budget">
                         <div class="relative mb-2">
@@ -76,7 +95,7 @@
                                         'min' => 0,
                                         'max' => 500000000,
                                         'step' => 500000,
-                                        'single_page' =>true,
+                                        'single_page' => true,
                                     ])
                                 </div>
                             </div>
@@ -84,62 +103,63 @@
                     </template>
 
 
-                   <!-- Builders Filter -->
-                   <div class="relative mb-2">
-                    <button type="button" @click="toggleDropdown('builder')"
-                        class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
-                        Builder
-                        <i :class="openDropdown === 'builder' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                    </button>
-                    <div x-show="openDropdown === 'builder'" x-transition class="dropdown-box filter-web-dropdown">
-                        <div class="option-sections">
-                            <ul class="ks-cboxtags p-0">
-                                @foreach ($builders as $builder)
-                                    <li><input type="checkbox" value="freehold" id="builder_{{ $builder->id }}"
-                                            @change="toggleArrayFilter('builder', $builder->name)">
-                                        <label for="builder_{{ $builder->id }}"> {{ $builder->name }}
+                    <!-- Builders Filter -->
+                    <div class="relative mb-2">
+                        <button type="button" @click="toggleDropdown('builder')"
+                            class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
+                            Builder
+                            <i :class="openDropdown === 'builder' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </button>
+                        <div x-show="openDropdown === 'builder'" x-transition class="dropdown-box filter-web-dropdown">
+                            <div class="option-sections">
+                                <ul class="ks-cboxtags p-0">
+                                    @foreach ($builders as $builder)
+                                        <li><input type="checkbox" value="freehold" id="builder_{{ $builder->id }}"
+                                                @change="toggleArrayFilter('builder', $builder->name)">
+                                            <label for="builder_{{ $builder->id }}"> {{ $builder->name }}
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Constriction Statis Filter -->
+                    <div class="relative mb-2">
+                        <button type="button" @click="toggleDropdown('construction')"
+                            class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
+                            Constriction Status
+                            <i
+                                :class="openDropdown === 'construction' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </button>
+                        <div x-show="openDropdown === 'construction'" x-transition
+                            class="dropdown-box filter-web-dropdown">
+                            <div class="option-sections">
+                                <ul class="ks-cboxtags p-0">
+                                    <li><input type="checkbox" value="freehold" id="new_laucnh"
+                                            @change="toggleArrayFilter('construction', 'new_laucnh')">
+                                        <label for="new_laucnh"> New Launch
                                         </label>
                                     </li>
-                                @endforeach
-                            </ul>
+                                    <li><input type="checkbox" value="co-operative_society" id="under_construction"
+                                            @change="toggleArrayFilter('construction', 'under_construction')">
+                                        <label for="under_construction"> Under Construction
+                                        </label>
+                                    </li>
+                                    <li><input type="checkbox" value="power_of_attorney" id="ready_to_move"
+                                            @change="toggleArrayFilter('construction', 'ready_to_move')">
+                                        <label for="ready_to_move">Ready to move</label>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+
+
                 </div>
-
-
-
-                <!-- Constriction Statis Filter -->
-                <div class="relative mb-2">
-                    <button type="button" @click="toggleDropdown('construction')"
-                        class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
-                        Constriction Status
-                        <i
-                            :class="openDropdown === 'construction' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                    </button>
-                    <div x-show="openDropdown === 'construction'" x-transition
-                        class="dropdown-box filter-web-dropdown">
-                        <div class="option-sections">
-                            <ul class="ks-cboxtags p-0">
-                                <li><input type="checkbox" value="freehold" id="new_laucnh"
-                                        @change="toggleArrayFilter('construction', 'new_laucnh')">
-                                    <label for="new_laucnh"> New Launch
-                                    </label>
-                                </li>
-                                <li><input type="checkbox" value="co-operative_society" id="under_construction"
-                                        @change="toggleArrayFilter('construction', 'under_construction')">
-                                    <label for="under_construction"> Under Construction
-                                    </label>
-                                </li>
-                                <li><input type="checkbox" value="power_of_attorney" id="ready_to_move"
-                                        @change="toggleArrayFilter('construction', 'ready_to_move')">
-                                    <label for="ready_to_move">Ready to move</label>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-              
             </div>
         </div>
     </div>
@@ -217,7 +237,7 @@
                     // Check Categories
 
                     this.categories.forEach(category => {
-                     
+
                         if (this.filters.categories.includes(String(category.id))) {
                             this.$nextTick(() => {
                                 const categoryCheckbox = document.getElementById('category' + category.id);
@@ -236,7 +256,7 @@
                         });
                     });
 
-                   
+
                 },
 
                 // Toggle dropdown
@@ -258,25 +278,21 @@
                 // Apply filters with AJAX
                 applyFilters() {
                     if (this.filters.type == 'projects') {
-                        
-                    }
-                    else if(this.filters.type == 'sell' && `{{ isset($type) && $type != 'sell' }}`) {
+
+                    } else if (this.filters.type == 'sell' && `{{ isset($type) && $type != 'sell' }}`) {
                         window.location.href = "{{ route('public.properties.sale') }}";
                         return;
-                    }
-                    else if(this.filters.type == 'rent'  && `{{ isset($type) && $type != 'rent' }}`) {
+                    } else if (this.filters.type == 'rent' && `{{ isset($type) && $type != 'rent' }}`) {
                         window.location.href = "{{ route('public.properties.rent') }}";
                         return;
-                    }
-                    else if(this.filters.type == 'pg') {
+                    } else if (this.filters.type == 'pg') {
                         window.location.href = "{{ route('public.properties.pg') }}";
                         return;
-                    }
-                    else if(this.filters.type == 'plot') {
+                    } else if (this.filters.type == 'plot') {
                         window.location.href = "{{ route('public.properties.plot') }}";
                         return;
                     }
-                    
+
                     document.body.scrollTop = 0, document.documentElement.scrollTop = 0
                     const params = new URLSearchParams(this.filters).toString();
                     var url = `{{ route('public.projects') }}?${params}`;

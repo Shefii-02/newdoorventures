@@ -54,6 +54,7 @@
             </div>
         </div>
     </div>
+   
     <div class="p-2 bg-white  dark:border-gray-800 mb-0 dark:bg-slate-900 sticky top-0 z-999">
         <div class="container  ">
             <div class=" ">
@@ -68,6 +69,18 @@
                         'min_price' => request()->get('min_price') ?? '',
                         'max_price' => request()->get('max_price') ?? '',
                     ])
+                @elseif(isset($type) && $type == 'commercial')
+                    @include('front.shortcuts.properties.search-box-top-commercial', [
+                        'id' => null,
+                        'type' => request()->get('type') ?? isset($type) ? $type : '',
+                        'mode' => request()->get('m') ?? $searchType,
+                        'categories' => $categories->where('has_commercial'),
+                        'cities' => $cities,
+                        'builders' => $builders,
+                        'min_price' => request()->get('min_price') ?? '',
+                        'max_price' => request()->get('max_price') ?? '',
+                    ])
+                
                 @elseif(isset($type) && $type == 'plot')
                     @include('front.shortcuts.properties.search-box-top-plot', [
                         'id' => null,
@@ -96,29 +109,7 @@
         </div>
 
     </div>
-    <div class="container mt-16 item-search d-none">
-        <div class="flex items-center justify-between" data-ajax-url="{{ route('public.projects') }}">
-            <div class="flex gap-2">
-                <button class="block px-3 py-2 text-white transition-all bg-primary md:hidden rounded-xl hover:bg-secondary"
-                    id="open-filter">
-                    <i class="mdi mdi-filter"></i>
-                    <span class="hidden md:block">{{ __('Filter') }}</span>
-                </button>
-                @foreach ($layouts as $key => $layout)
-                    <button @disabled($currentLayout === $key) @class([
-                        'hidden md:flex items-center pt-1 px-2 rounded-md text-white leading-none hover:bg-primary cursor-pointer toggle-layout',
-                        'bg-primary' => $currentLayout === $key,
-                        'bg-slate-500' => $currentLayout !== $key,
-                    ]) data-type="{{ $key }}"
-                        title="{{ $layout['name'] }}">
-                        <i class="{{ $layout['icon'] }} text-2xl"></i>
-                    </button>
-                @endforeach
-            </div>
-            @include('front.shortcuts.filters.sort-order', ['perPages' => ['12','24','36','48']])
-        </div>
-    </div>
-
+ 
     <section class="relative">
         <div class="container">
             <div id="items-map" @class([

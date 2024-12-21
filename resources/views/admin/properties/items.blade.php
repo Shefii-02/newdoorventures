@@ -1,4 +1,4 @@
-@foreach ($properties as $property)
+@forelse ($properties as $property)
     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
         <td class="w-4 p-4 " colspan="3">
             <a href="#" role="button" title="{{ $property->name }}">
@@ -9,7 +9,10 @@
             </a>
         </td>
         <th scope="row" class="px-2 py-1 text-center font-medium text-capitalize">
-            <span class="text-sm">{{ $property->type }}<br>{{ $property->mode }}</span>
+            <span class="text-sm">
+                {{ $property->type }}<br>{{ $property->mode }}<br>
+                {{ $property->category ? $property->category->name :  '' }}
+            </span>
         </th>
         <td class="px-2 py-1 text-center">
             <span class="text-sm" role="button"
@@ -31,10 +34,7 @@
             <span class="text-sm">{{ $property->account->name }}</span>
         </th>
         <td class="px-2 py-1 text-center">
-            <span
-                class="badge badge-pill text-capitalize text-md {{ $property->moderation_status == 'approved' ? 'bg-success' : ($property->moderation_status == 'pending' ? 'bg-warning' : 'bg-danger') }}  text-light ">
-                {{ $property->moderation_status }}
-            </span>
+            {!! dateTimeFormat($property->account->created_at) !!}
         </td>
         <td class="px-2 py-1 text-center">
             <div class="btn-group ">
@@ -77,4 +77,11 @@
             </div>
         </td>
     </tr>
-@endforeach
+@empty
+<tr>
+    <td class="text-center" colspan="12">
+        <p class="font-bold">No Data Found..</p>
+    </td>
+</tr>
+
+@endforelse

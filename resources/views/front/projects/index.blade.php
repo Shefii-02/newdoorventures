@@ -42,7 +42,7 @@
                     <i class="text-xl mdi mdi-close"></i>
                 </button>
                 <div class="mt-8 mb-12 {{ $searchType === 'projects' ? 'project' : 'property' }}-search item-search">
-                    @include("front.shortcuts.projects.search-box-top", [
+                    @include('front.shortcuts.projects.search-box-top', [
                         'id' => 'mobile',
                         'type' => 'rent',
                         'categories' => $categories,
@@ -55,7 +55,7 @@
     <div class="p-6 bg-white  dark:border-gray-800 mb-0 dark:bg-slate-900 sticky top-0 z-999">
         <div class="container  ">
             <div class=" ">
-                @include("front.shortcuts.projects.search-box-top", [
+                @include('front.shortcuts.projects.search-box-top', [
                     'id' => null,
                     'type' => request()->get('type') ?? $searchType,
                     'mode' => request()->get('m') ?? $searchType,
@@ -87,7 +87,7 @@
                     </button>
                 @endforeach
             </div>
-            @include('front.shortcuts.filters.sort-order', ['perPages' => ['12','24','36','48']])
+            @include('front.shortcuts.filters.sort-order', ['perPages' => ['12', '24', '36', '48']])
         </div>
     </div>
 
@@ -98,8 +98,8 @@
             ])>
                 @include('front.shortcuts.projects.items-map', compact('projects'))
             </div>
-            <div id="items-list" data-box-type="project" @class(['hidden' => request()->input('layout') == 'map'])
-                data-layout="grid" style="max-height: none; max-width: none">
+            <div id="items-list" data-box-type="project" @class(['hidden' => request()->input('layout') == 'map']) data-layout="grid"
+                style="max-height: none; max-width: none">
                 @include('front.shortcuts.projects.items', compact('projects'))
             </div>
         </div>

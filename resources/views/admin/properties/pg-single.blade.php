@@ -52,13 +52,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-5">
 
             <div class="col-xl-12 mb-3 mt-4">
                 <div class="card bg-primary text-center">
                     <div class="card-body">
                         <h1 class="text-white text-capitalize mb-3">{{ $property->type_name }} Price</h1>
-                        <span class="text-white font-w300">{!! shorten_price($property->price) . '<small>(' . $property->price . ')</small>' !!}</span>
+                        <span class="text-white font-w300">{!! shorten_price($property->price) . '<small> (' . number_format($property->price) . ')</small>' !!}</span>
                     </div>
                 </div>
             </div>
@@ -68,8 +68,11 @@
                     <div class="card-body">
                         <h4 class="text-black fs-20 font-bold mb-3">{{ $property->author->name }}</h4>
                         <span class="mt-2 text-bold mb-3"><a
-                                href="mailto:{{ $property->author->email }}">{{ $property->author->email }}</a></span>
-                        <span class="mt-2 text-bold"><a
+                                href="mailto:{{ $property->author->email }}">{{ $property->author->email }}</a>
+                                <br>
+                        </span>
+                        <span class="mt-2 text-bold">
+                            <a
                                 href="tel:{{ $property->author->phone }}">{{ $property->author->phone }}</a></span>
                     </div>
                 </div>
@@ -155,7 +158,7 @@
 
 
         </div>
-        <div class="col-lg-9">
+        <div class="col-lg-7">
             <div class="col-xl-12 mb-4 mt-4">
                 <div class="card bg-white text-center">
                     <div class="card-body">
@@ -184,8 +187,12 @@
                             <div class="col-lg-12 text-start">
                                 <h2 class="fs-4 font-bold mb-3">{{ $property->name }}</h2>
                                 <div class="my-3">
-                                    <span class="badge bg-dark">Category : {{ $property->category->name }}</span>
-                                    <span class="badge bg-dark">Project : {{ $property->project->name }}</span>
+                                    Category : <span class="badge bg-dark"> {{ $property->category->name }}</span>
+                                    Project : <span class="badge bg-dark"> {{ $property->project->name }}</span>
+                                    <br><br>
+                                    <span class="pt-3">
+                                        Created At : <span class="text-dark"> {{ date('d M, Y h:i a'),strtotime($property->created_at) }}</span>
+                                    </span>
                                 </div>
                                 <p>
                                     <span class="font-bold">Description</span>

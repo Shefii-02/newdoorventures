@@ -129,22 +129,19 @@ class PropertyController extends Controller
 
     public function soldRented(Request $request)
     {
-        $query = Property::orderByRaw("
-                                        CASE 
-                                            WHEN moderation_status = 'pending' THEN 1
-                                            WHEN moderation_status = 'approved' THEN 2
-                                            WHEN moderation_status = 'suspended' THEN 3
-                                            ELSE 4
-                                        END
-                                    ");
+        $query = Property::where(function ($q) {
+                            $q->where('status', "sold")
+                            ->orWhere('status', "rented");
+                        });
+
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
 
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'LIKE', "%$search%")
-                    ->orWhere('location', 'LIKE', "%$search%")
-                    ->orWhere('type', 'LIKE', "%$search%")
-                    ->orWhere('moderation_status', 'LIKE', "%$search%");
+                $q->where('name', 'LIKE', "%$search%");
+                    // ->orWhere('location', 'LIKE', "%$search%")
+                    // ->orWhere('type', 'LIKE', "%$search%")
+                    // ->orWhere('moderation_status', 'LIKE', "%$search%");
             });
             // $query->whereHas('account', function ($q) use ($search) {
             //     $q->where('first_name', 'LIKE', "%$search%")
@@ -216,8 +213,15 @@ class PropertyController extends Controller
     {
         //
         $property = Property::findOrFail($id);
-
-        return view('admin.properties.modal-content', compact('property'));
+        if($property->type == 'pg'){
+            return view('admin.properties.pg-single', compact('property'));
+        }
+        else if($property->category->name == 'Plot and Land'){
+            return view('admin.properties.plot-single', compact('property'));
+        }
+        else{
+            return view('admin.properties.rent-sale-single', compact('property'));
+        }
     }
 
     /**
