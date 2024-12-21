@@ -19,13 +19,14 @@
             <span class="text-sm" role="button"
                 title="{{ '₹' . $property->price }}">{{ shorten_price($property->price) }}</span>
         </td>
-        @if($property->)
+        @if($property->moderation_status != 'pending')
         <td class="px-2 py-1 text-center">
             <span class="text-sm">{{ $property->leads_count ?? 0 }}</span>
         </td>
         <td class="px-2 py-1 text-center">
             <span class="text-sm">{{ $property->views }}</span>
         </td>
+        @endif
         <th scope="row" class="px-2 py-1 text-center font-medium text-capitalize">
             <span class="text-sm">{{ $property->account->name }}</span>
         </th>
