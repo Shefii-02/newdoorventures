@@ -2,7 +2,7 @@
 
 namespace App;
 use App\Jobs\Email;
-use App\Models\{User, Ad, SubscriptionOrder, Ticket};
+use App\Models\{Account, User, Ad, Property, SubscriptionOrder, Ticket};
 use Illuminate\Http\Request;
 
 trait Emails{
@@ -26,8 +26,8 @@ trait Emails{
 		]));
     }
 
-    public function accountCreated(User $user){
-        if($user->status == '0'){
+    public function accountCreated(Account $user){
+        if($user->status == 'pending'){
             self::email(new Email([
                 'emailClass' => 'DefaultMail',
                 'to' => env('ADMIN_EMAIL'),
@@ -64,29 +64,41 @@ trait Emails{
         ]));
     }
 
-    public function adApproved(Ad $ad){
+    public function adApproved(Property $ad){
         self::email(new Email([
 		    'emailClass' => 'DefaultMail',
-            'name' => $ad->seller->name,
-            'to' => $ad->seller->email,
-            'subject' => __("Ad :title approved", ['title' => $ad->title]),
+            'name' => $ad->author->name,
+            'to' => $ad->author->email,
+            'subject' => __("Property :title approved", ['title' => $ad->name]),
             'contents' => view('email.adApproved')->withAd($ad)->render(),
         ]));
     }
 
-    public function adPendingReview(Ad $ad){
+    public function adSuspended(Property $ad){
         self::email(new Email([
 		    'emailClass' => 'DefaultMail',
-            'name' => $ad->seller->name,
-            'to' => $ad->seller->email,
-            'subject' => __("Ad :title is awaiting review", ['title' => $ad->title]),
+            'name' => $ad->author->name,
+            'to' => $ad->author->email,
+            'subject' => __("Property :title has been suspended", ['title' => $ad->name]),
+            'contents' => view('email.adSuspended')->withAd($ad)->render(),
+        ]));
+    }
+
+    
+
+    public function adPendingReview(Property $ad){
+        self::email(new Email([
+		    'emailClass' => 'DefaultMail',
+            'name' => $ad->author->name,
+            'to' => $ad->author->email,
+            'subject' => __("Property :title is awaiting review", ['title' => $ad->name]),
             'contents' => view('email.adPendingReviewSeller')->withAd($ad)->render(),
         ]));
 
         self::email(new Email([
 		    'emailClass' => 'DefaultMail',
             'to' => env('ADMIN_EMAIL'),
-            'subject' => __("Ad :title is awaiting review", ['title' => $ad->title]),
+            'subject' => __("Property :title is awaiting review", ['title' => $ad->name]),
             'contents' => view('email.adPendingReviewAdmin')->withAd($ad)->render(),
         ]));
     }
@@ -142,34 +154,34 @@ trait Emails{
         self::email(new Email([
 		    'emailClass' => 'DefaultMail',
             'to' => env('ADMIN_EMAIL'),
-            'subject' => __("Contact inquiry from :firstname :lastname", ['firstname' => $request->firstname, 'lastname' => $request->lastname]),
+            'subject' => __("Contact inquiry from :name", ['name' => $request->name]),
             'contents' => view('email.adminContactReceived')->withRequest($request)->render(),
-            'reply_name' => __(":firstname :lastname", ['firstname' => $request->firstname, 'lastname' => $request->lastname]),
+            'reply_name' => __(":name ", ['name' => $request->name]),
             'reply_to' => $request->email,
         ]));
     }
 
-    public function sellerLeadReceived(User $user, Ad $ad, Request $request){
+    public function adminLeadReceived(User $user, Property $property, Request $request){
         self::email(new Email([
 		    'emailClass' => 'DefaultMail',
-            'to' => $user->email,
-            'subject' => __("New inquiry from :firstname :lastname", ['firstname' => $request->firstname, 'lastname' => $request->lastname]),
+            'to' => env('ADMIN_EMAIL'),
+            'subject' => __("New inquiry from :name ", ['name' => $request->name]),
             'name' => $user->name,
-            'contents' => view('email.sellerLeadReceived')->withRequest($request)->withAd($ad)->render(),
-            'reply_name' => __(":firstname :lastname", ['firstname' => $request->firstname, 'lastname' => $request->lastname]),
+            'contents' => view('email.sellerLeadReceived')->withRequest($request)->withAd($property)->render(),
+            'reply_name' => __(":name ", ['name' => $request->name]),
             'reply_to' => $request->email,
         ]));
     }
 
-    public function customerLeadResponded(\App\Models\LeadEnquiry $lead){
+    public function userLeadResponded(\App\Models\Consult $lead){
         self::email(new Email([
 		    'emailClass' => 'DefaultMail',
             'to' => $lead->email,
             'subject' => __("Your inquiry has been responded"),
-            'name' =>  __(":firstname :lastname", ['firstname' => $lead->firstname, 'lastname' => $lead->lastname]),
+            'name' =>  __(":name ", ['name' => $lead->name]),
             'contents' => view('email.customerLeadResponded')->withLead($lead)->render(),
-            'reply_name' => $lead->seller->name,
-            'reply_to' => $lead->seller->email,
+            'reply_name' => env('ADMIN_EMAIL'),
+            'reply_to' => env('ADMIN_EMAIL'),
         ]));
     }
     /**

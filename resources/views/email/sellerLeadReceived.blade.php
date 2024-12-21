@@ -1,16 +1,23 @@
 <div>
     @if ($ad)
-        You have received a new inquiry for your ad <a
-            href="{{ route('ads.show', ['ad' => $ad]) }}">{{ $ad->title }}</a> from
-        {{ "{$request->firstname} {$request->lastname}" }}.
+        You have received a new inquiry for your property
+        @if ($request->type == 'project')
+            <a
+                href="{{ route('public.project_single', ['uid' => $ad->unique_id, 'slug' => $ad->slug]) }}">{{ $ad->name }}</a>
+        @else
+            <a
+                href="{{ route('public.property_single', ['uid' => $ad->unique_id, 'slug' => $ad->slug]) }}">{{ $ad->name }}</a>
+        @endif
+        from
+        {{ "{$request->name}" }}.
     @else
-        You have received a general inquiry from {{ "{$request->firstname} {$request->lastname}" }}.
+        You have received a general inquiry from {{ "{$request->name}" }}.
     @endif
 </div>
 <div style="border-bottom: 1px solid #e5e3e3;margin-bottom: 1rem;margin-top: 1rem;padding-bottom: 10px;">
     <div>
         <div style="font-weight: 600;margin-bottom: 6px;">Name</div>
-        <div>{{ "{$request->firstname} {$request->lastname}" }}</div>
+        <div>{{ "{$request->name}" }}</div>
     </div>
 </div>
 <div style="border-bottom: 1px solid #e5e3e3;margin-bottom: 1rem;margin-top: 1rem;padding-bottom: 10px;">
@@ -25,20 +32,33 @@
         <div>{{ $request->phone }}</div>
     </div>
 </div>
-@if($ad)
-<div style="border-bottom: 1px solid #e5e3e3;margin-bottom: 1rem;margin-top: 1rem;padding-bottom: 10px;">
-    <div>
-        <div style="font-weight: 600;margin-bottom: 6px;">Ad</div>
-        <div><a href="{{ route('ads.show', ['ad' => $ad]) }}">{{ $ad->title }}</a></div>
-    </div>
-</div>
+@if ($ad)
+    @if ($request->type == 'project')
+        <div style="border-bottom: 1px solid #e5e3e3;margin-bottom: 1rem;margin-top: 1rem;padding-bottom: 10px;">
+            <div>
+                <div style="font-weight: 600;margin-bottom: 6px;">Property</div>
+                <div><a target="_new"
+                        href="{{ route('public.project_single', ['uid' => $ad->unique_id, 'slug' => $ad->slug]) }}">{{ $ad->name }}</a>
+                </div>
+            </div>
+        </div>
+    @else
+        <div style="border-bottom: 1px solid #e5e3e3;margin-bottom: 1rem;margin-top: 1rem;padding-bottom: 10px;">
+            <div>
+                <div style="font-weight: 600;margin-bottom: 6px;">Project</div>
+                <div><a target="_new"
+                        href="{{ route('public.property_single', ['uid' => $ad->unique_id, 'slug' => $ad->slug]) }}">{{ $ad->name }}</a>
+                </div>
+            </div>
+        </div>
+    @endif
 @endif
-<div style="border-bottom: 1px solid #ffffff00;margin-bottom: 1rem;margin-top: 1rem;padding-bottom: 10px;">
+{{-- <div style="border-bottom: 1px solid #ffffff00;margin-bottom: 1rem;margin-top: 1rem;padding-bottom: 10px;">
     <div>
         <div style="font-weight: 600;margin-bottom: 6px;">Message</div>
         <div>{{ $request->message }}</div>
     </div>
-</div>
+</div> --}}
 <div style="margin-top:2rem">
-    You can directly reply to {{ "{$request->firstname} {$request->lastname}" }} through this email.
+    You can directly reply to {{ "{$request->name}" }} through this email.
 </div>

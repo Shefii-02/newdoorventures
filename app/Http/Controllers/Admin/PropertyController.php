@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Session;
 
 class PropertyController extends Controller
 {
+
+    use \App\Emails;
+
+
     /**
      * Display a listing of the resource.
      */
@@ -239,8 +243,17 @@ class PropertyController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $consult = Property::findOrFail($id);
-        $consult->update($request->only('moderation_status'));
+        $property = Property::findOrFail($id);
+        $property->update($request->only('moderation_status'));
+
+        if($request->moderation_status == 'approved'){
+            $this->adApproved($property);
+        }
+        else if($request->moderation_status == 'suspended'){
+            $this->adSuspended($property);
+        }
+        
+
 
         return redirect()->route('admin.properties.index')->with('success', 'Status updated successfully!');
     }

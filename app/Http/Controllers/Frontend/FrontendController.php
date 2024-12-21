@@ -21,6 +21,8 @@ use Illuminate\Routing\Controller;
 
 class FrontendController extends Controller
 {
+    use \App\Emails;
+
     public function index()
     {
         $categories                 = Category::where('status', 'published')->get();
@@ -225,7 +227,7 @@ class FrontendController extends Controller
         $categories     = Category::where('status', 'published')->where('has_commercial', 1)->get();
         $type           = 'commercial';
 
-        if (($request->has('tab') && $request->tab == 'sale') || $request->has('type') && $request->type == 'commercial-sale')  {
+        if (($request->has('tab') && $request->tab == 'sale') || $request->has('type') && $request->type == 'commercial-sale') {
             $property_query = $property_query->where('type', 'sell');
         } else if (($request->has('tab') && $request->tab == 'rent') || $request->has('type') && $request->type == 'commercial-rent') {
             $property_query = $property_query->where('type', 'rent');
@@ -237,7 +239,7 @@ class FrontendController extends Controller
             $html = view('front.shortcuts.properties.items', compact('properties'))->render();
             return response()->json(['html' => $html]);
         }
-     
+
         return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type'));
     }
 
@@ -272,7 +274,7 @@ class FrontendController extends Controller
 
         $property->increment('views');
 
-        if($property->mode == 'Commercial'){
+        if ($property->mode == 'Commercial') {
             if ($property->category && $property->category->name == 'Plot and Land') {
                 return view('front.properties.commercial-plot-property', compact('property', 'recent_properties'));
             }
@@ -629,7 +631,8 @@ class FrontendController extends Controller
             $lead->status = 'unread';
             $lead->save();
 
-
+            $this->adminContactReceived($request);
+            
             return response()->json([
                 'error' => false,
                 'message' => 'Your enquiry request has been submitted successfully!',
@@ -651,11 +654,13 @@ class FrontendController extends Controller
             $contact = new Contact();
             $contact->name = $request->name;
             $contact->email = $request->email;
-            $contact->phone = '1';
+            $contact->phone = $request->phone ?? 1;
             $contact->subject = $request->subject;
             $contact->content = $request->content;
             $contact->status = 'unread';
             $contact->save();
+
+            $this->adminContactReceived($request);
 
             return response()->json([
                 'error' => false,

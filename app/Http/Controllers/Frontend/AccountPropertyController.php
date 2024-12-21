@@ -39,6 +39,10 @@ use Illuminate\Routing\Controller;
 
 class AccountPropertyController extends Controller
 {
+
+    use \App\Emails;
+
+
     public function __construct(
 
         //     protected AccountInterface $accountRepository,
@@ -273,11 +277,14 @@ class AccountPropertyController extends Controller
             }
             $property->save();
 
+
             if($request->furnishing_status =='furnished'){
-                $furnishingIds = Furnishing::whereStatus()->pluck('id');
+                $furnishingIds = Furnishing::whereStatus('published')->pluck('id');
+                
                 $request->merge(['furnishing' => $furnishingIds]);
             }
 
+      
             $property->features()->sync($request->input('amenities', []));
             // if ($request->furnishing_status != 'unfurnished') {
                 $property->furnishing()->sync($request->input('furnishing', []));
@@ -329,6 +336,14 @@ class AccountPropertyController extends Controller
                 'reference_name' => $property->name,
                 'reference_url' => route('user.properties.edit', $property->id),
             ]);
+
+            if (auth('account')->user()->auto_approvel == 1 && $request->moderation_status != 'draft') {
+                $this->adApproved($property);
+            }
+            else{
+                $this->adPendingReview($property);
+            }
+            
 
             // if (RealEstateHelper::isEnabledCreditsSystem()) {
             //     $account = Account::query()->findOrFail(auth('account')->id());
@@ -594,8 +609,10 @@ class AccountPropertyController extends Controller
                     $property->moderation_status = 'approved';
                 } else {
                     $property->moderation_status = 'pending';
+                    $this->adPendingReview($property);
                 }
             }
+
             $property->save();
 
             $property->features()->sync($request->input('amenities', []));

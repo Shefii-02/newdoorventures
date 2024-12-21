@@ -261,7 +261,7 @@
                             <label for="floatingInputName">Email Id</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="phone" maxlength="10" required
+                            <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="form-control" name="phone" maxlength="12" required
                                 id="floatingInputNo" placeholder="+91 Phone">
                             <label for="floatingInputNo">Mobile Number <small class="text-theme">(+91
                                     Phone)</small></label>

@@ -1,7 +1,7 @@
 <div>
     <div style="margin-bottom:2rem;">
         <div>
-            <strong>Your ad "{{ $ad->title }}" has been successfully submitted and is currently under
+            <strong>Your property "{{ $ad->name }}" has been successfully submitted and is currently under
                 review.</strong>
         </div>
         @include('email.adCard')

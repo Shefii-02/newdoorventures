@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Session;
 
 class ConsultsController extends Controller
 {
+
+    use \App\Emails;
+
     /**
      * Display a listing of the resource.
      */
@@ -77,6 +80,10 @@ class ConsultsController extends Controller
 
         $consult = Consult::findOrFail($id);
         $consult->update($request->only('status'));
+      
+        if($request->status == 'attended'){
+            $this->userLeadResponded($consult);
+        }
 
         return redirect()->route('admin.consults.index')->with('success', 'Status updated successfully!');
     }

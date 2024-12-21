@@ -10,7 +10,7 @@
         </div>
   
             <div>
-                <input name="phone" maxlength="10" type="text" class="bg-white text-black  form-input dark:bg-slate-700"
+                <input name="phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="12" type="text" class="bg-white text-black  form-input dark:bg-slate-700"
                     placeholder="{{ __('Phone') }} required">
             </div>
       

@@ -1,7 +1,7 @@
 <div>
     <div style="margin-bottom:2rem;">
         <div>
-            <strong>Great news! Your ad "{{ $ad->title }}" has been approved and is now live.</strong>
+            <strong>Great news! Your property "{{ $ad->name }}" has been approved and is now live.</strong>
         </div>
         @include('email.adCard')
         <div>

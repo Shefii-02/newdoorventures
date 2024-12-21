@@ -17,6 +17,8 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers, LogoutGuardTrait;
 
+    use \App\Emails;
+    
     public string $redirectTo = '/account/dashboard';
 
     protected function guard()
@@ -53,6 +55,7 @@ class LoginController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $this->accountCreated($account);
         auth('account')->login($account);
 
         return redirect($this->redirectTo);

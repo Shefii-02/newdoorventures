@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('ip_address', 39)->nullable();
             $table->longText('content')->nullable();
             $table->string('status', 60)->default('unread');
+            $table->boolean('is_agent')->default(0)->nullable();
+            $table->longText('response_msg')->nullable();
             $table->timestamps();
         });
     }

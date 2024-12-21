@@ -4,7 +4,7 @@
 <div style="border-bottom: 1px solid #e5e3e3;margin-bottom: 1rem;margin-top: 1rem;padding-bottom: 10px;">
     <div>
         <div style="font-weight: 600;margin-bottom: 6px;">Name</div>
-        <div>{{ "{$request->firstname} {$request->lastname}" }}</div>
+        <div>{{ "{$request->name}" }}</div>
     </div>
 </div>
 <div style="border-bottom: 1px solid #e5e3e3;margin-bottom: 1rem;margin-top: 1rem;padding-bottom: 10px;">
@@ -28,9 +28,9 @@
 <div style="border-bottom: 1px solid #ffffff00;margin-bottom: 1rem;margin-top: 1rem;padding-bottom: 10px;">
     <div>
         <div style="font-weight: 600;margin-bottom: 6px;">Message</div>
-        <div>{{ $request->message }}</div>
+        <div>{{ $request->content }}</div>
     </div>
 </div>
 <div style="margin-top:2rem">
-    You can directly reply to {{ "{$request->firstname} {$request->lastname}" }} through this email.
+    You can directly reply to {{ "{$request->name}" }} through this email.
 </div>
