@@ -44,7 +44,7 @@ class BlogCategoryController extends Controller
             $new            = new BlogCategory();
             $new->name      = $request->name ?? null;
             $new->slug      = Str::slug($new->name);
-            $new->image    = uploadFile($request->file('image'), 'services');
+            $new->image    = uploadFile($request->file('image'), 'news','public',true);
             $new->display_order  = $request->display_order;
             $new->status    = $request->has('status') ? 1 : 0;
             $new->save();
@@ -94,7 +94,7 @@ class BlogCategoryController extends Controller
                 $blogCategory->image = null;
             }
             if ($request->hasFile('image')) {
-                $blogCategory->image   = uploadFile($request->file('image'), 'services');
+                $blogCategory->image   = uploadFile($request->file('image'), 'news','public',true);
             }
             $blogCategory->save();
             Db::commit();

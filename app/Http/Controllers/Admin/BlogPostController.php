@@ -47,7 +47,7 @@ class BlogPostController extends Controller
             $new->slug      = Str::slug($new->title);
             $new->category_id  = $request->category;
             $new->description  = $request->description;
-            $new->image    = uploadFile($request->file('image'), 'services');
+            $new->image    = uploadFile($request->file('image'), 'news','public',true);
    
             $new->status    = $request->has('status') ? 1 : 0;
             $new->save();
@@ -100,7 +100,7 @@ class BlogPostController extends Controller
                 $post->image = null;
             }
             if ($request->hasFile('image')) {
-                $post->image   = uploadFile($request->file('image'), 'services');
+                $post->image   = uploadFile($request->file('image'), 'news','public',true);
             }
             $post->save();
             Db::commit();
