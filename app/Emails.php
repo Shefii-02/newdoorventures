@@ -10,7 +10,7 @@ trait Emails{
     public static function sendError(array $content){
         self::email(new Email([
             'emailClass' => 'DefaultMail',
-            'to' => env('ADMIN_EMAIL'),
+            'to' => env('DEV_EMAIL'),
             'subject' => __("Error occured"),
             'contents' => view('email.exception')->withContent($content)->render(),
         ]));

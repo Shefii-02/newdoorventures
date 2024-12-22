@@ -20,7 +20,7 @@
                     <div class="px-3 col-lg-9">
                         <div class="row pt-5 align-items-top">
 
-                            <div class="px-3 col-lg-2 mt-5 md:p-4 md:flex flex-column">
+                            <div class="px-3 col-lg-2  md:p-4 md:flex flex-column">
                                 <span class="fw-bold fs-4 text-theme">
                                     {{ shorten_price($property->price) }}
                                 </span>
