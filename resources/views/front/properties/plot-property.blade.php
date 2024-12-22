@@ -65,19 +65,28 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <div class="p-3 flex gap-5">
-                                                        <div class="ms-3">
-                                                            <span class="">Plot Area<br><span
-                                                                    class="fw-bold ">{{ $property->plot_area }}.sqft</span></span>
+                                                <div class="col-lg-12 my-5 px-3">
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <div class="flex flex-column">
+                                                                <h4 class="fw-bold">Plot Area {{ $property->plot_area ?? 0 }} sqft</h4>
+                                                                <span>{{ shorten_price($property->price / ($property->plot_area > 0 ? $property->plot_area : 1)) }}/sqft</span>
+                                                            </div>
                                                         </div>
-
-                                                        <div class=" ms-3">
-                                                            <span class="">Transaction Type<br><span
-                                                                    class="fw-bold text-capitalize">{{ str_replace('_', ' ', $property->construction_status) }}</span></span>
-
+                                                        <div class="col-lg-3">
+                                                            <div class="flex flex-column text-center">
+                                                                <h4 class="fw-bold">Transaction Type</h4>
+                                                                <span>{{ str_replace('_', ' ', $property->construction_status) }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="flex flex-column text-center">
+                                                                <h4 class="fw-bold">Open Sides</h4>
+                                                                <span>{{ $property->open_sides ?? '---' }}</span>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                  
                                                 </div>
 
                                                 <div class="px-3 mt-3">
@@ -133,14 +142,14 @@
                             <button @click="scrollToSection('Amenities')"
                                 :class="{ 'tab-active': activeTab === 'Amenities' }"
                                 class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
-                                id="amenities-tab" data-tabs-target="#amenities" type="button" role="tab"
-                                aria-controls="amenities" aria-selected="false">
+                                id="Amenities-tab" data-tabs-target="#Amenities" type="button" role="tab"
+                                aria-controls="Amenities" aria-selected="false">
                                 Amenities
                             </button>
                         </li>
                     @endif
                     {{-- @if ($relatedProperties->count()) --}}
-                    <li role="presentation" class="inline-block">
+                    {{-- <li role="presentation" class="inline-block">
                         <button @click="scrollToSection('SimilarPlots')"
                             :class="{ 'tab-active': activeTab === 'SimilarPlots' }"
                             class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
@@ -148,7 +157,7 @@
                             aria-controls="SimilarPlots" aria-selected="false">
                             Similar Plots
                         </button>
-                    </li>
+                    </li> --}}
                     {{-- @endif --}}
                     @if ($property->facilities->groupBy('name')->count())
                         <li role="presentation" class="inline-block">
@@ -265,13 +274,13 @@
                             @endif
 
                             @if ($property->features->count())
-                                <div class="container-fluid mb-5 section" id="amenities"
+                                <div class="container-fluid mb-5 section" id="Amenities"
                                     :class="{ 'active': activeSection === 'Amenities' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
                                             <div class="border-theme rounded-xl">
                                                 <div class="px-3 py-5">
-                                                    <h4 class="fs-5  font-bold me-2">amenities </h4>
+                                                    <h4 class="fs-5  font-bold me-2">Amenities </h4>
                                                     <div class="row align-items-center px-3">
                                                         @foreach ($property->features ?? [] as $featureItem)
                                                             <div class="col-lg-3 d-flex align-items-center">
@@ -384,7 +393,7 @@
                                                     <div class="property-street-map"
                                                         data-popup-id="#street-map-popup-template"
                                                         data-center="{{ json_encode([$property->latitude, $property->longitude]) }}"
-                                                        data-map-icon="{{ $property->type }}: {{ shorten_price($property->price) }}"
+                                                        data-map-icon="{{ $property->name }}: {{ shorten_price($property->price) }}"
                                                         style="height: 300px;">
                                                         <div class="hidden property-template-popup-map">
                                                             <table width="100%">
@@ -407,7 +416,7 @@
                                                                             </div>
                                                                             <div>{{ $property->city_name }}</div>
                                                                             <div class="ltr:flex">
-                                                                                <span> {{ $property->square_text }}</span>
+                                                                                <span> {{ $property->plot_area }} sq.ft</span>
 
                                                                             </div>
                                                                         </div>

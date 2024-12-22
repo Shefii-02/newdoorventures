@@ -339,7 +339,7 @@
                                                                         </td>
                                                                         <td class="text-center">
                                                                             <span
-                                                                                class="text-sm dark:text-white">{{ $variUnit->price }}</span>
+                                                                                class="text-sm dark:text-white">{{ shorten_price($variUnit->price) }}</span>
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach

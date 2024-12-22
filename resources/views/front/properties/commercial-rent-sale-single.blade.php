@@ -9,7 +9,11 @@
         }
     </style>
 @endpush
-
+@php
+    $car_parkiing = $property->customFields->where('name', 'Car Parking ')->first() ?? 0;
+    $grade = $property->customFields->where('name', 'Grade')->first() ?? '';
+    $facing = $property->customFields->where('name', 'Facing')->first() ?? '';
+@endphp
 
 @section('content')
 
@@ -20,7 +24,7 @@
                     <div class="px-3 col-lg-9">
                         <div class="row pt-5 align-items-top">
 
-                            <div class="px-3 col-lg-2 mt-5 md:p-4 md:flex flex-column">
+                            <div class="px-3 col-lg-2  text-end md:p-4 md:flex flex-column">
                                 <span class="fw-bold fs-4 text-theme">
                                     {{ shorten_price($property->price) }}
                                 </span>
@@ -28,12 +32,12 @@
                             </div>
                             <div class="px-3 col-lg-9 md:p-4 md:flex flex-column">
                                 <div class="flex flex-column flex-column">
-                                    <h4 class=" d-inline  font-bold me-2">{{ $property->name }}
+                                    <h4 class=" d-inline  font-bold me-2">
+                                        {{ $property->name }}
                                         <span
                                             class=" d-inline font-bold text-capitalize text-theme border-5 border-gray-300 border-end-0 border-top-0 border-bottom-0 ps-2">
                                             For {{ $property->type }}</span>
                                         <div class=" mt-2">
-
                                             @if ($property->project)
                                                 <p class="d-inline fw-bolder me-2  text-base text-theme">
                                                     {{ $property->project->name }}
@@ -63,17 +67,22 @@
             <div class="px-3  ">
                 <div class="border-theme rounded flex  py-1" style="width: fit-content;">
                     <span
-                        class="text-dark font-medium text-sm  inline  dark:text-gray-400 text-capitalize px-2">{{ $property->number_bedroom ?? 0 }}
-                        Beds</span>
+                        class="text-dark font-bold text-sm  inline  dark:text-gray-400 text-capitalize px-2">{{ $property->furnishing_status ?? '' }}</span>
                     <span
-                        class="text-dark font-medium  text-sm inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->number_bathroom ?? 0 }}
-                        Baths</span>
+                        class="text-dark font-bold  text-sm inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $car_parkiing ?? 0 }}
+                        Car Parking
+                    </span>
+
                     <span
-                        class="text-dark font-medium  text-sm  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->balconies ?? 0 }}
-                        Balconies</span>
+                        class="text-dark font-bold  text-sm  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">
+                        {{ $property->mode }} Purpose
+                    </span>
                     <span
-                        class="text-dark font-medium text-sm  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->covered_parking ?? 0 }}
-                        Covered Parking</span>
+                        class="text-dark font-bold  text-sm  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">
+                        Grade
+                        {{ $grade ?? '' }}
+                    </span>
+
                 </div>
             </div>
             @if ($property->project->rera_status == 'registered')
@@ -119,48 +128,79 @@
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <div class="flex flex-column">
-                                                        <h4 class="fw-bold">Developer</h4>
+                                                        <h4 class="fw-bold">Floor</h4>
                                                         <span>{{ $property->project && $property->project->investor ? $property->project->investor->name : '---' }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <div class="flex flex-column">
-                                                        <h4 class="fw-bold">Project</h4>
+                                                        <h4 class="fw-bold">Units on Floor</h4>
                                                         <span>{{ $property->project->name ?? '---' }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <div class="flex flex-column">
-                                                        <h4 class="fw-bold">Floor</h4>
-                                                        <span>{{ $property->available_floor }} (Out of
-                                                            {{ $property->number_floor }} Floors)</span>
+                                                        <h4 class="fw-bold">Facing</h4>
+                                                        <span>{{ $facing ?? '--' }}</span>
                                                     </div>
                                                 </div>
+
                                             </div>
                                             <div class="row mt-8">
                                                 <div class="col-lg-3">
                                                     <div class="flex flex-column">
-                                                        <h4 class="fw-bold">Transaction Type</h4>
+                                                        <h4 class="fw-bold">Washroom</h4>
                                                         <span class="text-capitalize">{{ $property->type }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <div class="flex flex-column">
-                                                        <h4 class="fw-bold">Status</h4>
-                                                        <span
-                                                            class="text-capitalize">{{ str_replace('_', ' ', $property->construction_status) }}</span>
+                                                        <h4 class="fw-bold">Cabin</h4>
+                                                        <span>{{ $property->cabin }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="flex flex-column">
+                                                        <h4 class="fw-bold">Seats</h4>
+                                                        <span>{{ $property->seats }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="flex flex-column">
+                                                        <h4 class="fw-bold">Pantry</h4>
+                                                        <span>{{ $property->available_floor }} (Out of
+                                                            {{ $property->number_floor }} Floors)</span>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="row mt-8">
+
+                                                <div class="col-lg-3">
+                                                    <div class="flex flex-column">
+                                                        <h4 class="fw-bold">Lock-in period</h4>
+                                                        <span>{{ $property->cabin }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Open parking</h4>
-                                                        <span>{{ $property->open_parking }}</span>
+                                                        <span>{{ $property->cabin }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Covered parking</h4>
-                                                        <span>{{ $property->covered_parking }}</span>
+                                                        <span>{{ $property->cabin }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="flex flex-column">
+                                                        <h4 class="fw-bold">Overlooking</h4>
+                                                        <span
+                                                            class="text-capitalize">{{ str_replace('_', ' ', $property->construction_status) }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,7 +208,7 @@
 
                                     </div>
                                     <div class="px-3 mt-8">
-                                        <a href="#" data-id="{{ $property->id }}" data-type="property" 
+                                        <a href="#" data-id="{{ $property->id }}" data-type="property"
                                             class=" text-white btn bg-primary popup-contact-modal-form">{{ __('Get Phone Number') }}</a>
                                     </div>
                                 </div>
@@ -178,7 +218,8 @@
                 </div>
             </div>
             <div class="jump-header sticky top-34 z-999">
-                <ul style="border-bottom-width:3px !important" class="flex-wrap justify-left inline-block w-full p-4  text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
+                <ul style="border-bottom-width:3px !important"
+                    class="flex-wrap justify-left inline-block w-full p-4  text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
                     x-data="{ isDragging: false, startX: 0, scrollLeft: 0 }"
                     x-on:mousedown="isDragging = true; startX = $event.pageX - $el.offsetLeft; scrollLeft = $el.scrollLeft;"
                     x-on:mousemove="if (isDragging) { $el.scrollLeft = scrollLeft - ($event.pageX - startX); }"
@@ -270,7 +311,7 @@
                     <div class="md:flex">
                         <div class=" lg:w-2/3 md:w-1/2 ">
 
-                            <div class="container-fluid mb-5 section" id="MoreDetails" 
+                            <div class="container-fluid mb-5 section" id="MoreDetails"
                                 :class="{ 'active': activeSection === 'MoreDetails' }">
                                 <div class="md:flex">
                                     <div class="w-full p-1 ">
@@ -306,7 +347,7 @@
                                                             {!! $property->content !!}
                                                         </span>
                                                     </div>
-                                                    <a href="#" data-id="{{ $property->id }}" data-type="property" 
+                                                    <a href="#" data-id="{{ $property->id }}" data-type="property"
                                                         class="popup-contact-modal-form text-white btn bg-primary mt-10">{{ __('Get Phone Number') }}</a>
                                                 </div>
                                             </div>
@@ -316,7 +357,7 @@
                             </div>
 
                             @if ($property->project_id && ($project = $property->project))
-                                <div class="container-fluid mb-5 section" id="AboutProject" 
+                                <div class="container-fluid mb-5 section" id="AboutProject"
                                     :class="{ 'active': activeSection === 'AboutProject' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -380,7 +421,7 @@
                                 </div>
                             @endif
                             @if ($property->furnishing->count() > 0)
-                                <div class="container-fluid mb-5 section" id="FurnishingDetails" 
+                                <div class="container-fluid mb-5 section" id="FurnishingDetails"
                                     :class="{ 'active': activeSection === 'FurnishingDetails' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -407,7 +448,7 @@
                                 </div>
                             @endif
                             @if ($property->features->count())
-                                <div class="container-fluid mb-5 section" id="Amenities" 
+                                <div class="container-fluid mb-5 section" id="Amenities"
                                     :class="{ 'active': activeSection === 'Amenities' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -449,7 +490,7 @@
 
 
                             @if ($property->facilities->groupBy('name')->count())
-                                <div class="container-fluid mb-5 section" id="Landmarks" 
+                                <div class="container-fluid mb-5 section" id="Landmarks"
                                     :class="{ 'active': activeSection === 'Landmarks' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1">
@@ -510,7 +551,7 @@
                             @endif
 
                             @if ($property->latitude && $property->longitude)
-                                <div class="container-fluid mb-5 section" id="Location" 
+                                <div class="container-fluid mb-5 section" id="Location"
                                     :class="{ 'active': activeSection === 'Location' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -534,7 +575,8 @@
                                                                                 src="{{ asset($property->image_thumb) }}"
                                                                                 width="80"
                                                                                 alt="{{ $property->name }}">
-                                                                            <div class="status text-white">{!! $property->mode !!}
+                                                                            <div class="status text-white">
+                                                                                {!! $property->mode !!}
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -582,7 +624,7 @@
                                     ])
                                 </div>
                                 <div class="mt-4">
-                                    <a href="#"  data-id="{{ $property->id }}" data-type="property" 
+                                    <a href="#" data-id="{{ $property->id }}" data-type="property"
                                         class="w-full py-4 text-white btn bg-primary fs-5 popup-contact-modal-form"><i
                                             class="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
                                 </div>

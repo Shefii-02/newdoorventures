@@ -317,7 +317,7 @@ class FrontendController extends Controller
 
         if ($property->mode == 'Commercial') {
             if ($property->category && $property->category->name == 'Plot and Land') {
-                return view('front.properties.commercial-plot-property', compact('property', 'recent_properties','pageTitle','pageDescription','pageKeywords'));
+                return view('front.properties.plot-property', compact('property', 'recent_properties','pageTitle','pageDescription','pageKeywords'));
             }
 
             return match ($property->type) {
@@ -376,7 +376,7 @@ class FrontendController extends Controller
 
         $pageTitle = $blog->title . ' | New Door Ventures Blog';
         $pageDescription = Str::limit($blog->content, 160);
-        $pageKeywords = 'real estate blog, property buying tips, property rental advice, ' . implode(', ', $blog->tags->pluck('name')->toArray());
+        $pageKeywords = 'real estate blog, property buying tips, property rental advice, ';
 
         return view('front.news.single', compact('blog', 'blogs','pageTitle','pageDescription','pageKeywords'));
     }
