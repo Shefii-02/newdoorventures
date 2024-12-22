@@ -18,7 +18,7 @@
                  <div class="flex items-end justify-between">
                      <div>
                          <h3 class="mb-4 text-title-lg font-bold text-black dark:text-black">
-                             {{ number_format($totalPropertyLeads) ?? 0 }}
+                             {{ indian_number_format($totalPropertyLeads) ?? 0 }}
                          </h3>
                          <p class="font-medium">Total Leads</p>
 
@@ -33,7 +33,7 @@
                  <div class="flex items-end justify-between">
                      <div>
                          <h3 class="mb-4 text-title-lg font-bold text-black dark:text-black">
-                             {{ number_format($totalProperties) ?? 0 }}
+                             {{ indian_number_format($totalProperties) ?? 0 }}
                          </h3>
                          <p class="font-medium">Total Properties</p>
 
@@ -47,7 +47,7 @@
                  <div class="flex items-end justify-between">
                      <div>
                          <h3 class="mb-4 text-title-lg font-bold text-black dark:text-black">
-                             {{ number_format($totalProjects) ?? 0 }}
+                             {{ indian_number_format($totalProjects) ?? 0 }}
                          </h3>
                          <p class="font-medium">Total Projects</p>
                      </div>
@@ -60,7 +60,7 @@
                  <div class="flex items-end justify-between">
                      <div>
                          <h3 class="mb-4 text-title-lg font-bold text-black dark:text-black">
-                             {{ number_format($totalAccounts) ?? 0 }}
+                             {{ indian_number_format($totalAccounts) ?? 0 }}
                          </h3>
                          <p class="font-medium">Total Accounts</p>
 
@@ -92,13 +92,13 @@
                          <div class="border-stroke py-2 dark:border-strokedark xsm:w-1/2 xsm:border-r">
                              <p class="font-medium">Total Leads</p>
                              <h4 class="mt-1 text-title-sm font-bold text-black dark:text-black">
-                                 {{ number_format($totalPropertyLeads) }}
+                                 {{ indian_number_format($totalPropertyLeads) }}
                              </h4>
                          </div>
                          <div class="py-2 xsm:w-1/2">
                              <p class="font-medium">Total Visitors</p>
                              <h4 class="mt-1 text-title-sm font-bold text-black dark:text-black">
-                                 {{ number_format($totalViews ?? 0) }}
+                                 {{ indian_number_format($totalViews ?? 0) }}
                              </h4>
                          </div>
                      </div>
@@ -129,7 +129,7 @@
                                      <span class="mr-2 block h-3 w-full max-w-3 rounded-full bg-primary"></span>
                                      <p class="flex w-full justify-between text-sm font-medium text-black dark:text-black">
                                          <span class="text-capitalize"> {{ $device->device_category }} </span>
-                                         <span> {{ number_format($device->user_count) }} </span>
+                                         <span> {{ indian_number_format($device->user_count) }} </span>
                                      </p>
                                  </div>
                              </div>
@@ -181,7 +181,7 @@
                                  </div>
                                  <div class="col-span-2">
                                      <p class="text-right text-sm font-medium">
-                                         {{ number_format($ladingPageItem->view_count) }}</p>
+                                         {{ indian_number_format($ladingPageItem->view_count) }}</p>
                                  </div>
                              </div>
                          @endforeach

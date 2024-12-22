@@ -85,7 +85,7 @@ class Post extends BaseModel
                     return null;
                 }
 
-                return number_format(ceil(str_word_count(strip_tags($this->content)) / 200));
+                return indian_number_format(ceil(str_word_count(strip_tags($this->content)) / 200));
             }
         );
     }

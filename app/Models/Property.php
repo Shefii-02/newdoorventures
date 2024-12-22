@@ -145,7 +145,7 @@ class Property extends BaseModel
 
                 $unit = 'sq.ft';
 
-                return  (sprintf('%s %s', number_format($square), __($unit)));
+                return  (sprintf('%s %s', indian_number_format($square), __($unit)));
             },
         );
     }

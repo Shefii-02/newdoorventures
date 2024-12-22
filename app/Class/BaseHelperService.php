@@ -65,7 +65,7 @@ class BaseHelperService
 
         $bytes /= pow(1024, $pow);
 
-        return number_format($bytes, $precision, ',', '.') . ' ' . $units[$pow];
+        return indian_number_format($bytes, $precision, ',', '.') . ' ' . $units[$pow];
     }
 
     public function getFileData(string $file, bool $convertToArray = true)

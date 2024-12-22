@@ -273,13 +273,13 @@ if (!function_exists('shorten_price')) {
     function shorten_price($price)
     {
         if ($price >= 10000000) {
-            return '₹' . number_format($price / 10000000, 2) . ' Cr';
+            return '₹' . indian_number_format($price / 10000000, 2) . ' Cr';
         } elseif ($price >= 100000) {
-            return '₹' . number_format($price / 100000, 2) . ' L';
+            return '₹' . indian_number_format($price / 100000, 2) . ' L';
         } elseif ($price >= 1000) {
-            return '₹' . number_format($price / 1000, 2) . ' K';
+            return '₹' . indian_number_format($price / 1000, 2) . ' K';
         } else {
-            return '₹' . number_format($price, 2);
+            return '₹' . indian_number_format($price, 2);
         }
     }
 }
@@ -373,7 +373,7 @@ if (! function_exists('human_price_text')) {
             $thousandSeparator = ' ';
         }
 
-        $price = number_format(
+        $price = indian_number_format(
             (float)$price,
             (int)$numberAfterDot,
             $decimalSeparator,
@@ -448,4 +448,25 @@ if (!function_exists('dateTimeFormat')) {
         $time = date('h:i a',strtotime($date));
         return  $date . '<br>' . $time ;
     }
+}
+
+function indian_number_format($number) {
+    $decimal = ''; // To store decimal part if needed
+    if (strpos($number, '.') !== false) {
+        [$number, $decimal] = explode('.', $number); // Split integer and decimal parts
+        $decimal = '.' . $decimal; // Reattach decimal point
+    }
+
+    // Convert the number to a string and reverse it
+    $number = strrev($number);
+
+    // Insert commas after the first 3 digits, then every 2 digits
+    $formatted = preg_replace('/(\d{3})(?=\d)/', '$1,', $number);
+    $formatted = preg_replace('/(\d{2})(?=(\d{2},)+\d)/', '$1,', $formatted);
+
+    // Reverse the string back to normal
+    $formatted = strrev($formatted);
+
+    // Reattach decimal part if present
+    return $formatted . $decimal;
 }

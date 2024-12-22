@@ -47,7 +47,7 @@ class Transaction extends BaseModel
 
         $time = Html::tag('span', $this->created_at->diffForHumans(), ['class' => 'small italic']);
 
-        $credits = number_format($this->credits);
+        $credits = indian_number_format($this->credits);
 
         if ($this->user_id) {
             if ($this->type == TransactionTypeEnum::ADD) {
@@ -66,7 +66,7 @@ class Transaction extends BaseModel
         $description = __('You have purchased :credits credit(s)', ['credits' => $credits]);
         if ($this->payment_id) {
             $description .= ' ' . __('via') . ' ' . $this->payment->payment_channel->label() . ' ' . $time .
-                ': ' . number_format($this->payment->amount, 2) . $this->payment->currency;
+                ': ' . indian_number_format($this->payment->amount, 2) . $this->payment->currency;
         }
 
         return $description;

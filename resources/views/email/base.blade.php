@@ -13,9 +13,9 @@
                 </div>
             </div>
             <div style="text-align: center;margin-top: 3em; ">
-                <h1>{{ env('APP_NAME') }}</h1>
-                <div>© {{ 2024 }} {{ env('APP_NAME') }} | <a href="{{ url('/contact') }}" style="text-decoration: none;">Contact us</a></div>
-                <p style="margin-top: .5em;">You're receiving this email as you created an account with, or someone sent to you using {{ env('APP_NAME') }}.</p>
+                <h1>{{ str_replace('-',' ', env('APP_NAME'))  }}</h1>
+                <div>© {{ 2024 }} {{ str_replace('-',' ', env('APP_NAME')) }} | <a href="{{ url('/contact') }}" style="text-decoration: none;">Contact us</a></div>
+                <p style="margin-top: .5em;">You're receiving this email as you created an account with, or someone sent to you using {{ str_replace('-',' ', env('APP_NAME')) }}.</p>
             </div>
             @if(!isset($reply_to) || !$reply_to)
             <div style="text-align: center;">

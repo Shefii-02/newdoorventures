@@ -29,7 +29,7 @@
             </table>
         </td>
         <td style="text-align: right">
-            <strong> ₹ {{ number_format($ad->price) }}</strong>
+            <strong> ₹ {{ indian_number_format($ad->price) }}</strong>
         </td>
     </tr>
 </table>

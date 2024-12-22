@@ -2,7 +2,8 @@
     <section class="relative mt-20">
         <div class=" container-fluid ">
             <div class="relative table w-full pt-40 overflow-hidden shadow-md pb-52 rounded-2xl" id="home"
-                data-images="[&quot;https:\/\/hously.archielite.com\/storage\/backgrounds\/01.jpg&quot;,&quot;https:\/\/hously.archielite.com\/storage\/backgrounds\/02.jpg&quot;,&quot;https:\/\/hously.archielite.com\/storage\/backgrounds\/03.jpg&quot;,&quot;https:\/\/hously.archielite.com\/storage\/backgrounds\/04.jpg&quot;]">
+            data-images="[&quot;themes/images/banners/01.jpg&quot;,&quot;themes/images/banners/02.jpg&quot;,&quot;themes/images/banners/03.jpg&quot;,&quot;themes/images/banners/04.jpg&quot;]"
+            >
                 <div class="absolute inset-0 bg-black/60"></div>
                 <div class="container">
                     <div class="grid grid-cols-1">

@@ -5,7 +5,7 @@
         </div>
         @include('email.adCard')
         <div>
-            You can start receiving leads right away. Thank you for choosing our platform!
+            You will start receiving leads right away. Thank you for choosing our {{ str_replace('-',' ', env('APP_NAME')) }}!
         </div>
     </div>
 </div>

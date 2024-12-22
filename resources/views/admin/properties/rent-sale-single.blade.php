@@ -58,7 +58,7 @@
                 <div class="card bg-primary text-center">
                     <div class="card-body">
                         <h1 class="text-white text-capitalize mb-3">{{ $property->type_name }} Price</h1>
-                        <span class="text-white font-w300">{!! shorten_price($property->price) . '<small> (' . number_format($property->price) . ')</small>' !!}</span>
+                        <span class="text-white font-w300">{!! shorten_price($property->price) . '<small> (' . indian_number_format($property->price) . ')</small>' !!}</span>
                     </div>
                 </div>
             </div>

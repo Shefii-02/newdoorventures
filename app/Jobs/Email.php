@@ -41,4 +41,9 @@ class Email implements ShouldQueue{
     public function handle(){
         Mail::to($this->to)->bcc($this->bcc)->send(new $this->mailClass($this->details));   
     }
+
+    public static function dispatchWithDelay(array $details, int $delayInMinutes = 1)
+    {
+        self::dispatch($details)->delay(now()->addMinutes($delayInMinutes));
+    }
 }
