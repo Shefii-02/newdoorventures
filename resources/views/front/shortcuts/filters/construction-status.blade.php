@@ -1,6 +1,6 @@
 <div class="mt-6">
     {{-- <label class="form-label" for="property-status" class=" form-label text-slate-900 dark:text-white">Construction Status</label> --}}
-    <div class="relative mt-2 filter-search-form filter-border  gap-8" style="display:flex;" >
+    <div class="relative mt-2 filter-search-form filter-border flex flex-wrap  gap-2"  >
         <div class="lg:grid-cols-3 ">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="newLaunch" name="construction[]" id="consNewLaunch_{{ $type }}">

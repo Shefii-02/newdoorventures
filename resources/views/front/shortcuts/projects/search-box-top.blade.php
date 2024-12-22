@@ -1,5 +1,5 @@
 <form x-data="projectFilters()" x-init="initFilters()" class="search-filter">
-    <div class="py-5">
+    <div class="py-lg-5 py-sm-0">
         <div class="row align-items-center">
             <!-- Property Type Dropdown -->
             <div class="col-lg-4 mb-4 px-1">
@@ -51,8 +51,8 @@
             </div>
 
             <!-- Other Filters -->
-            <div class="col-lg-6 p-0 mb-3">
-                <div class="relative gap-1 flex align-items-center">
+            <div class="col-lg-6 p-0 mb-3 filter-parent">
+                <div class="relative gap-1 flex align-items-center flex-wrap filter-options">
                     <!-- Categories -->
                     <template x-if="showFilters.categories">
                         <div class="relative mb-2">

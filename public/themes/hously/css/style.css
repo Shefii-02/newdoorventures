@@ -954,7 +954,7 @@ video {
     display: none !important
 }
 
-.\ !h-12 {
+.\  !h-12 {
     height: 3rem !important
 }
 
@@ -998,9 +998,10 @@ video {
     height: 11rem !important;
 }
 
-.h-50{
+.h-50 {
     height: 17rem !important;
 }
+
 .h-4 {
     height: 1rem !important
 }
@@ -3141,6 +3142,7 @@ h6 {
         flex-wrap: wrap;
         justify-content: center
     }
+
     #topnav .navigation-menu>li .submenu {
         --tw-bg-opacity: 1;
         --tw-shadow: 0 0 3px rgba(60, 72, 88, .15);
@@ -3160,19 +3162,23 @@ h6 {
         visibility: hidden;
         z-index: 1000
     }
+
     .ck-content #topnav .navigation-menu>li .submenu,
     .ck-content #topnav .navigation-menu>li .submenu li {
         list-style: none
     }
+
     :is(.dark #topnav .navigation-menu>li .submenu) {
         --tw-bg-opacity: 1;
         --tw-shadow-color: #374151;
         --tw-shadow: var(--tw-shadow-colored);
         background-color: rgb(15 23 42/var(--tw-bg-opacity))
     }
+
     #topnav .navigation-menu>li .submenu li {
         position: relative
     }
+
     #topnav .navigation-menu>li .submenu li a {
         --tw-text-opacity: 1;
         clear: both;
@@ -3186,27 +3192,33 @@ h6 {
         transition: all .3s;
         white-space: nowrap
     }
+
     :is(.dark #topnav .navigation-menu>li .submenu li a) {
         --tw-text-opacity: 1;
         color: rgb(255 255 255/var(--tw-text-opacity))
     }
+
     #topnav .navigation-menu>li .submenu li a:hover {
         --tw-text-opacity: 1 !important;
         color: rgb(var(--primary-color)/var(--tw-text-opacity)) !important
     }
+
     :is(.dark #topnav .navigation-menu>li .submenu li a:hover) {
         --tw-text-opacity: 1 !important;
         color: rgb(var(--primary-color)/var(--tw-text-opacity)) !important
     }
+
     #topnav .navigation-menu>li .submenu li ul {
         list-style-type: none;
         margin: 0;
         padding-inline-start: 0
     }
+
     .ck-content #topnav .navigation-menu>li .submenu li ul,
     .ck-content #topnav .navigation-menu>li .submenu li ul li {
         list-style: none
     }
+
     #topnav .navigation-menu>li .submenu.megamenu {
         --tw-translate-x: -50%;
         display: flex;
@@ -3216,104 +3228,128 @@ h6 {
         transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
         white-space: nowrap
     }
+
     #topnav .navigation-menu>li .submenu.megamenu>li {
         overflow: hidden;
         vertical-align: top;
         width: 20%
     }
+
     #topnav .navigation-menu>li .submenu.megamenu>li .submenu {
         inset-inline-start: 100%;
         margin-inline-start: 10px;
         margin-top: -1px;
         top: 0
     }
+
     #topnav .navigation-menu>li .submenu>li .submenu {
         inset-inline-start: 101%;
         margin-inline-start: 10px;
         margin-top: -1px;
         top: 0
     }
+
     #topnav .navigation-menu>li>a {
         min-height: 62px;
         padding-bottom: 25px;
         padding-top: 25px
     }
+
     #topnav .navigation-menu>li:hover>.menu-arrow {
         --tw-border-opacity: 1;
         border-color: rgb(var(--primary-color)/var(--tw-border-opacity))
     }
+
     :is(.dark #topnav .navigation-menu>li:hover>.menu-arrow) {
         --tw-border-opacity: 1;
         border-color: rgb(var(--primary-color)/var(--tw-border-opacity))
     }
+
     #topnav .navigation-menu>li.active>a,
     #topnav .navigation-menu>li:hover>a {
         --tw-text-opacity: 1 !important;
         color: rgb(var(--primary-color)/var(--tw-text-opacity)) !important
     }
+
     :is(.dark #topnav .navigation-menu>li.active>a),
     :is(.dark #topnav .navigation-menu>li:hover>a) {
         --tw-text-opacity: 1 !important;
         color: rgb(var(--primary-color)/var(--tw-text-opacity)) !important
     }
+
     #topnav .navigation-menu>li.last-elements .submenu {
         inset-inline-end: 0;
         inset-inline-start: auto
     }
+
     #topnav .navigation-menu>li.last-elements .submenu:before {
         content: var(--tw-content);
         inset-inline-end: 10px;
         inset-inline-start: auto
     }
+
     #topnav .navigation-menu>li.last-elements .submenu>li.has-submenu .submenu {
         inset-inline-end: 100%;
         inset-inline-start: auto;
         margin-inline-end: 10px;
         margin-inline-start: 0
     }
+
     #topnav .navigation-menu.nav-light>li>a {
         color: hsla(0, 0%, 100%, .5)
     }
+
     #topnav .navigation-menu.nav-light>li.active>a {
         --tw-text-opacity: 1 !important;
         color: rgb(255 255 255/var(--tw-text-opacity)) !important
     }
+
     #topnav .navigation-menu.nav-light>li:hover>.menu-arrow {
         --tw-border-opacity: 1 !important;
         border-color: rgb(255 255 255/var(--tw-border-opacity)) !important
     }
+
     #topnav .navigation-menu.nav-light>li:hover>a {
         --tw-text-opacity: 1 !important;
         color: rgb(255 255 255/var(--tw-text-opacity)) !important
     }
+
     #topnav .navigation-menu.nav-light .has-submenu .submenu .menu-arrow {
         --tw-border-opacity: 1;
         border-color: rgb(22 28 45/var(--tw-border-opacity))
     }
+
     #topnav .navigation-menu.nav-light .has-submenu .menu-arrow {
         border-color: hsla(0, 0%, 100%, .5)
     }
+
     #topnav .navigation-menu.nav-light .has-submenu.active .menu-arrow {
         --tw-border-opacity: 1 !important;
         border-color: rgb(var(--primary-color)/var(--tw-border-opacity)) !important
     }
+
     #topnav .buy-button {
         margin-inline-start: 15px;
         padding-inline-start: 15px
     }
+
     #topnav .navbar-toggle {
         display: none
     }
+
     #topnav #navigation {
         display: block !important
     }
+
     #topnav.scroll {
         top: 0
     }
+
     #topnav.scroll .navigation-menu>li>a {
         padding-bottom: 1.25rem;
         padding-top: 1.25rem
     }
+
     #topnav.scroll-active .navigation-menu>li>a {
         padding-bottom: 25px;
         padding-top: 25px
@@ -3329,41 +3365,50 @@ h6 {
         box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
         min-height: 74px
     }
+
     :is(.dark #topnav) {
         --tw-bg-opacity: 1;
         --tw-shadow-color: #374151;
         --tw-shadow: var(--tw-shadow-colored);
         background-color: rgb(15 23 42/var(--tw-bg-opacity))
     }
+
     #topnav .logo .l-dark {
         display: inline-block !important
     }
+
     #topnav .logo .l-light {
         display: none !important
     }
+
     #topnav .container {
         width: auto
     }
+
     #topnav #navigation {
         --tw-shadow: 0 0 3px rgba(60, 72, 88, .15);
         --tw-shadow-colored: 0 0 3px var(--tw-shadow-color);
         box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
         max-height: 400px
     }
+
     #topnav .navigation-menu,
     #topnav .navigation-menu>li {
         float: none !important
     }
+
     #topnav .navigation-menu>li .submenu {
         display: none;
         list-style-type: none;
         margin: 0;
         padding-inline-start: 1.25rem
     }
+
     .ck-content #topnav .navigation-menu>li .submenu,
     .ck-content #topnav .navigation-menu>li .submenu li {
         list-style: none
     }
+
     #topnav .navigation-menu>li .submenu li a {
         --tw-text-opacity: 1 !important;
         color: rgb(22 28 45/var(--tw-text-opacity)) !important;
@@ -3373,21 +3418,26 @@ h6 {
         position: relative !important;
         transition: all .3s
     }
+
     :is(.dark #topnav .navigation-menu>li .submenu li a) {
         --tw-text-opacity: 1 !important;
         color: rgb(255 255 255/var(--tw-text-opacity)) !important
     }
+
     #topnav .navigation-menu>li .submenu.megamenu li .megamenu-head {
         padding: 7px 15px
     }
+
     #topnav .navigation-menu>li .submenu.megamenu>li>ul {
         list-style-type: none;
         padding-inline-start: 0
     }
+
     .ck-content #topnav .navigation-menu>li .submenu.megamenu>li>ul,
     .ck-content #topnav .navigation-menu>li .submenu.megamenu>li>ul li {
         list-style: none
     }
+
     #topnav .navigation-menu>li .submenu.megamenu>li>ul>li>span {
         --tw-text-opacity: 1;
         color: rgb(226 232 240/var(--tw-text-opacity));
@@ -3399,62 +3449,77 @@ h6 {
         position: relative;
         text-transform: uppercase
     }
+
     #topnav .navigation-menu>li .submenu.open {
         display: block
     }
+
     #topnav .navigation-menu>li .submenu .submenu {
         display: none;
         list-style-type: none
     }
+
     .ck-content #topnav .navigation-menu>li .submenu .submenu,
     .ck-content #topnav .navigation-menu>li .submenu .submenu li {
         list-style: none
     }
+
     #topnav .navigation-menu>li .submenu .submenu.open {
         display: block
     }
+
     #topnav .navigation-menu>li>a {
         --tw-text-opacity: 1;
         color: rgb(22 28 45/var(--tw-text-opacity));
         padding: 10px 20px
     }
+
     #topnav .navigation-menu>li>a:after {
         content: var(--tw-content);
         inset-inline-end: 15px;
         position: absolute
     }
+
     :is(.dark #topnav .navigation-menu>li>a) {
         --tw-text-opacity: 1;
         color: rgb(255 255 255/var(--tw-text-opacity))
     }
+
     #topnav .navigation-menu>li .submenu li a:hover,
     #topnav .navigation-menu>li.has-submenu.open>a,
     #topnav .navigation-menu>li>a:hover {
         --tw-text-opacity: 1;
         color: rgb(var(--primary-color)/var(--tw-text-opacity))
     }
+
     #topnav .menu-extras .menu-item {
         --tw-border-opacity: 1;
         border-color: rgb(229 231 235/var(--tw-border-opacity))
     }
+
     :is(.dark #topnav .menu-extras .menu-item) {
         --tw-border-opacity: 1;
         border-color: rgb(55 65 81/var(--tw-border-opacity))
     }
+
     :is([dir=ltr] #topnav .navbar-header) {
         float: left
     }
+
     :is([dir=rtl] #topnav .navbar-header) {
         float: right
     }
+
     #topnav .buy-button .btn-icon-dark,
     #topnav .buy-button .login-btn-primary {
         display: inline-block !important
     }
+
     #topnav .buy-button .btn-icon-light,
     #topnav .buy-button .login-btn-light {
         display: none
     }
+
     #topnav .has-submenu .submenu .menu-arrow {
         --tw-rotate: 45deg;
         inset-inline-end: 1.25rem;
@@ -3462,10 +3527,12 @@ h6 {
         top: .75rem;
         transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
     }
+
     #topnav .has-submenu.active a {
         --tw-text-opacity: 1;
         color: rgb(var(--primary-color)/var(--tw-text-opacity))
     }
+
     #navigation {
         --tw-bg-opacity: 1;
         background-color: rgb(255 255 255/var(--tw-bg-opacity));
@@ -3477,10 +3544,12 @@ h6 {
         top: 74px;
         width: 100%
     }
+
     :is(.dark #navigation) {
         --tw-bg-opacity: 1;
         background-color: rgb(15 23 42/var(--tw-bg-opacity))
     }
+
     #navigation.open {
         display: block;
         overflow-y: auto
@@ -3500,6 +3569,7 @@ h6 {
         opacity: 1;
         visibility: visible
     }
+
     #topnav .navigation-menu>li.has-submenu:hover>.submenu>li.has-submenu:hover>.submenu,
     #topnav .navigation-menu>li.has-submenu:hover>.submenu>li.has-submenu:hover>.submenu>li:hover>.submenu {
         margin-inline-end: 0;
@@ -3507,6 +3577,7 @@ h6 {
         opacity: 1;
         visibility: visible
     }
+
     .navbar-toggle {
         display: block
     }
@@ -3518,6 +3589,7 @@ h6 {
         margin: 0 10px !important;
         padding: 10px 1.25rem !important
     }
+
     #topnav .buy-menu-btn .dropdown .dropdown-menu.show {
         transform: translate3d(0, -54px, 0) !important
     }
@@ -3536,6 +3608,7 @@ h6 {
     .tagline {
         display: none
     }
+
     .tagline-height {
         top: 0 !important
     }
@@ -3642,10 +3715,12 @@ h6 {
 }
 
 @keyframes sk-bounce {
+
     0%,
     to {
         transform: scale(0)
     }
+
     50% {
         transform: scale(1)
     }
@@ -3737,6 +3812,7 @@ h6 {
         transform: scale(1);
         transform-origin: bottom
     }
+
     to {
         transform: scale(1.4)
     }
@@ -3746,15 +3822,19 @@ h6 {
     0% {
         transform: scale(1.3) translate(-10%, 10%)
     }
+
     25% {
         transform: scale(1) translate(0)
     }
+
     50% {
         transform: scale(1.3) translate(10%, 10%)
     }
+
     75% {
         transform: scale(1) translate(0)
     }
+
     to {
         transform: scale(1.3) translate(-10%, 10%)
     }
@@ -3953,14 +4033,17 @@ html[dir=rtl] .tns-visually-hidden {
         top: 10px;
         z-index: 1
     }
+
     :is(.dark .filter-border):before {
         --tw-border-opacity: 1;
         border-color: rgb(55 65 81/var(--tw-border-opacity));
         content: var(--tw-content)
     }
+
     .registration-form {
         position: relative
     }
+
     .registration-form .submit-btn {
         border-bottom-left-radius: .125rem;
         border-bottom-right-radius: .125rem;
@@ -3971,6 +4054,7 @@ html[dir=rtl] .tns-visually-hidden {
         border-top-left-radius: 0;
         border-top-right-radius: 0
     }
+
     .registration-form .form-input {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
@@ -3982,6 +4066,7 @@ html[dir=rtl] .tns-visually-hidden {
         border-top-right-radius: .125rem;
         outline-width: 0
     }
+
     .registration-form .choices[data-type*=select-one] .choices__inner {
         border-radius: 0
     }
@@ -4660,6 +4745,7 @@ html[dir=rtl] .tns-visually-hidden {
     0% {
         transform: rotate(0deg)
     }
+
     to {
         transform: rotate(1turn)
     }
@@ -5257,25 +5343,32 @@ footer .currency-switcher+.social-icon:before {
     .sm\:mt-3 {
         margin-top: .75rem !important
     }
+
     .sm\:inline {
         display: inline !important
     }
+
     .sm\:h-36 {
         height: 9rem !important
     }
+
     .sm\:h-full {
         height: 100% !important
     }
+
     .sm\:w-36 {
         width: 9rem !important
     }
+
     .sm\:w-fit {
         width: -moz-fit-content !important;
         width: fit-content !important
     }
+
     .sm\:w-full {
         width: 100% !important
     }
+
     .sm\:grid-cols-1 {
         grid-template-columns: repeat(1, minmax(0, 1fr)) !important
     }
@@ -5285,151 +5378,198 @@ footer .currency-switcher+.social-icon:before {
     .md\:-end-24 {
         inset-inline-end: -6rem !important
     }
+
     .md\:-start-24 {
         inset-inline-start: -6rem !important
     }
+
     .md\:start-\[45px\] {
         inset-inline-start: 45px !important
     }
+
     .md\:col-span-12 {
         grid-column: span 12/span 12 !important
     }
+
     .md\:col-span-2 {
         grid-column: span 2/span 2 !important
     }
+
     .md\:col-span-3 {
         grid-column: span 3/span 3 !important
     }
+
     .md\:col-span-4 {
         grid-column: span 4/span 4 !important
     }
+
     .md\:col-span-5 {
         grid-column: span 5/span 5 !important
     }
+
     .md\:col-span-6 {
         grid-column: span 6/span 6 !important
     }
+
     .md\:col-span-7 {
         grid-column: span 7/span 7 !important
     }
+
     .md\:mx-4 {
         margin-left: 1rem !important;
         margin-right: 1rem !important
     }
+
     .md\:mb-0 {
         margin-bottom: 0 !important
     }
+
     .md\:me-2 {
         margin-inline-end: .5rem !important
     }
+
     .md\:ms-auto {
         margin-inline-start: auto !important
     }
+
     .md\:mt-0 {
         margin-top: 0 !important
     }
+
     .md\:mt-16 {
         margin-top: 4rem !important
     }
+
     .md\:block {
         display: block !important
     }
+
     .md\:inline-block {
         display: inline-block !important
     }
+
     .md\:flex {
         display: flex !important
     }
+
     .md\:hidden {
         display: none !important
     }
+
     .md\:h-40 {
         height: 10rem !important
     }
+
     .md\:h-screen {
         height: 100vh !important
     }
+
     .md\:w-1\/2 {
         width: 50% !important
     }
+
     .md\:w-1\/4 {
         width: 25% !important
     }
+
     .md\:w-3\/4 {
         width: 75% !important
     }
+
     .md\:w-48 {
         width: 12rem !important
     }
+
     .md\:w-80 {
         width: 20rem !important
     }
+
     .md\:w-fit {
         width: -moz-fit-content !important;
         width: fit-content !important
     }
+
     .md\:w-full {
         width: 100% !important
     }
+
     .md\:shrink-0 {
         flex-shrink: 0 !important
     }
+
     .md\:grid-cols-12 {
         grid-template-columns: repeat(12, minmax(0, 1fr)) !important
     }
+
     .md\:grid-cols-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important
     }
+
     .md\:grid-cols-3 {
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important
     }
+
     .md\:grid-cols-5 {
         grid-template-columns: repeat(5, minmax(0, 1fr)) !important
     }
+
     .md\:grid-cols-6 {
         grid-template-columns: repeat(6, minmax(0, 1fr)) !important
     }
+
     .md\:gap-10 {
         gap: 2.5rem !important
     }
+
     .md\:rounded-se-xl {
         border-start-end-radius: .75rem !important
     }
+
     .md\:p-4 {
         padding: 1rem !important
     }
+
     .md\:px-10 {
         padding-left: 2.5rem !important;
         padding-right: 2.5rem !important
     }
+
     .md\:py-4 {
         padding-bottom: 1rem !important
     }
+
     .md\:pt-4,
     .md\:py-4 {
         padding-top: 1rem !important
     }
+
     .md\:text-left {
         text-align: left !important
     }
+
     .md\:text-start {
         text-align: start !important
     }
+
     .md\:text-end {
         text-align: end !important
     }
+
     .md\:text-3xl {
         font-size: 1.875rem !important;
         line-height: 2.25rem !important
     }
+
     .md\:text-4xl {
         font-size: 2.25rem !important;
         line-height: 2.5rem !important
     }
+
     .md\:text-5xl {
         font-size: 3rem !important;
         line-height: 1 !important
     }
+
     .md\:leading-normal {
         line-height: 1.5 !important
     }
@@ -5439,146 +5579,191 @@ footer .currency-switcher+.social-icon:before {
     .lg\:col-span-10 {
         grid-column: span 10/span 10 !important
     }
+
     .lg\:col-span-2 {
         grid-column: span 2/span 2 !important
     }
+
     .lg\:col-span-3 {
         grid-column: span 3/span 3 !important
     }
+
     .lg\:col-span-4 {
         grid-column: span 4/span 4 !important
     }
+
     .lg\:col-span-5 {
         grid-column: span 5/span 5 !important
     }
+
     .lg\:col-span-6 {
         grid-column: span 6/span 6 !important
     }
+
     .lg\:col-span-7 {
         grid-column: span 7/span 7 !important
     }
+
     .lg\:col-span-8 {
         grid-column: span 8/span 8 !important
     }
+
     .lg\:col-start-2 {
         grid-column-start: 2 !important
     }
+
     .lg\:-mt-16 {
         margin-top: -4rem !important
     }
+
     .lg\:me-0 {
         margin-inline-end: 0 !important
     }
+
     .lg\:me-6 {
         margin-inline-end: 1.5rem !important
     }
+
     .lg\:ms-10 {
         margin-inline-start: 2.5rem !important
     }
+
     .lg\:ms-4 {
         margin-inline-start: 1rem !important
     }
+
     .lg\:ms-5 {
         margin-inline-start: 1.25rem !important
     }
+
     .lg\:mt-24 {
         margin-top: 6rem !important
     }
+
     .lg\:inline-block {
         display: inline-block !important
     }
+
     .lg\:hidden {
         display: none !important
     }
+
     .lg\:h-28 {
         height: 7rem !important
     }
+
     .lg\:h-screen {
         height: 100vh !important
     }
+
     .lg\:w-1\/2 {
         width: 50% !important
     }
+
     .lg\:w-1\/3 {
         width: 33.333333% !important
     }
+
     .lg\:w-2\/3 {
         width: 66.666667% !important
     }
+
     .lg\:w-full {
         width: 100% !important
     }
+
     .lg\:max-w-2xl {
         max-width: 42rem !important
     }
+
     .lg\:grid-cols-12 {
         grid-template-columns: repeat(12, minmax(0, 1fr)) !important
     }
+
     .lg\:grid-cols-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important
     }
+
     .lg\:grid-cols-3 {
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important
     }
+
     .lg\:grid-cols-4 {
         grid-template-columns: repeat(4, minmax(0, 1fr)) !important
     }
+
     .lg\:grid-cols-5 {
         grid-template-columns: repeat(5, minmax(0, 1fr)) !important
     }
+
     .lg\:gap-0 {
         gap: 0 !important
     }
+
     .lg\:gap-6 {
         gap: 1.5rem !important
     }
+
     .lg\:px-10 {
         padding-left: 2.5rem !important;
         padding-right: 2.5rem !important
     }
+
     .lg\:px-8 {
         padding-left: 2rem !important;
         padding-right: 2rem !important
     }
+
     .lg\:py-24 {
         padding-bottom: 6rem !important;
         padding-top: 6rem !important
     }
+
     .lg\:py-36 {
         padding-bottom: 9rem !important;
         padding-top: 9rem !important
     }
+
     .lg\:py-44 {
         padding-bottom: 11rem !important;
         padding-top: 11rem !important
     }
+
     .lg\:pt-24 {
         padding-top: 6rem !important
     }
+
     .lg\:pt-32 {
         padding-top: 8rem !important
     }
+
     .lg\:text-3xl {
         font-size: 1.875rem !important;
         line-height: 2.25rem !important
     }
+
     .lg\:text-5xl {
         font-size: 3rem !important;
         line-height: 1 !important
     }
+
     .lg\:text-\[150px\] {
         font-size: 150px !important
     }
+
     .lg\:text-lg {
         font-size: 1.125rem !important
     }
+
     .lg\:text-lg,
     .lg\:text-xl {
         line-height: 1.75rem !important
     }
+
     .lg\:text-xl {
         font-size: 1.25rem !important
     }
+
     .lg\:leading-normal {
         line-height: 1.5 !important
     }
@@ -5690,6 +5875,7 @@ input[type="range"]::-moz-range-thumb {
     background-color: #cba641 !important;
     color: #fff !important;
 }
+
 .bg-theme-light {
     background-color: #e8cf89 !important;
     color: #625454 !important;
@@ -5777,14 +5963,14 @@ body {
 
 /* Modal Styles */
 .modal {
- /*     display: none;
+    /*     display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
     top: 0;*/
     width: 100%;
     height: 100%;
-    overflow: auto; 
+    overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -6031,7 +6217,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus+label {
     border: 2px solid #e9a1ff;
 }
 
-.h-230{
+.h-230 {
     height: 230px;
     width: 100%;
 }
@@ -6051,5 +6237,47 @@ ul.ks-cboxtags li input[type="checkbox"]:focus+label {
 
 .jump-header .tab-active {
     background-color: transparent !important;
-    color: #cba641 !important; 
+    color: #cba641 !important;
+}
+
+
+/*responsive */
+@media only screen and (max-width: 600px) {
+
+    .buy-button{
+        margin-top: 10px;
+        /* height: 1.5rem !important; */
+    }
+    #topnav .buy-button {
+        line-height: 40px;
+    }
+    a.post-property {
+        font-size: 12px;
+    }
+
+    #navigation{
+        z-index: 99999999999;
+    }
+
+    .all-residential{
+        justify-content: left !important;
+    }
+
+    .filter-web-dropdown .option-sections{
+        left: 0 !important;
+    }
+
+
+    .filter-parent .filter-options .relative{
+        position: unset !important;
+    }
+
+    .bg-white.dark\:bg-slate-900.dark\:border-gray-800.mb-0.p-6.sticky.top-0.z-999{
+        z-index: 99999999999999 !important;
+    }
+
+    .modal-content{
+        margin: 0 !important;
+        min-width: 100% !important;
+    }
 }

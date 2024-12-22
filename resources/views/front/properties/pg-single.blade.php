@@ -45,7 +45,7 @@
 
                         </div>
                     </div>
-                    <div class="px-3 mt-8 col-lg-3">
+                    <div class="px-3 mt-8 col-lg-3 mb-3">
                         <span class="">Posted on {{ date('M d, Y', strtotime($property->created_at)) }}</span>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
 
                 <div class=" mt-2 px-3">
 
-                    <div class="px-3  ">
+                    <div class="px-3  flex flex-wrap">
                         <span class="text-md">Occupancy Type : <i class="mdi mdi-bed-outline"></i> <span
                                 class="text-capitalize text-md"> {{ $property->occupancy_type }}</span></span>
                         <span class="px-2 ms-2 py-0.75 text-sm border-theme rounded">For <i
@@ -81,7 +81,7 @@
                                             <div class="md:flex">
                                                 <div class="px-3 col-lg-12 md:p-4">
                                                     <div class="row">
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">Deposit Amount</h4>
                                                                 @php
@@ -98,7 +98,7 @@
                                                                 <span>{{ $depositValue }}</span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">Maintenance</h4>
                                                                 @php
@@ -116,7 +116,7 @@
 
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">Notice Period</h4>
                                                                 @php
@@ -133,7 +133,7 @@
                                                                 <span>{{ $noticeValue }}</span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">Electricity Charges</h4>
                                                                 @php
@@ -152,7 +152,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row mt-8">
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">Food Availability</h4>
                                                                 @php
@@ -169,7 +169,7 @@
                                                                 <span>{{ $foodValue }}</span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">AC Rooms</h4>
                                                                 @php
@@ -183,7 +183,7 @@
                                                                 <span>{{ $acRoomsValue }}</span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">Parking</h4>
                                                                 @php
@@ -197,7 +197,7 @@
                                                                 <span>{{ $acParkingValue }}</span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">Power Backup</h4>
                                                                 @php
@@ -217,14 +217,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="row mt-8">
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">Available for</h4>
                                                                 <span
                                                                     class="text-capitalize">{{ $property->available_for == 'any' ? 'Boys and Girls' : $property->available_for }}</span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">Preferred Tenants</h4>
 
@@ -243,7 +243,7 @@
                                                                 <span>{{ $preferredTenantsValue }}</span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">Total Number of Beds</h4>
                                                                 @php
@@ -261,7 +261,7 @@
                                                                 <span>{{ $totalBedsValue }}</span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">Operating Since</h4>
                                                                 @php
@@ -398,7 +398,7 @@
                                                                 Area </h4>
                                                             <div class="row align-items-center px-3">
                                                                 @foreach ($property->features ?? [] as $featureItem)
-                                                                    <div class="col-lg-3 d-flex align-items-center">
+                                                                    <div class="col-lg-3 mb-3 d-flex align-items-center">
                                                                         <img class="rounded-xl w-6 w-1/2 h-6"
                                                                             src="{{ $featureItem->image_url }}">
                                                                         <div class="p-3">
@@ -426,7 +426,7 @@
                                                             </h4>
                                                             <div class="row align-items-center px-3">
                                                                 @foreach ($property->furnishing ?? [] as $furnishingItem)
-                                                                    <div class="col-lg-3 d-flex align-items-center">
+                                                                    <div class="col-lg-3 mb-3 d-flex align-items-center">
                                                                         <img class="rounded-xl w-6 w-1/2 h-6"
                                                                             src="{{ $furnishingItem->image_url }}">
                                                                         <div class="p-3">
@@ -458,7 +458,7 @@
                                                                 @foreach ($property->pg_rules ?? [] as $ruleItem)
                                                            
                                                                     <div
-                                                                        class="col-lg-3 d-flex  flex-column align-items-center">
+                                                                        class="col-lg-3 mb-3 d-flex  flex-column align-items-center">
                                                                         <img class="rounded-xl w-6 w-1/2 h-6"
                                                                             src="{{ $ruleItem->rule->image_url }}">
                                                                             <label class="text-sm mt-1">{{ $ruleItem->rule->name }}</label>

@@ -28,13 +28,13 @@
                     <div class="px-3 col-lg-9">
                         <div class="row pt-5 align-items-top">
 
-                            <div class="px-3 col-lg-2  text-end md:p-4 md:flex flex-column">
+                            <div class="px-3 col-lg-2 mb-3 text-lg-end md:p-4 md:flex flex-column">
                                 <span class="fw-bold fs-4 text-theme">
                                     {{ shorten_price($property->price) }}
                                 </span>
                                 <span class="mt-2 fs-6">{{ $property->square_text }}</span>
                             </div>
-                            <div class="px-3 col-lg-9 md:p-4 md:flex flex-column">
+                            <div class="px-3 col-lg-9 mb-3 md:p-4 md:flex flex-column">
                                 <div class="flex flex-column flex-column">
                                     <h4 class=" d-inline  font-bold me-2">
                                         {{ $property->name }}
@@ -69,7 +69,7 @@
         <div class="container mt-2">
 
             <div class="px-3  ">
-                <div class="border-theme rounded flex  py-1" style="width: fit-content;">
+                <div class="border-theme rounded flex flex-wrap  py-1" style="width: fit-content;">
                     <span
                         class="text-dark font-bold text-sm  inline  dark:text-gray-400 text-capitalize px-2">{{ $property->furnishing_status ?? '' }}</span>
                     <span
@@ -123,29 +123,29 @@
                                     <div class="md:flex">
                                         <div class="px-3 col-lg-12 md:p-4">
                                             <div class="row">
-                                                <div class="col-lg-3">
-                                                    <div class="flex flex-column text-center gap-2">
+                                                <div class="col-lg-3 mb-3">
+                                                    <div class="flex flex-column text-lg-center gap-2">
                                                         <h4><span class="fw-bold">Carpet Area</span>
                                                             <small>{{ $property->carpet_area ?? 0 }} sqft</small>
                                                         </h4>
                                                         <span>{{ shorten_price($property->price / ($property->square > 0 ? $property->square : 1)) }}/sqft</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <div class="flex flex-column text-center gap-2">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column text-lg-center gap-2">
                                                         <h4 class="fw-bold">Floor</h4>
                                                         <span>{{ $property->available_floor }} (Out of
                                                             {{ $property->number_floor }} Floors)</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <div class="flex flex-column gap-2  text-center">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
                                                         <h4 class="fw-bold">Units on Floor</h4>
                                                         <span>{{ $property->units_on_floor ?? '---' }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <div class="flex flex-column gap-2  text-center">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
                                                         <h4 class="fw-bold">Facing</h4>
                                                         <span>{{ $facing ?? '--' }}</span>
                                                     </div>
@@ -153,26 +153,26 @@
 
                                             </div>
                                             <div class="row mt-8">
-                                                <div class="col-lg-3">
-                                                    <div class="flex flex-column gap-2  text-center">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
                                                         <h4 class="fw-bold">Washroom</h4>
                                                         <span class="text-capitalize">{{ $property->washroom }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <div class="flex flex-column gap-2  text-center">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
                                                         <h4 class="fw-bold">Cabin</h4>
                                                         <span>{{ $property->cabin }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <div class="flex flex-column gap-2  text-center">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
                                                         <h4 class="fw-bold">Seats</h4>
                                                         <span>{{ $property->seats }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <div class="flex flex-column gap-2  text-center">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
                                                         <h4 class="fw-bold">Pantry</h4>
                                                         <span>{{ $property->pantry }}</span>
                                                     </div>
@@ -180,15 +180,15 @@
                                             </div>
                                             <div class="row mt-8">
                                                 @if ($property->type == 'rent')
-                                                    <div class="col-lg-3">
-                                                        <div class="flex flex-column gap-2  text-center">
+                                                    <div class="col-lg-3  mb-3">
+                                                        <div class="flex flex-column gap-2  text-lg-center">
                                                             <h4 class="fw-bold">Lock-in period</h4>
                                                             <span>{{ $lockInPeriod ?? '---' }}</span>
                                                         </div>
                                                     </div>
                                                 @else 
-                                                    <div class="col-lg-3">
-                                                        <div class="flex flex-column gap-2  text-center">
+                                                    <div class="col-lg-3  mb-3">
+                                                        <div class="flex flex-column gap-2  text-lg-center">
                                                             <h4 class="fw-bold">Suitable for</h4>
                                                             <span>{{ $suitableFor ?? '---' }}</span>
                                                         </div>
@@ -196,20 +196,20 @@
                                                 
                                                 @endif
 
-                                                <div class="col-lg-3">
-                                                    <div class="flex flex-column gap-2  text-center">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
                                                         <h4 class="fw-bold">Open parking</h4>
                                                         <span>{{ $property->open_parking }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <div class="flex flex-column gap-2  text-center">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
                                                         <h4 class="fw-bold">Covered parking</h4>
                                                         <span>{{ $property->covered_parking }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <div class="flex flex-column gap-2  text-center">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
                                                         <h4 class="fw-bold">Overlooking</h4>
                                                         <span
                                                             class="text-capitalize">{{ $property->overlooking ?? '--' }}</span>

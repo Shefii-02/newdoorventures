@@ -3,7 +3,7 @@
     <input type="hidden" name="type" value="{{ $type }}">
     <div class="col-lg-12">
         <div class="row align-items-center">
-            <div class="col-md-2 flex justify-end">
+            <div class="col-md-2 flex justify-end all-residential">
                 <button type="button" @click="openProject = !openProject"
                     class="flex items-center gap-2 toggle-advanced-search text-primary hover:text-secondary">
                     {{ __('All Residential') }}
@@ -11,12 +11,12 @@
                 </button>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-8 mb-3">
                 <div class="row align-items-center">
-                    <div class="col-lg-11">
+                    <div class="col-lg-11 col-11">
                         @include('front.shortcuts.filters.keyword', ['type' => $type])
                     </div>
-                    <div class="col-lg-1 flex gap-5">
+                    <div class="col-lg-1 col-1 flex gap-5">
                         <i role="button" class="mdi mdi-microphone fs-3 text-primary openModal"></i>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="container-fluid px-3 mt-5">
-                    <div class="flex space-x-4 mb-4 gap-8">
+                    <div class="flex flex-wrap mb-4 gap-8">
                         <span role="button"
                             @click="activeTab2 = (activeTab2 === 'budget_Project' ? '' : 'budget_Project')"
                             :class="{ 'font-bold tab-active bg-theme-light': activeTab2 === 'budget_Project' }"

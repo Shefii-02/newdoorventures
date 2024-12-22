@@ -25,7 +25,7 @@
 
         <ul class="buy-button list-none mb-0">
 
-            <li class="inline mb-0">
+            <li class="hidden inline mb-0">
                 <a href="{{ route('user.login') }}"
                     class="text-white rounded-full btn btn-icon bg-primary hover:bg-secondary border-primary dark:border-primary"
                     aria-label="Sign in">
@@ -37,9 +37,9 @@
                     </svg>
                 </a>
             </li>
-            <li class="hidden mb-0 sm:inline ps-1">
+            <li class=" mb-0 sm:inline ps-1">
                 <a href="{{ route('user.properties.create') }}"
-                    class="text-white rounded-full btn bg-primary hover:bg-secondary border-primary dark:border-primary"
+                    class="text-white rounded-full btn bg-primary hover:bg-secondary border-primary dark:border-primary post-property"
                     aria-label="Add your listing">
                     Post your property for free
                 </a>

@@ -20,13 +20,13 @@
                     <div class="px-3 col-lg-9">
                         <div class="row pt-5 align-items-top">
 
-                            <div class="px-3 col-lg-2  md:p-4 md:flex flex-column">
+                            <div class="px-3 col-lg-2  md:p-4 md:flex flex-column text-lg-end mb-3">
                                 <span class="fw-bold fs-4 text-theme">
                                     {{ shorten_price($property->price) }}
                                 </span>
                                 <span class="mt-2 fs-6">{{ $property->square_text }}</span>
                             </div>
-                            <div class="px-3 col-lg-9 md:p-4 md:flex flex-column">
+                            <div class="px-3 col-lg-9 md:p-4 md:flex flex-column mb-3">
                                 <div class="flex flex-column flex-column">
                                     <h4 class=" d-inline  font-bold me-2">{{ $property->name }}
                                         <span
@@ -61,7 +61,7 @@
         <div class="container mt-2">
 
             <div class="px-3  ">
-                <div class="border-theme rounded flex  py-1" style="width: fit-content;">
+                <div class="border-theme rounded flex flex-wrap justify-between  py-1" style="width: fit-content;">
                     <span
                         class="text-dark font-medium text-sm  inline  dark:text-gray-400 text-capitalize px-2">{{ $property->number_bedroom ?? 0 }}
                         Beds</span>
@@ -78,7 +78,7 @@
             </div>
             @if ($property->project->rera_status == 'registered')
                 <div class="px-3  mt-4">
-                    <div class="border-theme rounded flex " style="width: fit-content;">
+                    <div class="border-theme rounded flex flex-wrap" style="width: fit-content;">
                         <span
                             class="text-light text-sm  bg-theme font-medium  inline  dark:text-gray-400 text-uppercase px-2">RERA
                             STATUS</span>
@@ -110,26 +110,26 @@
                                     <div class="md:flex">
                                         <div class="px-3 col-lg-12 md:p-4">
                                             <div class="row">
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-3 mb-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Carpet Area {{ $property->carpet_area ?? 0 }}
                                                             sqft</h4>
                                                         <span>{{ shorten_price($property->price / ($property->square > 0 ? $property->square : 1)) }}/sqft</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-3 mb-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Developer</h4>
                                                         <span>{{ $property->project && $property->project->investor ? $property->project->investor->name : '---' }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-3 mb-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Project</h4>
                                                         <span>{{ $property->project->name ?? '---' }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-3 mb-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Floor</h4>
                                                         <span>{{ $property->available_floor }} (Out of
@@ -138,26 +138,26 @@
                                                 </div>
                                             </div>
                                             <div class="row mt-8">
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-3 mb-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Transaction Type</h4>
                                                         <span class="text-capitalize">{{ $property->type }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-3 mb-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Status</h4>
                                                         <span
                                                             class="text-capitalize">{{ str_replace('_', ' ', $property->construction_status) }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-3 mb-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Open parking</h4>
                                                         <span>{{ $property->open_parking }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-3 mb-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Covered parking</h4>
                                                         <span>{{ $property->covered_parking }}</span>

@@ -67,20 +67,20 @@
                                                 </div>
                                                 <div class="col-lg-12 my-5 px-3">
                                                     <div class="row">
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
                                                                 <h4 class="fw-bold">Plot Area {{ $property->plot_area ?? 0 }} sqft</h4>
                                                                 <span>{{ shorten_price($property->price / ($property->plot_area > 0 ? $property->plot_area : 1)) }}/sqft</span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
-                                                            <div class="flex flex-column text-center">
+                                                        <div class="col-lg-3 mb-3">
+                                                            <div class="flex flex-column text-lg-center">
                                                                 <h4 class="fw-bold">Transaction Type</h4>
                                                                 <span>{{ str_replace('_', ' ', $property->construction_status) }}</span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
-                                                            <div class="flex flex-column text-center">
+                                                        <div class="col-lg-3 mb-3">
+                                                            <div class="flex flex-column text-lg-center">
                                                                 <h4 class="fw-bold">Open Sides</h4>
                                                                 <span>{{ $property->open_sides ?? '---' }}</span>
                                                             </div>

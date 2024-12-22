@@ -1,4 +1,4 @@
-<form action="{{ $actionUrl ?? RealEstateHelper::getProjectsListPageUrl() }}" data-ajax-url="{{ $ajaxUrl ?? route('public.projects') }}" class="search-filter">
+{{-- <form action="{{ $actionUrl ?? RealEstateHelper::getProjectsListPageUrl() }}" data-ajax-url="{{ $ajaxUrl ?? route('public.projects') }}" class="search-filter">
     <div class="space-y-5 registration-form text-dark text-start">
         <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-0">
             
@@ -36,4 +36,4 @@
             </button>
         </div>
     </div>
-</form>
+</form> --}}

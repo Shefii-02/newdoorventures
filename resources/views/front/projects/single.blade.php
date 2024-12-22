@@ -76,14 +76,14 @@
                                                 </div>
 
                                                 <div class="px-3  ">
-                                                    <div class="border-theme rounded flex " style="width: fit-content;">
+                                                    <div class="border-theme rounded flex flex-wrap  " style="width: fit-content;">
                                                         <span
-                                                            class="text-light text-sm  bg-theme font-medium  inline  dark:text-white text-uppercase px-2">RERA
-                                                            STATUS</span>
+                                                            class="text-light text-sm pt-1 bg-theme font-medium  inline  dark:text-white text-uppercase px-2">
+                                                            RERA  STATUS</span>
                                                         <span
-                                                            class="text-theme text-sm   inline  dark:text-white text-uppercase border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $project->rera_status }}</span>
+                                                            class="text-theme text-sm pt-1  inline  dark:text-white text-uppercase border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $project->rera_status }}</span>
                                                         <span
-                                                            class="text-theme text-sm font-medium  inline  dark:text-white text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">Registration
+                                                            class="text-theme text-sm font-medium pt-1 inline  dark:text-white text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">Registration
                                                             No: {{ $project->rera_reg_no }}</span>
                                                     </div>
                                                 </div>

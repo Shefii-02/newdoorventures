@@ -2,7 +2,7 @@
     <input type="hidden" name="type" value="{{ 'sale' }}">
     <div class="col-lg-12">
         <div class="row align-items-center">
-            <div class="col-md-2 flex justify-end">
+            <div class="col-md-2 flex justify-end all-residential">
                 <button type="button" @click="openBuy = !openBuy"
                     class="flex items-center gap-2 toggle-advanced-search text-primary hover:text-secondary">
                     {{ __('All Residential') }}
@@ -10,12 +10,12 @@
                 </button>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-8 mb-3">
                 <div class="row align-items-center">
-                    <div class="col-lg-10">
+                    <div class="col-lg-10 col-10">
                         @include("front.shortcuts.filters.keyword", ['type' => $type])
                     </div>
-                    <div class="col-lg-2 flex gap-5">
+                    <div class="col-lg-2 col-2 flex gap-5">
                         @include("front.shortcuts.filters.tabs.mic-location")
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="container-fluid px-3 mt-3">
-                    <div class="flex space-x-4 mb-4 gap-8">
+                    <div class="flex mb-4 gap-4 flex-wrap">
                         <span role="button"
                             @click="activeTab2 = (activeTab2 === 'budget_Buy' ? '' : 'budget_Buy')"
                             :class="{ 'font-bold tab-active bg-theme-light': activeTab2 === 'budget_Buy' }"

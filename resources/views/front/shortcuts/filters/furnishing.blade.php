@@ -1,5 +1,5 @@
 <div class="mt-6">
-    <div class="relative mt-2 filter-search-form filter-border  gap-8" style="display:flex;" >
+    <div class="relative mt-2 filter-search-form filter-border flex flex-wrap gap-8">
         <div class="lg:grid-cols-3 ">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="furnished" name="furnishing[]" id="furnished_{{ $type }}">
