@@ -45,13 +45,33 @@ trait Emails{
         ]));
     }
 
-    public function accountApproved(User $user){
+    public function accountApproved(Account $user){
         self::email(new Email([
 		    'emailClass' => 'DefaultMail',
             'name' => $user->name,
             'to' => $user->email,
             'subject' => __("Account approved"),
             'contents' => view('email.accountApproved')->withUser($user)->render(),
+        ]));
+    }
+
+    public function accountSuspended(Account $user){
+        self::email(new Email([
+		    'emailClass' => 'DefaultMail',
+            'name' => $user->name,
+            'to' => $user->email,
+            'subject' => __("Account Subspended"),
+            'contents' => view('email.accountSuspended')->withUser($user)->render(),
+        ]));
+    }
+
+    public function accountDeleted(Account $user){
+        self::email(new Email([
+		    'emailClass' => 'DefaultMail',
+            'name' => $user->name,
+            'to' => $user->email,
+            'subject' => __("Account Deleted"),
+            'contents' => view('email.accountDeleted')->withUser($user)->render(),
         ]));
     }
 
@@ -102,6 +122,18 @@ trait Emails{
             'contents' => view('email.adPendingReviewAdmin')->withAd($ad)->render(),
         ]));
     }
+
+
+    public function adDeleted(Property $ad){
+        self::email(new Email([
+		    'emailClass' => 'DefaultMail',
+            'name' => $ad->author->name,
+            'to' => $ad->author->email,
+            'subject' => __("Property :title has been suspended", ['title' => $ad->name]),
+            'contents' => view('email.adDeleted')->withAd($ad)->render(),
+        ]));
+    }
+    
 
     public function subscriptionOrderExpired(SubscriptionOrder $order){
         self::email(new Email([

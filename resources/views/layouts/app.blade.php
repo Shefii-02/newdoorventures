@@ -14,10 +14,18 @@
     <meta content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=1"
         name="viewport" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>New Door Ventures</title>
+    <title>{{ $pageTitle }}</title>
+    <meta name="description" content="{{ $pageDescription }}">
+    <meta name="keywords"
+        content="{{ 'Real estate in Bangalore, properties in Karnataka, buy property in Bangalore, Karnataka real estate solutions, residential properties for sale in Bangalore, commercial properties for sale in Karnataka, plots for sale in Bangalore, affordable homes for sale in Karnataka, properties for rent in Bangalore, flats for rent in Karnataka, commercial spaces for lease in Bangalore, houses for rent in Karnataka, PG accommodation in Bangalore, paying guests in Karnataka, affordable PGs in Bangalore, residential plots in Bangalore, commercial plots in Karnataka, land for sale in Bangalore, latest real estate projects in Bangalore, top builders in Karnataka, new construction projects in Bangalore, builder properties in Karnataka, buy rent or lease properties in Bangalore, residential and commercial real estate in Karnataka, property listings in Bangalore and Karnataka, ' . $pageKeywords }}">
+    <meta property="og:image" content="{{ $ogImage }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="1024">
+
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link href="{{ asset('images/backgrounds/favicon.png') }}" rel="shortcut icon">
-
     <style>
         .slick-prev,
         .slick-next {
@@ -37,7 +45,6 @@
             -moz-osx-font-smoothing: grayscale;
         }
     </style>
-
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
@@ -205,6 +212,19 @@
             overflow: hidden;
         }
     </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZD5X2WP5QJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZD5X2WP5QJ');
+    </script>
 </head>
 
 <body class="dark:bg-slate-900">
@@ -251,18 +271,20 @@
                         <input type="hidden" value="{{ isset($type) ? $type : '' }}" name="type" id="type">
                         <input type="hidden" value="" name="data_id" id="data_id">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="name" required id="floatingInputName"
-                                placeholder="">
+                            <input type="text" class="form-control" name="name" required
+                                id="floatingInputName" placeholder="">
                             <label for="floatingInputName">Full Name</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="email" required id="floatingInputName"
-                                placeholder="">
+                            <input type="text" class="form-control" name="email" required
+                                id="floatingInputName" placeholder="">
                             <label for="floatingInputName">Email Id</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="form-control" name="phone" maxlength="12" required
-                                id="floatingInputNo" placeholder="+91 Phone">
+                            <input type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                class="form-control" name="phone" maxlength="12" required id="floatingInputNo"
+                                placeholder="+91 Phone">
                             <label for="floatingInputNo">Mobile Number <small class="text-theme">(+91
                                     Phone)</small></label>
                             <p class="text-theme text-start d-none">This number will be verified</p>
@@ -680,7 +702,7 @@
                     // Set default active tab
                     this.activeTab = 'Overview';
                     this.detectSectionInView();
-    
+
                     // Add scroll event listener
                     window.addEventListener('scroll', this.detectSectionInView.bind(this));
                 },
@@ -691,10 +713,10 @@
                     sections.forEach(section => {
                         const sectionTop = section.offsetTop - this.offset;
                         const sectionBottom = section.offsetTop + section.offsetHeight - this.offset;
-                
+
                         // Check if the viewport top is within the section boundaries
                         if (viewportTop >= sectionTop && viewportTop < sectionBottom) {
-                
+
                             this.activeSection = section.id;
                             this.activeTab = section.id; // Update the active tab based on the section in view
                         }
@@ -703,14 +725,14 @@
                 scrollToSection(sectionId) {
                     const section = document.getElementById(sectionId);
                     const yOffset = -this.offset;
-    
+
                     const yPosition = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-    
+
                     window.scrollTo({
                         top: yPosition,
                         behavior: 'smooth'
                     });
-    
+
                     // Manually set active tab on click
                     this.activeTab = sectionId;
                     this.activeSection = sectionId;
@@ -718,7 +740,7 @@
             };
         }
     </script>
-    
+
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>

@@ -76,9 +76,23 @@ class AccountsController extends Controller
       
         $account = Account::findOrFail($id);
         $account->update($request->only('status'));
-        $account->is_staff     = $request->has('is_staff') ? $request->is_staff : 0;
-        $account->auto_approvel= $request->has('is_staff') ? $request->is_staff : 0;
+
+        if (permission_check('Set Staff'))
+        {
+            $account->is_staff     = $request->has('is_staff') ? $request->is_staff : 0;
+            $account->auto_approvel= $request->has('is_staff') ? $request->is_staff : 0;
+        }
+        
         $account->save();
+
+        if($request->only('status') == 'approved' && $account->status != 'approved' ){
+            $this->accountApproved($account);
+        }
+        else if($request->only('status') == 'suspended' && $account->status != 'suspended' ){
+            $this->accountSuspended($account);
+        }
+
+
        
         return redirect()->route('admin.accounts.index')->with('success', 'status updated successfully!');
     }

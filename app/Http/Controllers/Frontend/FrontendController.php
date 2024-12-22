@@ -16,6 +16,7 @@ use App\Models\BlogPost;
 use App\Models\Consult;
 use App\Models\Contact;
 use App\Models\PgRules;
+use Illuminate\Support\Str;
 
 use Illuminate\Routing\Controller;
 
@@ -38,6 +39,8 @@ class FrontendController extends Controller
 
     public function properties(Request $request)
     {
+
+
         $query = Property::query()->where('moderation_status', 'approved')
             ->where(function ($q) {
                 $q->where('status', "selling")
@@ -81,7 +84,11 @@ class FrontendController extends Controller
         $cities = Property::groupBy('locality')->pluck('locality');
         $categories = Category::where('status', 'published')->get();
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders'));
+        $pageTitle = 'Residential Properties for Sale, Rent, and Lease in Bangalore & Karnataka | New Door Ventures';
+        $pageDescription = 'Explore a wide range of residential properties including houses, apartments, flats, and more for sale, rent, or lease in Bangalore and Karnataka. Find your dream home today!';
+        $pageKeywords = 'residential properties for sale, residential properties for rent, apartments for rent in Bangalore, houses for sale in Karnataka, flats for sale in Bangalore, affordable homes in Karnataka, residential real estate in Bangalore, buy house in Karnataka, rental homes Bangalore, lease properties Karnataka';
+
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders','pageTitle','pageDescription','pageKeywords'));
     }
 
 
@@ -110,8 +117,14 @@ class FrontendController extends Controller
             return response()->json(['html' => $html]);
         }
 
+    
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type'));
+        $pageTitle = 'Properties for Sale in Bangalore & Karnataka | New Door Ventures';
+        $pageDescription = 'Browse a wide selection of properties for sale in Bangalore and Karnataka. Find houses, apartments, plots, and more to buy at competitive prices.';
+        $pageKeywords = 'properties for sale, houses for sale in Bangalore, apartments for sale in Karnataka, buy homes in Bangalore, residential plots for sale in Karnataka, real estate for sale, commercial properties for sale, affordable homes for sale, property listings in Bangalore';
+
+
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords'));
     }
     public function PropertiesForRent(Request $request)
     {
@@ -137,7 +150,12 @@ class FrontendController extends Controller
             return response()->json(['html' => $html]);
         }
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type'));
+
+        $pageTitle = 'Properties for Rent in Bangalore & Karnataka | New Door Ventures';
+        $pageDescription = 'Explore a variety of properties for rent in Bangalore and Karnataka. Find apartments, houses, PG accommodations, and more at competitive rental prices.';
+        $pageKeywords = 'properties for rent, apartments for rent in Bangalore, houses for rent in Karnataka, rental properties in Bangalore, PG accommodation in Karnataka, rental flats in Bangalore, commercial spaces for rent, affordable houses for rent in Karnataka, paying guest accommodation, real estate rentals';
+
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle','pageDescription','pageKeywords'));
     }
     public function PropertiesForPlot(Request $request)
     {
@@ -175,7 +193,12 @@ class FrontendController extends Controller
             return response()->json(['html' => $html]);
         }
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type'));
+        $pageTitle = 'Plots for Sale in Bangalore & Karnataka | New Door Ventures';
+        $pageDescription = "Browse a variety of residential and commercial plots for sale in Bangalore and Karnataka. Find your ideal plot for construction, investment, or development.";
+        $pageKeywords = "plots for sale, residential plots in Bangalore, commercial plots in Karnataka, land for sale in Bangalore, investment land in Karnataka, real estate plots, agricultural plots in Karnataka, plot for construction, buy plots in Bangalore, land investment opportunities";
+    
+
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords'));
     }
     public function PropertiesForPg(Request $request)
     {
@@ -200,7 +223,11 @@ class FrontendController extends Controller
             return response()->json(['html' => $html]);
         }
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type'));
+        $pageTitle = 'PG Accommodation for Rent in Bangalore & Karnataka | New Door Ventures';
+        $pageDescription = 'Explore a variety of Paying Guest (PG) accommodations for rent in Bangalore and Karnataka. Find affordable PGs, private rooms, and shared spaces that suit your needs.';
+        $pageKeywords = 'PG accommodation in Bangalore, paying guests in Karnataka, PG for rent in Bangalore, affordable PGs in Bangalore, PG rooms for rent in Karnataka, private rooms for rent in Bangalore, shared PG accommodation, budget PGs in Bangalore, PG spaces near IT hubs, PGs for students in Bangalore, PG rental properties in Karnataka, PG facilities in Bangalore';
+
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords'));
     }
 
 
@@ -240,7 +267,12 @@ class FrontendController extends Controller
             return response()->json(['html' => $html]);
         }
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type'));
+        $pageTitle = 'Commercial Properties for Sale & Rent in Bangalore & Karnataka | New Door Ventures';
+        $pageDescription = 'Discover a wide range of commercial properties for sale and rent in Bangalore and Karnataka. From office spaces to retail shops, find the perfect location for your business.';
+        $pageKeywords = 'commercial properties for sale in Bangalore, commercial properties for rent in Karnataka, office spaces for rent in Bangalore, retail shops for sale in Karnataka, commercial real estate in Bangalore, business spaces for lease in Bangalore, commercial property investment in Karnataka, commercial land for sale in Bangalore, office buildings for rent in Karnataka, shops for rent in Bangalore, commercial plots for sale, industrial properties for rent, commercial space for lease';
+    
+
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords'));
     }
 
 
@@ -263,7 +295,11 @@ class FrontendController extends Controller
         $categories = Category::where('status', 'published')->get();
         $builders = Investor::get();
 
-        return view('front.projects.index', compact('projects', 'categories', 'cities', 'builders'));
+        $pageTitle = 'All Real Estate Projects: New Launch, Ready to Launch & Under Construction in Bangalore & Karnataka | New Door Ventures';
+        $pageDescription = 'Explore a variety of real estate projects including new launches, ready-to-launch, and under-construction properties in Bangalore and Karnataka. Find your dream home or investment opportunity today.';
+        $pageKeywords = 'new launch real estate projects in Bangalore, ready to launch projects in Karnataka, under construction properties in Bangalore, residential projects in Karnataka, commercial projects Bangalore, real estate investment Bangalore, new homes Bangalore, property projects in Karnataka, builder projects Bangalore, new construction properties, affordable housing projects Karnataka, residential development Bangalore, upcoming projects Bangalore, ongoing construction in Karnataka';
+
+        return view('front.projects.index', compact('projects', 'categories', 'cities', 'builders','pageTitle','pageDescription','pageKeywords'));
     }
 
     public function propertyDetails($uid, $slug)
@@ -271,27 +307,32 @@ class FrontendController extends Controller
         $property = Property::where('slug', $slug)->where('unique_id', $uid)->first() ?? abort(404);
         $recent_properties = $this->recentlyViewedProperties();
         $rules = PgRules::get();
-
         $property->increment('views');
+
+        $pageTitle = $property->name.' | New Door Ventures';
+        $pageDescription = $property->content;
+        $pageKeywords = 'property for sale, property for rent, PG accommodation, residential plots, commercial properties, rental properties in Bangalore, sale properties in Karnataka, residential properties for sale, commercial spaces for lease, PGs in Bangalore, land for sale in Karnataka, affordable properties in Bangalore, buy rent or lease property in Karnataka, real estate Bangalore, residential real estate Bangalore, commercial real estate Karnataka';
+
+
 
         if ($property->mode == 'Commercial') {
             if ($property->category && $property->category->name == 'Plot and Land') {
-                return view('front.properties.commercial-plot-property', compact('property', 'recent_properties'));
+                return view('front.properties.commercial-plot-property', compact('property', 'recent_properties','pageTitle','pageDescription','pageKeywords'));
             }
 
             return match ($property->type) {
-                'sell', 'rent' => view('front.properties.commercial-rent-sale-single', compact('property', 'recent_properties')),
+                'sell', 'rent' => view('front.properties.commercial-rent-sale-single', compact('property', 'recent_properties','pageTitle','pageDescription','pageKeywords')),
                 default => abort(404),
             };
         }
 
         if ($property->category && $property->category->name == 'Plot and Land') {
-            return view('front.properties.plot-property', compact('property', 'recent_properties'));
+            return view('front.properties.plot-property', compact('property', 'recent_properties','pageTitle','pageDescription','pageKeywords'));
         }
 
         return match ($property->type) {
-            'sell', 'rent' => view('front.properties.single', compact('property', 'recent_properties')),
-            'pg' => view('front.properties.pg-single', compact('property', 'recent_properties', 'rules')),
+            'sell', 'rent' => view('front.properties.single', compact('property', 'recent_properties','pageTitle','pageDescription','pageKeywords','pageTitle','pageDescription','pageKeywords')),
+            'pg' => view('front.properties.pg-single', compact('property', 'recent_properties', 'rules','pageTitle','pageDescription','pageKeywords','pageTitle','pageDescription','pageKeywords')),
             default => abort(404),
         };
     }
@@ -302,18 +343,30 @@ class FrontendController extends Controller
         $project->increment('views');
         $configurations = Configration::get();
         $advertisement = Advertisement::inRandomOrder()->first();
-        return view('front.projects.single', compact('project', 'configurations', 'advertisement'));
+        $pageTitle = $project->name.' | New Door Ventures';
+        $pageDescription = $project->content;
+        $pageKeywords = 'new launch projects, under construction projects, ready to launch properties, real estate projects in Bangalore, residential projects, commercial projects in Karnataka, real estate builders in Bangalore, upcoming property launches, real estate development, investment in property, new construction projects in Karnataka, real estate investment opportunities, residential apartments, commercial spaces for sale in Bangalore';
+    
+
+        return view('front.projects.single', compact('project', 'configurations', 'advertisement','pageTitle','pageDescription','pageKeywords'));
     }
 
     public function contact()
     {
-        return view('front.contact');
+        $pageTitle = 'Contact Us | New Door Ventures';
+        $pageDescription = 'Get in touch with New Door Ventures for any inquiries or support regarding real estate properties in Bangalore and Karnataka. We are here to assist you with your real estate needs.';
+        $pageKeywords = 'contact New Door Ventures, real estate inquiries, property consultation, real estate support Bangalore, get in touch with real estate experts, property queries Karnataka, real estate advice, property help Bangalore, contact us for real estate, customer support real estate, contact real estate company';
+        return view('front.contact',compact('pageTitle','pageDescription','pageKeywords'));
     }
 
     public function blogList()
     {
         $blogs = BlogPost::get();
-        return view('front.news.index', compact('blogs'));
+        $pageTitle = 'Latest Real Estate News & Blogs | New Door Ventures';
+        $pageDescription = 'Stay updated with the latest trends, tips, and insights on real estate in Bangalore and Karnataka. Read our blogs for expert advice on property buying, renting, and leasing.';
+        $pageKeywords = 'real estate blogs, property news, real estate tips, Bangalore real estate, Karnataka property updates, real estate trends, property buying advice, property rental tips, leasing properties, real estate experts Bangalore, real estate news Karnataka, new property developments, property market insights, real estate investment tips, property for sale Bangalore, property rental Karnataka';
+    
+        return view('front.news.index', compact('blogs','pageTitle','pageDescription','pageKeywords'));
     }
 
     public function blogDetails($slug)
@@ -321,7 +374,11 @@ class FrontendController extends Controller
         $blog = BlogPost::where('slug', $slug)->firstOrFail();
         $blogs = BlogPost::where('slug', '!=', $slug)->get();
 
-        return view('front.news.single', compact('blog', 'blogs'));
+        $pageTitle = $blog->title . ' | New Door Ventures Blog';
+        $pageDescription = Str::limit($blog->content, 160);
+        $pageKeywords = 'real estate blog, property buying tips, property rental advice, ' . implode(', ', $blog->tags->pluck('name')->toArray());
+
+        return view('front.news.single', compact('blog', 'blogs','pageTitle','pageDescription','pageKeywords'));
     }
 
     public function page($slug)
@@ -329,7 +386,12 @@ class FrontendController extends Controller
         $page_id = Slug::where('key', $slug)->pluck('reference_id')->first() ?? abort(404);
         $page = Page::findOrFail($page_id);
 
-        return view('front.page', compact('page'));
+        $pageTitle = $page->name . ' | New Door Ventures Blog';
+        $pageDescription = Str::limit($page->content, 160);
+        $pageKeywords = '';
+
+
+        return view('front.page', compact('page','pageTitle','pageDescription','pageKeywords'));
     }
 
     private function recentlyViewedProperties()
@@ -632,7 +694,7 @@ class FrontendController extends Controller
             $lead->save();
 
             $this->adminContactReceived($request);
-            
+
             return response()->json([
                 'error' => false,
                 'message' => 'Your enquiry request has been submitted successfully!',

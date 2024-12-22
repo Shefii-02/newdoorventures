@@ -30,14 +30,14 @@ class PropertyController extends Controller
     public function index(Request $request)
     {
         //
-        $query = Property::where('moderation_status' ,'pending');
+        $query = Property::where('moderation_status', 'pending');
 
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%$search%");
-                    // ->orWhere('location', 'LIKE', "%$search%")
-                    // ->orWhere('type', 'LIKE', "%$search%");
+                // ->orWhere('location', 'LIKE', "%$search%")
+                // ->orWhere('type', 'LIKE', "%$search%");
             });
         }
 
@@ -55,23 +55,23 @@ class PropertyController extends Controller
 
     public function approved(Request $request)
     {
-        $query = Property::where('moderation_status' ,'approved');
-    //      orderByRaw("
-    //     CASE 
-    //         WHEN moderation_status = 'pending' THEN 1
-    //         WHEN moderation_status = 'approved' THEN 2
-    //         WHEN moderation_status = 'suspended' THEN 3
-    //         ELSE 4
-    //     END
-    // ");
+        $query = Property::where('moderation_status', 'approved');
+        //      orderByRaw("
+        //     CASE 
+        //         WHEN moderation_status = 'pending' THEN 1
+        //         WHEN moderation_status = 'approved' THEN 2
+        //         WHEN moderation_status = 'suspended' THEN 3
+        //         ELSE 4
+        //     END
+        // ");
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
 
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%$search%");
-            //         ->orWhere('location', 'LIKE', "%$search%")
-            //         ->orWhere('type', 'LIKE', "%$search%")
-            //         ->orWhere('moderation_status', 'LIKE', "%$search%");
+                //         ->orWhere('location', 'LIKE', "%$search%")
+                //         ->orWhere('type', 'LIKE', "%$search%")
+                //         ->orWhere('moderation_status', 'LIKE', "%$search%");
             });
             // $query->whereHas('account', function ($q) use ($search) {
             //     $q->where('first_name', 'LIKE', "%$search%")
@@ -94,23 +94,23 @@ class PropertyController extends Controller
 
     public function suspended(Request $request)
     {
-        $query = Property::where('moderation_status' ,'suspended');
-                                // orderByRaw("
-                                //         CASE 
-                                //             WHEN moderation_status = 'pending' THEN 1
-                                //             WHEN moderation_status = 'approved' THEN 2
-                                //             WHEN moderation_status = 'suspended' THEN 3
-                                //             ELSE 4
-                                //         END
-                                //     ");
+        $query = Property::where('moderation_status', 'suspended');
+        // orderByRaw("
+        //         CASE 
+        //             WHEN moderation_status = 'pending' THEN 1
+        //             WHEN moderation_status = 'approved' THEN 2
+        //             WHEN moderation_status = 'suspended' THEN 3
+        //             ELSE 4
+        //         END
+        //     ");
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
 
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%$search%");
-                    // ->orWhere('location', 'LIKE', "%$search%")
-                    // ->orWhere('type', 'LIKE', "%$search%")
-                    // ->orWhere('moderation_status', 'LIKE', "%$search%");
+                // ->orWhere('location', 'LIKE', "%$search%")
+                // ->orWhere('type', 'LIKE', "%$search%")
+                // ->orWhere('moderation_status', 'LIKE', "%$search%");
             });
             // $query->whereHas('account', function ($q) use ($search) {
             //     $q->where('first_name', 'LIKE', "%$search%")
@@ -134,18 +134,18 @@ class PropertyController extends Controller
     public function soldRented(Request $request)
     {
         $query = Property::where(function ($q) {
-                            $q->where('status', "sold")
-                            ->orWhere('status', "rented");
-                        });
+            $q->where('status', "sold")
+                ->orWhere('status', "rented");
+        });
 
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
 
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%$search%");
-                    // ->orWhere('location', 'LIKE', "%$search%")
-                    // ->orWhere('type', 'LIKE', "%$search%")
-                    // ->orWhere('moderation_status', 'LIKE', "%$search%");
+                // ->orWhere('location', 'LIKE', "%$search%")
+                // ->orWhere('type', 'LIKE', "%$search%")
+                // ->orWhere('moderation_status', 'LIKE', "%$search%");
             });
             // $query->whereHas('account', function ($q) use ($search) {
             //     $q->where('first_name', 'LIKE', "%$search%")
@@ -217,13 +217,11 @@ class PropertyController extends Controller
     {
         //
         $property = Property::findOrFail($id);
-        if($property->type == 'pg'){
+        if ($property->type == 'pg') {
             return view('admin.properties.pg-single', compact('property'));
-        }
-        else if($property->category->name == 'Plot and Land'){
+        } else if ($property->category->name == 'Plot and Land') {
             return view('admin.properties.plot-single', compact('property'));
-        }
-        else{
+        } else {
             return view('admin.properties.rent-sale-single', compact('property'));
         }
     }
@@ -246,14 +244,11 @@ class PropertyController extends Controller
         $property = Property::findOrFail($id);
         $property->update($request->only('moderation_status'));
 
-        if($request->moderation_status == 'approved'){
+        if ($request->moderation_status == 'approved' && $property->moderation_status != 'approved') {
             $this->adApproved($property);
-        }
-        else if($request->moderation_status == 'suspended'){
+        } else if ($request->moderation_status == 'suspended' && $property->moderation_status != 'suspended') {
             $this->adSuspended($property);
         }
-        
-
 
         return redirect()->route('admin.properties.index')->with('success', 'Status updated successfully!');
     }
@@ -287,8 +282,12 @@ class PropertyController extends Controller
                 DB::table('re_custom_field_values')->where('reference_type', 'App\Models\Property')->where('reference_id', $property->id)->delete();
                 DB::table('re_property_categories')->where('property_id', $id)->delete();
                 DB::table('re_property_furnishing')->where('property_id', $id)->delete();
+                $this->adDeleted($property);
+
                 $property->forceDelete();
+
                 // $property->delete();
+
                 DB::commit();
                 Session::flash('success_msg', 'Successfully Deleted');
                 if ($request->has('from') && $request->from == 'trash') {
@@ -306,7 +305,9 @@ class PropertyController extends Controller
         } else {
             DB::beginTransaction();
             try {
-                Property::where('id', $id)->delete();
+                $property = Property::where('id', $id)->first() ?? abort(404);
+                $this->adDeleted($property);
+                $property->delete();
                 DB::commit();
                 Session::flash('success_msg', 'Successfully Deleted');
                 return redirect()->route('admin.properties.index')->with('success_msg', 'Property deleted!');

@@ -135,7 +135,7 @@
                                 class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                                 id="amenities-tab" data-tabs-target="#amenities" type="button" role="tab"
                                 aria-controls="amenities" aria-selected="false">
-                                amenities
+                                Amenities
                             </button>
                         </li>
                     @endif
