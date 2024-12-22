@@ -4,7 +4,7 @@
     <div style="background-color:#f2f2f7;height:100%;width:100%;display:flex;align-items:center;font-family: 'Google Sans', system-ui;">
         <div style="margin: auto;max-width: 760px;width: 100%;margin-top:4em;margin-bottom:4em;font-size:1.2em;">
             <div style="text-align: center;margin-bottom:2rem">
-                <img width="200" src="{{ 'https://stage.newdoorventures.in/images/general/logo-dark.png' }}" alt="">
+                <img width="200" src="{{ url('themes/images/logo-email.png') }}" alt="">
             </div>
             <div style="background:#fff;padding: 2em;border-radius: .5em;width: 100%;margin: auto;max-width: -webkit-fill-available;">
                 @isset($name)<div style="font-size: 1.2em;">Hi @isset($name)<strong>{{ $name }}</strong>@endif,</div> @endif
