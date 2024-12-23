@@ -29,8 +29,8 @@ if (!function_exists('uploadFile')) {
             $publicPath = public_path('images/' . $destinationPath);
 
             // Create directory if it doesn't exist
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath, 0755, true);
+            if (!file_exists($publicPath)) {
+                mkdir($publicPath, 0755, true);
             }
 
             // Process the image
@@ -54,7 +54,7 @@ if (!function_exists('uploadFile')) {
                 // Save the image with watermark
                 $image->save($publicPath . '/' . $filename, $disk);
             } else {
-                $path = $file->storeAs($storagePath, $filename, $disk);
+                $path = $file->storeAs($publicPath, $filename, $disk);
                 // Save the image normally without watermark
                 // $file->move($publicPath, $filename); // This saves the file directly in the public directory
             }
@@ -88,8 +88,8 @@ if (!function_exists('uploadFiletoMedia')) {
             $publicPath = public_path('images/' . $destinationPath);
 
             // Create directory if it doesn't exist
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath, 0755, true);
+            if (!file_exists($publicPath)) {
+                mkdir($publicPath, 0755, true);
             }
 
             // Process the image
@@ -111,9 +111,9 @@ if (!function_exists('uploadFiletoMedia')) {
                     );
                 }
                 // Save the image to the public directory (watermarked version)
-                $path = $image->save($storagePath . '/' . $filename);
+                $path = $image->save($publicPath . '/' . $filename);
             } else {
-                $path = $file->storeAs($storagePath, $filename, $disk);
+                $path = $file->storeAs($publicPath, $filename, $disk);
             }
 
             // Prepare data for insertion
