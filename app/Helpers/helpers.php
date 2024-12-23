@@ -124,7 +124,7 @@ if (!function_exists('uploadFiletoMedia')) {
                 'folder_id'  => 0, // Set the appropriate folder ID if needed
                 'mime_type'  => $file->getClientMimeType(),
                 'size'       => $file->getSize(),
-                'url'        => str_replace('images/', '', $path),
+                'url'        => $destinationPath . '/' . $filename,
                 'options'    => null, // Add any additional options or metadata
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -134,7 +134,7 @@ if (!function_exists('uploadFiletoMedia')) {
             $mediaId = MediaFile::insertGetId($mediaData);
 
             // Return file information or media ID
-            return ['media_id' => $mediaId, 'file_path' => str_replace('images/', '', $path)];
+            return ['media_id' => $mediaId, 'file_path' => $destinationPath . '/' . $filename];
         }
 
         return null;
