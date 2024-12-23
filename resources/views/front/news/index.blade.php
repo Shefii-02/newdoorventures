@@ -25,8 +25,7 @@
                                     <img src="{{ asset('images/' . $blog->image) }}" alt="{{ $blog->title }}"
                                         class="w-full transition-all duration-300 hover:scale-110"></a>
                             </div>
-                            <div class="p-6"><a href="{{ route('public.blog_single',$blog->slug) }}"
-                                    class="text-lg transition-all hover:text-secondary">{{ $blog->title }}</a>
+                            <div class="p-6">
                                 <ul class="flex gap-3 ps-0 my-2 text-sm list-none text-slate-500 dark:text-slate-300">
                                     <li><i
                                             class="mdi mdi-calendar-outline"></i><span>{{ date('M d, Y', strtotime($blog->created_at)) }}</span>
@@ -35,6 +34,9 @@
                                                 class="mdi mdi-tag-outline"></i><span>{{-- $blog->category->name  --}}</span></a></li>
                                     <li><i class="mdi mdi-eye-outline"></i><span>{{ $blog->views }}</span></li>
                                 </ul>
+                                <a href="{{ route('public.blog_single',$blog->slug) }}"
+                                    class="text-lg transition-all hover:text-secondary">{{ $blog->title }}</a>
+                                
                                 {{-- <p class="mt-3 leading-6 text-slate-600 dark:text-slate-300"
                                     title="{!! Str::limit($blog->description, '30') !!}">
                                     {!! Str::limit($blog->description, '50') !!}
