@@ -260,7 +260,7 @@
 <body class="dark:bg-slate-900">
     <main class="ps-main flex-column">
         <div class="ps-main__wrapper dark:bg-slate-900" id="vendor-dashboard">
-            <div class="d-none d-lg-block">
+            <div class="">
                 @include('seller.layouts.header')
             </div>
         </div>
