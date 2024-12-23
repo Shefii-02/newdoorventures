@@ -697,7 +697,7 @@ class FrontendController extends Controller
 
             return response()->json([
                 'error' => false,
-                'message' => 'Your enquiry request has been submitted successfully!',
+                'message' => 'Thank you, we have received your request, we will get in touch with you shortly.',
                 'data' => [
                     'next_page' => null, // Or set a URL for redirection if needed
                 ],
@@ -726,7 +726,7 @@ class FrontendController extends Controller
 
             return response()->json([
                 'error' => false,
-                'message' => 'Your enquiry request has been submitted successfully!',
+                'message' => 'Thank you, we have received your request, we will get in touch with you shortly.',
                 'data' => [
                     'next_page' => null, // Or set a URL for redirection if needed
                 ],
