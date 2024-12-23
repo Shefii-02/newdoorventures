@@ -444,6 +444,7 @@
                                                                         class="text-gray-800 text-center w-20 flex justify-content-center items-center">
                                                                         <img src="{{ asset('images/' . $spec->image) }}"
                                                                             class="w-48 text-center rounded-2 h-10 mt-2">
+                                                                            <span>{{ $spec->name }}</span>
                                                                     </td>
                                                                     <td class="text-gray-800 text-left p-2">
                                                                         <span
