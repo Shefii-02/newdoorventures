@@ -441,14 +441,14 @@
                                                             @foreach ($project->specifications ?? [] as $spec)
                                                                 <tr class="border-bottom-none">
                                                                     <td
-                                                                        class="text-gray-800 text-center w-20 flex justify-content-center items-center">
+                                                                        class="text-gray-800 text-center w-20 flex flex-column justify-content-center items-center">
                                                                         <img src="{{ asset('images/' . $spec->image) }}"
                                                                             class="w-48 text-center rounded-2 h-10 mt-2">
-                                                                            <span>{{ $spec->name }}</span>
+                                                                            <small>{{ $spec->name }}</small>
                                                                     </td>
                                                                     <td class="text-gray-800 text-left p-2">
                                                                         <span
-                                                                            class="text-sm dark:text-white">{{ $spec->description }}</span>
+                                                                            class="text-sm dark:text-white">{{ $spec->description ?? '--' }}</span>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
