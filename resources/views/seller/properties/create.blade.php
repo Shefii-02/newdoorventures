@@ -80,7 +80,7 @@
         </nav>
     </div>
 
-    <div x-data="stepper()" class="container bg-white rounded-lg shadow-lg p-6 mt-5">
+    <div x-data="stepper()" class="container bg-white rounded-lg shadow-lg p-lg-6 p-2.5 mt-5">
         <div class="" x-data="formHandler()">
 
             <form method="POST" @submit.prevent="submitForm" id="propertyFrom"
@@ -102,9 +102,8 @@
         <div class="flex flex-col lg:flex-row">
             <!-- Stepper Navigation -->
             <div class="lg:w-1/4  lg:border-r border-gray-200 lg:pr-6 mb-6 lg:mb-0 position-sticky top-0 bg-white">
-                <ul class="flex flex-wrap justify-center justify-content-around lg:flex-col lg:justify-start lg:space-x-0 lg:space-y-8 overflow-auto position-sticky top-0" style="z-index: 99999999"
-                    {{-- class="flex justify-center lg:flex-col lg:justify-start lg:space-x-0 lg:space-y-8 overflow-auto position-sticky space-x-4 top-0 z-1000" --}}
-                    >
+                <ul class="flex flex-wrap justify-center justify-content-around lg:flex-col lg:justify-start lg:space-x-0 lg:space-y-8 overflow-auto position-sticky top-0"
+                    style="z-index: 99999999" {{-- class="flex justify-center lg:flex-col lg:justify-start lg:space-x-0 lg:space-y-8 overflow-auto position-sticky space-x-4 top-0 z-1000" --}}>
                     <template x-for="(step, index) in steps" :key="index">
                         <li role="button" class="flex items-center lg:relative mt-2 step-items" @click="jumpToStep(index)">
                             <!-- Step Circle -->
@@ -126,17 +125,20 @@
                         </li>
                     </template>
 
-                    <li class="flex items-center lg:relative  step-items">
-                        <!-- Step Circle -->
-                        <div
-                            class="px-4 py-1 bg-vk-lt step-circle2 border-gray-300 text-gray-500  flex items-center justify-center h-5 w-5 border-2 rounded-full z-10">
-                            <span class=" text-dark"><i class="fs-3 fw-bold">✓</i></span>
+                    <li class="d-none d-lg-block  ">
+                        <div class="flex items-center lg:relative  step-items">
+                            <!-- Step Circle -->
+                            <div
+                                class="px-4 py-1 bg-vk-lt step-circle2 border-gray-300 text-gray-500  flex items-center justify-center h-5 w-5 border-2 rounded-full z-10">
+                                <span class=" text-dark"><i class="fs-3 fw-bold">✓</i></span>
+                            </div>
+
+                            <!-- Step Titles -->
+                            <div class="ms-2 lg:ml-0  ">
+                                Submit for review
+                            </div>
                         </div>
 
-                        <!-- Step Titles -->
-                        <div class="ms-2 lg:ml-0  ">
-                            Submit for review
-                        </div>
                     </li>
                 </ul>
             </div>
@@ -358,77 +360,94 @@
 
                                 </div>
 
-                                <div class="grid md:grid-cols-3 md:gap-6">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <!-- City Input -->
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input form="propertyFrom" name="city" type="text" id="auto_city"
+                                                    autocomplete="off"
+                                                    class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " />
+                                                <label for="auto_city"
+                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                    City<sup class="text-danger fs-4">*</sup></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
 
-                                    <!-- City Input -->
-                                    <div class="relative z-0 w-full mb-5 group">
-                                        <input form="propertyFrom" name="city" type="text" id="auto_city"
-                                            autocomplete="off"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="auto_city"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                                            City<sup class="text-danger fs-4">*</sup></label>
+                                            <!-- Locality Input -->
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input form="propertyFrom" name="locality" type="text"
+                                                    id="auto_locality" autocomplete="off"
+                                                    class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " />
+                                                <label for="auto_locality"
+                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                    Locality<sup class="text-danger fs-4">*</sup>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Sub Locality Input -->
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input form="propertyFrom" name="sub_locality" type="text"
+                                                    id="auto_subLocality" autocomplete="off"
+                                                    class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " />
+                                                <label for="auto_subLocality"
+                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                    Sub Locality (Optional)</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 d-none">
+                                            <!-- Landmark Input -->
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input form="propertyFrom" name="landmark" type="text"
+                                                    id="auto_landmark" autocomplete="off"
+                                                    class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " />
+                                                <label for="auto_landmark"
+                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Landmark
+                                                    (Optional)</label>
+                                            </div>
+                                        </div>
+
                                     </div>
 
-                                    <!-- Locality Input -->
-                                    <div class="relative z-0 w-full mb-5 group">
-                                        <input form="propertyFrom" name="locality" type="text" id="auto_locality"
-                                            autocomplete="off"
-                                            class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="auto_locality"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                                            Locality<sup class="text-danger fs-4">*</sup>
-                                        </label>
-                                    </div>
-                                    <!-- Sub Locality Input -->
-                                    <div class="relative z-0 w-full mb-5 group">
-                                        <input form="propertyFrom" name="sub_locality" type="text"
-                                            id="auto_subLocality" autocomplete="off"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="auto_subLocality"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                                            Sub Locality (Optional)</label>
-                                    </div>
 
                                 </div>
 
-                                <div class="grid md:grid-cols-2 md:gap-6">
 
-                                    <!-- Landmark Input -->
-                                    <div class="relative z-0 w-full mb-5 group">
-                                        <input form="propertyFrom" name="landmark" type="text" id="auto_landmark"
-                                            autocomplete="off"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="auto_landmark"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Landmark
-                                            (Optional)</label>
-                                    </div>
-                                </div>
-                                <div class="grid md:grid-cols-2 md:gap-6">
-                                    <!-- Latitude Input -->
-                                    <div class="relative z-0 w-full mb-5 group">
-                                        <input form="propertyFrom" name="latitude" type="text" id="auto_latitude"
-                                            autocomplete="off"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="auto_latitude"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Latitude
-                                        </label>
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <!-- Latitude Input -->
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input form="propertyFrom" name="latitude" type="text"
+                                                    id="auto_latitude" autocomplete="off"
+                                                    class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " />
+                                                <label for="auto_latitude"
+                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Latitude
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- longitude Input -->
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input form="propertyFrom" name="longitude" type="text"
+                                                    id="auto_longitude" autocomplete="off"
+                                                    class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " />
+                                                <label for="auto_longitude"
+                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Longitude</label>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <!-- longitude Input -->
-                                    <div class="relative z-0 w-full mb-5 group">
-                                        <input form="propertyFrom" name="longitude" type="text" id="auto_longitude"
-                                            autocomplete="off"
-                                            class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="auto_longitude"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Longitude</label>
-                                    </div>
+
+
 
                                 </div>
                             </div>
@@ -731,7 +750,8 @@
                                                 <h5 class="mt-3 fs-3 text-black font-bold">Inside Details</h5>
                                                 <div class="my-3 card bg-body p-3">
                                                     <div class="row1">
-                                                        <div class="col-lg-6 HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
+                                                        <div
+                                                            class="col-lg-6 HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
                                                             <div class="relative z-0 w-full mb-3 group ">
                                                                 <input form="propertyFrom" name="pantry" type="text"
                                                                     autocomplete="off" id="pantry"
@@ -742,8 +762,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 col-lg-6">
-                                                            <div
-                                                                class="mb-2 flex gap-3 mt-3 justify-content-between ">
+                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
                                                                     class="block mb-2 text-sm font-medium text-gray-500">
                                                                     Washroom
@@ -757,11 +776,9 @@
                                                                     </button>
 
                                                                     <!-- Display Counter -->
-                                                                    <span class="text-md font-bold"
-                                                                        x-text="count"></span>
+                                                                    <span class="text-md font-bold" x-text="count"></span>
                                                                     <input type="hidden" form="propertyFrom"
-                                                                        :value="count"
-                                                                        name="washroom">
+                                                                        :value="count" name="washroom">
                                                                     <!-- Plus Button -->
                                                                     <button @click="count++"
                                                                         class="border fw-bold px-2 rounded rounded-5 text-theme">
@@ -772,8 +789,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 col-lg-6">
-                                                            <div
-                                                                class="mb-2 flex gap-3 mt-3 justify-content-between ">
+                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
                                                                     class="block mb-2 text-sm font-medium text-gray-500">
                                                                     Cabin
@@ -787,11 +803,9 @@
                                                                     </button>
 
                                                                     <!-- Display Counter -->
-                                                                    <span class="text-md font-bold"
-                                                                        x-text="count"></span>
+                                                                    <span class="text-md font-bold" x-text="count"></span>
                                                                     <input type="hidden" form="propertyFrom"
-                                                                        :value="count"
-                                                                        name="cabin">
+                                                                        :value="count" name="cabin">
                                                                     <!-- Plus Button -->
                                                                     <button @click="count++"
                                                                         class="border fw-bold px-2 rounded rounded-5 text-theme">
@@ -802,8 +816,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 col-lg-6">
-                                                            <div
-                                                                class="mb-2 flex gap-3 mt-3 justify-content-between ">
+                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
                                                                     class="block mb-2 text-sm font-medium text-gray-500">
                                                                     Seats
@@ -817,11 +830,9 @@
                                                                     </button>
 
                                                                     <!-- Display Counter -->
-                                                                    <span class="text-md font-bold"
-                                                                        x-text="count"></span>
+                                                                    <span class="text-md font-bold" x-text="count"></span>
                                                                     <input type="hidden" form="propertyFrom"
-                                                                        :value="count"
-                                                                        name="seats">
+                                                                        :value="count" name="seats">
                                                                     <!-- Plus Button -->
                                                                     <button @click="count++"
                                                                         class="border fw-bold px-2 rounded rounded-5 text-theme">
@@ -832,8 +843,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 col-lg-6">
-                                                            <div
-                                                                class="mb-2 flex gap-3 mt-3 justify-content-between ">
+                                                            <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
                                                                     class="block mb-2 text-sm font-medium text-gray-500">
                                                                     Units on Floor
@@ -847,11 +857,9 @@
                                                                     </button>
 
                                                                     <!-- Display Counter -->
-                                                                    <span class="text-md font-bold"
-                                                                        x-text="count"></span>
+                                                                    <span class="text-md font-bold" x-text="count"></span>
                                                                     <input type="hidden" form="propertyFrom"
-                                                                        :value="count"
-                                                                        name="units_on_floor">
+                                                                        :value="count" name="units_on_floor">
                                                                     <!-- Plus Button -->
                                                                     <button @click="count++"
                                                                         class="border fw-bold px-2 rounded rounded-5 text-theme">
@@ -1366,7 +1374,9 @@
 
                                                     <div id="MoreaboutDetails"
                                                         class="HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
-                                                        <h5 class="mt-3 font-bold text-black fs-3">More about details <small>(optional)</small></h5>
+                                                        <h5 class="mt-3 font-bold text-black fs-3">More about details
+                                                            <small>(optional)</small>
+                                                        </h5>
                                                         <div class="my-4 card p-3 bg-body">
                                                             <div class="col-lg-12 mt-2">
                                                                 <div class="row">
@@ -1374,9 +1384,10 @@
                                                                         <div
                                                                             class="col-md-6 more-details {{ $option_item->has_rent ? 'ShowWantedSectionInRent' : 'HideUnwantedSectionsInRent' }} {{ $option_item->has_sell ? 'ShowWantedSectionInSell' : 'HideUnwantedSectionsInSell' }} ">
                                                                             <div class="relative z-0  mb-3 group  ">
-                                                                                <input  form="propertyFrom"
+                                                                                <input form="propertyFrom"
                                                                                     name="custom_fields[{{ $key }}][name]"
-                                                                                    type="hidden" value="{{ $option_item->name }}" />
+                                                                                    type="hidden"
+                                                                                    value="{{ $option_item->name }}" />
                                                                                 <input form="propertyFrom"
                                                                                     name="custom_fields[{{ $key }}][value]"
                                                                                     type="text" autocomplete="off"
@@ -1540,8 +1551,8 @@
                                                                 @foreach ($features ?? [] as $feature_item)
                                                                     <div class="col-lg-4">
                                                                         <div class="flex items-center mb-4">
-                                                                            <input name="amenities[]" form="propertyFrom"
-                                                                                type="checkbox"
+                                                                            <input name="amenities[]"
+                                                                                form="propertyFrom" type="checkbox"
                                                                                 value="{{ $feature_item->id }}"
                                                                                 id="amenity_{{ $feature_item->id }}"
                                                                                 class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
@@ -1577,30 +1588,35 @@
                                                             <template x-for="(facility, index) in facilities"
                                                                 :key="index">
                                                                 <div
-                                                                    class="flex items-center space-x-4 mb-4 position-relative">
-                                                                    <!-- Facility Select Box -->
-                                                                    <div class="w-1/2">
-                                                                        <select form="propertyFrom"
-                                                                            :name="'facilities[' + index + '][id]'"
-                                                                            x-model="facility.id"
-                                                                            class="w-full p-2 bg-gray-100 border border-gray-300 rounded-md">
-                                                                            <option value="">Select Landmark</option>
-                                                                            @foreach ($facilities ?? [] as $facility_item)
-                                                                                <option value="{{ $facility_item->id }}">
-                                                                                    {{ $facility_item->name }}</option>
-                                                                            @endforeach
-                                                                        </select>
+                                                                    class="col-lg-12 items-center space-x-4 mb-4 position-relative">
+                                                                    <div class="row">
+                                                                        <!-- Facility Select Box -->
+                                                                        <div class="col-lg-6 mb-2">
+                                                                            <select form="propertyFrom"
+                                                                                :name="'facilities[' + index + '][id]'"
+                                                                                x-model="facility.id"
+                                                                                class="w-full p-2 bg-gray-100 border border-gray-300 rounded-md">
+                                                                                <option value="">Select Landmark
+                                                                                </option>
+                                                                                @foreach ($facilities ?? [] as $facility_item)
+                                                                                    <option
+                                                                                        value="{{ $facility_item->id }}">
+                                                                                        {{ $facility_item->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+
+                                                                        <!-- Custom Facility Input Box -->
+                                                                        <div class="col-lg-6 mb-2">
+                                                                            <input type="text"
+                                                                                :name="'facilities[' + index + '][distance]'"
+                                                                                autocomplete="off" form="propertyFrom"
+                                                                                x-model="facility.distance"
+                                                                                class="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                                                                                placeholder="Enter custom facility distance">
+                                                                        </div>
                                                                     </div>
 
-                                                                    <!-- Custom Facility Input Box -->
-                                                                    <div class="w-1/2">
-                                                                        <input type="text"
-                                                                            :name="'facilities[' + index + '][distance]'"
-                                                                            autocomplete="off" form="propertyFrom"
-                                                                            x-model="facility.distance"
-                                                                            class="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                                                                            placeholder="Enter custom facility distance">
-                                                                    </div>
 
                                                                     <!-- Remove Icon Button -->
                                                                     <div class="position-absolute right-2">
@@ -1608,7 +1624,8 @@
                                                                             class="text-red-600 font-medium">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 width="16" height="16"
-                                                                                fill="currentColor" class="bi bi-x-circle"
+                                                                                fill="currentColor"
+                                                                                class="bi bi-x-circle"
                                                                                 viewBox="0 0 16 16">
                                                                                 <path
                                                                                     d="M11.742 4.742a1 1 0 1 0-1.414-1.414L8 6.586 5.672 4.258a1 1 0 1 0-1.414 1.414L6.586 8l-2.328 2.328a1 1 0 1 0 1.414 1.414L8 9.414l2.328 2.328a1 1 0 1 0 1.414-1.414L9.414 8l2.328-2.328z" />
@@ -1834,7 +1851,7 @@
                             <div class="mt-5">
                                 <h6 class="mt-3 font-bold text-black fs-3">Ownership<sup
                                         class="text-danger fs-4">*</sup></h6>
-                                <ul class="flex gap-5 mt-3">
+                                <ul class="flex gap-5 mt-3 flex-wrap">
                                     <li class="relative">
                                         <input form="propertyFrom" class="sr-only peer" checked type="radio"
                                             value="freehold" name="ownership" id="freehold">
@@ -1901,7 +1918,7 @@
                                 <h6 class="mt-3 font-bold text-black fs-3">Mark as moderation status <sup
                                         class="text-danger fs-4">*</sup>
                                 </h6>
-                                <ul class="flex gap-5 mt-3">
+                                <ul class="flex gap-5 mt-3 flex-wrap">
                                     <li class="relative">
                                         <input form="propertyFrom" class="sr-only peer" checked type="radio"
                                             value="draft" name="moderation_status" id="draft">
@@ -2267,7 +2284,7 @@
                             this.currentCategory = null;
                         }
 
-                        
+
                     },
                     // Utility function to toggle visibility of sections
                     toggleSections(className, displayStyle) {
@@ -2290,12 +2307,11 @@
                         } else {
                             ShowHiddenSections();
 
-                            if(this.currentType === 'Residential' && categoryName != 'Plot and Land'){
+                            if (this.currentType === 'Residential' && categoryName != 'Plot and Land') {
                                 this.toggleSections('ShowWantedSectionsInCommercial', 'none');
                                 this.toggleSections('HideUnwantedSectionsInCommercial', 'block');
-                            }
-                            else if(this.currentType === 'Commercial' && categoryName != 'Plot and Land'){
-                
+                            } else if (this.currentType === 'Commercial' && categoryName != 'Plot and Land') {
+
                                 this.toggleSections('HideUnwantedSectionsInCommercial', 'none');
                                 this.toggleSections('ShowWantedSectionsInCommercial', 'block');
                             }

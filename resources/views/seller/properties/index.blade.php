@@ -70,8 +70,8 @@
                 <div class="">
                     <div class="relative py-5 ">
 
-                        <div class="pb-4 flex justify-between items-center">
-                            <div class=" flex gap-4">
+                        <div class="pb-4 flex justify-between items-center flex-wrap">
+                            <div class=" flex gap-4 flex-wrap">
                                 <div class="relative mt-1">
                                     <div
                                         class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">

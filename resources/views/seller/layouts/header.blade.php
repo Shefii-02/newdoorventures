@@ -6,7 +6,7 @@
         </a>
     </div>
 
-    <div class="d-flex align-items-center gap-4 ">
+    <div class="d-flex align-items-center  ">
 
         <a href="{{ route('public.index') }}" target="_blank" class="text-uppercase btn btn-dark fs-6 p-1 ">
             <span class="ps-2">Go to homepage</span>

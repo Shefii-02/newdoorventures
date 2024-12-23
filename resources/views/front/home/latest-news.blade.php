@@ -10,11 +10,11 @@
             <div
                 class="overflow-hidden transition-all bg-white rounded-lg shadow-lg hover:shadow-2xl duration-400 dark:bg-slate-900 dark:border dark:border-slate-800">
                 <div class="overflow-hidden"><a href="{{ route('public.blog_single',$blog->slug) }}">
-                    <img src="{{ asset('images/' . $blog->image) }}" alt="{{ $blog->name }}"
+                    <img src="{{ asset('images/' . $blog->image) }}" alt="{{ $blog->title }}"
                         class="w-full transition-all duration-300 hover:scale-110"></a>
                 </div>
                 <div class="p-6"><a href="{{ route('public.blog_single',$blog->slug) }}"
-                        class="text-lg transition-all hover:text-secondary">{{ $blog->name }}</a>
+                        class="text-lg transition-all hover:text-secondary">{{ $blog->title }}</a>
                     <ul class="flex gap-3 ps-0 my-2 text-sm list-none text-slate-500 dark:text-slate-300">
                         <li><i class="mdi mdi-calendar-outline"></i><span>{{ date('M d, Y',strtotime($blog->created_at)) }}</span></li>
                         <li><a href="news/travel-tips.html" class="text-sm hover:text-primary"><i
