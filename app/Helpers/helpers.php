@@ -86,7 +86,6 @@ if (!function_exists('uploadFiletoMedia')) {
             // Define storage path
             $storagePath = storage_path('app/images/' . $destinationPath);
             $publicPath = public_path('images/' . $destinationPath);
-
             // Create directory if it doesn't exist
             if (!file_exists($publicPath)) {
                 mkdir($publicPath, 0755, true);
