@@ -373,7 +373,7 @@ class FrontendController extends Controller
     {
         $blog = BlogPost::where('slug', $slug)->firstOrFail();
         $blogs = BlogPost::where('slug', '!=', $slug)->get();
-
+        $blog->increment('views');
         $pageTitle = $blog->title . ' | New Door Ventures Blog';
         $pageDescription = Str::limit($blog->content, 160);
         $pageKeywords = 'real estate blog, property buying tips, property rental advice, ';

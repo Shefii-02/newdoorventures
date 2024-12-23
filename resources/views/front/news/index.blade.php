@@ -57,10 +57,11 @@
                                         src="{{ asset('images/' . $blog2->image) }}"
                                         alt="Sexy Clutches: How to Buy &amp; Wear a Designer Clutch Bag"
                                         class="max-w-[90px] rounded"></a>
-                                <div class="ms-3"><a href="{{ route('public.blog_single',$blog2->slug) }}"
+                                <div class="ms-3">
+                                    {{-- <a href="{{ route('public.blog_single',$blog2->slug) }}"
                                         class="transition-all hover:text-primary line-clamp-2">
                                         <h5>{{ Str::limit($blog2->slug, 30, '...') }}</h5>
-                                    </a>
+                                    </a> --}}
                                     <div class="text-sm text-slate-500"><i class="mdi mdi-calendar-outline"></i><span>{{ date('M d, Y', strtotime($blog2->created_at)) }}</span></div>
                                 </div>
                             </div>
