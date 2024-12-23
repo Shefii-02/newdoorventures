@@ -82,7 +82,7 @@
         </nav>
     </div>
 
-    <div x-data="stepper()" class="container bg-white rounded-lg shadow-lg p-6 mt-5">
+    <div x-data="stepper()" class="container bg-white rounded-lg shadow-lg p-lg-6 p-2.5 mt-5">
         <div class="" x-data="formHandler()">
 
             <form method="POST" @submit.prevent="submitForm" id="propertyFrom"
@@ -101,9 +101,8 @@
         <div class="flex flex-col lg:flex-row">
             <!-- Stepper Navigation -->
             <div class="lg:w-1/4  lg:border-r border-gray-200 lg:pr-6 mb-6 lg:mb-0 lg:sticky lg:top-0  z-10 bg-white">
-                <ul class="flex flex-wrap justify-center justify-content-around lg:flex-col lg:justify-start lg:space-x-0 lg:space-y-8 overflow-auto position-sticky top-0" style="z-index: 99999999"
-                    {{-- class="flex justify-center lg:flex-col lg:justify-start lg:space-x-0 lg:space-y-8 overflow-auto position-sticky space-x-4 top-0 z-1000" --}}
-                    >
+                <ul class="flex flex-wrap justify-center justify-content-around lg:flex-col lg:justify-start lg:space-x-0 lg:space-y-8 overflow-auto position-sticky top-0"
+                    style="z-index: 99999999" {{-- class="flex justify-center lg:flex-col lg:justify-start lg:space-x-0 lg:space-y-8 overflow-auto position-sticky space-x-4 top-0 z-1000" --}}>
                     <template x-for="(step, index) in steps" :key="index">
                         <li role="button" class="flex items-center lg:relative mt-2 step-items" @click="jumpToStep(index)">
                             <!-- Step Circle -->
@@ -394,47 +393,55 @@
                                             </span> --}}
                                     </div>
                                 </div>
-                                <div class="grid md:grid-cols-3 md:gap-6">
-
-                                    <!-- City Input -->
-                                    <div class="relative z-0 w-full mb-5 group">
-                                        <input form="propertyFrom" name="city"
-                                            value="{{ $property ? $property->city : '' }}" type="text" id="auto_city"
-                                            autocomplete="off"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="auto_city"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                                            City<sup class="text-danger fs-4">*</sup></label>
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <!-- City Input -->
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input form="propertyFrom" name="city"
+                                                    value="{{ $property ? $property->city : '' }}" type="text"
+                                                    id="auto_city" autocomplete="off"
+                                                    class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " />
+                                                <label for="auto_city"
+                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                    City<sup class="text-danger fs-4">*</sup></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Locality Input -->
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input form="propertyFrom" name="locality"
+                                                    value="{{ $property ? $property->locality : '' }}" type="text"
+                                                    id="auto_locality" autocomplete="off"
+                                                    class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " />
+                                                <label for="auto_locality"
+                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                    Locality<sup class="text-danger fs-4">*</sup>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Sub Locality Input -->
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input form="propertyFrom" name="sub_locality"
+                                                    value="{{ $property ? $property->sub_locality : '' }}" type="text"
+                                                    id="auto_subLocality" autocomplete="off"
+                                                    class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " />
+                                                <label for="auto_subLocality"
+                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                    Sub Locality (Optional)</label>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <!-- Locality Input -->
-                                    <div class="relative z-0 w-full mb-5 group">
-                                        <input form="propertyFrom" name="locality"
-                                            value="{{ $property ? $property->locality : '' }}" type="text"
-                                            id="auto_locality" autocomplete="off"
-                                            class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="auto_locality"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                                            Locality<sup class="text-danger fs-4">*</sup>
-                                        </label>
-                                    </div>
-                                    <!-- Sub Locality Input -->
-                                    <div class="relative z-0 w-full mb-5 group">
-                                        <input form="propertyFrom" name="sub_locality"
-                                            value="{{ $property ? $property->sub_locality : '' }}" type="text"
-                                            id="auto_subLocality" autocomplete="off"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="auto_subLocality"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                                            Sub Locality (Optional)</label>
-                                    </div>
+
 
                                 </div>
 
-                                <div class="grid md:grid-cols-2 md:gap-6">
+                                <div class="grid md:grid-cols-2 md:gap-6 d-none">
 
                                     <!-- Landmark Input -->
                                     <div class="relative z-0 w-full mb-5 group">
@@ -448,28 +455,34 @@
                                             (Optional)</label>
                                     </div>
                                 </div>
-                                <div class="grid md:grid-cols-2 md:gap-6">
-                                    <!-- Latitude Input -->
-                                    <div class="relative z-0 w-full mb-5 group">
-                                        <input form="propertyFrom" name="latitude"
-                                            value="{{ $property ? $property->latitude : '' }}" type="text"
-                                            id="auto_latitude" autocomplete="off"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="auto_latitude"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Latitude
-                                        </label>
-                                    </div>
 
-                                    <!-- longitude Input -->
-                                    <div class="relative z-0 w-full mb-5 group">
-                                        <input form="propertyFrom" name="longitude"
-                                            value="{{ $property ? $property->longitude : '' }}" type="text"
-                                            id="auto_longitude" autocomplete="off"
-                                            class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="auto_longitude"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Longitude</label>
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <!-- Latitude Input -->
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input form="propertyFrom" name="latitude"
+                                                    value="{{ $property ? $property->latitude : '' }}" type="text"
+                                                    id="auto_latitude" autocomplete="off"
+                                                    class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " />
+                                                <label for="auto_latitude"
+                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Latitude
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- longitude Input -->
+                                            <div class="relative z-0 w-full mb-5 group">
+                                                <input form="propertyFrom" name="longitude"
+                                                    value="{{ $property ? $property->longitude : '' }}" type="text"
+                                                    id="auto_longitude" autocomplete="off"
+                                                    class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " />
+                                                <label for="auto_longitude"
+                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Longitude</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1494,7 +1507,8 @@
                                                                     <div class="relative z-0  mb-3 group  ">
                                                                         <input form="propertyFrom"
                                                                             name="custom_fields[{{ $key }}][name]"
-                                                                            type="hidden" value="{{$option_item->name}}" />
+                                                                            type="hidden"
+                                                                            value="{{ $option_item->name }}" />
                                                                         <input form="propertyFrom"
                                                                             name="custom_fields[{{ $key }}][value]"
                                                                             type="text" autocomplete="off"
@@ -1637,7 +1651,8 @@
                                                                 <div class="flex items-center me-4 mb-2">
                                                                     <input form="propertyFrom" type="radio"
                                                                         value="unfurnished" name="furnishing_status"
-                                                                        x-model="furnishingStatus" id="unfurnished-radio"
+                                                                        x-model="furnishingStatus"
+                                                                        id="unfurnished-radio"
                                                                         class="w-4 h-4 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
                                                                     <label for="unfurnished-radio"
                                                                         class="ms-2 text-sm font-medium text-gray dark:text-gray">Unfurnished</label>
@@ -1746,33 +1761,36 @@
                                                         }
                                                     }">
                                                         @foreach ($facilitiesList as $keyFac => $exFacility)
-                                                            <div class="flex items-center space-x-4 mb-4"
+                                                            <div class="col-lg-12 items-center space-x-4 mb-4"
                                                                 id="1000{{ $keyFac }}">
-                                                                <!-- Facility Select Box -->
-                                                                <div class="w-1/2">
-                                                                    <select form="propertyFrom"
-                                                                        name="facilities[100{{ $keyFac }}][id]"
-                                                                        class="w-full p-2 bg-gray-100 border border-gray-300 rounded-md">
-                                                                        <option value="">Select Landmark</option>
-                                                                        @foreach ($facilities ?? [] as $facility_item)
-                                                                            <option
-                                                                                {{ $exFacility['id'] == $facility_item->id ? 'selected' : '' }}
-                                                                                value="{{ $facility_item->id }}">
-                                                                                {{ $facility_item->name }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
+                                                                <div class="row">
+                                                                    <!-- Facility Select Box -->
+                                                                    <div class="col-lg-6 mb-2">
+                                                                        <select form="propertyFrom"
+                                                                            name="facilities[100{{ $keyFac }}][id]"
+                                                                            class="w-full p-2 bg-gray-100 border border-gray-300 rounded-md">
+                                                                            <option value="">Select Landmark
+                                                                            </option>
+                                                                            @foreach ($facilities ?? [] as $facility_item)
+                                                                                <option
+                                                                                    {{ $exFacility['id'] == $facility_item->id ? 'selected' : '' }}
+                                                                                    value="{{ $facility_item->id }}">
+                                                                                    {{ $facility_item->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
 
-                                                                <!-- Custom Facility Input Box -->
-                                                                <div class="w-1/2">
-                                                                    <input type="text"
-                                                                        name="facilities[100{{ $keyFac }}][distance]"
-                                                                        value="{{ $exFacility['distance'] }}"
-                                                                        autocomplete="off" form="propertyFrom"
-                                                                        class="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                                                                        placeholder="Enter custom facility distance">
-                                                                </div>
+                                                                    <!-- Custom Facility Input Box -->
+                                                                    <div class="col-lg-6 mb-2">
+                                                                        <input type="text"
+                                                                            name="facilities[100{{ $keyFac }}][distance]"
+                                                                            value="{{ $exFacility['distance'] }}"
+                                                                            autocomplete="off" form="propertyFrom"
+                                                                            class="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                                                                            placeholder="Enter custom facility distance">
+                                                                    </div>
 
+                                                                </div>
                                                                 <!-- Remove Icon Button -->
                                                                 <div class="position-absolute right-2">
                                                                     <button
@@ -1794,31 +1812,35 @@
                                                         <!-- Dynamic Facility List -->
                                                         <template x-for="(facility, index) in facilities"
                                                             :key="index">
-                                                            <div class="flex items-center space-x-4 mb-4">
-                                                                <!-- Facility Select Box -->
-                                                                <div class="w-1/2">
-                                                                    <select form="propertyFrom"
-                                                                        :name="'facilities[' + index + '][id]'"
-                                                                        x-model="facility.id"
-                                                                        class="w-full p-2 bg-gray-100 border border-gray-300 rounded-md">
-                                                                        <option value="">Select Landmark</option>
-                                                                        @foreach ($facilities ?? [] as $facility_item)
-                                                                            <option value="{{ $facility_item->id }}">
-                                                                                {{ $facility_item->name }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
+                                                            <div class="col-lg-12 items-center space-x-4 mb-4">
+                                                                <div class="row">
+                                                                    <!-- Facility Select Box -->
+                                                                    <div class="col-lg-6 mb-2">
+                                                                        <select form="propertyFrom"
+                                                                            :name="'facilities[' + index + '][id]'"
+                                                                            x-model="facility.id"
+                                                                            class="w-full p-2 bg-gray-100 border border-gray-300 rounded-md">
+                                                                            <option value="">Select Landmark
+                                                                            </option>
+                                                                            @foreach ($facilities ?? [] as $facility_item)
+                                                                                <option
+                                                                                    value="{{ $facility_item->id }}">
+                                                                                    {{ $facility_item->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
 
-                                                                <!-- Custom Facility Input Box -->
-                                                                <div class="w-1/2">
-                                                                    <input type="text"
-                                                                        :name="'facilities[' + index + '][distance]'"
-                                                                        autocomplete="off" form="propertyFrom"
-                                                                        x-model="facility.distance"
-                                                                        class="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                                                                        placeholder="Enter custom facility distance">
-                                                                </div>
+                                                                    <!-- Custom Facility Input Box -->
+                                                                    <div class="col-lg-6 mb-2">
+                                                                        <input type="text"
+                                                                            :name="'facilities[' + index + '][distance]'"
+                                                                            autocomplete="off" form="propertyFrom"
+                                                                            x-model="facility.distance"
+                                                                            class="w-full p-2 mt-1 border border-gray-300 rounded-md"
+                                                                            placeholder="Enter custom facility distance">
+                                                                    </div>
 
+                                                                </div>
                                                                 <!-- Remove Icon Button -->
                                                                 <div class="position-absolute right-2">
                                                                     <button @click="removeFacility(index)"
@@ -2089,7 +2111,7 @@
                             <div class="mt-5">
                                 <h6 class="my-4 fs-3 text-black font-bold">Ownership<sup
                                         class="text-danger fs-4">*</sup></h6>
-                                <ul class="flex gap-5 mt-3">
+                                <ul class="flex flex-wrap gap-5 mt-3">
                                     <li class="relative">
                                         <input form="propertyFrom" class="sr-only peer"
                                             @if ($property->ownership == 'freehold') checked @endif type="radio"
