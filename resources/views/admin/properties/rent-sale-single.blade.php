@@ -187,8 +187,8 @@
                             <div class="col-lg-12 text-start">
                                 <h2 class="fs-4 font-bold mb-3">{{ $property->name }}</h2>
                                 <div class="my-3">
-                                    Category : <span class="badge bg-dark"> {{ $property->category->name }}</span>
-                                    Project : <span class="badge bg-dark"> {{ $property->project->name }}</span>
+                                    Category : <span class="badge bg-dark"> {{ $property->category->name }}</span><br>
+                                    Project : <span class="badge bg-dark"> {{ $property->project->name }}</span><br>
                                     Flat No/Villa No : <span class="badge bg-dark"> {{ $property->unit_info }}</span>
                                     <br><br>
                                     <span class="pt-3">
