@@ -81,7 +81,7 @@
     </div>
 
     <div x-data="stepper()" class="container bg-white rounded-lg shadow-lg p-lg-6 p-2.5 mt-5">
-        <div class="" x-data="formHandler()">
+        <div class="pb-5" x-data="formHandler()">
 
             <form method="POST" @submit.prevent="submitForm" id="propertyFrom"
                 action="{{ route('user.properties.store') }}" enctype="multipart/form-data">
@@ -101,7 +101,7 @@
         <!-- Responsive Stepper -->
         <div class="flex flex-col lg:flex-row">
             <!-- Stepper Navigation -->
-            <div class="lg:w-1/4  lg:border-r border-gray-200 lg:pr-6 mb-6 lg:mb-0 position-sticky top-0 bg-white">
+            <div class="lg:w-1/4  lg:border-r border-gray-200 lg:pr-6 mb-6 lg:mb-0 lg:sticky lg:top-0  z-10 bg-white">
                 <ul class="flex flex-wrap justify-center justify-content-around lg:flex-col lg:justify-start lg:space-x-0 lg:space-y-8 overflow-auto position-sticky top-0"
                     style="z-index: 99999999" {{-- class="flex justify-center lg:flex-col lg:justify-start lg:space-x-0 lg:space-y-8 overflow-auto position-sticky space-x-4 top-0 z-1000" --}}>
                     <template x-for="(step, index) in steps" :key="index">
@@ -1889,7 +1889,7 @@
 
                                     <p class="mt-4 text-gray-700">Price in words: <span id="priceInWords"></span></p>
                                 </div>
-                                <div class="mt-3 flex gap-3">
+                                <div class="mt-3 flex gap-3 flex-wrap">
                                     <label class="flex items-center">
                                         <input name="all_include" form="propertyFrom" type="checkbox"
                                             class="mr-2">

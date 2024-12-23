@@ -43,7 +43,7 @@
 
 @section('content')
     <div class="container">
-        <nav class="flex" aria-label="Breadcrumb">
+        <nav class="flex flex-wrap" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
                     <a href="{{ route('user.dashboard') }}"
@@ -100,7 +100,7 @@
         <!-- Responsive Stepper -->
         <div class="flex flex-col lg:flex-row">
             <!-- Stepper Navigation -->
-            <div class="lg:w-1/4  lg:border-r border-gray-200 lg:pr-6 mb-6 lg:mb-0 position-sticky top-0 bg-white">
+            <div class="lg:w-1/4  lg:border-r border-gray-200 lg:pr-6 mb-6 lg:mb-0 lg:sticky lg:top-0  z-10 bg-white">
                 <ul class="flex flex-wrap justify-center justify-content-around lg:flex-col lg:justify-start lg:space-x-0 lg:space-y-8 overflow-auto position-sticky top-0" style="z-index: 99999999"
                     {{-- class="flex justify-center lg:flex-col lg:justify-start lg:space-x-0 lg:space-y-8 overflow-auto position-sticky space-x-4 top-0 z-1000" --}}
                     >
@@ -2132,7 +2132,7 @@
 
                                     <p class="mt-4 text-gray-700">Price in words: <span id="priceInWords"></span></p>
                                 </div>
-                                <div class="mt-3 flex gap-3">
+                                <div class="mt-3 flex gap-3 flex-wrap">
                                     <label class="flex items-center">
                                         <input name="all_include" form="propertyFrom"
                                             @if ($property->all_include == 1) checked @endif type="checkbox"
