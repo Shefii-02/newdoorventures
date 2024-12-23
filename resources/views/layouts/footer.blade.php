@@ -205,7 +205,7 @@
                         <div class="text-center md:text-start">
                             <p class="mb-0 text-gray-300">
                                 © 2024 New Door Ventures. All right reserved. 
-                                <a class="text-theme mt-2 dark:text-black" href="www.newdoorventures.co.in" target="_new">www.newdoorventures.co.in</a>
+                                <a class="text-theme mt-2 dark:text-black" href="https://www.newdoorventures.co.in" target="_new">www.newdoorventures.co.in</a>
                             </p>
                         </div>
 
