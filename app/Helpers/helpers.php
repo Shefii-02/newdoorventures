@@ -54,7 +54,7 @@ if (!function_exists('uploadFile')) {
                 // Save the image with watermark
                 $image->save($publicPath . '/' . $filename, $disk);
             } else {
-                $path = $file->storeAs($destinationPath, $filename, $disk);
+                $path = $file->move($publicPath, $filename, $disk);
                 // Save the image normally without watermark
                 // $file->move($publicPath, $filename); // This saves the file directly in the public directory
             }
@@ -113,7 +113,7 @@ if (!function_exists('uploadFiletoMedia')) {
                 $image->save($publicPath . '/' . $filename, $disk);
             } else {
                 
-              $file->storeAs($destinationPath, $filename, $disk);
+                $file->move($publicPath, $filename, $disk);
             }
 
             // Prepare data for insertion
