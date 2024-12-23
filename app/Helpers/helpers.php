@@ -112,8 +112,7 @@ if (!function_exists('uploadFiletoMedia')) {
                 // Save the image to the public directory (watermarked version)
                 $image->save($publicPath . '/' . $filename, $disk);
             } else {
-                
-                $file->move($publicPath, $filename, $disk);
+                $path = $file->storeAs('images/' . $destinationPath, $filename, $disk);
             }
 
             // Prepare data for insertion
