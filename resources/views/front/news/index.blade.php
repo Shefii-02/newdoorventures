@@ -35,10 +35,10 @@
                                                 class="mdi mdi-tag-outline"></i><span>{{-- $blog->category->name  --}}</span></a></li>
                                     <li><i class="mdi mdi-eye-outline"></i><span>{{ $blog->views }}</span></li>
                                 </ul>
-                                <p class="mt-3 leading-6 text-slate-600 dark:text-slate-300"
+                                {{-- <p class="mt-3 leading-6 text-slate-600 dark:text-slate-300"
                                     title="{!! Str::limit($blog->description, '30') !!}">
                                     {!! Str::limit($blog->description, '50') !!}
-                                </p>
+                                </p> --}}
                             </div>
                         </div>
                     @endforeach

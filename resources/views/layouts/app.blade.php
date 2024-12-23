@@ -79,7 +79,7 @@
 
     <link media="all" type="text/css" rel="stylesheet" href="{{ asset('themes/hously/css/icons.css') }}">
 
-    <link media="all" type="text/css" rel="stylesheet" href="{{ asset('themes/hously/css/style.css?v=1.8.6') }}">
+    <link media="all" type="text/css" rel="stylesheet" href="{{ asset('themes/hously/css/style.css?v=1.8.7') }}">
 
     <link media="all" type="text/css" rel="stylesheet"
         href="{{ asset('themes/hously/plugins/leaflet/leaflet.css') }}">
