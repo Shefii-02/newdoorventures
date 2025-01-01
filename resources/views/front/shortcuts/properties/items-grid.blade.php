@@ -1,18 +1,67 @@
 @if ($properties->isNotEmpty())
-    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
-        @foreach ($properties as $property)
-            @if ($property->type == 'pg')
-                @include('front.shortcuts.properties.item-pg', compact('property'))
-            @elseif($property->category->name == 'Plot and Land')
-   
-                @include('front.shortcuts.properties.item-plot', compact('property'))
-            @elseif($property->type == 'rent')
-                @include('front.shortcuts.properties.item-rent', compact('property'))
-            @else
-                @include('front.shortcuts.properties.item-sale', compact('property'))
-            @endif
-        @endforeach
+<div class="row">
+    <div class="col-lg-10">
+        <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
+            @foreach ($properties as $property)
+                @if ($property->type == 'pg')
+                    @include('front.shortcuts.properties.item-pg', compact('property'))
+                @elseif($property->category->name == 'Plot and Land')
+       
+                    @include('front.shortcuts.properties.item-plot', compact('property'))
+                @elseif($property->type == 'rent')
+                    @include('front.shortcuts.properties.item-rent', compact('property'))
+                @else
+                    @include('front.shortcuts.properties.item-sale', compact('property'))
+                @endif
+            @endforeach
+        </div>
     </div>
+    <div class="col-lg-2">
+        <div class="card">
+            <div class="card-body">
+                <a href="{{ route('user.properties.create') }}" target="_blank">
+                    <div class="box">
+                        <div class="px-1.5 bg-gray-300 py-4 rounded">
+                            <h1 class="fw-bold  text-center text-dark  " >
+                                Sell/Rent your Property with us for Free
+                            </h1>
+                        </div>
+                        <div class="py-4 ">
+                            <button class="text-white rounded-full btn bg-primary hover:bg-secondary border-primary dark:border-primary post-property fs-6">Post Property</button>
+                        </div>
+                        
+    
+                        <h6 class=" fw-bold fs-16 ">Here's why Our Portal:</h6>
+                        <ul class="py-4">
+                            <li class="fs-13 mb-2">
+                                Get Access to 4 Lakh + Buyers
+                            </li>
+                            <li class="fs-13 mb-2">
+                                Sell Faster with Premium Service
+                            </li>
+                            <li class="fs-13 mb-2">
+                                Find only Genuine Leads
+                            </li>
+                            <li class="fs-13 mb-2">
+                                Get Expert advice on Market Trends & insights
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </a>
+               
+                
+            </div>
+        </div>
+        {{-- advertisement --}}
+        <div class="py-4" >
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/aae8da113086087.60212ba3b3ae2.jpg">
+        </div>
+
+    </div>
+
+</div>
+   
 @else
     <div class="my-16 text-center">
         <svg class="mx-auto h-24 w-24 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

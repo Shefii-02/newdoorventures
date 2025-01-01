@@ -182,6 +182,7 @@
                             </button>
                         </li>
                     @endif
+                    
                     @if ($project->latitude && $project->longitude)
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Location')"
@@ -429,6 +430,7 @@
                                     </div>
                                 </div>
                             @endif
+                         
                             @if ($project->specifications->count())
                                 <div class="container-fluid mb-5 section" id="Specifications"
                                     :class="{ 'active': activeSection === 'Specifications' }">
@@ -462,7 +464,15 @@
                                     </div>
                                 </div>
                             @endif
-
+                            <div class="container-fluid mb-5 section">
+                                
+                                <a href="https://www.indoordesigns.in" target="_blank">
+                                    <div class="py-2">
+                                        <img src="{{ asset('themes/images/in-door-ad.png') }}" class="w-100 rounded-2">
+                                    </div>
+                                    
+                                </a>
+                            </div>
                             {{-- @if ($project->construction_status != 'ready_to_move') --}}
                             <div class="container-fluid mb-5">
                                 <div class="md:flex">

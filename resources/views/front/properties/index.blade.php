@@ -118,94 +118,10 @@
                 {{-- {!! Theme::partial('real-estate.properties.items-map', compact('properties')) !!} --}}
             </div>
             <div id="items-list" data-box-type="property" @class(['hidden' => request()->input('layout') == 'map'])
-                data-layout="grid style="max-height: none; max-width: none">
+                data-layout="grid" style="max-height: none; max-width: none">
                 @include('front.shortcuts.properties.items', compact('properties'))
             </div>
         </div>
     </section>
 
-    <div class="hidden w-full mx-auto overflow-hidden duration-500 ease-in-out bg-white shadow group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 lg:max-w-2xl"
-        id="property-list-skeleton">
-        <div class="md:flex">
-            <div class="flex items-center justify-center bg-gray-300 rounded-l h-60 dark:bg-gray-700">
-                <i class="px-12 py-16 text-gray-200 text-8xl mdi mdi-image-filter-hdr"></i>
-            </div>
-            <div class="p-6">
-                <div class="pb-6 space-y-4">
-                    <div class="hidden md:flex items-center -ms-0.5 mb-2">
-                        <i class="me-1 text-sm mdi mdi-tag-outline text-slate-200"></i>
-                        <div class="w-1/4 h-2 rounded bg-slate-200"></div>
-                    </div>
-                    <div class="h-2 rounded bg-slate-200"></div>
-                    <div class="w-3/5 h-2 rounded bg-slate-200"></div>
-                </div>
-
-                <ul class="flex items-center justify-between py-6 ps-0 mb-0 list-none md:py-4">
-                    <li class="flex items-center me-4">
-                        <i class="text-2xl text-slate-200 mdi mdi-shower me-2"></i>
-                        <div class="w-10 h-2 rounded bg-slate-200"></div>
-                    </li>
-
-                    <li class="flex items-center me-4">
-                        <i class="text-2xl text-slate-200 mdi mdi-bed-empty me-2"></i>
-                        <div class="w-10 h-2 rounded bg-slate-200"></div>
-                    </li>
-
-                    <li class="flex items-center">
-                        <i class="text-2xl text-slate-200 mdi mdi-arrow-collapse-all me-2"></i>
-                        <div class="w-10 h-2 rounded bg-slate-200"></div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="hidden overflow-hidden duration-500 ease-in-out bg-white shadow group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700"
-        id="property-grid-skeleton">
-        <div class="relative">
-            <div class="flex items-center justify-center w-full bg-gray-300 rounded h-60 dark:bg-gray-700">
-                <i class="text-gray-200 text-8xl mdi mdi-image-filter-hdr"></i>
-            </div>
-        </div>
-
-        <div class="p-6 space-y-6">
-            <div class="space-y-4">
-                <div class="h-2 rounded bg-slate-200"></div>
-                <div class="w-3/5 h-2 rounded bg-slate-200"></div>
-            </div>
-
-            <ul class="flex items-center justify-between py-6 ps-0 mb-0 list-none">
-                <li class="flex items-center me-4">
-                    <i class="text-2xl text-slate-200 mdi mdi-shower me-2"></i>
-                    <div class="w-10 h-2 rounded bg-slate-200"></div>
-                </li>
-
-                <li class="flex items-center me-4">
-                    <i class="text-2xl text-slate-200 mdi mdi-bed-empty me-2"></i>
-                    <div class="w-10 h-2 rounded bg-slate-200"></div>
-                </li>
-
-                <li class="flex items-center">
-                    <i class="text-2xl text-slate-200 mdi mdi-arrow-collapse-all me-2"></i>
-                    <div class="w-10 h-2 rounded bg-slate-200"></div>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="hidden overflow-hidden duration-500 ease-in-out bg-white shadow group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700"
-        id="property-map-skeleton">
-        <div class="relative">
-            <div class="flex items-center justify-center w-full bg-gray-300 rounded h-60 dark:bg-gray-700">
-                <i class="text-gray-200 text-8xl mdi mdi-image-filter-hdr"></i>
-            </div>
-        </div>
-
-        <div class="p-6 space-y-6">
-            <div class="space-y-4">
-                <div class="h-2 rounded bg-slate-200"></div>
-                <div class="w-3/5 h-2 rounded bg-slate-200"></div>
-            </div>
-        </div>
-    </div>
 @endsection

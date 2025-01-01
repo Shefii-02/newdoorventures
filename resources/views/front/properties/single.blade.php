@@ -431,6 +431,15 @@
                                     </div>
                                 </div>
                             @endif
+                            <div class="container-fluid mb-5 section">
+                                
+                                <a href="https://www.indoordesigns.in" target="_blank">
+                                    <div class="py-2">
+                                        <img src="{{ asset('themes/images/in-door-ad.png') }}" class="w-100 rounded-2">
+                                    </div>
+                                    
+                                </a>
+                            </div>
                             @if ('location' == 'location')
                                 <div class="container-fluid mb-5">
                                     <div class="md:flex">
