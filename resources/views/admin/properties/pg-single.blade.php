@@ -142,16 +142,10 @@
                                             <label for="statusApproved" class="form-check-label">Approved</label>
                                         </div>
 
-                                        <div class="form-check">
-                                            <input type="radio" id="statusRenting" name="moderation_status"
-                                                value="renting" class="form-check-input"
-                                                {{ $property->moderation_status === 'renting' ? 'checked' : '' }}>
-                                            <label for="statusRenting" class="form-check-label">Renting</label>
-                                        </div>
 
                                         <div class="form-check">
                                             <input type="radio" id="statusRented" name="moderation_status"
-                                                value="approved" class="form-check-input"
+                                                value="rented" class="form-check-input"
                                                 {{ $property->moderation_status === 'rented' ? 'checked' : '' }}>
                                             <label for="statusRented" class="form-check-label">Rented</label>
                                         </div>

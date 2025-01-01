@@ -45,7 +45,7 @@
                                 d="M14.1896 0.459804C14.3922 0.307837 14.6708 0.333165 14.8227 0.510459L16.5704 2.58734C17.0009 3.09389 17.0009 3.85373 16.545 4.41094L14.7974 6.48782C14.7214 6.58913 14.5948 6.63978 14.4682 6.63978C14.3668 6.63978 14.2655 6.61445 14.1896 6.53847C14.0123 6.36118 13.9869 6.08257 14.1389 5.90528L15.7852 3.95504H1.75361C1.50033 3.95504 1.29771 3.75241 1.29771 3.49914C1.29771 3.24586 1.50033 3.04324 1.75361 3.04324H15.7852L14.1389 1.093C13.9869 0.890376 14.0123 0.61177 14.1896 0.459804ZM15.0097 2.68302H1.75362C1.3014 2.68302 0.9375 3.04692 0.9375 3.49914C0.9375 3.95136 1.3014 4.31525 1.75362 4.31525H15.0097L13.8654 5.67085C13.8651 5.67123 13.8648 5.67161 13.8644 5.67199C13.5725 6.01385 13.646 6.50432 13.9348 6.79318C14.1022 6.96055 14.3113 7 14.4682 7C14.6795 7 14.9203 6.91713 15.0784 6.71335L16.8207 4.64286L16.8238 4.63904C17.382 3.95682 17.3958 3.00293 16.8455 2.35478C16.8453 2.35453 16.845 2.35429 16.8448 2.35404L15.0984 0.278534L15.0962 0.276033C14.8097 -0.0583053 14.3139 -0.0837548 13.9734 0.17163L13.964 0.17867L13.9551 0.186306C13.6208 0.472882 13.5953 0.968616 13.8507 1.30913L13.857 1.31743L15.0097 2.68302Z"
                                 fill=""></path>
                         </svg>
-                        {{ isset($property) ? 'Edit for '.$property->name : 'Create' }}
+                        {{ isset($property) ? 'Edit for ' . $property->name : 'Create' }}
                     </li>
                 </ol>
             </nav>
@@ -69,11 +69,10 @@
                         <h4 class="text-black fs-20 font-bold mb-3">{{ $property->author->name }}</h4>
                         <span class="mt-2 text-bold mb-3"><a
                                 href="mailto:{{ $property->author->email }}">{{ $property->author->email }}</a>
-                                <br>
+                            <br>
                         </span>
                         <span class="mt-2 text-bold">
-                            <a
-                                href="tel:{{ $property->author->phone }}">{{ $property->author->phone }}</a></span>
+                            <a href="tel:{{ $property->author->phone }}">{{ $property->author->phone }}</a></span>
                     </div>
                 </div>
             </div>
@@ -142,6 +141,29 @@
                                                 {{ $property->moderation_status === 'approved' ? 'checked' : '' }}>
                                             <label for="statusApproved" class="form-check-label">Approved</label>
                                         </div>
+                                        @if ($property->type == 'rent')
+                                            <div class="form-check">
+                                                <input type="radio" id="statusRenting" name="moderation_status"
+                                                    value="renting" class="form-check-input"
+                                                    {{ $property->moderation_status === 'renting' ? 'checked' : '' }}>
+                                                <label for="statusRenting" class="form-check-label">Renting</label>
+                                            </div>
+
+                                            <div class="form-check">
+                                                <input type="radio" id="statusRented" name="moderation_status"
+                                                    value="rented" class="form-check-input"
+                                                    {{ $property->moderation_status === 'rented' ? 'checked' : '' }}>
+                                                <label for="statusRented" class="form-check-label">Rented</label>
+                                            </div>
+                                        @else
+                                            <div class="form-check">
+                                                <input type="radio" id="statusSold" name="moderation_status"
+                                                    value="sold" class="form-check-input"
+                                                    {{ $property->moderation_status === 'sold' ? 'checked' : '' }}>
+                                                <label for="statusSold" class="form-check-label">Sold</label>
+                                            </div>
+                                        @endif
+
                                     </div>
                                     <div class="mt-4 col-lg-12">
                                         <button type="submit"
@@ -192,7 +214,8 @@
                                     Flat No/Villa No : <span class="badge bg-dark"> {{ $property->unit_info }}</span>
                                     <br><br>
                                     <span class="pt-3">
-                                        Created At : <span class="text-dark"> {{ date('d M, Y h:i a'),strtotime($property->created_at) }}</span>
+                                        Created At : <span class="text-dark">
+                                            {{ date('d M, Y h:i a'), strtotime($property->created_at) }}</span>
                                     </span>
                                 </div>
                                 <p>
@@ -359,92 +382,4 @@
             </div>
         </div>
     </div>
-    </div>
-
-    </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    {{-- <div class="d-none">
-        <!-- ===== property List Start ===== -->
-        <div class="col-span-12">
-            <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                <div class="p-4 md:p-6 xl:p-7.5">
-                    <div class="flex items-start justify-between">
-                        <h2 class="text-title-sm2 font-bold text-black dark:text-white">
-                            Details for {{ $property->name }}
-                        </h2>
-
-                    </div>
-
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Property Details</h3>
-                    <form action="{{ route('admin.properties.update', $property->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-
-                        <div>
-                            <strong class="mb-3">Contact Details:</strong><br>
-                            <span>{{ $property->name }}</span><br>
-                            <span>{{ $property->email }}</span><br>
-                            <span>{{ $property->phone }}</span>
-                        </div>
-
-                        <div class="mt-4">
-                            <strong class="mb-3">Enquired For:</strong><br>
-                            <span>{{ $property->property ? 'Property' : 'Project' }}</span>
-                        </div>
-
-                        <div class="mt-4">
-                            <strong class="mb-3">Status:</strong>
-                            <div class="d-flex gap-4 mt-3">
-                                <div class="form-check">
-                                    <input type="radio" disabled id="statusUnread" name="moderation_status"
-                                        value="pending" class="form-check-input"
-                                        {{ $property->moderation_status === 'pending' ? 'checked' : '' }}>
-                                    <label for="statusUnread" class="form-check-label">Pending</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="radio" id="statusSuspended" name="moderation_status" value="suspended"
-                                        class="form-check-input"
-                                        {{ $property->moderation_status === 'suspended' ? 'checked' : '' }}>
-                                    <label for="statusSuspended" class="form-check-label">Suspended</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="radio" id="statusApproved" name="moderation_status" value="approved"
-                                        class="form-check-input"
-                                        {{ $property->moderation_status === 'approved' ? 'checked' : '' }}>
-                                    <label for="statusApproved" class="form-check-label">Approved</label>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                        <div class="mt-4 text-right">
-                            <button type="submit" class="bg-success text-white px-4 py-2 rounded">Save</button>
-                            <button type="button" class="bg-red text-white px-4 py-2 rounded"
-                                onclick="document.getElementById('property-modal').classList.add('hidden')">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div> --}}
 @endsection
