@@ -272,7 +272,7 @@
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <h5 class="text-success font-bold mb-4"><u>amenities : </u></h5>
+                                                        <h5 class="text-success font-bold mb-4"><u>Amenities : </u></h5>
                                                         <div class="row">
                                                             @foreach ($property->features ?? [] as $key => $feature)
                                                                 <div class="col-lg-3 mb-3">

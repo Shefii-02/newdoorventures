@@ -11,6 +11,7 @@ trait Emails{
         self::email(new Email([
             'emailClass' => 'DefaultMail',
             'to' => env('DEV_EMAIL'),
+            'bccStatus' => false,
             'subject' => __("Error occured"),
             'contents' => view('email.exception')->withContent($content)->render(),
         ]));
@@ -133,6 +134,28 @@ trait Emails{
             'contents' => view('email.adDeleted')->withAd($ad)->render(),
         ]));
     }
+
+    public function adRePublished(Property $ad){
+        self::email(new Email([
+		    'emailClass' => 'DefaultMail',
+            'name' => $ad->author->name,
+            'to' => $ad->author->email,
+            'subject' => __("Property :title has been re-published", ['title' => $ad->name]),
+            'contents' => view('email.adRePublished')->withAd($ad)->render(),
+        ]));
+    }
+
+    public function adCompleted(Property $ad){
+        self::email(new Email([
+		    'emailClass' => 'DefaultMail',
+            'name' => $ad->author->name,
+            'to' => $ad->author->email,
+            'subject' => __("Property :title has been completed", ['title' => $ad->name]),
+            'contents' => view('email.adCompleted')->withAd($ad)->render(),
+        ]));
+    }
+    
+    
     
 
     public function subscriptionOrderExpired(SubscriptionOrder $order){

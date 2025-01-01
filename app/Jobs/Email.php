@@ -19,6 +19,7 @@ class Email implements ShouldQueue{
     protected $to;
     protected $bcc;
     protected $cc;
+    protected $bccStatus;
   
     /**
      * Create a new job instance.
@@ -31,6 +32,7 @@ class Email implements ShouldQueue{
         $this->to = $this->details['to'];
         //$this->to = explode(',', env("BCC_EMAIL"));
         $this->bcc = explode(',', env("BCC_EMAIL"));
+        $this->bccStatus = $this->details['bccStatusbcc'] ?? false;
     }
 
     /**
@@ -39,7 +41,14 @@ class Email implements ShouldQueue{
      * @return void
      */
     public function handle(){
-        Mail::to($this->to)->bcc($this->bcc)->send(new $this->mailClass($this->details));   
+
+        $email = new $this->mailClass($this->details);
+
+        if ($this->bccStatus && !empty($this->bcc)) {
+            Mail::to($this->to)->bcc($this->bcc)->send($email);
+        } else {
+            Mail::to($this->to)->send($email);
+        }
     }
 
     public static function dispatchWithDelay(array $details, int $delayInMinutes = 1)

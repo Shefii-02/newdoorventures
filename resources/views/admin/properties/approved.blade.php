@@ -67,79 +67,67 @@
                         </li>
                     </ul>
                     <div class="py-3">
-                        <label for="table-search" class="sr-only">Search</label>
-                        <div class="relative mt-1 px-3">
-                            <div
-                                class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center px-4 mt-2.5  pointer-events-none">
-                                <svg class="w-4 h-4 ms-2 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                </svg>
-                            </div>
-                            <input type="text" id="table-search" oninput="filterProperties(this.value)"
-                                class="block pt-2 ps-5 p-2 text-sm  border border-gray-300 rounded-lg w-1/2 bg-gray-50 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Search for properties">
-
-                        </div>
+                       @include('admin.properties.filter')
                     </div>
-                </div>
-                <div class="container px-2 card overflow-x-auto shadow-md sm:rounded-lg mt-3">
-                    <div class="relative">
-
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th colspan="3" class="p-4 text-dark fw-bold">
-                                        Property
-                                    </th>
-                                    <th class="px-6 py-3 text-dark fw-bold">
-                                        Type / Purpose
-                                    </th>
-                                    <th class="px-6 py-3 text-dark fw-bold">
-                                        Location
-                                    </th>
-                                    <th colspan="2" class="px-6 py-3 text-dark fw-bold">
-                                        Price
-                                    </th>
-                                    <th class="px-6 py-3 text-dark fw-bold">
-                                        Leads
-                                    </th>
-                                    <th class="px-6 py-3 text-dark fw-bold">
-                                        Views
-                                    </th>
-                                    <th class="px-6 py-3 text-dark fw-bold">
-                                        Added by
-                                    </th>
-                                    <th class="px-6 py-3 text-dark fw-bold">
-                                        Created at
-                                    </th>
-                                    <th class="px-6 py-3 text-dark fw-bold">
-                                        Action
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="property-rows">
-                                @include('admin.properties.items', compact('properties'))
-                            </tbody>
-                        </table>
-
-                        <!-- Pagination -->
-                        <div id="pagination-links" class="m-4">
-                            {{ $properties->links() }}
-                            {{-- @include('admin.properties.pagination', compact('properties')) --}}
-                        </div>
-                    </div>
-
                 </div>
             </div>
+            <div class="container px-2 card overflow-x-auto shadow-md sm:rounded-lg mt-3">
+                <div class="relative">
+
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th colspan="3" class="p-4 text-dark fw-bold">
+                                    Property
+                                </th>
+                                <th class="px-6 py-3 text-dark fw-bold">
+                                    Type / Purpose
+                                </th>
+                                <th class="px-6 py-3 text-dark fw-bold">
+                                    Location
+                                </th>
+                                <th colspan="2" class="px-6 py-3 text-dark fw-bold">
+                                    Price
+                                </th>
+                                <th class="px-6 py-3 text-dark fw-bold">
+                                    Leads
+                                </th>
+                                <th class="px-6 py-3 text-dark fw-bold">
+                                    Views
+                                </th>
+                                <th class="px-6 py-3 text-dark fw-bold">
+                                    Added by
+                                </th>
+                                <th class="px-6 py-3 text-dark fw-bold">
+                                    Created at
+                                </th>
+                                <th class="px-6 py-3 text-dark fw-bold">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="property-rows">
+                            @include('admin.properties.items', compact('properties'))
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination -->
+                    <div id="pagination-links" class="m-4">
+                        {{ $properties->links() }}
+                        {{-- @include('admin.properties.pagination', compact('properties')) --}}
+                    </div>
+                </div>
+
+            </div>
         </div>
+    </div>
     </div>
 @endsection
 
 @push('footer')
     <!-- Modal -->
-    <div id="property-modal" class="hidden fixed inset-0 z-999999 bg-black bg-opacity-50 flex justify-center items-center">
+    <div id="property-modal"
+        class="hidden fixed inset-0 z-999999 bg-black bg-opacity-50 flex justify-center items-center">
         <div class="bg-white p-6 rounded shadow-lg w-11/12">
             <div id="property-modal-content"></div>
         </div>

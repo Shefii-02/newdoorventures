@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Account;
 use App\Models\Category;
 use App\Models\CustomField;
 use App\Models\Facility;
@@ -41,6 +42,18 @@ class PropertyController extends Controller
             });
         }
 
+        if ($request->has('staff') && $request->staff != '') {
+            $query = $query->where('author_id', $request->staff);
+        }
+
+        if ($request->has('created_at') && $request->created_at != '') {
+            $start_date = $request->created_at . ' 00:00:00';
+            $end_date = $request->created_at . ' 23:59:59';
+            $query = $query->whereBetween('created_at', [$start_date, $end_date]);
+        }
+
+
+
         $properties = $query->paginate(10);
 
         if ($request->ajax()) {
@@ -49,13 +62,14 @@ class PropertyController extends Controller
             return response()->json(['rows' => $rows, 'pagination' => $pagination]);
         }
 
+        $staffs = Account::where('is_staff', '1')->get();
 
-        return view('admin.properties.pending', compact('properties'));
+        return view('admin.properties.pending', compact('properties', 'staffs'));
     }
 
     public function approved(Request $request)
     {
-        $query = Property::where('moderation_status', 'approved');
+        $query = Property::where('moderation_status', 'approved')->orderBy('id', 'desc');
         //      orderByRaw("
         //     CASE 
         //         WHEN moderation_status = 'pending' THEN 1
@@ -79,6 +93,17 @@ class PropertyController extends Controller
             // });
         }
 
+        if ($request->has('staff') && $request->staff != '') {
+            $query = $query->where('author_id', $request->staff);
+        }
+
+        if ($request->has('created_at') && $request->created_at != '') {
+            $start_date = $request->created_at . ' 00:00:00';
+            $end_date = $request->created_at . ' 23:59:59';
+
+            $query = $query->whereBetween('created_at', [$start_date, $end_date]);
+        }
+
         $properties = $query->paginate(10);
 
         if ($request->ajax()) {
@@ -87,14 +112,14 @@ class PropertyController extends Controller
             return response()->json(['rows' => $rows, 'pagination' => $pagination]);
         }
 
-
-        return view('admin.properties.approved', compact('properties'));
+        $staffs = Account::where('is_staff', '1')->get();
+        return view('admin.properties.approved', compact('properties', 'staffs'));
     }
 
 
     public function suspended(Request $request)
     {
-        $query = Property::where('moderation_status', 'suspended');
+        $query = Property::where('moderation_status', 'suspended')->orderBy('id', 'desc');
         // orderByRaw("
         //         CASE 
         //             WHEN moderation_status = 'pending' THEN 1
@@ -118,6 +143,18 @@ class PropertyController extends Controller
             // });
         }
 
+        if ($request->has('staff') && $request->staff != '') {
+            $query = $query->where('author_id', $request->staff);
+        }
+
+        if ($request->has('created_at') && $request->created_at != '') {
+            $start_date = $request->created_at . ' 00:00:00';
+            $end_date = $request->created_at . ' 23:59:59';
+            $query = $query->whereBetween('created_at', [$start_date, $end_date]);
+        }
+
+
+
         $properties = $query->paginate(10);
 
         if ($request->ajax()) {
@@ -126,8 +163,8 @@ class PropertyController extends Controller
             return response()->json(['rows' => $rows, 'pagination' => $pagination]);
         }
 
-
-        return view('admin.properties.suspended', compact('properties'));
+        $staffs = Account::where('is_staff', '1')->get();
+        return view('admin.properties.suspended', compact('properties', 'staffs'));
     }
 
 
@@ -136,7 +173,7 @@ class PropertyController extends Controller
         $query = Property::where(function ($q) {
             $q->where('status', "sold")
                 ->orWhere('status', "rented");
-        });
+        })->orderBy('id', 'desc');
 
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
@@ -153,6 +190,19 @@ class PropertyController extends Controller
             // });
         }
 
+
+        if ($request->has('staff') && $request->staff != '') {
+            $query = $query->where('author_id', $request->staff);
+        }
+
+        if ($request->has('created_at') && $request->created_at != '') {
+            $start_date = $request->created_at . ' 00:00:00';
+            $end_date = $request->created_at . ' 23:59:59';
+            $query = $query->whereBetween('created_at', [$start_date, $end_date]);
+        }
+
+
+
         $properties = $query->paginate(10);
 
         if ($request->ajax()) {
@@ -161,14 +211,9 @@ class PropertyController extends Controller
             return response()->json(['rows' => $rows, 'pagination' => $pagination]);
         }
 
-
-        return view('admin.properties.sold-rented', compact('properties'));
+        $staffs = Account::where('is_staff', '1')->get();
+        return view('admin.properties.sold-rented', compact('properties', 'staffs'));
     }
-
-
-
-
-
 
 
 
@@ -238,20 +283,60 @@ class PropertyController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // public function update(Request $request, string $id)
+    // {
+    //     //
+    //     $property = Property::findOrFail($id);
+
+
+    //     $property->update($request->only('moderation_status'));
+
+    //     if ($request->moderation_status == 'approved' && $property->moderation_status != 'approved') {
+    //         $this->adApproved($property);
+    //     } else if ($request->moderation_status == 'suspended' && $property->moderation_status != 'suspended') {
+    //         $this->adSuspended($property);
+    //     }
+
+    //     return redirect()->route('admin.properties.index')->with('success', 'Status updated successfully!');
+    // }
+
     public function update(Request $request, string $id)
     {
-        //
         $property = Property::findOrFail($id);
+
+        $previousStatus = $property->moderation_status;
         $property->update($request->only('moderation_status'));
 
-        if ($request->moderation_status == 'approved' && $property->moderation_status != 'approved') {
-            $this->adApproved($property);
-        } else if ($request->moderation_status == 'suspended' && $property->moderation_status != 'suspended') {
-            $this->adSuspended($property);
+        // Handle transitions based on the status
+        switch ($request->moderation_status) {
+            case 'approved':
+                if ($previousStatus == 'pending') {
+                    $this->adApproved($property); // Handle pending to approved
+                } elseif (in_array($previousStatus, ['rented', 'sold'])) {
+                    $this->adRePublished($property); // Handle re-approval of sold/rented properties
+                }
+                break;
+
+            case 'suspended':
+                if (in_array($previousStatus, ['pending', 'approved'])) {
+                    $this->adSuspended($property); // Handle transition to suspended
+                }
+                break;
+
+            case 'rented':
+            case 'sold':
+                if ($previousStatus == 'approved') {
+                    $this->adCompleted($property); // Handle approved to rented/sold
+                }
+                break;
+
+            default:
+                break;
         }
 
         return redirect()->route('admin.properties.index')->with('success', 'Status updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.

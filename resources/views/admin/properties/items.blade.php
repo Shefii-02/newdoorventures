@@ -34,7 +34,7 @@
             <span class="text-sm">{{ $property->account->name }}</span>
         </th>
         <td class="px-2 py-1 text-center">
-            {!! dateTimeFormat($property->account->created_at) !!}
+            {!! dateTimeFormat($property->created_at) !!}
         </td>
         <td class="px-2 py-1 text-center">
             <div class="btn-group ">

@@ -76,10 +76,11 @@
                                                 </div>
 
                                                 <div class="px-3  ">
-                                                    <div class="border-theme rounded flex flex-wrap  " style="width: fit-content;">
+                                                    <div class="border-theme rounded flex flex-wrap  "
+                                                        style="width: fit-content;">
                                                         <span
                                                             class="text-light text-sm pt-1 bg-theme font-medium  inline  dark:text-white text-uppercase px-2">
-                                                            RERA  STATUS</span>
+                                                            RERA STATUS</span>
                                                         <span
                                                             class="text-theme text-sm pt-1  inline  dark:text-white text-uppercase border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $project->rera_status }}</span>
                                                         <span
@@ -444,7 +445,7 @@
                                                                         class="text-gray-800 text-center w-20 flex flex-column justify-content-center items-center">
                                                                         <img src="{{ asset('images/' . $spec->image) }}"
                                                                             class="w-48 text-center rounded-2 h-10 mt-2">
-                                                                            <small>{{ $spec->name }}</small>
+                                                                        <small>{{ $spec->name }}</small>
                                                                     </td>
                                                                     <td class="text-gray-800 text-left p-2">
                                                                         <span
@@ -476,11 +477,12 @@
                                                                 <img class="w-10 mb-2"
                                                                     src="{{ asset('assets/icons/For-Sale.gif') }}"
                                                                     alt="Resale">
-                                                                    
+
                                                                 <span
                                                                     class="text-medium font-bold ">{{ $sell_properties->count() }}
                                                                     Resale</span>
-                                                                <a href="#sell-related" class="text-sm text-gray-500 text-decoration-underline">
+                                                                <a href="#sell-related"
+                                                                    class="text-sm text-gray-500 text-decoration-underline">
                                                                     Properties in this project</a>
                                                             </div>
                                                         </div>
@@ -495,7 +497,8 @@
                                                                 <span
                                                                     class="text-medium font-bold ">{{ $rent_properties->count() }}
                                                                     Rental</span>
-                                                                <a href="#rent-related" class="text-sm text-gray-500 text-decoration-underline">
+                                                                <a href="#rent-related"
+                                                                    class="text-sm text-gray-500 text-decoration-underline">
                                                                     Properties in this project</a>
                                                             </div>
                                                         </div>
@@ -512,11 +515,15 @@
                                     <div class="w-full p-1 ">
                                         <div class="border-theme rounded-xl">
                                             <div class="px-3 py-5">
-                                                <h4 class="fs-5  font-bold me-2 ">{{ __('Resale Properties in this project') }}
+                                                <h4 class="fs-5  font-bold me-2 ">
+                                                    {{ __('Resale Properties in this project') }}
                                                 </h4>
                                             </div>
                                             <div class="px-2">
-                                                @include('front.shortcuts.properties.items-scroll-related', ['properties' => $sell_properties])
+                                                @include(
+                                                    'front.shortcuts.properties.items-scroll-related',
+                                                    ['properties' => $sell_properties]
+                                                )
                                             </div>
                                         </div>
                                     </div>
@@ -527,13 +534,17 @@
                                     <div class="w-full p-1 ">
                                         <div class="border-theme rounded-xl">
                                             <div class="px-3 py-5">
-                                                <h4 class="fs-5  font-bold me-2 ">{{ __('Rental Properties in this project') }}
+                                                <h4 class="fs-5  font-bold me-2 ">
+                                                    {{ __('Rental Properties in this project') }}
                                                 </h4>
                                             </div>
                                             <div class="px-2">
-                                                @include('front.shortcuts.properties.items-scroll-related', ['properties' => $rent_properties])
-                                        
-                                               
+                                                @include(
+                                                    'front.shortcuts.properties.items-scroll-related',
+                                                    ['properties' => $rent_properties]
+                                                )
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -662,8 +673,8 @@
                                     </div>
                                 </div>
                             @endif
-                            
-                           
+
+
 
                             @if ($project->investor)
                                 <div class="container-fluid mb-5 section" id="AboutDeveloper"
@@ -738,34 +749,77 @@
                         </div>
                     </div>
                 </div>
-                @if ($advertisement && $project->construction_status == 'new_launch')
-                    <div x-data="{ showModal: true }" class="z-999" x-init="document.body.style.overflow = 'hidden'">
-                        <!-- Modal Background -->
-                        <template x-if="showModal">
-                            <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 z-999">
-                                <!-- Modal Content -->
-                                <div class="relative bg-white rounded-lg shadow-lg p-0"
-                                    style="width: 500px; height: 350px;">
-                                    <!-- Advertisement Image -->
+                {{-- @if ($advertisement && $project->construction_status == 'new_launch') --}}
+                <div x-data="imageModal()" class="z-999">
+                    <!-- Modal Background -->
+                    <template x-if="showModal">
+                        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                            <!-- Modal Content -->
+                            <div class="relative bg-white rounded-lg shadow-lg p-0" style="width: 500px; height: 350px;">
+                                <!-- Advertisement Image -->
+                                <img :src="currentImage" alt="Ad Image" class="w-full h-full rounded-lg">
 
-                                    <img src="{{ asset('images/' . $advertisement->image) }}" alt="Advertisement"
-                                        class="w-full h-full  rounded-lg">
-                                    <!-- Close Button -->
-                                    <button @click="showModal = false; document.body.style.overflow = 'auto'"
-                                        class="absolute top-0 end-0 text-white bg-theme bg-opacity-75 rounded-full p-2 hover:bg-opacity-100 focus:outline-none">
-                                        ✕
-                                    </button>
-                                </div>
+                                <!-- Close Button -->
+                                <button @click="closeModal()"
+                                    class="absolute top-0 right-0 text-white bg-red-500 bg-opacity-75 rounded-full p-2 hover:bg-opacity-100 focus:outline-none">
+                                    ✕
+                                </button>
                             </div>
-                        </template>
+                        </div>
+                    </template>
 
-                        <!-- Optional Button to Show Modal Again -->
-                        <button @click="showModal = true; document.body.style.overflow = 'hidden'"
-                            class="fixed top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded shadow">
-                            Show Advertisement
-                        </button>
-                    </div>
-                @endif
+                    <!-- Optional Button to Show Modal Again -->
+                    <button @click="showModal = true; document.body.style.overflow = 'hidden'"
+                        class="fixed top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded shadow">
+                        Show Advertisement
+                    </button>
+                </div>
+
+                {{-- @endif --}}
             </div>
     </section>
 @endsection
+
+
+@push('footer')
+    <script>
+        function imageModal() {
+            return {
+                images: [
+                    'https://media.istockphoto.com/id/1416797815/photo/golden-number-one.jpg?s=612x612&w=0&k=20&c=A1AOP7RZK8Rkk2yxEumTlWmhQE-0nGfxVz3Ef39Dzxc=',
+                    'https://media.istockphoto.com/id/1389130584/photo/rainbow-foil-balloon-number-top-view.jpg?s=612x612&w=0&k=20&c=d_k74tiGrRlHfnGFggcaDBqtKqUG5XgCCrPfyt8iRfs=',
+                    'https://media.istockphoto.com/id/1208521247/photo/human-hand-reaching-through-torn-yellow-paper-sheet-showing-number-three.jpg?s=612x612&w=0&k=20&c=lzFYhsuOItsU0wm5Rr6lpWxMWMeDMfq6wt9Cc_hgtsA=',
+                    'https://media.istockphoto.com/id/1348028241/photo/yellow-number-four-sitting-on-blue-background.jpg?s=612x612&w=0&k=20&c=SSs71_8qFXwWqbjYrM18ovCqSk8KhCnPdoRrJCAnto4=',
+                    'https://media.istockphoto.com/id/1145226297/photo/five-year-birthday-number-5-flying-foil-balloon.jpg?s=612x612&w=0&k=20&c=ga5rSosLZ2l_xvYu3pQ6PnmxIXaxENDL5QvUdkvXHOA='
+                ], // Replace with your actual image URLs
+                currentImage: null,
+                showModal: true,
+
+                init() {
+                    this.showNextImage();
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+                },
+
+                showNextImage() {
+                    // Retrieve the index of the last shown image from local storage
+                    let lastIndex = localStorage.getItem('lastShownIndex');
+                    lastIndex = lastIndex ? parseInt(lastIndex) : -1;
+
+                    // Determine the next image index
+                    const nextIndex = (lastIndex + 1) % this.images.length;
+
+                    // Set the current image
+                    this.currentImage = this.images[nextIndex];
+
+                    // Save the new index in local storage
+                    localStorage.setItem('lastShownIndex', nextIndex);
+                },
+
+                closeModal() {
+                    this.showModal = false;
+                    document.body.style.overflow = 'auto'; // Re-enable scrolling
+                }
+            };
+        }
+    </script>
+@endpush
