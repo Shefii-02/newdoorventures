@@ -171,8 +171,8 @@ class PropertyController extends Controller
     public function soldRented(Request $request)
     {
         $query = Property::where(function ($q) {
-            $q->where('status', "sold")
-                ->orWhere('status', "rented");
+            $q->where('moderation_status', "sold")
+                ->orWhere('moderation_status', "rented");
         })->orderBy('id', 'desc');
 
         if ($request->has('search') && $request->search != '') {
