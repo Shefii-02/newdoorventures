@@ -1,5 +1,5 @@
-<form x-data="propertyFilters()" x-init="initFilters()" target="_blank" class="search-filter">
-    <div class="py-5">
+<form x-data="propertyFilters()" x-init="initFilters()" class="search-filter">
+    <div class="pt-5">
         <div class="row align-items-center">
             <!-- Property Type Dropdown -->
             <div class="col-lg-4 mb-4 px-1">
@@ -23,16 +23,6 @@
                             </optgroup>
                             <option value="projects">Projects</option>
                         </select>
-
-                        {{-- <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
-                            class="border-theme px-3 py-2 rounded-s-2xl">
-                            <option value="null" >Properties</option>
-                            <option {{ isset($type) && $type == 'sell' ? 'selected' : '' }} value="sell">Sale</option>
-                            <option {{ isset($type) && $type == 'rent' ? 'selected' : '' }} value="rent">Rent</option>
-                            <option value="pg">PG</option>
-                            <option  value="plot">Plot</option>
-                            <option value="projects">Projects</option>
-                        </select> --}}
                         <input type="text" x-model="filters.k" @input="applyFilters()"
                             class="border-theme px-3 py-1.5 w-full rounded-e-2xl text-black" placeholder="Search for properties">
                     </div>
@@ -50,12 +40,10 @@
                 </select>
             </div>
             <div class="col-lg-2 mb-4 px-1">
-                <select x-model="filters.city" name="project" @change="applyFilters()"
+                <select name="project" @change="applyFilters()"
                     class="w-full border-theme px-3 py-2 rounded-2xl text-black">
                     <option value="null" selected>Projects</option>
-                    <template x-for="city in cities" :key="city">
-                        <option :value="city" x-text="city"></option>
-                    </template>
+                    
                 </select>
             </div>
 
@@ -76,14 +64,16 @@
                                     <ul class="ks-cboxtags p-0">
                                         <template x-for="category in categories" :key="category.id">
                                             <li>
-                                                <input type="checkbox" name="category[]" :id="'category' + category.id"
+                                                <input type="checkbox" name="categories[]" :id="'category' + category.id"
                                                     :value="category.id"
                                                     @change="toggleArrayFilter('categories', category.id)">
                                                 <label :for="'category' + category.id" x-text="category.name"></label>
                                             </li>
                                         </template>
                                     </ul>
-                                    <input type="submit" value="Search" class="btn btn-theme"/>
+                                    <div class="text-end">
+                                        <input type="submit" value="Search" @click="toggleDropdown('categories')" class="btn btn-theme text-light"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,6 +102,9 @@
                                             <label for="purpose_commercial">Commercial</label>
                                         </li>
                                     </ul>
+                                    <div class="text-end">
+                                        <input type="submit" value="Search" @click="toggleDropdown('purpose')" class="btn btn-theme text-light"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -173,6 +166,9 @@
                                             <label for="bedroom4_buy">4+ Bedrooms</label>
                                         </li>
                                     </ul>
+                                    <div class="text-end">
+                                        <input type="submit" value="Search" @click="toggleDropdown('bedrooms')" class="btn btn-theme text-light"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -190,21 +186,24 @@
                                 class="dropdown-box filter-web-dropdown">
                                 <div class="option-sections">
                                     <ul class="ks-cboxtags p-0">
-                                        <li><input type="checkbox" value="freehold" id="ownership_1"
+                                        <li><input type="checkbox" name="ownership[]"  value="freehold" id="ownership_1"
                                                 @change="toggleArrayFilter('ownership', 'freehold')">
                                             <label for="ownership_1"> Freehold
                                             </label>
                                         </li>
-                                        <li><input type="checkbox" value="co-operative_society" id="ownership_2"
+                                        <li><input type="checkbox" name="ownership[]" value="co-operative_society" id="ownership_2"
                                                 @change="toggleArrayFilter('ownership', 'co-operative_society')">
                                             <label for="ownership_2"> Co-operative Society
                                             </label>
                                         </li>
-                                        <li><input type="checkbox" value="power_of_attorney" id="ownership_3"
+                                        <li><input type="checkbox" name="ownership[]"  value="power_of_attorney" id="ownership_3"
                                                 @change="toggleArrayFilter('ownership', 'power_of_attorney')">
                                             <label for="ownership_3">Power of Attorney</label>
                                         </li>
                                     </ul>
+                                    <div class="text-end">
+                                        <input type="submit" value="Search" @click="toggleDropdown('ownership')" class="btn btn-theme text-light"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -337,7 +336,7 @@
                     this.filters.max_price = urlParams.get('max_price') || null;
                     this.checkFilterState();
                     this.updateVisibility();
-                    this.applyFilters();
+                    // this.applyFilters();
                 },
 
                 updateVisibility() {
@@ -417,7 +416,7 @@
                     } else {
                         this.filters[filterName].push(value);
                     }
-                    this.applyFilters();
+                    // this.applyFilters();
                 },
 
                 // Apply filters with AJAX
@@ -447,11 +446,22 @@
                         window.location.href = "{{ route('public.properties.commercial', ['tab' => 'rent']) }}";
                         return;
                     }
+                    else if (this.filters.type == 'null') {
 
+                        window.location.href = "{{ route('public.properties') }}";
+                        return;
+                    }
 
                     document.body.scrollTop = 0, document.documentElement.scrollTop = 0
                     // const params = new URLSearchParams(this.filters).toString();
                     // var url = `{{ route('public.properties') }}?${params}`;
+
+                    const params = new URLSearchParams(this.filters).toString();
+
+                    // Get the current URL and append the parameters
+                    const baseUrl = window.location.origin + window.location.pathname;
+                    const url = `${baseUrl}?${params}`;
+                    window.location=url;
                     // fetch(url, {
                     //         headers: {
                     //             'X-Requested-With': 'XMLHttpRequest'

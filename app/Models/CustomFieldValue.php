@@ -96,20 +96,22 @@ class CustomFieldValue extends BaseModel
         $newCustomFields = [];
 
         foreach ($customFields as $item) {
-            $customField = null;
+            if ($item['value'] != null) {
+                $customField = null;
 
-          
-            // $itemId = self::where('name',$item->name)->pluck('id')->first();
-            // dd($itemId);
-            // if ($itemId) {
-            //     $customField = self::find($itemId);
-            //     $customField->fill($item);
-            // } else {
+
+                // $itemId = self::where('name',$item->name)->pluck('id')->first();
+                // dd($itemId);
+                // if ($itemId) {
+                //     $customField = self::find($itemId);
+                //     $customField->fill($item);
+                // } else {
                 Arr::forget($item, 'id');
                 $customField = new self($item);
-            // }
+                // }
 
-            $newCustomFields[] = $customField;
+                $newCustomFields[] = $customField;
+            }
         }
 
         return $newCustomFields;

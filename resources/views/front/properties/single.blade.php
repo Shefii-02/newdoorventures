@@ -283,7 +283,7 @@
                                                         @foreach ($property->customFields ?? [] as $customValue)
                                                             <tr class="border-bottom-none">
                                                                 <td class="text-gray-800 w-1/2">
-                                                                    {{ $customValue->name }}
+                                                                    @dump($customValue->customField)
                                                                 </td>
                                                                 <th>
                                                                     {{ $customValue->value }}

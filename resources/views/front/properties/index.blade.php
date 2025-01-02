@@ -104,12 +104,13 @@
                     ])
                 @endif
             </div>
+            <h3 class="fs-4 pb-5 text-gray fw-bold ">{{ isset($searchByTitle) ? $searchByTitle : '' }}</h3>
+
         </div>
     </div>
 
     <section class="relative">
         <div class="container">
-            <h3 class="fs-2 fw-bold">{{ isset($searchByTitle) ? $searchByTitle : '' }}</h3>
          
             <div id="items-map" @class([
                 'hidden' => !request()->input('layout') == 'map' || !$showMap,

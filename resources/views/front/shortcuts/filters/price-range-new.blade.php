@@ -60,7 +60,7 @@
                 <!-- Submit Button -->
                 <div class="submit-button mt-5 text-end">
                     <button type="submit"
-                        class="bg-theme text-white px-4 py-2 rounded-md hover:bg-theme-dark">Submit</button>
+                        class="bg-theme text-white px-4 py-2 rounded-md hover:bg-theme-dark">Search</button>
                 </div>
             </form>
         @endif

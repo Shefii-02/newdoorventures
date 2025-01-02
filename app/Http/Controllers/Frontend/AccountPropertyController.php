@@ -746,9 +746,8 @@ class AccountPropertyController extends Controller
     protected function saveCustomFields(Property $property, array $customFields = []): void
     {
         $customFields = CustomFieldValue::formatCustomFields($customFields);
-
-        DB::table('re_custom_field_values')->where('reference_type', 'App\Models\Property')->where('reference_id', $property->id)->delete();
-
+        DB::table('re_custom_field_values')->update(['reference_type'=>'App\Models\Property']);
+        DB::table('re_custom_field_values')->where('reference_id', $property->id)->delete();
         $property->customFields()->saveMany($customFields);
     }
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Botble\RealEstate\Enums;
+namespace Enums;
 
-use Botble\Base\Supports\Enum;
+use Base\Supports\Enum;
 
 /**
  * @method static CustomFieldEnum TEXT()
