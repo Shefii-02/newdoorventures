@@ -8,7 +8,7 @@
                         <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
                             class="border-theme px-3 py-2 rounded-s-2xl text-black">
                             <optgroup label="Residential" class="text-dark">
-                                <option value="null">All Residential</option>
+                                <option value="all-residential">All Residential</option>
                                 <option {{ isset($type) && $type == 'sell' ? 'selected' : '' }} value="sell">Sale
                                 </option>
                                 <option {{ isset($type) && $type == 'rent' ? 'selected' : '' }} value="rent">Rent
@@ -42,10 +42,16 @@
             <div class="col-lg-2 mb-4 px-1">
                 <select name="project" @change="applyFilters()"
                     class="w-full border-theme px-3 py-2 rounded-2xl text-black">
-                    <option value="null" selected>Projects</option>
-                    
+                    <option value="null" {{ request()->get('project') == 'null' ? 'selected' : '' }}>Projects</option>
+                    @foreach($projects ?? [] as $project)
+                        <option value="{{ $project->id }}" 
+                            {{ request()->get('project') == $project->id ? 'selected' : '' }}>
+                            {{ $project->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
+            
 
             <!-- Other Filters -->
             <div class="col-lg-4 p-0 mb-3">
@@ -244,43 +250,7 @@
                             </div>
                         </div>
                     </template>
-                    {{-- <template x-if="showFilters.availability">
-                        <div class="relative mb-2">
-                            <button type="button" @click="toggleDropdown('available_for')"
-                                class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
-                                Availability
-                                <i
-                                    :class="openDropdown === 'available_for' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                            </button>
-                            <div x-show="openDropdown === 'available_for'" x-transition
-                                class="dropdown-box filter-web-dropdown">
-                                <div class="option-sections">
-                                    <ul class="ks-cboxtags p-0">
-
-                                        <li>
-                                            <input type="checkbox" value="boys" id="boys"
-                                                @change="toggleArrayFilter('availability', 'boys')">
-                                            <label for="boys"> Boys
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" value="girls" id="girls"
-                                                @change="toggleArrayFilter('availability', 'girls')">
-                                            <label for="girls"> Girls
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" value="boys-girls" id="boys-girls"
-                                                @change="toggleArrayFilter('availability', 'boys-girls')">
-                                            <label for="boys-girls">Boys and Girls
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                    </template> --}}
+                
                 </div>
             </div>
         </div>
@@ -303,7 +273,8 @@
                     furnishing: [],
                     // builders: [],
                     type: null,
-                    purpose: []
+                    purpose: [],
+                    project: ''
                 },
                 cities: @json($cities),
                 categories: @json($categories),
@@ -331,7 +302,8 @@
                     this.filters.ownership = this.getArrayFromUrlParam(urlParams, 'ownership');
                     this.filters.furnishing = this.getArrayFromUrlParam(urlParams, 'furnishing');
                     this.filters.categories = this.getArrayFromUrlParam(urlParams, 'categories');
-
+                    
+                    this.filters.min_price = urlParams.get('min_price') || null;
                     this.filters.min_price = urlParams.get('min_price') || null;
                     this.filters.max_price = urlParams.get('max_price') || null;
                     this.checkFilterState();
@@ -346,7 +318,6 @@
                     this.showFilters.purpose = ['sell', 'rent', 'plot'].includes(type);
                     this.showFilters.bedrooms = ['sell', 'rent'].includes(type);
                     this.showFilters.occupancy = ['pg'].includes(type);
-                    this.showFilters.availability = ['pg'].includes(type);
                 },
 
                 getArrayFromUrlParam(urlParams, param) {
@@ -446,7 +417,7 @@
                         window.location.href = "{{ route('public.properties.commercial', ['tab' => 'rent']) }}";
                         return;
                     }
-                    else if (this.filters.type == 'null') {
+                    else if (this.filters.type == 'all-residential') {
 
                         window.location.href = "{{ route('public.properties') }}";
                         return;

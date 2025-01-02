@@ -68,6 +68,7 @@
                         'builders' => $builders,
                         'min_price' => request()->get('min_price') ?? '',
                         'max_price' => request()->get('max_price') ?? '',
+                        'projects' => $projects,
                     ])
                 @elseif(isset($type) && $type == 'commercial')
                     @include('front.shortcuts.properties.search-box-top-commercial', [
@@ -79,6 +80,7 @@
                         'builders' => $builders,
                         'min_price' => request()->get('min_price') ?? '',
                         'max_price' => request()->get('max_price') ?? '',
+                        'projects' => $projects
                     ])
                 @elseif(isset($type) && $type == 'plot')
                     @include('front.shortcuts.properties.search-box-top-plot', [
@@ -90,6 +92,7 @@
                         'builders' => $builders,
                         'min_price' => request()->get('min_price') ?? '',
                         'max_price' => request()->get('max_price') ?? '',
+                        'projects' => $projects
                     ])
                 @else
                     @include('front.shortcuts.properties.search-box-top', [
@@ -101,6 +104,7 @@
                         'builders' => $builders,
                         'min_price' => request()->get('min_price') ?? '',
                         'max_price' => request()->get('max_price') ?? '',
+                        'projects' => $projects
                     ])
                 @endif
             </div>

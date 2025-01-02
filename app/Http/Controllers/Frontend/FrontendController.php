@@ -34,6 +34,7 @@ class FrontendController extends Controller
         $recent_viwed_properties    = $this->recentlyViewedProperties();
         $latest_blogs               = BlogPost::orderBy('created_at', 'desc')->limit(3)->get();
 
+
         return view('front.index', compact('categories', 'featured_properties_rent', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
     }
 
@@ -86,11 +87,12 @@ class FrontendController extends Controller
         $pageDescription = 'Explore a wide range of residential properties including houses, apartments, flats, and more for sale, rent, or lease in Bangalore and Karnataka. Find your dream home today!';
         $pageKeywords = 'residential properties for sale, residential properties for rent, apartments for rent in Bangalore, houses for sale in Karnataka, flats for sale in Bangalore, affordable homes in Karnataka, residential real estate in Bangalore, buy house in Karnataka, rental homes Bangalore, lease properties Karnataka';
 
+        $projects    = Project::get();
 
         $searchByTitle = $properties->count() . " results | Properties for Residential in " . 
         ($request->has('city') ? $request->city . ', ' : '') . "Bangalore";
     
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders','pageTitle','pageDescription','pageKeywords','searchByTitle'));
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders','pageTitle','pageDescription','pageKeywords','searchByTitle','projects'));
     }
 
 
@@ -111,6 +113,7 @@ class FrontendController extends Controller
 
         $categories = Category::where('status', 'published')->where('has_sell', 1)->get();
 
+        $projects    = Project::get();
         $type = 'sell';
 
         $properties = $property_query->get();
@@ -129,7 +132,7 @@ class FrontendController extends Controller
         $pageKeywords = 'properties for sale, houses for sale in Bangalore, apartments for sale in Karnataka, buy homes in Bangalore, residential plots for sale in Karnataka, real estate for sale, commercial properties for sale, affordable homes for sale, property listings in Bangalore';
 
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords','searchByTitle'));
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords','searchByTitle','projects'));
     }
     public function PropertiesForRent(Request $request)
     {
@@ -146,6 +149,7 @@ class FrontendController extends Controller
             ->pluck('locality');
         $categories = Category::where('status', 'published')->where('has_rent', 1)->get();
  
+        $projects    = Project::get();
         $type = 'rent';
 
         $properties = $property_query->get();
@@ -163,7 +167,7 @@ class FrontendController extends Controller
         $pageDescription = 'Explore a variety of properties for rent in Bangalore and Karnataka. Find apartments, houses, PG accommodations, and more at competitive rental prices.';
         $pageKeywords = 'properties for rent, apartments for rent in Bangalore, houses for rent in Karnataka, rental properties in Bangalore, PG accommodation in Karnataka, rental flats in Bangalore, commercial spaces for rent, affordable houses for rent in Karnataka, paying guest accommodation, real estate rentals';
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle','pageDescription','pageKeywords','searchByTitle'));
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle','pageDescription','pageKeywords','searchByTitle','projects'));
     }
     public function PropertiesForPlot(Request $request)
     {
@@ -193,6 +197,7 @@ class FrontendController extends Controller
         $categories = Category::where('status', 'published')->get();
         $type = 'plot';
 
+        $projects    = Project::get();
 
         $properties = $property_query->get();
 
@@ -210,7 +215,7 @@ class FrontendController extends Controller
         $pageKeywords = "plots for sale, residential plots in Bangalore, commercial plots in Karnataka, land for sale in Bangalore, investment land in Karnataka, real estate plots, agricultural plots in Karnataka, plot for construction, buy plots in Bangalore, land investment opportunities";
     
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords','searchByTitle'));
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords','searchByTitle','projects'));
     }
     public function PropertiesForPg(Request $request)
     {
@@ -228,6 +233,7 @@ class FrontendController extends Controller
 
         $type = 'pg';
 
+        $projects    = Project::get();
         $properties = $property_query->get();
 
         if ($request->ajax()) {
@@ -243,7 +249,7 @@ class FrontendController extends Controller
         $pageDescription = 'Explore a variety of Paying Guest (PG) accommodations for rent in Bangalore and Karnataka. Find affordable PGs, private rooms, and shared spaces that suit your needs.';
         $pageKeywords = 'PG accommodation in Bangalore, paying guests in Karnataka, PG for rent in Bangalore, affordable PGs in Bangalore, PG rooms for rent in Karnataka, private rooms for rent in Bangalore, shared PG accommodation, budget PGs in Bangalore, PG spaces near IT hubs, PGs for students in Bangalore, PG rental properties in Karnataka, PG facilities in Bangalore';
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords','searchByTitle'));
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords','searchByTitle','projects'));
     }
 
 
@@ -268,6 +274,8 @@ class FrontendController extends Controller
             ->pluck('locality');
 
         $categories     = Category::where('status', 'published')->where('has_commercial', 1)->get();
+
+        $projects    = Project::get();
         $type           = 'commercial';
 
         if (($request->has('tab') && $request->tab == 'sale') || $request->has('type') && $request->type == 'commercial-sale') {
@@ -292,7 +300,7 @@ class FrontendController extends Controller
         $pageKeywords = 'commercial properties for sale in Bangalore, commercial properties for rent in Karnataka, office spaces for rent in Bangalore, retail shops for sale in Karnataka, commercial real estate in Bangalore, business spaces for lease in Bangalore, commercial property investment in Karnataka, commercial land for sale in Bangalore, office buildings for rent in Karnataka, shops for rent in Bangalore, commercial plots for sale, industrial properties for rent, commercial space for lease';
     
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords','searchByTitle'));
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords','searchByTitle','projects'));
     }
 
 

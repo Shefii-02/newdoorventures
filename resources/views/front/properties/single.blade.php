@@ -31,7 +31,7 @@
                                     <h4 class=" d-inline  font-bold me-2">{{ $property->name }}
                                         <span
                                             class=" d-inline font-bold text-capitalize text-theme border-5 border-gray-300 border-end-0 border-top-0 border-bottom-0 ps-2">
-                                            For {{ $property->type }}</span>
+                                            For {{ $property->type_name }}</span>
                                         <div class=" mt-2">
 
                                             @if ($property->project)
@@ -283,7 +283,7 @@
                                                         @foreach ($property->customFields ?? [] as $customValue)
                                                             <tr class="border-bottom-none">
                                                                 <td class="text-gray-800 w-1/2">
-                                                                    @dump($customValue->customField)
+                                                                    {{ $customValue->name }}
                                                                 </td>
                                                                 <th>
                                                                     {{ $customValue->value }}
