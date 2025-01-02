@@ -1,7 +1,7 @@
 <div role="button"
     class="p-2 mb-3  overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
     <div class="relative overflow-hidden">
-        <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug]) }}">
+        <a target="_blank" href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug]) }}">
             <img src="{{ asset('images/' . $property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'"
                 alt="{{ $property->name }}" class="rounded-xl duration-500 h-50 w-100">
         </a>
@@ -36,7 +36,7 @@
 
     <div class="p-1 flex flex-column justify-content-between mt-2">
         <div class="truncate">
-            <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug]) }}"
+            <a target="_blank" href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug]) }}"
                 class="text-md font-bold text-capitaize duration-500 ease-in-out hover:text-primary"
                 title="{{ $property->name }}">
                 {!! $property->name !!}

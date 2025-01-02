@@ -1,4 +1,4 @@
-<form action="{{ $actionUrl ?? RealEstateHelper::getPropertiesListPageUrl() }}" class="search-filter"
+<form action="{{ $actionUrl ?? RealEstateHelper::getPropertiesListPageUrl() }}" target="_blank" class="search-filter"
     data-ajax-url="{{ $ajaxUrl ?? route('public.properties') }}">
 
     <div class="py-5" x-data="propertyFilters()" x-init="initFilters()" >

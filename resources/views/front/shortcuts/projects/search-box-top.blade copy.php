@@ -1,4 +1,4 @@
-<form action="{{ $actionUrl ?? RealEstateHelper::getProjectsListPageUrl() }}"
+<form action="{{ $actionUrl ?? RealEstateHelper::getProjectsListPageUrl() }}" target="_blank"
     data-ajax-url="{{ $ajaxUrl ?? route('public.projects') }}" class="search-filter relative">
     <div class="py-5">
         <div class="row align-items-center">

@@ -4,7 +4,7 @@
             <div class="w-full mx-auto overflow-hidden duration-500 ease-in-out bg-white shadow project-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700 lg:max-w-2xl">
                 <div class="h-full md:flex">
                     <div class="relative overflow-hidden md:shrink-0">
-                        <a href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}">
+                        <a target="_blank" href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}">
                             <img class="object-cover w-full h-full transition-all duration-500 md:w-48 hover:scale-110" src="{{ RvMedia::getImageUrl($project->image, 'small', false, RvMedia::getDefaultImage()) }}" alt="{{ $project->name }}">
                         </a>
                         <div class="absolute top-6 end-6">
@@ -24,12 +24,12 @@
                     <div class="w-full p-6">
                         <div>
                             <div class="-ms-0.5 mb-2">
-                                <a href="{{ $project->category->url }}" class="text-sm transition-all hover:text-primary">
+                                <a target="_blank" href="{{ $project->category->url }}" class="text-sm transition-all hover:text-primary">
                                     <i class="mdi mdi-tag-outline"></i>
                                     {{ $project->category->name }}
                                 </a>
                             </div>
-                            <a href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}" class="text-lg font-medium duration-500 ease-in-out hover:text-primary" title="{{ $project->name }}">
+                            <a target="_blank" href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}" class="text-lg font-medium duration-500 ease-in-out hover:text-primary" title="{{ $project->name }}">
                                 {{ $project->name }}
                             </a>
                             @if($project->city)

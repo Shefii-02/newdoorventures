@@ -21,7 +21,7 @@
         @foreach ($properties as $property)
             <div class="p-2">
                 <div class="relative overflow-hidden p-2">
-                    <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}">
+                    <a target="_blank" href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}">
                         <img src="{{ RvMedia::getImageUrl($property->image, 'small', false, RvMedia::getDefaultImage()) }}"
                             alt="{{ $property->name }}" class="rounded-xl duration-500">
                     </a>
@@ -56,7 +56,7 @@
 
                 <div class="p-6">
                     <div class="truncate">
-                        <a href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}"
+                        <a target="_blank" href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}"
                             class="text-lg font-medium uppercase duration-500 ease-in-out hover:text-primary"
                             title="{{ $property->name }}">
                             {!! BaseHelper::clean($property->name) !!}

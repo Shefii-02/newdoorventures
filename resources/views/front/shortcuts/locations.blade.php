@@ -20,7 +20,7 @@
                 <div
                     class="overflow-hidden duration-500 ease-in-out bg-white shadow location-item group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 p-2">
                     <div class="relative overflow-hidden rounded-2xl">
-                        <a href="{{ url('properties?location=Hebbal') }}">
+                        <a target="_blank" href="{{ url('properties?location=Hebbal') }}">
                             <img src="{{ asset('images/cities/location-1.jpg') }}" alt="Hebbal">
                             <div class="absolute inset-0 bg-slate-900 bg-opacity-40">
                             </div>
@@ -38,7 +38,7 @@
                 <div
                     class="overflow-hidden duration-500 ease-in-out bg-white shadow location-item group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 p-2">
                     <div class="relative overflow-hidden rounded-2xl">
-                        <a href="{{ url('properties?location=Yelahanka') }}">
+                        <a target="_blank" href="{{ url('properties?location=Yelahanka') }}">
                             <img src="{{ asset('images/cities/location-2.jpg') }}" alt="Yelahanka">
                             <div class="absolute inset-0 bg-slate-900 bg-opacity-40">
                             </div>
@@ -54,7 +54,7 @@
                 <div
                     class="overflow-hidden duration-500 ease-in-out bg-white shadow location-item group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 p-2">
                     <div class="relative overflow-hidden rounded-2xl">
-                        <a href="{{ url('properties?location=Thanisandra') }}">
+                        <a target="_blank" href="{{ url('properties?location=Thanisandra') }}">
                             <img src="{{ asset('images/cities/location-3.jpg') }}" alt="Thanisandra">
                             <div class="absolute inset-0 bg-slate-900 bg-opacity-40">
                             </div>
@@ -70,7 +70,7 @@
                 <div
                     class="overflow-hidden duration-500 ease-in-out bg-white shadow location-item group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 p-2">
                     <div class="relative overflow-hidden rounded-2xl">
-                        <a href="{{ url('properties?location=Hennur+Road') }}">
+                        <a target="_blank" href="{{ url('properties?location=Hennur+Road') }}">
                             <img src="{{ asset('images/cities/location-4.jpg') }}" alt="Hennur Road">
                             <div class="absolute inset-0 bg-slate-900 bg-opacity-40">
                             </div>
@@ -87,7 +87,7 @@
                 <div
                     class="overflow-hidden duration-500 ease-in-out bg-white shadow location-item group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 p-2">
                     <div class="relative overflow-hidden rounded-2xl">
-                        <a href="{{ url('properties?location=Devanahalli') }}">
+                        <a target="_blank" href="{{ url('properties?location=Devanahalli') }}">
                             <img src="{{ asset('images/cities/location-5.jpg') }}" alt="Devanahalli">
                             <div class="absolute inset-0 bg-slate-900 bg-opacity-40">
                             </div>
@@ -103,7 +103,7 @@
                 <div
                     class="overflow-hidden duration-500 ease-in-out bg-white shadow location-item group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 p-2">
                     <div class="relative overflow-hidden rounded-2xl">
-                        <a href="{{ url('properties?location=Bagalur') }}">
+                        <a target="_blank" href="{{ url('properties?location=Bagalur') }}">
                             <img src="{{ asset('images/cities/location-3.jpg') }}" alt="Bagalur">
                             <div class="absolute inset-0 bg-slate-900 bg-opacity-40">
                             </div>

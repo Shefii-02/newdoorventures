@@ -1,4 +1,4 @@
-<form x-data="propertyFilters()" x-init="initFilters()" class="search-filter">
+<form x-data="propertyFilters()" x-init="initFilters()" target="_blank" class="search-filter">
     <div class="py-5">
         <div class="row align-items-center">
             <!-- Property Type Dropdown -->

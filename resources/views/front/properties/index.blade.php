@@ -54,14 +54,14 @@
             </div>
         </div>
     </div>
-   
+
     <div class="p-2 bg-white  dark:border-gray-800 mb-0 dark:bg-slate-900 sticky top-0 z-999">
         <div class="container  ">
             <div class=" ">
-                @if(isset($type) && $type == 'pg')
+                @if (isset($type) && $type == 'pg')
                     @include('front.shortcuts.properties.search-box-top-pg', [
                         'id' => null,
-                        'type' => request()->get('type') ??  isset($type) ? $type : '' ,
+                        'type' => request()->get('type') ?? isset($type) ? $type : '',
                         'mode' => request()->get('m') ?? $searchType,
                         'categories' => $categories,
                         'cities' => $cities,
@@ -80,7 +80,6 @@
                         'min_price' => request()->get('min_price') ?? '',
                         'max_price' => request()->get('max_price') ?? '',
                     ])
-                
                 @elseif(isset($type) && $type == 'plot')
                     @include('front.shortcuts.properties.search-box-top-plot', [
                         'id' => null,
@@ -104,24 +103,23 @@
                         'max_price' => request()->get('max_price') ?? '',
                     ])
                 @endif
-               
             </div>
         </div>
-
     </div>
- 
+
     <section class="relative">
         <div class="container">
+            <h3 class="fs-2 fw-bold">{{ isset($searchByTitle) ? $searchByTitle : '' }}</h3>
+         
             <div id="items-map" @class([
                 'hidden' => !request()->input('layout') == 'map' || !$showMap,
             ])>
                 {{-- {!! Theme::partial('real-estate.properties.items-map', compact('properties')) !!} --}}
             </div>
-            <div id="items-list" data-box-type="property" @class(['hidden' => request()->input('layout') == 'map'])
-                data-layout="grid" style="max-height: none; max-width: none">
+            <div id="items-list" data-box-type="property" @class(['hidden' => request()->input('layout') == 'map']) data-layout="grid"
+                style="max-height: none; max-width: none">
                 @include('front.shortcuts.properties.items', compact('properties'))
             </div>
         </div>
     </section>
-
 @endsection

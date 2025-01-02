@@ -6121,7 +6121,7 @@ html.dark #topnav {
     position: absolute;
     left: -90px;
     top: 40px;
-    background-color: #fff;
+    background-color: #e5e7eb;
     min-width: 330px;
     padding: 16px;
     border-radius: 12px;
@@ -6283,11 +6283,33 @@ ul.ks-cboxtags li input[type="checkbox"]:focus+label {
 }
 
 /* ///////////////////////////////////////////// */
-
-@media (min-width: 1280px) {
+@media (min-width: 1200px) {
     .container {
         max-width: 100% !important;
     }
+}
+
+
+@media (min-width: 1500px) {
+    .container {
+        max-width: 1700px !important;
+    }
+}
+
+@media (min-width: 2100px) {
+    .container {
+        max-width: 2100px !important;
+    }
+}
+
+.rounded-circle{
+    height: 100px !important;
+    width: 100px !important;
+    border-radius: 50% !important;
+    margin: 0 auto;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    object-fit: cover;
 }
 
 .fs-13{

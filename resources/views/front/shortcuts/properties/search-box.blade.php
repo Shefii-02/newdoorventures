@@ -1,4 +1,4 @@
-<form action="{{ $actionUrl ?? RealEstateHelper::getPropertiesListPageUrl() }}" class="search-filter" data-ajax-url="{{ $ajaxUrl ?? route('public.properties') }}">
+<form action="{{ $actionUrl ?? RealEstateHelper::getPropertiesListPageUrl() }}" target="_blank" class="search-filter" data-ajax-url="{{ $ajaxUrl ?? route('public.properties') }}">
     <input type="hidden" name="type" value="{{ $type }}">
     <div class="space-y-5 registration-form text-dark text-start">
         <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-0">

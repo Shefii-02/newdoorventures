@@ -1,8 +1,8 @@
-<form x-data="propertyFilters()" x-init="initFilters()" class="search-filter">
+<form x-data="propertyFilters()" x-init="initFilters()" target="_blank" class="search-filter">
     <div class="py-5">
         <div class="row align-items-center">
             <!-- Property Type Dropdown -->
-            <div class="col-lg-6 mb-4 px-1">
+            <div class="col-lg-4 mb-4 px-1">
                 <div>
                     <div class="flex items-center space-x-3">
                         <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
@@ -49,6 +49,15 @@
                     </template>
                 </select>
             </div>
+            <div class="col-lg-2 mb-4 px-1">
+                <select x-model="filters.city" name="project" @change="applyFilters()"
+                    class="w-full border-theme px-3 py-2 rounded-2xl text-black">
+                    <option value="null" selected>Projects</option>
+                    <template x-for="city in cities" :key="city">
+                        <option :value="city" x-text="city"></option>
+                    </template>
+                </select>
+            </div>
 
             <!-- Other Filters -->
             <div class="col-lg-4 p-0 mb-3">
@@ -67,13 +76,14 @@
                                     <ul class="ks-cboxtags p-0">
                                         <template x-for="category in categories" :key="category.id">
                                             <li>
-                                                <input type="checkbox" :id="'category' + category.id"
+                                                <input type="checkbox" name="category[]" :id="'category' + category.id"
                                                     :value="category.id"
                                                     @change="toggleArrayFilter('categories', category.id)">
                                                 <label :for="'category' + category.id" x-text="category.name"></label>
                                             </li>
                                         </template>
                                     </ul>
+                                    <input type="submit" value="Search" class="btn btn-theme"/>
                                 </div>
                             </div>
                         </div>
@@ -235,7 +245,7 @@
                             </div>
                         </div>
                     </template>
-                    <template x-if="showFilters.availability">
+                    {{-- <template x-if="showFilters.availability">
                         <div class="relative mb-2">
                             <button type="button" @click="toggleDropdown('available_for')"
                                 class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
@@ -271,7 +281,7 @@
                             </div>
                         </div>
 
-                    </template>
+                    </template> --}}
                 </div>
             </div>
         </div>
@@ -440,19 +450,19 @@
 
 
                     document.body.scrollTop = 0, document.documentElement.scrollTop = 0
-                    const params = new URLSearchParams(this.filters).toString();
-                    var url = `{{ route('public.properties') }}?${params}`;
-                    fetch(url, {
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest'
-                            },
-                        })
-                        .then((response) => response.json())
-                        .then((data) => {
-                            // window.history.pushState({}, '', url);
-                            document.getElementById('items-list').innerHTML = data.html;
-                        })
-                        .catch((error) => console.error('Error:', error));
+                    // const params = new URLSearchParams(this.filters).toString();
+                    // var url = `{{ route('public.properties') }}?${params}`;
+                    // fetch(url, {
+                    //         headers: {
+                    //             'X-Requested-With': 'XMLHttpRequest'
+                    //         },
+                    //     })
+                    //     .then((response) => response.json())
+                    //     .then((data) => {
+                    //         // window.history.pushState({}, '', url);
+                    //         document.getElementById('items-list').innerHTML = data.html;
+                    //     })
+                    //     .catch((error) => console.error('Error:', error));
                 },
             };
         }

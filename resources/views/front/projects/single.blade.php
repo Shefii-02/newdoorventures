@@ -591,7 +591,7 @@
                                                                     </td>
                                                                     <td>
                                                                         <div class="infomarker text-start">
-                                                                            <h5><a href="{{ $project->url }}"
+                                                                            <h5><a href="{{ $project->url }}" target="_blank"
                                                                                     target="_blank">{!! $project->name !!}</a>
                                                                             </h5>
                                                                             <div class="text-info">

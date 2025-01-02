@@ -88,7 +88,10 @@ class FrontendController extends Controller
         $pageDescription = 'Explore a wide range of residential properties including houses, apartments, flats, and more for sale, rent, or lease in Bangalore and Karnataka. Find your dream home today!';
         $pageKeywords = 'residential properties for sale, residential properties for rent, apartments for rent in Bangalore, houses for sale in Karnataka, flats for sale in Bangalore, affordable homes in Karnataka, residential real estate in Bangalore, buy house in Karnataka, rental homes Bangalore, lease properties Karnataka';
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders','pageTitle','pageDescription','pageKeywords'));
+
+        $searchByTitle = $properties->count()." results | Property in Bangalore";
+
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders','pageTitle','pageDescription','pageKeywords','searchByTitle'));
     }
 
 
@@ -553,6 +556,10 @@ class FrontendController extends Controller
             $query->where('locality', $request->city);
         }
 
+         // // City filter
+         if ($request->filled('location') && $request->location !== '' && $request->location != 'null') {
+            $query->where('locality', $request->location);
+        }
 
         // Category filter
         if ($request->filled('categories') && $request->categories !== '' && $request->categories != 'null') {
