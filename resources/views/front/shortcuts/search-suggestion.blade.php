@@ -1,36 +1,29 @@
 <div class="absolute z-10 hidden w-full" id="keyword-suggestion">
-     
-    @php
-    $path = $items->path(); // Get the base path
-    $lastSegment = collect(explode('/', $path))->last();
-
-    if($lastSegment == 'projects'){
-        $route_name = 'public.project_single';
-    }
-    else{
-       $route_name = 'public.property_single';
-    }
-    
-
-
-    @endphp
     <ul class="p-0 m-0 overflow-auto list-none bg-white rounded-md shadow-md max-h-96 dark:bg-slate-900 dark:text-white">
-        @forelse($items as $item)
-
+        @forelse($items as $key => $arrayItem)
+            @php
+                // Extract the value you need to display
+                $displayValue = is_array($arrayItem) ? ($arrayItem['name'] ?? implode(', ', $arrayItem)) : $arrayItem;
+            @endphp
             <li class="px-5 py-2.5 transition-all hover:bg-gray-100 hover:text-primary cursor-pointer dark:hover:bg-slate-800">
-                <a href="{{ route($route_name, ['uid' => $item->unique_id, 'slug' => $item->slug]) }}">{{ $item->name }}
-                @if($item->city)
-                    <p>{{ $item->locality }},{{ $item->city }} {{--, $item->city->state->name --}}</p>
-                @endif </a>
+                <div class="row align-items-center">
+                    <div class="col-lg-10">
+                        {{-- Safely display the extracted value --}}
+                        <strong>{{ $displayValue }}</strong>
+                    </div>
+                    <div class="col-lg-2 text-end">
+                        {{-- Optional badge or additional info --}}
+                        <span class="badge bg-primary text-white">{{ $key }}</span>
+                    </div>
+                </div>
             </li>
         @empty
-        <li class="px-5 py-2.5 transition-all hover:bg-gray-100 hover:text-primary cursor-pointer dark:hover:bg-slate-800">
-            <div class="text-center">
-                <a href="#" class="small">No data found..</a>  
-                <p>You can rewrite suitable words to better suggest you</p>
-            </div>
-            
-        </li>
+            <li class="px-5 py-2.5 transition-all hover:bg-gray-100 hover:text-primary cursor-pointer dark:hover:bg-slate-800">
+                <div class="text-center">
+                    <strong>No data found..</strong>
+                    <p class="text-sm text-gray-500">Try different keywords to see better suggestions.</p>
+                </div>
+            </li>
         @endforelse
     </ul>
 </div>

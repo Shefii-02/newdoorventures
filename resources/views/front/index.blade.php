@@ -5,7 +5,7 @@
     </div>
 
     <div>
-        <section class="relative pt-28 lg:pt-32">
+        <section class=" pt-28 lg:pt-32">
             <div class="container">
                 @include('front.shortcuts.locations', ['images' => [], 'title' => '', 'content' => ''])
             </div>

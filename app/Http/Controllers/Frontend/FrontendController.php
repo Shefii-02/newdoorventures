@@ -38,6 +38,30 @@ class FrontendController extends Controller
         return view('front.index', compact('categories', 'featured_properties_rent', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
     }
 
+
+    public function searchByTitle(Request $request, $properties,$type = '',$purpose = "Residential")
+    {
+        // Initialize the search title with the number of results and default category
+        $searchByTitle = $properties->count() . " results | ";
+        // Append keywords to the title if present in the request
+        if ($request->filled('s') && is_array($request->s) && count($request->s) > 0) {
+            $keywords = implode(', ', $request->s);
+            $searchByTitle .=  $keywords .', ';
+        }
+        // if ($request->has('type') && $request->type != '') {
+            $searchByTitle .= ucfirst($type) . " Properties for ".$purpose;
+        // }
+
+        // Append city to the title if present in the request
+        if ($request->has('city') && $request->city != '') {
+            $searchByTitle .= " in " . $request->city . ', Bangalore';
+        }
+
+        
+
+        return $searchByTitle; // Return the generated search title
+    }
+
     public function properties(Request $request)
     {
 
@@ -80,7 +104,7 @@ class FrontendController extends Controller
         }
 
         $builders = Investor::get();
-        $cities = Property::groupBy('locality')->orderBy('locality','asc')->pluck('locality');
+        $cities = Property::groupBy('locality')->orderBy('locality', 'asc')->pluck('locality');
         $categories = Category::where('status', 'published')->get();
 
         $pageTitle = 'Residential Properties for Sale, Rent, and Lease in Bangalore & Karnataka | New Door Ventures';
@@ -89,10 +113,10 @@ class FrontendController extends Controller
 
         $projects    = Project::get();
 
-        $searchByTitle = $properties->count() . " results | Properties for Residential in " . 
-        ($request->has('city') ? $request->city . ', ' : '') . "Bangalore";
-    
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders','pageTitle','pageDescription','pageKeywords','searchByTitle','projects'));
+        $searchByTitle = $this->searchByTitle($request, $properties,'',"Residential");
+
+
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects'));
     }
 
 
@@ -123,16 +147,16 @@ class FrontendController extends Controller
             return response()->json(['html' => $html]);
         }
 
-    
-        $searchByTitle = $properties->count() . " results | Properties for sale in " . 
-        ($request->has('city') ? $request->city . ', ' : '') . "Bangalore";
+
+        $searchByTitle = $this->searchByTitle($request, $properties,'Sale',"Residential");
+
 
         $pageTitle = 'Properties for Sale in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Browse a wide selection of properties for sale in Bangalore and Karnataka. Find houses, apartments, plots, and more to buy at competitive prices.';
         $pageKeywords = 'properties for sale, houses for sale in Bangalore, apartments for sale in Karnataka, buy homes in Bangalore, residential plots for sale in Karnataka, real estate for sale, commercial properties for sale, affordable homes for sale, property listings in Bangalore';
 
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords','searchByTitle','projects'));
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects'));
     }
     public function PropertiesForRent(Request $request)
     {
@@ -148,7 +172,7 @@ class FrontendController extends Controller
             ->groupBy('locality')
             ->pluck('locality');
         $categories = Category::where('status', 'published')->where('has_rent', 1)->get();
- 
+
         $projects    = Project::get();
         $type = 'rent';
 
@@ -160,14 +184,14 @@ class FrontendController extends Controller
         }
 
 
-        $searchByTitle = $properties->count() . " results | Properties for rent in " . 
-        ($request->has('city') ? $request->city . ', ' : '') . "Bangalore";
+        $searchByTitle = $this->searchByTitle($request, $properties,'Rent',"Residential");
+
 
         $pageTitle = 'Properties for Rent in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Explore a variety of properties for rent in Bangalore and Karnataka. Find apartments, houses, PG accommodations, and more at competitive rental prices.';
         $pageKeywords = 'properties for rent, apartments for rent in Bangalore, houses for rent in Karnataka, rental properties in Bangalore, PG accommodation in Karnataka, rental flats in Bangalore, commercial spaces for rent, affordable houses for rent in Karnataka, paying guest accommodation, real estate rentals';
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle','pageDescription','pageKeywords','searchByTitle','projects'));
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects'));
     }
     public function PropertiesForPlot(Request $request)
     {
@@ -207,15 +231,15 @@ class FrontendController extends Controller
         }
 
 
-        $searchByTitle = $properties->count() . " results | Properties in " . 
-        ($request->has('city') ? $request->city . ', ' : '') . "Bangalore";
+        $searchByTitle = $this->searchByTitle($request, $properties,'Plot and Lands',"Residential");
+
 
         $pageTitle = 'Plots for Sale in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = "Browse a variety of residential and commercial plots for sale in Bangalore and Karnataka. Find your ideal plot for construction, investment, or development.";
         $pageKeywords = "plots for sale, residential plots in Bangalore, commercial plots in Karnataka, land for sale in Bangalore, investment land in Karnataka, real estate plots, agricultural plots in Karnataka, plot for construction, buy plots in Bangalore, land investment opportunities";
-    
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords','searchByTitle','projects'));
+
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects'));
     }
     public function PropertiesForPg(Request $request)
     {
@@ -242,14 +266,14 @@ class FrontendController extends Controller
         }
 
 
-        $searchByTitle = $properties->count() . " results | Properties for PG in " . 
-        ($request->has('city') ? $request->city . ', ' : '') . "Bangalore";
+        $searchByTitle = $this->searchByTitle($request, $properties,'PG',"");
+
 
         $pageTitle = 'PG Accommodation for Rent in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Explore a variety of Paying Guest (PG) accommodations for rent in Bangalore and Karnataka. Find affordable PGs, private rooms, and shared spaces that suit your needs.';
         $pageKeywords = 'PG accommodation in Bangalore, paying guests in Karnataka, PG for rent in Bangalore, affordable PGs in Bangalore, PG rooms for rent in Karnataka, private rooms for rent in Bangalore, shared PG accommodation, budget PGs in Bangalore, PG spaces near IT hubs, PGs for students in Bangalore, PG rental properties in Karnataka, PG facilities in Bangalore';
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords','searchByTitle','projects'));
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects'));
     }
 
 
@@ -292,15 +316,15 @@ class FrontendController extends Controller
         }
 
 
-        $searchByTitle = $properties->count() . " results | Properties for commercial in " . 
-        ($request->has('city') ? $request->city . ', ' : '') . "Bangalore";
+        $searchByTitle = $this->searchByTitle($request, $properties,'',"Commercial");
+
 
         $pageTitle = 'Commercial Properties for Sale & Rent in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Discover a wide range of commercial properties for sale and rent in Bangalore and Karnataka. From office spaces to retail shops, find the perfect location for your business.';
         $pageKeywords = 'commercial properties for sale in Bangalore, commercial properties for rent in Karnataka, office spaces for rent in Bangalore, retail shops for sale in Karnataka, commercial real estate in Bangalore, business spaces for lease in Bangalore, commercial property investment in Karnataka, commercial land for sale in Bangalore, office buildings for rent in Karnataka, shops for rent in Bangalore, commercial plots for sale, industrial properties for rent, commercial space for lease';
-    
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type','pageTitle','pageDescription','pageKeywords','searchByTitle','projects'));
+
+        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects'));
     }
 
 
@@ -324,14 +348,14 @@ class FrontendController extends Controller
         $builders = Investor::get();
 
 
-        $searchByTitle = $projects->count() . " results | projects  in " . 
-        ($request->has('city') ? $request->city . ', ' : '') . "Bangalore";
+        $searchByTitle = $projects->count() . " results | projects  in " .
+            ($request->has('city') ? $request->city . ', ' : '') . "Bangalore";
 
         $pageTitle = 'All Real Estate Projects: New Launch, Ready to Launch & Under Construction in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Explore a variety of real estate projects including new launches, ready-to-launch, and under-construction properties in Bangalore and Karnataka. Find your dream home or investment opportunity today.';
         $pageKeywords = 'new launch real estate projects in Bangalore, ready to launch projects in Karnataka, under construction properties in Bangalore, residential projects in Karnataka, commercial projects Bangalore, real estate investment Bangalore, new homes Bangalore, property projects in Karnataka, builder projects Bangalore, new construction properties, affordable housing projects Karnataka, residential development Bangalore, upcoming projects Bangalore, ongoing construction in Karnataka';
 
-        return view('front.projects.index', compact('projects', 'categories', 'cities', 'builders','pageTitle','pageDescription','pageKeywords','searchByTitle'));
+        return view('front.projects.index', compact('projects', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle'));
     }
 
     public function propertyDetails($uid, $slug)
@@ -341,7 +365,7 @@ class FrontendController extends Controller
         $rules = PgRules::get();
         $property->increment('views');
 
-        $pageTitle = $property->name.' | New Door Ventures';
+        $pageTitle = $property->name . ' | New Door Ventures';
         $pageDescription = $property->content;
         $pageKeywords = 'property for sale, property for rent, PG accommodation, residential plots, commercial properties, rental properties in Bangalore, sale properties in Karnataka, residential properties for sale, commercial spaces for lease, PGs in Bangalore, land for sale in Karnataka, affordable properties in Bangalore, buy rent or lease property in Karnataka, real estate Bangalore, residential real estate Bangalore, commercial real estate Karnataka';
 
@@ -349,22 +373,22 @@ class FrontendController extends Controller
 
         if ($property->mode == 'Commercial') {
             if ($property->category && $property->category->name == 'Plot and Land') {
-                return view('front.properties.plot-property', compact('property', 'recent_properties','pageTitle','pageDescription','pageKeywords'));
+                return view('front.properties.plot-property', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords'));
             }
 
             return match ($property->type) {
-                'sell', 'rent' => view('front.properties.commercial-rent-sale-single', compact('property', 'recent_properties','pageTitle','pageDescription','pageKeywords')),
+                'sell', 'rent' => view('front.properties.commercial-rent-sale-single', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords')),
                 default => abort(404),
             };
         }
 
         if ($property->category && $property->category->name == 'Plot and Land') {
-            return view('front.properties.plot-property', compact('property', 'recent_properties','pageTitle','pageDescription','pageKeywords'));
+            return view('front.properties.plot-property', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords'));
         }
 
         return match ($property->type) {
-            'sell', 'rent' => view('front.properties.single', compact('property', 'recent_properties','pageTitle','pageDescription','pageKeywords','pageTitle','pageDescription','pageKeywords')),
-            'pg' => view('front.properties.pg-single', compact('property', 'recent_properties', 'rules','pageTitle','pageDescription','pageKeywords','pageTitle','pageDescription','pageKeywords')),
+            'sell', 'rent' => view('front.properties.single', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords')),
+            'pg' => view('front.properties.pg-single', compact('property', 'recent_properties', 'rules', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords')),
             default => abort(404),
         };
     }
@@ -375,12 +399,12 @@ class FrontendController extends Controller
         $project->increment('views');
         $configurations = Configration::get();
         $advertisement = Advertisement::inRandomOrder()->first();
-        $pageTitle = $project->name.' | New Door Ventures';
+        $pageTitle = $project->name . ' | New Door Ventures';
         $pageDescription = $project->content;
         $pageKeywords = 'new launch projects, under construction projects, ready to launch properties, real estate projects in Bangalore, residential projects, commercial projects in Karnataka, real estate builders in Bangalore, upcoming property launches, real estate development, investment in property, new construction projects in Karnataka, real estate investment opportunities, residential apartments, commercial spaces for sale in Bangalore';
-    
 
-        return view('front.projects.single', compact('project', 'configurations', 'advertisement','pageTitle','pageDescription','pageKeywords'));
+
+        return view('front.projects.single', compact('project', 'configurations', 'advertisement', 'pageTitle', 'pageDescription', 'pageKeywords'));
     }
 
     public function contact()
@@ -388,7 +412,7 @@ class FrontendController extends Controller
         $pageTitle = 'Contact Us | New Door Ventures';
         $pageDescription = 'Get in touch with New Door Ventures for any inquiries or support regarding real estate properties in Bangalore and Karnataka. We are here to assist you with your real estate needs.';
         $pageKeywords = 'contact New Door Ventures, real estate inquiries, property consultation, real estate support Bangalore, get in touch with real estate experts, property queries Karnataka, real estate advice, property help Bangalore, contact us for real estate, customer support real estate, contact real estate company';
-        return view('front.contact',compact('pageTitle','pageDescription','pageKeywords'));
+        return view('front.contact', compact('pageTitle', 'pageDescription', 'pageKeywords'));
     }
 
     public function blogList()
@@ -397,8 +421,8 @@ class FrontendController extends Controller
         $pageTitle = 'Latest Real Estate News & Blogs | New Door Ventures';
         $pageDescription = 'Stay updated with the latest trends, tips, and insights on real estate in Bangalore and Karnataka. Read our blogs for expert advice on property buying, renting, and leasing.';
         $pageKeywords = 'real estate blogs, property news, real estate tips, Bangalore real estate, Karnataka property updates, real estate trends, property buying advice, property rental tips, leasing properties, real estate experts Bangalore, real estate news Karnataka, new property developments, property market insights, real estate investment tips, property for sale Bangalore, property rental Karnataka';
-    
-        return view('front.news.index', compact('blogs','pageTitle','pageDescription','pageKeywords'));
+
+        return view('front.news.index', compact('blogs', 'pageTitle', 'pageDescription', 'pageKeywords'));
     }
 
     public function blogDetails($slug)
@@ -410,7 +434,7 @@ class FrontendController extends Controller
         $pageDescription = Str::limit($blog->content, 160);
         $pageKeywords = 'real estate blog, property buying tips, property rental advice, ';
 
-        return view('front.news.single', compact('blog', 'blogs','pageTitle','pageDescription','pageKeywords'));
+        return view('front.news.single', compact('blog', 'blogs', 'pageTitle', 'pageDescription', 'pageKeywords'));
     }
 
     public function page($slug)
@@ -423,7 +447,7 @@ class FrontendController extends Controller
         $pageKeywords = '';
 
 
-        return view('front.page', compact('page','pageTitle','pageDescription','pageKeywords'));
+        return view('front.page', compact('page', 'pageTitle', 'pageDescription', 'pageKeywords'));
     }
 
     private function recentlyViewedProperties()
@@ -446,86 +470,171 @@ class FrontendController extends Controller
     {
         if ($request->type == 'projects' || $request->type  == 'new-launch') {
             $items = $this->searchProjects($request);
-            $route_name = 'projects';
         } else {
             // Fetch filtered properties
             $items = $this->searchProperties($request);
-            $route_name = 'properties';
         }
 
 
-
+        return  $items;
         // Render the view with the items
-        return view('front.shortcuts.filters.search-suggestion', compact('items', 'route_name'))->render();
+        // return view('front.shortcuts.search-suggestion', compact('items'))->render();
     }
+
+    // public function searchProperties(Request $request)
+    // {
+
+    //     // // Keyword-based Search
+    //     if ($request->filled('k') && $request->k != '') {
+    //         $query = Property::query();
+    //         // Columns to retrieve
+    //         $query->where('moderation_status', 'approved'); // Approved properties only
+
+    //         // // Handle 'type' filters
+    //         if ($request->filled('type')) {
+    //             $type = $request->type;
+    //             switch ($type) {
+    //                 case 'sale':
+    //                     $query->where('type', 'sell')
+    //                         ->whereDoesntHave('categories', function ($subQuery) {
+    //                             $subQuery->where('name', 'Plot and Land');
+    //                         });
+    //                     break;
+    //                 case 'rent':
+    //                     $query->where('type', $type)
+    //                         ->whereDoesntHave('categories', function ($subQuery) {
+    //                             $subQuery->where('name', 'Plot and Land');
+    //                         });
+    //                     break;
+
+    //                 case 'pg':
+    //                     $query->where('type', 'pg');
+    //                     break;
+
+    //                 case 'plot':
+    //                     $query->whereHas('categories', function ($subQuery) {
+    //                         $subQuery->where('name', 'Plot and Land');
+    //                     });
+    //                     break;
+
+    //                 default:
+    //                     return collect(); // Return an empty collection if type is invalid
+    //             }
+    //         }
+
+    //         $keyword = $request->k;
+
+    //         $query->where(function ($q) use ($keyword) {
+    //             $q->where('name', 'LIKE', "%{$keyword}%")
+    //                 ->orWhere('slug', 'LIKE', "%{$keyword}%")
+    //                 ->orWhere('description', 'LIKE', "%{$keyword}%")
+    //                 ->orWhere('content', 'LIKE', "%{$keyword}%")
+    //                 ->orWhere('location', 'LIKE', "%{$keyword}%")
+    //                 ->orWhere('city', 'LIKE', "%{$keyword}%")
+    //                 ->orWhere('locality', 'LIKE', "%{$keyword}%")
+    //                 ->orWhere('sub_locality', 'LIKE', "%{$keyword}%")
+    //                 ->orWhere('number_bedroom', 'LIKE', "%{$keyword}%")
+    //                 ->orWhere('apartment', 'LIKE', "%{$keyword}%")
+    //                 ->orWhere('landmark', 'LIKE', "%{$keyword}%")
+    //                 ->orWhereHas('categories', function ($subQuery) use ($keyword) {
+    //                     $subQuery->where('name', 'LIKE', "%{$keyword}%");
+    //                 })
+    //                 ->orWhereHas('project', function ($subQuery) use ($keyword) {
+    //                     $subQuery->where('name', 'LIKE', "%{$keyword}%");
+    //                 });
+    //         });
+    //         return $query->get();
+    //     }
+
+    //     return collect();
+    // }
 
     public function searchProperties(Request $request)
     {
-
-        // // Keyword-based Search
         if ($request->filled('k') && $request->k != '') {
-            $query = Property::query();
-            // Columns to retrieve
-            $query->where('moderation_status', 'approved'); // Approved properties only
-
-            // // Handle 'type' filters
-            if ($request->filled('type')) {
-                $type = $request->type;
-                switch ($type) {
-                    case 'sale':
-                        $query->where('type', 'sell')
-                            ->whereDoesntHave('categories', function ($subQuery) {
-                                $subQuery->where('name', 'Plot and Land');
-                            });
-                        break;
-                    case 'rent':
-                        $query->where('type', $type)
-                            ->whereDoesntHave('categories', function ($subQuery) {
-                                $subQuery->where('name', 'Plot and Land');
-                            });
-                        break;
-
-                    case 'pg':
-                        $query->where('type', 'pg');
-                        break;
-
-                    case 'plot':
-                        $query->whereHas('categories', function ($subQuery) {
-                            $subQuery->where('name', 'Plot and Land');
-                        });
-                        break;
-
-                    default:
-                        return collect(); // Return an empty collection if type is invalid
-                }
-            }
-
             $keyword = $request->k;
 
-            $query->where(function ($q) use ($keyword) {
-                $q->where('name', 'LIKE', "%{$keyword}%")
-                    ->orWhere('slug', 'LIKE', "%{$keyword}%")
-                    ->orWhere('description', 'LIKE', "%{$keyword}%")
-                    ->orWhere('content', 'LIKE', "%{$keyword}%")
-                    ->orWhere('location', 'LIKE', "%{$keyword}%")
-                    ->orWhere('city', 'LIKE', "%{$keyword}%")
-                    ->orWhere('locality', 'LIKE', "%{$keyword}%")
-                    ->orWhere('sub_locality', 'LIKE', "%{$keyword}%")
-                    ->orWhere('number_bedroom', 'LIKE', "%{$keyword}%")
-                    ->orWhere('apartment', 'LIKE', "%{$keyword}%")
-                    ->orWhere('landmark', 'LIKE', "%{$keyword}%")
-                    ->orWhereHas('categories', function ($subQuery) use ($keyword) {
-                        $subQuery->where('name', 'LIKE', "%{$keyword}%");
-                    })
-                    ->orWhereHas('project', function ($subQuery) use ($keyword) {
-                        $subQuery->where('name', 'LIKE', "%{$keyword}%");
-                    });
-            });
-            return $query->get();
+
+            if ($request->filled('type') && $request->type != '' && $request->type == 'buy') {
+                $type = 'sell';
+            }
+            else if($request->filled('type') && $request->type != '' && $request->type == 'rent'){
+                $type = 'rent';
+            }
+            else if($request->filled('type') && $request->type != '' && $request->type == 'pg'){
+                $type = 'pg';
+            }
+            else if($request->filled('type') && $request->type != '' && $request->type == 'plot'){
+                $type = 'plot';
+            }
+            else if($request->filled('type') && $request->type != '' && $request->type == 'commercial'){
+                $type = 'commercial';
+            }
+            else{
+                $type = 'sell';
+            }
+            
+          
+
+            // Query 1: Search in 'city'
+            $cities = Property::query()
+                ->where('moderation_status', 'approved')
+                ->where('city', 'LIKE', "%{$keyword}%")
+                ->where('city', '!=', '')
+                ->where('type',$type)
+                ->distinct()
+                ->pluck('city')->toArray();
+
+            // Query 2: Search in 'locality'
+            $localities = Property::query()
+                ->where('moderation_status', 'approved')
+                ->where('locality', 'LIKE', "%{$keyword}%")
+                ->where('locality', '!=', '')
+                ->where('type',$type)
+                ->distinct()
+                ->pluck('locality')->toArray();
+
+            // Query 3: Search in associated 'project name'
+            $projects = Project::where('name', 'LIKE', "%{$keyword}%")
+                ->where('name', '!=', '')
+                ->distinct()
+                ->pluck('name')->toArray();
+
+            // Combine all results into one array and filter out empty arrays
+            // $results = array_filter([
+            //     'cities' => $cities->toArray(),
+            //     'localities' => $localities->toArray(),
+            //     'projects' => $projects->toArray(),
+            // ]);
+            // Combine all the results
+            //         $results = array_merge($cities, $localities, $projects);
+
+            //  // Return the results as JSON
+            //         return response()->json($results);
+            // return $results;\
+
+            $results = [];
+
+            if (count($cities) > 0) {
+                $results['cities'] = $cities;
+            }
+
+            if (count($localities) > 0) {
+                $results['localities'] = $localities;
+            }
+
+            if (count($projects) > 0) {
+                $results['projects'] = $projects;
+            }
+
+            // Return the results as a JSON response
+            return response()->json($results);
         }
 
-        return collect();
+        return response()->json([]);
     }
+
+
 
 
     public function searchProjects(Request $request)
@@ -579,16 +688,33 @@ class FrontendController extends Controller
                 ->orWhere('content', 'LIKE', '%' . $request->k . '%');
         }
 
+        if ($request->filled('s') && is_array($request->s)) {
+            foreach ($request->s as $keyword) {
+                if ($keyword != '' && $keyword != 'null') {
+                 
+                    $query->where(function ($query) use ($keyword) {
+                        $query->where('name', 'LIKE', '%' . $keyword . '%')
+                            ->orWhere('content', 'LIKE', '%' . $keyword . '%')
+                            ->where('locality', $keyword)
+                            ->orWhereHas('categories', function ($subQuery) use ($keyword) {
+                                $subQuery->where('name', 'LIKE', "%{$keyword}%");
+                            });
+                    });
+                }
+            }
+        }
 
         // // City filter
         if ($request->filled('city') && $request->city !== '' && $request->city != 'null') {
             $query->where('locality', $request->city);
         }
 
-         // // City filter
-         if ($request->filled('location') && $request->location !== '' && $request->location != 'null') {
+        // // City filter
+        if ($request->filled('location') && $request->location !== '' && $request->location != 'null') {
             $query->where('locality', $request->location);
         }
+
+ 
 
         // Category filter
         if ($request->filled('categories') && $request->categories !== '' && $request->categories != 'null') {
@@ -598,10 +724,11 @@ class FrontendController extends Controller
                 $categories = explode(',', $request->categories);
             }
             $query->whereHas('categories', function ($query) use ($categories) {
-                $query->whereIn('id', $categories);
+                $query->whereIn('name', $categories);
             });
+      
         }
-
+     
 
         // Bedrooms filter
         if ($request->filled('bedrooms') && $request->bedrooms !== '' && $request->bedrooms != 'null') {
@@ -643,6 +770,7 @@ class FrontendController extends Controller
 
         return $query;
     }
+
     function ShortcutFilterProjects($query, $request)
     {
         // Keyword search
