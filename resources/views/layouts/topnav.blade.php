@@ -25,7 +25,7 @@
 
         <ul class="buy-button list-none mb-0">
 
-            <li class="d-none d-lg-block inline mb-0">
+            <li class="block md:none inline mb-0">
                 <a href="{{ route('user.login') }}"
                     class="text-white rounded-full btn btn-icon bg-primary hover:bg-secondary border-primary dark:border-primary"
                     aria-label="Sign in">

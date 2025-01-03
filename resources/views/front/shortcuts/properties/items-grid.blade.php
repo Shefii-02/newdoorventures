@@ -20,8 +20,17 @@
                             @include('front.shortcuts.properties.item-sale', compact('property'))
                         </div>
                     @endif
+           
+                        @if($Pkey  == 5)
+                        <div class="col-lg-12 py-3">
+                            @include('front.shortcuts.ready-to-move-projects')
+                        </div>
+                        @endif
+      
+                    
                 @endforeach
             </div>
+            
         </div>
         <div class="col-lg-2">
             <div class="card">

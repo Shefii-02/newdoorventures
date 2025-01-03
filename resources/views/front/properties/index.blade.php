@@ -80,7 +80,7 @@
                         'builders' => $builders,
                         'min_price' => request()->get('min_price') ?? '',
                         'max_price' => request()->get('max_price') ?? '',
-                        'projects' => $projects
+                        'projects' => $projects,
                     ])
                 @elseif(isset($type) && $type == 'plot')
                     @include('front.shortcuts.properties.search-box-top-plot', [
@@ -92,7 +92,7 @@
                         'builders' => $builders,
                         'min_price' => request()->get('min_price') ?? '',
                         'max_price' => request()->get('max_price') ?? '',
-                        'projects' => $projects
+                        'projects' => $projects,
                     ])
                 @else
                     @include('front.shortcuts.properties.search-box-top', [
@@ -104,18 +104,56 @@
                         'builders' => $builders,
                         'min_price' => request()->get('min_price') ?? '',
                         'max_price' => request()->get('max_price') ?? '',
-                        'projects' => $projects
+                        'projects' => $projects,
                     ])
                 @endif
             </div>
             <h3 class="fs-4 pb-5 text-gray fw-bold ">{{ isset($searchByTitle) ? $searchByTitle : '' }}</h3>
-
         </div>
     </div>
-
     <section class="relative">
         <div class="container">
-         
+            @php
+                $filtersApplied = request()->filled('city') || request()->filled('project') ||
+                    is_array(request()->get('categories')) || is_array(request()->get('bedrooms')) ||
+                    is_array(request()->get('ownership')) || request()->filled('min_price') || request()->filled('max_price');
+            @endphp
+    
+            @if ($filtersApplied)
+                <span class="font-bold">Searching for</span>: <br>
+                @if (request()->filled('city') && request('city') !== 'null')
+                    <span class="fs-6">Locality: <span class="fw-bold">{{ request('city') }}</span></span> |
+                @endif
+                @if (request()->filled('project') && request('project') !== 'null')
+                    <span class="fs-6">Project: <span class="fw-bold">{{ request('project') }}</span></span> |
+                @endif
+                @if (is_array(request()->get('categories')))
+                    <span class="fs-6">Categories: <span class="fw-bold">{{ implode(', ', request('categories')) }}</span></span> |
+                @endif
+                @if (is_array(request()->get('bedrooms')))
+                    <span class="fs-6">Bedrooms: <span class="fw-bold">{{ implode(', ', request('bedrooms')) }}</span></span> |
+                @endif
+                @if (is_array(request()->get('ownership')))
+                    <span class="fs-6">Ownership: <span class="fw-bold">{{ implode(', ', request('ownership')) }}</span></span> |
+                @endif
+                @if (request()->filled('min_price') || request()->filled('max_price'))
+                    <span class="fs-6">Budget: 
+                        <span class="fw-bold">
+                            Min Price: {{ number_format(request('min_price', 0)) }},
+                            Max Price: {{ number_format(request('max_price', 0)) }}
+                        </span>
+                    </span>
+                @endif
+                <hr class="my-2">
+            @else
+                <span class="text-muted">No filters applied</span>
+            @endif
+        </div>
+    </section>
+    
+    <section class="relative">
+        <div class="container">
+
             <div id="items-map" @class([
                 'hidden' => !request()->input('layout') == 'map' || !$showMap,
             ])>

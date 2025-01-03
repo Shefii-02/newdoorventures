@@ -54,7 +54,8 @@ class FrontendController extends Controller
 
         // Append city to the title if present in the request
         if ($request->has('city') && $request->city != '') {
-            $searchByTitle .= " in " . $request->city . ', Bangalore';
+            $cityName  =  $request->city  == 'null' ? 'all' :  $request->city;
+            $searchByTitle .= " in " . $cityName . ', Bangalore';
         }
 
 

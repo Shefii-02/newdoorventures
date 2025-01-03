@@ -76,10 +76,10 @@
 
                                     @foreach ($categories ?? [] as $category)
                                         <li>
-                                            <input type="checkbox"
+                                            <input type="checkbox" value="{{ $category->name }}"
                                                 {{ in_array($category->name, (array) request()->get('categories')) ? 'checked' : '' }}
                                                 name="categories[]" id="category{{ $category->id }}"
-                                                value={{ $category->name }}>
+                                                >
                                             <label for="category{{ $category->id }}">{{ $category->name }}</label>
                                         </li>
                                     @endforeach
