@@ -39,17 +39,17 @@ class FrontendController extends Controller
     }
 
 
-    public function searchByTitle(Request $request, $properties,$type = '',$purpose = "Residential")
+    public function searchByTitle(Request $request, $properties, $type = '', $purpose = "Residential")
     {
         // Initialize the search title with the number of results and default category
         $searchByTitle = $properties->count() . " results | ";
         // Append keywords to the title if present in the request
         if ($request->filled('s') && is_array($request->s) && count($request->s) > 0) {
             $keywords = implode(', ', $request->s);
-            $searchByTitle .=  $keywords .', ';
+            $searchByTitle .=  $keywords . ', ';
         }
         // if ($request->has('type') && $request->type != '') {
-            $searchByTitle .= ucfirst($type) . " Properties for ".$purpose;
+        $searchByTitle .= ucfirst($type) . " Properties for " . $purpose;
         // }
 
         // Append city to the title if present in the request
@@ -57,15 +57,14 @@ class FrontendController extends Controller
             $searchByTitle .= " in " . $request->city . ', Bangalore';
         }
 
-        
+
 
         return $searchByTitle; // Return the generated search title
     }
 
     public function properties(Request $request)
     {
-
-
+        $type = $request->type ?? 'sale';
         $query = Property::query()->where('moderation_status', 'approved')
             ->where(function ($q) {
                 $q->where('status', "selling")
@@ -87,6 +86,8 @@ class FrontendController extends Controller
 
         $property_query = $this->ShortcutFilterProperties($query, $request);
 
+
+        $propertySearchKeywords = $this->propertySearchKeywords($request, $type);
         // Other filters...
 
         $properties = $property_query->get();
@@ -111,34 +112,33 @@ class FrontendController extends Controller
         $pageDescription = 'Explore a wide range of residential properties including houses, apartments, flats, and more for sale, rent, or lease in Bangalore and Karnataka. Find your dream home today!';
         $pageKeywords = 'residential properties for sale, residential properties for rent, apartments for rent in Bangalore, houses for sale in Karnataka, flats for sale in Bangalore, affordable homes in Karnataka, residential real estate in Bangalore, buy house in Karnataka, rental homes Bangalore, lease properties Karnataka';
 
-        $projects    = Project::get();
+        $projects    = Project::pluck('name');
 
-        $searchByTitle = $this->searchByTitle($request, $properties,'',"Residential");
+        $searchByTitle = $this->searchByTitle($request, $properties, '', "Residential");
 
 
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects'));
+        return view('front.properties.index', compact('type', 'properties', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects'));
     }
 
 
     public function PropertiesForSale(Request $request)
     {
-        $query = Property::query()->where('type', 'sell')->where('status', 'selling')->where('moderation_status', 'approved');
+        $query = Property::query()->where('type', 'sell')->where('moderation_status', 'approved');
 
         $property_query = $this->ShortcutFilterProperties($query, $request);
 
         $builders = Investor::get();
         $cities = Property::where('type', 'sell')
-            ->where('moderation_status', 'approved')
-            ->where(function ($q) {
-                $q->where('status', "selling")
-                    ->orWhere('status', "renting");
-            })
-            ->groupBy('locality')->pluck('locality');
+                            ->where('moderation_status', 'approved')
+                            ->distinct('locality')
+                            ->orderBy('locality','asc')
+                            ->pluck('locality');
 
         $categories = Category::where('status', 'published')->where('has_sell', 1)->get();
 
-        $projects    = Project::get();
+        $projects    = Project::pluck('name');
         $type = 'sell';
+        $propertySearchKeywords = $this->propertySearchKeywords($request, $type);
 
         $properties = $property_query->get();
 
@@ -148,7 +148,7 @@ class FrontendController extends Controller
         }
 
 
-        $searchByTitle = $this->searchByTitle($request, $properties,'Sale',"Residential");
+        $searchByTitle = $this->searchByTitle($request, $properties, 'Sale', "Residential");
 
 
         $pageTitle = 'Properties for Sale in Bangalore & Karnataka | New Door Ventures';
@@ -173,9 +173,9 @@ class FrontendController extends Controller
             ->pluck('locality');
         $categories = Category::where('status', 'published')->where('has_rent', 1)->get();
 
-        $projects    = Project::get();
+        $projects    = Project::pluck('name');
         $type = 'rent';
-
+        $propertySearchKeywords = $this->propertySearchKeywords($request, $type);
         $properties = $property_query->get();
 
         if ($request->ajax()) {
@@ -184,7 +184,7 @@ class FrontendController extends Controller
         }
 
 
-        $searchByTitle = $this->searchByTitle($request, $properties,'Rent',"Residential");
+        $searchByTitle = $this->searchByTitle($request, $properties, 'Rent', "Residential");
 
 
         $pageTitle = 'Properties for Rent in Bangalore & Karnataka | New Door Ventures';
@@ -220,8 +220,8 @@ class FrontendController extends Controller
             ->groupBy('locality')->pluck('locality');
         $categories = Category::where('status', 'published')->get();
         $type = 'plot';
-
-        $projects    = Project::get();
+        $propertySearchKeywords = $this->propertySearchKeywords($request, $type);
+        $projects    = Project::pluck('name');
 
         $properties = $property_query->get();
 
@@ -231,7 +231,7 @@ class FrontendController extends Controller
         }
 
 
-        $searchByTitle = $this->searchByTitle($request, $properties,'Plot and Lands',"Residential");
+        $searchByTitle = $this->searchByTitle($request, $properties, 'Plot and Lands', "Residential");
 
 
         $pageTitle = 'Plots for Sale in Bangalore & Karnataka | New Door Ventures';
@@ -256,8 +256,8 @@ class FrontendController extends Controller
         $categories = Category::where('status', 'published')->get();
 
         $type = 'pg';
-
-        $projects    = Project::get();
+        $propertySearchKeywords = $this->propertySearchKeywords($request, $type);
+        $projects    = Project::pluck('name');
         $properties = $property_query->get();
 
         if ($request->ajax()) {
@@ -266,7 +266,7 @@ class FrontendController extends Controller
         }
 
 
-        $searchByTitle = $this->searchByTitle($request, $properties,'PG',"");
+        $searchByTitle = $this->searchByTitle($request, $properties, 'PG', "");
 
 
         $pageTitle = 'PG Accommodation for Rent in Bangalore & Karnataka | New Door Ventures';
@@ -299,8 +299,10 @@ class FrontendController extends Controller
 
         $categories     = Category::where('status', 'published')->where('has_commercial', 1)->get();
 
-        $projects    = Project::get();
+        $projects    = Project::pluck('name');
         $type           = 'commercial';
+
+        $propertySearchKeywords = $this->propertySearchKeywords($request, $type);
 
         if (($request->has('tab') && $request->tab == 'sale') || $request->has('type') && $request->type == 'commercial-sale') {
             $property_query = $property_query->where('type', 'sell');
@@ -316,7 +318,7 @@ class FrontendController extends Controller
         }
 
 
-        $searchByTitle = $this->searchByTitle($request, $properties,'',"Commercial");
+        $searchByTitle = $this->searchByTitle($request, $properties, '', "Commercial");
 
 
         $pageTitle = 'Commercial Properties for Sale & Rent in Bangalore & Karnataka | New Door Ventures';
@@ -557,31 +559,26 @@ class FrontendController extends Controller
 
             if ($request->filled('type') && $request->type != '' && $request->type == 'buy') {
                 $type = 'sell';
-            }
-            else if($request->filled('type') && $request->type != '' && $request->type == 'rent'){
+            } else if ($request->filled('type') && $request->type != '' && $request->type == 'rent') {
                 $type = 'rent';
-            }
-            else if($request->filled('type') && $request->type != '' && $request->type == 'pg'){
+            } else if ($request->filled('type') && $request->type != '' && $request->type == 'pg') {
                 $type = 'pg';
-            }
-            else if($request->filled('type') && $request->type != '' && $request->type == 'plot'){
+            } else if ($request->filled('type') && $request->type != '' && $request->type == 'plot') {
                 $type = 'plot';
-            }
-            else if($request->filled('type') && $request->type != '' && $request->type == 'commercial'){
+            } else if ($request->filled('type') && $request->type != '' && $request->type == 'commercial') {
                 $type = 'commercial';
-            }
-            else{
+            } else {
                 $type = 'sell';
             }
-            
-          
+
+
 
             // Query 1: Search in 'city'
             $cities = Property::query()
                 ->where('moderation_status', 'approved')
                 ->where('city', 'LIKE', "%{$keyword}%")
                 ->where('city', '!=', '')
-                ->where('type',$type)
+                ->where('type', $type)
                 ->distinct()
                 ->pluck('city')->toArray();
 
@@ -590,7 +587,7 @@ class FrontendController extends Controller
                 ->where('moderation_status', 'approved')
                 ->where('locality', 'LIKE', "%{$keyword}%")
                 ->where('locality', '!=', '')
-                ->where('type',$type)
+                ->where('type', $type)
                 ->distinct()
                 ->pluck('locality')->toArray();
 
@@ -634,6 +631,36 @@ class FrontendController extends Controller
         return response()->json([]);
     }
 
+    public function propertySearchKeywords(Request $request, $type = null)
+    {
+        if ($request->has('s') && $request->filled('s')) {
+            $keywords = is_array($request->s) ? $request->s : [$request->s];
+
+            $properties = Property::query()
+                ->where('moderation_status', 'approved')
+                ->where(function ($query) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $query->orWhere('city', 'LIKE', "%{$keyword}%")
+                            ->orWhere('locality', 'LIKE', "%{$keyword}%")
+                            ->orWhereHas('project', function ($q) use ($keyword) {
+                                $q->where('name', 'LIKE', "%{$keyword}%");
+                            });
+                    }
+                });
+
+      
+            if (in_array($type,['sell','rent','pg'])) {
+                $properties->where('type', $type);
+            }
+            else if(in_array($type,['commercial'])){
+                $properties->where('mode', 'commercial');
+            }
+
+            return $properties->get();
+        }
+
+        return collect(); // Return an empty collection if no keywords are provided
+    }
 
 
 
@@ -688,17 +715,18 @@ class FrontendController extends Controller
                 ->orWhere('content', 'LIKE', '%' . $request->k . '%');
         }
 
+
         if ($request->filled('s') && is_array($request->s)) {
             foreach ($request->s as $keyword) {
                 if ($keyword != '' && $keyword != 'null') {
-                 
+
                     $query->where(function ($query) use ($keyword) {
                         $query->where('name', 'LIKE', '%' . $keyword . '%')
                             ->orWhere('content', 'LIKE', '%' . $keyword . '%')
-                            ->where('locality', $keyword)
-                            ->orWhereHas('categories', function ($subQuery) use ($keyword) {
-                                $subQuery->where('name', 'LIKE', "%{$keyword}%");
-                            });
+                            ->orWhere('locality', 'LIKE', '%' . $keyword . '%');
+                            // ->orWhereHas('categories', function ($subQuery) use ($keyword) {
+                            //     $subQuery->where('name', 'LIKE', "%{$keyword}%");
+                            // });
                     });
                 }
             }
@@ -706,16 +734,19 @@ class FrontendController extends Controller
 
         // // City filter
         if ($request->filled('city') && $request->city !== '' && $request->city != 'null') {
-            $query->where('locality', $request->city);
+            $query->where('locality', 'LIKE', '%' .  $request->city . '%');
+    
         }
+
 
         // // City filter
         if ($request->filled('location') && $request->location !== '' && $request->location != 'null') {
-            $query->where('locality', $request->location);
+
+            $query->where('locality', 'LIKE', '%' .  $request->location . '%');
         }
 
- 
 
+ 
         // Category filter
         if ($request->filled('categories') && $request->categories !== '' && $request->categories != 'null') {
             if (is_array($request->categories)) {
@@ -723,12 +754,15 @@ class FrontendController extends Controller
             } else {
                 $categories = explode(',', $request->categories);
             }
+
+
             $query->whereHas('categories', function ($query) use ($categories) {
                 $query->whereIn('name', $categories);
             });
-      
+
+
         }
-     
+
 
         // Bedrooms filter
         if ($request->filled('bedrooms') && $request->bedrooms !== '' && $request->bedrooms != 'null') {
@@ -752,7 +786,7 @@ class FrontendController extends Controller
 
 
 
-
+       
         // Furnishing filter
         if ($request->filled('furnishing') && $request->furnishing !== '' && $request->furnishing != 'null') {
             $query->whereIn('furnishing', $request->furnishing);

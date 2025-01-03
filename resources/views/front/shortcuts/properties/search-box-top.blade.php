@@ -1,14 +1,14 @@
-<form x-data="propertyFilters()" x-init="initFilters()" class="search-filter">
+<form x-data="propertyFilters()" class="search-filter">
     <div class="pt-5">
         <div class="row align-items-center">
             <!-- Property Type Dropdown -->
             <div class="col-lg-4 mb-4 px-1">
                 <div>
                     <div class="flex items-center space-x-3">
-                        <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
+                        <select name="type" id="type" @change="applyFilters()"
                             class="border-theme px-3 py-2 rounded-s-2xl text-black">
                             <optgroup label="Residential" class="text-dark">
-                                <option value="all-residential">All Residential</option>
+                                <option value="">All Residential</option>
                                 <option {{ isset($type) && $type == 'sell' ? 'selected' : '' }} value="sell">Sale
                                 </option>
                                 <option {{ isset($type) && $type == 'rent' ? 'selected' : '' }} value="rent">Rent
@@ -23,234 +23,165 @@
                             </optgroup>
                             <option value="projects">Projects</option>
                         </select>
-                        <input type="text" x-model="filters.k" @input="applyFilters()"
-                            class="border-theme px-3 py-1.5 w-full rounded-e-2xl text-black" placeholder="Search for properties">
+                        <input type="text" name="k"
+                            class="border-theme px-3 py-1.5 w-full rounded-e-2xl text-black"
+                            placeholder="Search for properties">
                     </div>
                 </div>
             </div>
 
             <!-- City Dropdown -->
             <div class="col-lg-2 mb-4 px-1">
-                <select x-model="filters.city" @change="applyFilters()"
+                <select name="city" onchange="this.form.submit()" 
                     class="w-full border-theme px-3 py-2 rounded-2xl text-black">
                     <option value="null" selected>Locality</option>
-                    <template x-for="city in cities" :key="city">
-                        <option :value="city" x-text="city"></option>
-                    </template>
+                    @foreach ($cities ?? [] as $city)
+                        <option value="{{ $city }}"
+                            {{ request()->get('city') == $city ? 'selected' : '' }}>
+                            {{ $city }}
+                        </option>
+                    @endforeach
+
                 </select>
             </div>
             <div class="col-lg-2 mb-4 px-1">
-                <select name="project" @change="applyFilters()"
+                <select name="project" onchange="this.form.submit()" 
                     class="w-full border-theme px-3 py-2 rounded-2xl text-black">
                     <option value="null" {{ request()->get('project') == 'null' ? 'selected' : '' }}>Projects</option>
-                    @foreach($projects ?? [] as $project)
-                        <option value="{{ $project->id }}" 
-                            {{ request()->get('project') == $project->id ? 'selected' : '' }}>
-                            {{ $project->name }}
+                    @foreach ($projects ?? [] as $project)
+                        <option value="{{ $project }}"
+                            {{ request()->get('project') == $project ? 'selected' : '' }}>
+                            {{ $project }}
                         </option>
                     @endforeach
                 </select>
             </div>
-            
+
 
             <!-- Other Filters -->
             <div class="col-lg-4 p-0 mb-3">
                 <div class="relative gap-1 flex align-items-center">
                     <!-- Categories -->
-                    <template x-if="showFilters.categories">
-                        <div class="relative mb-2">
-                            <button type="button" @click="toggleDropdown('categories')"
-                                class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
-                                Categories<i
-                                    :class="openDropdown === 'categories' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                            </button>
-                            <div x-show="openDropdown === 'categories'" x-transition
-                                class="dropdown-box filter-web-dropdown">
-                                <div class="option-sections">
-                                    <ul class="ks-cboxtags p-0">
-                                        <template x-for="category in categories" :key="category.id">
-                                            <li>
-                                                <input type="checkbox" name="categories[]" :id="'category' + category.id"
-                                                    :value="category.id"
-                                                    @change="toggleArrayFilter('categories', category.id)">
-                                                <label :for="'category' + category.id" x-text="category.name"></label>
-                                            </li>
-                                        </template>
-                                    </ul>
-                                    <div class="text-end">
-                                        <input type="submit" value="Search" @click="toggleDropdown('categories')" class="btn btn-theme text-light"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </template>
 
-                    <!-- Purpose -->
-                    <template x-if="showFilters.purpose">
-                        <div class="relative mb-2 d-none">
-                            <button type="button" @click="toggleDropdown('purpose')"
-                                class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
-                                Purpose<i
-                                    :class="openDropdown === 'purpose' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                            </button>
-                            <div x-show="openDropdown === 'purpose'" x-transition
-                                class="dropdown-box filter-web-dropdown">
-                                <div class="option-sections">
-                                    <ul class="ks-cboxtags p-0">
+                    <div class="relative mb-2">
+                        <button type="button" @click="toggleDropdown('categories')"
+                            class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
+                            Categories<i
+                                :class="openDropdown === 'categories' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </button>
+                        <div x-show="openDropdown === 'categories'" x-transition
+                            class="dropdown-box filter-web-dropdown">
+                            <div class="option-sections">
+                                <ul class="ks-cboxtags p-0">
+
+                                    @foreach ($categories ?? [] as $category)
                                         <li>
-                                            <input type="checkbox" value="residential" id="purpose_residential"
-                                                @change="toggleArrayFilter('purpose', 'residential')">
-                                            <label for="purpose_residential">Residential</label>
+                                            <input type="checkbox"
+                                                {{ in_array($category->name, (array) request()->get('categories')) ? 'checked' : '' }}
+                                                name="categories[]" id="category{{ $category->id }}"
+                                                value={{ $category->name }}>
+                                            <label for="category{{ $category->id }}">{{ $category->name }}</label>
                                         </li>
-                                        <li>
-                                            <input type="checkbox" value="commercial" id="purpose_commercial"
-                                                @change="toggleArrayFilter('purpose', 'commercial')">
-                                            <label for="purpose_commercial">Commercial</label>
-                                        </li>
-                                    </ul>
-                                    <div class="text-end">
-                                        <input type="submit" value="Search" @click="toggleDropdown('purpose')" class="btn btn-theme text-light"/>
-                                    </div>
+                                    @endforeach
+                                </ul>
+                                <div class="text-end">
+                                    <input type="submit" value="Search" @click="toggleDropdown('categories')"
+                                        class="btn btn-theme text-light" />
                                 </div>
                             </div>
                         </div>
-                    </template>
+                    </div>
+
+
 
                     <!-- Budget -->
-                    <template x-if="showFilters.budget">
-                        <div class="relative mb-2">
-                            <button type="button" @click="toggleDropdown('budget')"
-                                class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
-                                Budget<i
-                                    :class="openDropdown === 'budget' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                            </button>
-                            <div x-show="openDropdown === 'budget'" x-transition
-                                class="dropdown-box filter-web-dropdown">
-                                <div class="option-sections">
-                                    @include('front.shortcuts.filters.price-range-new', [
-                                        'min' => 0,
-                                        'max' => 500000000,
-                                        'step' => 500000,
-                                        'single_page' => true,
-                                    ])
-                                </div>
+
+                    <div class="relative mb-2">
+                        <button type="button" @click="toggleDropdown('budget')"
+                            class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
+                            Budget<i
+                                :class="openDropdown === 'budget' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </button>
+                        <div x-show="openDropdown === 'budget'" x-transition class="dropdown-box filter-web-dropdown">
+                            <div class="option-sections">
+                                @include('front.shortcuts.filters.price-range-new', [
+                                    'min' => 0,
+                                    'max' => 500000000,
+                                    'step' => 500000,
+                                    'single_page' => true,
+                                ])
                             </div>
                         </div>
-                    </template>
+                    </div>
+
 
 
                     <!-- Bedrooms -->
-                    <template x-if="showFilters.bedrooms">
-                        <div class="relative mb-2">
-                            <button type="button" @click="toggleDropdown('bedrooms')"
-                                class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
-                                Bedrooms<i
-                                    :class="openDropdown === 'bedrooms' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                            </button>
-                            <div x-show="openDropdown === 'bedrooms'" x-transition
-                                class="dropdown-box filter-web-dropdown">
-                                <div class="option-sections">
-                                    <ul class="ks-cboxtags p-0">
-                                        <li>
-                                            <input type="checkbox" value="1" id="bedroom1_buy"
-                                                @change="toggleArrayFilter('bedrooms', 1)">
-                                            <label for="bedroom1_buy">1 Bedroom</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" value="2" id="bedroom2_buy"
-                                                @change="toggleArrayFilter('bedrooms', 2)">
-                                            <label for="bedroom2_buy">2 Bedrooms</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" value="3" id="bedroom3_buy"
-                                                @change="toggleArrayFilter('bedrooms', 3)">
-                                            <label for="bedroom3_buy">3 Bedrooms</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" value="4" id="bedroom4_buy"
-                                                @change="toggleArrayFilter('bedrooms', 4)">
-                                            <label for="bedroom4_buy">4+ Bedrooms</label>
-                                        </li>
-                                    </ul>
-                                    <div class="text-end">
-                                        <input type="submit" value="Search" @click="toggleDropdown('bedrooms')" class="btn btn-theme text-light"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </template>
-                    <template x-if="showFilters.ownership">
-                        <!-- Ownership Filter -->
-                        <div class="relative mb-2">
-                            <button type="button" @click="toggleDropdown('ownership')"
-                                class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
-                                Ownership
-                                <i
-                                    :class="openDropdown === 'ownership' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                            </button>
-                            <div x-show="openDropdown === 'ownership'" x-transition
-                                class="dropdown-box filter-web-dropdown">
-                                <div class="option-sections">
-                                    <ul class="ks-cboxtags p-0">
-                                        <li><input type="checkbox" name="ownership[]"  value="freehold" id="ownership_1"
-                                                @change="toggleArrayFilter('ownership', 'freehold')">
-                                            <label for="ownership_1"> Freehold
-                                            </label>
-                                        </li>
-                                        <li><input type="checkbox" name="ownership[]" value="co-operative_society" id="ownership_2"
-                                                @change="toggleArrayFilter('ownership', 'co-operative_society')">
-                                            <label for="ownership_2"> Co-operative Society
-                                            </label>
-                                        </li>
-                                        <li><input type="checkbox" name="ownership[]"  value="power_of_attorney" id="ownership_3"
-                                                @change="toggleArrayFilter('ownership', 'power_of_attorney')">
-                                            <label for="ownership_3">Power of Attorney</label>
-                                        </li>
-                                    </ul>
-                                    <div class="text-end">
-                                        <input type="submit" value="Search" @click="toggleDropdown('ownership')" class="btn btn-theme text-light"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                    </template>
-                    <template x-if="showFilters.occupancy">
-                        <div class="relative mb-2">
-                            <button type="button" @click="toggleDropdown('occupancy')"
-                                class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
-                                Occupancy
-                                <i
-                                    :class="openDropdown === 'occupancy' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                            </button>
-                            <div x-show="openDropdown === 'occupancy'" x-transition
-                                class="dropdown-box filter-web-dropdown">
-                                <div class="option-sections">
-                                    <ul class="ks-cboxtags p-0">
-                                        <li>
-                                            <input type="checkbox" value="Furnished" id="furnished"
-                                                @change="toggleArrayFilter('occupancy', 'Furnished')">
-                                            <label for="furnished"> Single
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" value="Semi-Furnished" id="semi_furnished"
-                                                @change="toggleArrayFilter('occupancy', 'Semi-Furnished')">
-                                            <label for="semi_furnished"> Double
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" value="Unfurnished" id="unfurnished"
-                                                @change="toggleArrayFilter('occupancy', 'Unfurnished')">
-                                            <label for="unfurnished"> Other
-                                            </label>
-                                        </li>
-                                    </ul>
+                    <div class="relative mb-2">
+                        <button type="button" @click="toggleDropdown('bedrooms')"
+                            class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
+                            Bedrooms<i
+                                :class="openDropdown === 'bedrooms' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </button>
+                        <div x-show="openDropdown === 'bedrooms'" x-transition class="dropdown-box filter-web-dropdown">
+                            <div class="option-sections">
+                                <ul class="ks-cboxtags p-0">
+                                    <li>
+                                        <input type="checkbox" name="bedrooms[]" value="1" id="bedroom1_buy">
+                                        <label for="bedroom1_buy">1 Bedroom</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="bedrooms[]" value="2" id="bedroom2_buy">
+                                        <label for="bedroom2_buy">2 Bedrooms</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="bedrooms[]" value="3" id="bedroom3_buy">
+                                        <label for="bedroom3_buy">3 Bedrooms</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="bedrooms[]" value="4" id="bedroom4_buy">
+                                        <label for="bedroom4_buy">4+ Bedrooms</label>
+                                    </li>
+                                </ul>
+                                <div class="text-end">
+                                    <input type="submit" value="Search" @click="toggleDropdown('bedrooms')"
+                                        class="btn btn-theme text-light" />
                                 </div>
                             </div>
                         </div>
-                    </template>
-                
+                    </div>
+
+                    <!-- Ownership Filter -->
+                    <div class="relative mb-2">
+                        <button type="button" @click="toggleDropdown('ownership')"
+                            class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
+                            Ownership
+                            <i
+                                :class="openDropdown === 'ownership' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </button>
+                        <div x-show="openDropdown === 'ownership'" x-transition
+                            class="dropdown-box filter-web-dropdown">
+                            <div class="option-sections">
+                                <ul class="ks-cboxtags p-0">
+                                    <li><input type="checkbox" name="ownership[]" value="freehold" id="ownership_1">
+                                        <label for="ownership_1"> Freehold </label>
+                                    </li>
+                                    <li><input type="checkbox" name="ownership[]" value="co-operative_society"
+                                            id="ownership_2">
+                                        <label for="ownership_2"> Co-operative Society </label>
+                                    </li>
+                                    <li><input type="checkbox" name="ownership[]" value="power_of_attorney"
+                                            id="ownership_3">
+                                        <label for="ownership_3">Power of Attorney</label>
+                                    </li>
+                                </ul>
+                                <div class="text-start">
+                                    <input type="submit" value="Search" class="btn btn-theme text-light" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -264,175 +195,53 @@
             return {
                 filters: {
                     k: '',
-                    city: 'null',
-                    categories: [],
-                    min_price: null,
-                    max_price: null,
-                    bedrooms: [],
-                    ownership: [],
-                    furnishing: [],
-                    // builders: [],
-                    type: null,
-                    purpose: [],
-                    project: ''
                 },
-                cities: @json($cities),
-                categories: @json($categories),
-                builders: @json($builders),
                 openDropdown: '',
-                showFilters: {
-                    categories: true,
-                    purpose: false,
-                    bedrooms: false,
-                    budget: true,
-                    ownership: true,
-                },
-
-                // Initialize filters
-                initFilters() {
-                    // Parse the URL parameters and update the filters object
-                    const urlParams = new URLSearchParams(window.location.search);
-
-                    // Populate the filters from the URL parameters
-                    this.filters.k = urlParams.get('k') || '';
-                    this.filters.city = urlParams.get('city') || 'null';
-                    this.filters.type = `{{ isset($type) ? $type : '' }}`;
-                    this.filters.purpose = this.getArrayFromUrlParam(urlParams, 'purpose');
-                    this.filters.bedrooms = this.getArrayFromUrlParam(urlParams, 'bedrooms');
-                    this.filters.ownership = this.getArrayFromUrlParam(urlParams, 'ownership');
-                    this.filters.furnishing = this.getArrayFromUrlParam(urlParams, 'furnishing');
-                    this.filters.categories = this.getArrayFromUrlParam(urlParams, 'categories');
-                    
-                    this.filters.min_price = urlParams.get('min_price') || null;
-                    this.filters.min_price = urlParams.get('min_price') || null;
-                    this.filters.max_price = urlParams.get('max_price') || null;
-                    this.checkFilterState();
-                    this.updateVisibility();
-                    // this.applyFilters();
-                },
-
-                updateVisibility() {
-                    const type = this.filters.type;
-
-                    // this.showFilters.categories = ['pg', 'sell', 'rent', 'plot',''].includes(type);
-                    this.showFilters.purpose = ['sell', 'rent', 'plot'].includes(type);
-                    this.showFilters.bedrooms = ['sell', 'rent'].includes(type);
-                    this.showFilters.occupancy = ['pg'].includes(type);
-                },
-
-                getArrayFromUrlParam(urlParams, param) {
-                    const paramValue = urlParams.get(param);
-                    return paramValue ? paramValue.split(',').map(value => value.trim()) : [];
-                },
-
-                // Check if filters should be checked based on URL params
-                checkFilterState() {
-                    // Check Categories
-
-                    this.categories.forEach(category => {
-
-                        if (this.filters.categories.includes(String(category.id))) {
-                            this.$nextTick(() => {
-                                const categoryCheckbox = document.getElementById('category' + category.id);
-                                console.log(categoryCheckbox.checked)
-                                if (categoryCheckbox) categoryCheckbox.checked = true;
-                            });
-                        }
-                    });
-
-                    // Check Bedrooms
-                    this.filters.bedrooms.forEach(bedroom => {
-                        this.$nextTick(() => {
-                            const bedroomCheckbox = document.getElementById('bedroom' + bedroom + '_buy');
-                            console.log(bedroomCheckbox.checked)
-                            if (bedroomCheckbox) bedroomCheckbox.checked = true;
-                        });
-                    });
-
-                    // Check Ownership
-                    this.filters.ownership.forEach(ownership => {
-                        this.$nextTick(() => {
-                            const ownershipCheckbox = document.getElementById('ownership_' + ownership);
-                            if (ownershipCheckbox) ownershipCheckbox.checked = true;
-                        });
-                    });
-
-                    // Check Furnishing
-                    this.filters.furnishing.forEach(furnish => {
-                        this.$nextTick(() => {
-                            const furnishingCheckbox = document.getElementById(furnish.toLowerCase());
-                            if (furnishingCheckbox) furnishingCheckbox.checked = true;
-                        });
-                    });
-
-                    // Check Purpose
-                    this.filters.purpose.forEach(purpose => {
-                        this.$nextTick(() => {
-                            const purposeCheckbox = document.getElementById('purpose_' + purpose);
-                            if (purposeCheckbox) purposeCheckbox.checked = true;
-                        });
-                    });
-                },
 
                 // Toggle dropdown
                 toggleDropdown(name) {
                     this.openDropdown = this.openDropdown === name ? '' : name;
                 },
-
-                // Toggle array-based filter (e.g., categories, bedrooms, ownership)
-                toggleArrayFilter(filterName, value) {
-                    const filterArray = this.filters[filterName];
-                    if (filterArray.includes(value)) {
-                        this.filters[filterName] = filterArray.filter((item) => item !== value);
-                    } else {
-                        this.filters[filterName].push(value);
-                    }
-                    // this.applyFilters();
-                },
-
                 // Apply filters with AJAX
                 applyFilters() {
-                    if (this.filters.type == 'projects') {
+                    var type = document.getElementById('type').value;
+                    if (type== 'projects') {
                         window.location.href = "{{ route('public.projects') }}";
                         return;
-                    } else if (this.filters.type == 'sell' && `{{ isset($type) && $type != 'sell' }}`) {
+                    } else if (type== 'sell' && `{{ isset($type) && $type != 'sell' }}`) {
                         window.location.href = "{{ route('public.properties.sale') }}";
                         return;
-                    } else if (this.filters.type == 'rent' && `{{ isset($type) && $type != 'rent' }}`) {
+                    } else if (type== 'rent' && `{{ isset($type) && $type != 'rent' }}`) {
                         window.location.href = "{{ route('public.properties.rent') }}";
                         return;
-                    } else if (this.filters.type == 'pg') {
+                    } else if (type== 'pg') {
                         window.location.href = "{{ route('public.properties.pg') }}";
                         return;
-                    } else if (this.filters.type == 'plot') {
+                    } else if (type== 'plot') {
                         window.location.href = "{{ route('public.properties.plot') }}";
                         return;
-                    } else if (this.filters.type == 'all-commercial') {
+                    } else if (type== 'all-commercial') {
                         window.location.href = "{{ route('public.properties.commercial') }}";
                         return;
-                    } else if (this.filters.type == 'commercial-sale') {
+                    } else if (type== 'commercial-sale') {
                         window.location.href = "{{ route('public.properties.commercial', ['tab' => 'sale']) }}";
                         return;
-                    } else if (this.filters.type == 'commercial-rent') {
+                    } else if (type== 'commercial-rent') {
                         window.location.href = "{{ route('public.properties.commercial', ['tab' => 'rent']) }}";
                         return;
-                    }
-                    else if (this.filters.type == 'all-residential') {
+                    } else if (type== 'all-residential') {
 
                         window.location.href = "{{ route('public.properties') }}";
                         return;
                     }
 
                     document.body.scrollTop = 0, document.documentElement.scrollTop = 0
-                    // const params = new URLSearchParams(this.filters).toString();
-                    // var url = `{{ route('public.properties') }}?${params}`;
-
                     const params = new URLSearchParams(this.filters).toString();
 
                     // Get the current URL and append the parameters
                     const baseUrl = window.location.origin + window.location.pathname;
                     const url = `${baseUrl}?${params}`;
-                    window.location=url;
+                    window.location = url;
                     // fetch(url, {
                     //         headers: {
                     //             'X-Requested-With': 'XMLHttpRequest'

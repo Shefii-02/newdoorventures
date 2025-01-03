@@ -7,13 +7,16 @@
     // }
 
     $placeholders = [
-        'Search: 3 BHK for sale',
-        'Search: 2 BHK for rent',
-        'Search: Plot and land',
-        'Search: PG',
-        'Search: Farm house',
-        'Search: Bangalore north',
-        'Search: Villa',
+        // 'Search: 3 BHK for sale',
+        // 'Search: 2 BHK for rent',
+        // 'Search: Plot and land',
+        // 'Search: PG',
+        // 'Search: Farm house',
+        // 'Search: Bangalore north',
+        // 'Search: Villa',
+        'Search: City',
+        'Search: Locality',
+        'Search: Projects',
     ];
 
 @endphp
@@ -43,11 +46,24 @@
     </div>
   
 </div> --}}
-<div>
+<div x-data="{
+    placeholders: {{ json_encode($placeholders) }},
+    currentIndex: 0,
+    init() {
+        this.changePlaceholder();
+        setInterval(() => {
+            this.changePlaceholder();
+        }, 2000);
+    },
+    changePlaceholder() {
+        this.$refs.inputElement.placeholder = this.placeholders[this.currentIndex];
+        this.currentIndex = (this.currentIndex + 1) % this.placeholders.length;
+    }
+}">
     <!-- Search Box -->
     <div class="relative mt-2 filter-search-form filter-border">
         <i class="mdi mdi-magnify icons"></i>
-        <input id="search-box-{{ $type ?? 'default' }}" type="search"
+        <input x-ref="inputElement"  id="search-box-{{ $type ?? 'default' }}" type="search"
             class="border-0 form-input filter-input-box bg-gray-50 dark:bg-slate-800 pl-10" autocomplete="off"
             placeholder="Search for Projects, Areas, etc." oninput="fetchSuggestions('{{ $type ?? 'default' }}')" onfocus="showSuggestions('{{ $type ?? 'default' }}')">
         <i id="loading-icon-{{ $type ?? 'default' }}" class="absolute hidden mdi mdi-loading mdi-spin top-5 right-5"></i>
