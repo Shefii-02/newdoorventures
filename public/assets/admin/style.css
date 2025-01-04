@@ -13,6 +13,21 @@
   border-bottom: 1px solid #d9d9d9;
 }
 
+
+.text-theme {
+  color: rgb(203 166 65 / 1) !important;
+}
+
+.bg-theme {
+  background-color: #cba641 !important;
+  color: #fff !important;
+}
+
+.bg-theme-light {
+  background-color: #e8cf89 !important;
+  color: #625454 !important;
+}
+
 .datatable-top,
 .datatable-bottom {
   padding: 8px 10px;

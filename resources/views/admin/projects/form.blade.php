@@ -82,15 +82,37 @@
                                         <div class="form-body">
                                             <div class="row">
                                                 <div class="" x-data="slugGenerator('{{ old('name', $project->name ?? '') }}', '{{ old('slug', $project->slug ?? '') }}')">
-                                                    <div class="mb-3 position-relative">
-                                                        <label
-                                                            class="mb-3 block text-sm font-medium text-black dark:text-dark"
-                                                            for="name">Name</label>
-                                                        <input class="form-control" required x-model="name"
-                                                            data-counter="250" placeholder="Name" autocomplete="off"
-                                                            name="name" type="text" @input="updateSlug"
-                                                            value="{{ old('name', $project->name ?? '') }}">
+                                                    <div class="row">
+                                                        <div class="col-lg-8">
+                                                            <div class="mb-3 position-relative">
+                                                                <label
+                                                                    class="mb-3 block text-sm font-medium text-black dark:text-dark"
+                                                                    for="name">Name</label>
+                                                                <input class="form-control" required x-model="name"
+                                                                    data-counter="250" placeholder="Name" autocomplete="off"
+                                                                    name="name" type="text" @input="updateSlug"
+                                                                    value="{{ old('name', $project->name ?? '') }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group mb-3">
+                                                                <label
+                                                                    class="mb-3 block text-sm font-medium text-black dark:text-dark">Builder</label>
+    
+                                                                <select class="form-control form-select" id="builder"
+                                                                    name="investor_id">
+                                                                    <option value=""></option>
+                                                                    @foreach ($builders as $builder)
+                                                                        <option value="{{ $builder->id }}"
+                                                                            @if (isset($project) && $builder->id == $project->investor_id) selected @endif>
+                                                                            {{ $builder->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                   
 
                                                     <div class="mb-3">
                                                         <div class="slug-field-wrapper" data-field-name="name">
@@ -110,6 +132,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    
                                                 </div>
 
                                                 <div class="mb-3 position-relative">
@@ -496,23 +519,7 @@
 
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group mb-3">
-                                                            <label
-                                                                class="mb-3 block text-sm font-medium text-black dark:text-dark">Builder</label>
-
-                                                            <select class="form-control form-select" id="builder"
-                                                                name="investor_id">
-                                                                <option value=""></option>
-                                                                @foreach ($builders as $builder)
-                                                                    <option value="{{ $builder->id }}"
-                                                                        @if (isset($project) && $builder->id == $project->investor_id) selected @endif>
-                                                                        {{ $builder->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
+                                                    
                                                     <div class="col-lg-4">
                                                         <div class="form-group mb-3">
                                                             <label
@@ -539,16 +546,16 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-8">
 
                                                         <div class="form-group mb-3">
                                                             <label
-                                                                class="mb-3 block text-sm font-medium text-black dark:text-dark">RERA
-                                                                Registration Number
+                                                                class="mb-3 block text-sm font-medium text-black dark:text-dark">
+                                                                RERA Registration Number ( if you have multiple number use ' , ' comma  )
                                                             </label>
                                                             <input class="form-control"
                                                                 value="{{ old('rera_reg_no', $project->rera_reg_no ?? '') }}"
-                                                                placeholder="Enter RERA Registration Number"
+                                                                placeholder="PRM/KA/RERA|12/2020, PRM/KA/RERA|06/2021"
                                                                 data-counter="300" autocomplete="off" name="rera_reg_no"
                                                                 type="text" id="rera_reg_no">
                                                         </div>

@@ -159,9 +159,11 @@
             ])>
                 {{-- {!! Theme::partial('real-estate.properties.items-map', compact('properties')) !!} --}}
             </div>
-            <div id="items-list" data-box-type="property" @class(['hidden' => request()->input('layout') == 'map']) data-layout="grid"
+            <div data-box-type="property" @class(['hidden' => request()->input('layout') == 'map']) data-layout="grid"
                 style="max-height: none; max-width: none">
-                @include('front.shortcuts.properties.items', compact('properties'))
+                <div id="items-list" >
+                    @include('front.shortcuts.properties.items', compact('properties','projectProperties','readyToMoveProjects'))
+                </div>
             </div>
         </div>
     </section>

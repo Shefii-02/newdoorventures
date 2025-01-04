@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-10">
             <div class="row">
-                @foreach ($properties as $Pkey => $property)
+                @foreach ($properties ?? [] as $Pkey => $property)
                     @if ($property->type == 'pg')
                         <div class="col-lg-4">
                             @include('front.shortcuts.properties.item-pg', compact('property'))
@@ -20,17 +20,46 @@
                             @include('front.shortcuts.properties.item-sale', compact('property'))
                         </div>
                     @endif
-           
-                        @if($Pkey  == 5)
+                    @if ($Pkey == 5)
                         <div class="col-lg-12 py-3">
-                            @include('front.shortcuts.ready-to-move-projects')
+                            @include('front.shortcuts.ready-to-move-projects',compact('readyToMoveProjects'))
                         </div>
-                        @endif
-      
-                    
+                    @endif
                 @endforeach
             </div>
-            
+            @if($projectProperties->count())
+                <div class="row mt-3">
+                    <h3 class="py-3 font-bold fs-3">
+                    {{ $projectProperties->first()->project->name }} Project related similar properties
+                    </h3>
+                    @foreach ($projectProperties ?? [] as $Pkey => $property)
+                        @if ($property->type == 'pg')
+                            <div class="col-lg-4">
+                                @include('front.shortcuts.properties.item-pg', compact('property'))
+                            </div>
+                        @elseif($property->category->name == 'Plot and Land')
+                            <div class="col-lg-4">
+                                @include('front.shortcuts.properties.item-plot', compact('property'))
+                            </div>
+                        @elseif($property->type == 'rent')
+                            <div class="col-lg-4">
+                                @include('front.shortcuts.properties.item-rent', compact('property'))
+                            </div>
+                        @else
+                            <div class="col-lg-4">
+                                @include('front.shortcuts.properties.item-sale', compact('property'))
+                            </div>
+                        @endif
+
+                        @if ($Pkey == 5)
+                            <div class="col-lg-12 py-3">
+                                @include('front.shortcuts.ready-to-move-projects')
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            @endif
+
         </div>
         <div class="col-lg-2">
             <div class="card">

@@ -552,12 +552,14 @@ class ProjectController extends Controller
             // } else {
             //     $path = isset($specValue['eXimagePath']) ?? null;
             // }
-            $specification              = new ProjectSpecification();
-            $specification->project_id    = $project->id;
-            $specification->name          = $specValue['name'];;
-            $specification->image        = $specValue['image'];
-            $specification->description    = $specValue['description'];
-            $specification->save();
+            if($specValue['description'] != '' || $specValue['description'] != null){
+                $specification              = new ProjectSpecification();
+                $specification->project_id    = $project->id;
+                $specification->name          = $specValue['name'];;
+                $specification->image        = $specValue['image'];
+                $specification->description    = $specValue['description'];
+                $specification->save();
+            }
         }
     }
 

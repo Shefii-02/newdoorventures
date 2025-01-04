@@ -491,7 +491,7 @@
                                                                 <span
                                                                     class="text-medium font-bold ">{{ $sell_properties->count() }}
                                                                     Resale</span>
-                                                                <a href="#sell-related"
+                                                                <a target="_blank" href="{{ route('public.properties.sale',['project' => $project->name,'type'=>'sell']) }}"
                                                                     class="text-sm text-gray-500 text-decoration-underline">
                                                                     Properties in this project</a>
                                                             </div>
@@ -507,7 +507,7 @@
                                                                 <span
                                                                     class="text-medium font-bold ">{{ $rent_properties->count() }}
                                                                     Rental</span>
-                                                                <a href="#rent-related"
+                                                                <a target="_blank" href="{{ route('public.properties.rent',['project' => $project->name,'type'=>'sell']) }}"
                                                                     class="text-sm text-gray-500 text-decoration-underline">
                                                                     Properties in this project</a>
                                                             </div>
@@ -795,13 +795,7 @@
     <script>
         function imageModal() {
             return {
-                // images: [
-                //     'https://media.istockphoto.com/id/1416797815/photo/golden-number-one.jpg?s=612x612&w=0&k=20&c=A1AOP7RZK8Rkk2yxEumTlWmhQE-0nGfxVz3Ef39Dzxc=',
-                //     'https://media.istockphoto.com/id/1389130584/photo/rainbow-foil-balloon-number-top-view.jpg?s=612x612&w=0&k=20&c=d_k74tiGrRlHfnGFggcaDBqtKqUG5XgCCrPfyt8iRfs=',
-                //     'https://media.istockphoto.com/id/1208521247/photo/human-hand-reaching-through-torn-yellow-paper-sheet-showing-number-three.jpg?s=612x612&w=0&k=20&c=lzFYhsuOItsU0wm5Rr6lpWxMWMeDMfq6wt9Cc_hgtsA=',
-                //     'https://media.istockphoto.com/id/1348028241/photo/yellow-number-four-sitting-on-blue-background.jpg?s=612x612&w=0&k=20&c=SSs71_8qFXwWqbjYrM18ovCqSk8KhCnPdoRrJCAnto4=',
-                //     'https://media.istockphoto.com/id/1145226297/photo/five-year-birthday-number-5-flying-foil-balloon.jpg?s=612x612&w=0&k=20&c=ga5rSosLZ2l_xvYu3pQ6PnmxIXaxENDL5QvUdkvXHOA='
-                // ], // Replace with your actual image URLs
+               
                 images: @json($fullscreenAdvertisement),
                 currentImage: null,
                 showModal: true,

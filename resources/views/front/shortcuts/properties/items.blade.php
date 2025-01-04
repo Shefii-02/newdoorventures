@@ -5,7 +5,7 @@
         $currentLayout = 'grid';
     }
 @endphp
-@include("front.shortcuts.properties.items-$currentLayout", compact('properties'))
+@include("front.shortcuts.properties.items-$currentLayout", compact('properties','readyToMoveProjects'))
 
 
 {{-- @if ($properties instanceof \Illuminate\Pagination\LengthAwarePaginator)

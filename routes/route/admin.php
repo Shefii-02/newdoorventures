@@ -15,10 +15,10 @@ Route::prefix('admin')->group(function () {
 Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers\Admin'], function () {
 
     Route::resource('dashboard', DashboardController::class)->names('dashboard');
-
     Route::get('properties/approved', [PropertyController::class, 'approved'])->name('properties.approved');
     Route::get('properties/suspended', [PropertyController::class, 'suspended'])->name('properties.suspended'); 
     Route::get('properties/sold-rented', [PropertyController::class, 'soldRented'])->name('properties.sold-rented');
+    Route::delete('properties/multi-destroy', [PropertyController::class, 'multiDestroy'])->name('properties.multidestroy');
     Route::resource('properties', PropertyController::class)->names('properties');
 
     

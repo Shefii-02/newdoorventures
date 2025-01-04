@@ -37,7 +37,7 @@
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                               href="{{ route('admin.dashboard.index') }}"
                               @click="selected = (selected === 'Dashboard' ? '':'Dashboard')"
-                              :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Dashboard') }">
+                              :class="{ 'bg-theme dark:bg-meta-4': (selected === 'Dashboard') }">
                               <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none"
                                   xmlns="http://www.w3.org/2000/svg">
                                   <path
@@ -63,7 +63,7 @@
                               <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                                   href="{{ route('admin.properties.index') }}"
                                   @click="selected = (selected === 'Properties' ? '':'Properties')"
-                                  :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Properties') }">
+                                  :class="{ 'bg-theme dark:bg-meta-4': (selected === 'Properties') }">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                       fill="currentColor" class="bi bi-building-check" viewBox="0 0 16 16">
                                       <path
@@ -84,7 +84,7 @@
                               <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                                   href="{{ route('admin.projects.index') }}"
                                   @click="selected = (selected === 'Projects' ? '':'Projects')"
-                                  :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Projects') }">
+                                  :class="{ 'bg-theme dark:bg-meta-4': (selected === 'Projects') }">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                       fill="currentColor" class="bi bi-buildings" viewBox="0 0 16 16">
                                       <path
@@ -103,7 +103,7 @@
                               <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                                   href="{{ route('admin.builders.index') }}"
                                   @click="selected = (selected === 'Builders' ? '':'Builders')"
-                                  :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Builders') }">
+                                  :class="{ 'bg-theme dark:bg-meta-4': (selected === 'Builders') }">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                       fill="currentColor" class="bi bi-person-gear" viewBox="0 0 16 16">
                                       <path
@@ -120,7 +120,7 @@
                               <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                                   href="{{ route('admin.accounts.index') }}"
                                   @click="selected = (selected === 'Accounts' ? '':'Accounts')"
-                                  :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Accounts') }">
+                                  :class="{ 'bg-theme dark:bg-meta-4': (selected === 'Accounts') }">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                       fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
                                       <path
@@ -137,7 +137,7 @@
                               <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                                   href="{{ route('admin.consults.index') }}"
                                   @click="selected = (selected === 'Consults' ? '':'Consults')"
-                                  :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Consults') }">
+                                  :class="{ 'bg-theme dark:bg-meta-4': (selected === 'Consults') }">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                       fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
                                       <path
@@ -153,7 +153,7 @@
                               <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                                   href="{{ route('admin.contact.index') }}"
                                   @click="selected = (selected === 'Contact' ? '':'Contact')"
-                                  :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Contact') }">
+                                  :class="{ 'bg-theme dark:bg-meta-4': (selected === 'Contact') }">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                       fill="currentColor" class="bi bi-person-vcard" viewBox="0 0 16 16">
                                       <path
@@ -171,7 +171,7 @@
                               <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                                   href="#" @click.prevent="selected = (selected === 'Setup' ? '':'Setup')"
                                   :class="{
-                                      'bg-graydark dark:bg-meta-4': (selected === 'Setup')
+                                      'bg-theme dark:bg-meta-4': (selected === 'Setup')
                                   }">
                                   {{-- || (
                                     page === 'categories' ||
@@ -299,7 +299,7 @@
                                   href="{{ route('admin.newsletter.index') }}"
                                   @click="selected = (selected === 'Newsletters' ? '':'Newsletters')"
                                   :class="{
-                                      'bg-graydark dark:bg-meta-4': (selected === 'Newsletters')
+                                      'bg-theme dark:bg-meta-4': (selected === 'Newsletters')
                                   }">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                       fill="currentColor" class="bi bi-person-hearts" viewBox="0 0 16 16">
@@ -317,7 +317,7 @@
                               <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                                   href="#" @click.prevent="selected = (selected === 'Blogs' ? '':'Blogs')"
                                   :class="{
-                                      'bg-graydark dark:bg-meta-4': (selected === 'Blogs') || (
+                                      'bg-theme dark:bg-meta-4': (selected === 'Blogs') || (
                                           page === 'list' ||
                                           page === 'kanban')
                                   }">
@@ -388,7 +388,7 @@
                               <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                                   href="{{ route('admin.trash.index') }}"
                                   @click="selected = (selected === 'Trash' ? '':'Trash')"
-                                  :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Trash') }">
+                                  :class="{ 'bg-theme dark:bg-meta-4': (selected === 'Trash') }">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                       fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                       <path
@@ -407,7 +407,7 @@
                               <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                                   href="{{ route('admin.activity.index') }}"
                                   @click="selected = (selected === 'Activity' ? '':'Activity')"
-                                  :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Activity') }">
+                                  :class="{ 'bg-theme dark:bg-meta-4': (selected === 'Activity') }">
                                   <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18"
                                       fill="none" xmlns="http://www.w3.org/2000/svg">
                                       <path

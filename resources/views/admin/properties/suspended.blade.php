@@ -31,7 +31,7 @@
                                 d="M14.1896 0.459804C14.3922 0.307837 14.6708 0.333165 14.8227 0.510459L16.5704 2.58734C17.0009 3.09389 17.0009 3.85373 16.545 4.41094L14.7974 6.48782C14.7214 6.58913 14.5948 6.63978 14.4682 6.63978C14.3668 6.63978 14.2655 6.61445 14.1896 6.53847C14.0123 6.36118 13.9869 6.08257 14.1389 5.90528L15.7852 3.95504H1.75361C1.50033 3.95504 1.29771 3.75241 1.29771 3.49914C1.29771 3.24586 1.50033 3.04324 1.75361 3.04324H15.7852L14.1389 1.093C13.9869 0.890376 14.0123 0.61177 14.1896 0.459804ZM15.0097 2.68302H1.75362C1.3014 2.68302 0.9375 3.04692 0.9375 3.49914C0.9375 3.95136 1.3014 4.31525 1.75362 4.31525H15.0097L13.8654 5.67085C13.8651 5.67123 13.8648 5.67161 13.8644 5.67199C13.5725 6.01385 13.646 6.50432 13.9348 6.79318C14.1022 6.96055 14.3113 7 14.4682 7C14.6795 7 14.9203 6.91713 15.0784 6.71335L16.8207 4.64286L16.8238 4.63904C17.382 3.95682 17.3958 3.00293 16.8455 2.35478C16.8453 2.35453 16.845 2.35429 16.8448 2.35404L15.0984 0.278534L15.0962 0.276033C14.8097 -0.0583053 14.3139 -0.0837548 13.9734 0.17163L13.964 0.17867L13.9551 0.186306C13.6208 0.472882 13.5953 0.968616 13.8507 1.30913L13.857 1.31743L15.0097 2.68302Z"
                                 fill=""></path>
                         </svg>
-                       Suspended properties list
+                        Suspended properties list
                     </li>
                 </ol>
             </nav>
@@ -68,14 +68,25 @@
                     </ul>
                     <div class="py-3">
                         @include('admin.properties.filter')
-                     </div>
+                    </div>
                 </div>
-                <div class="container px-2 card overflow-x-auto shadow-md sm:rounded-lg mt-3">
+                <div class="container px-2  overflow-x-auto shadow-md sm:rounded-lg mt-3">
                     <div class="relative">
-
+                        @if (permission_check('Property Delete'))
+                        <div class="p-2">
+                            <form method="POST" id="muli_form_" action="{{ route('admin.properties.multidestroy') }}">@csrf
+                                @method('DELETE')</form>
+                            <button form="muli_form_" onclick="confirmDeleteAll(event,'muli_form_')" type="submit"
+                                role="button" class="btn text-dark btn-sm btn-danger hover:text-light">Delete Selected
+                                items</button>
+                        </div>
+                        @endif
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
+                                    <th class="p-4 text-dark fw-bold">
+
+                                    </th>
                                     <th colspan="3" class="p-4 text-dark fw-bold">
                                         Property
                                     </th>
@@ -162,50 +173,50 @@
 
 @push('footer')
     <script>
-        function filterProperties(search, page = 1) {
-            fetch(`{{ route('admin.properties.suspended') }}?search=${search}&page=${page}`, {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('property-rows').innerHTML = data.rows;
-                    document.getElementById('pagination-links').innerHTML = data.pagination;
-                })
-                .catch(error => console.error('Error:', error));
-        }
+        // function filterProperties(search, page = 1) {
+        //     fetch(`{{ route('admin.properties.suspended') }}?search=${search}&page=${page}`, {
+        //             headers: {
+        //                 'X-Requested-With': 'XMLHttpRequest'
+        //             }
+        //         })
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             document.getElementById('property-rows').innerHTML = data.rows;
+        //             document.getElementById('pagination-links').innerHTML = data.pagination;
+        //         })
+        //         .catch(error => console.error('Error:', error));
+        // }
 
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('pagination-link')) {
-                e.preventDefault();
-                const page = e.target.dataset.page;
-                const search = document.getElementById('table-search').value;
+        // document.addEventListener('click', function(e) {
+        //     if (e.target.classList.contains('pagination-link')) {
+        //         e.preventDefault();
+        //         const page = e.target.dataset.page;
+        //         const search = document.getElementById('table-search').value;
 
-                fetch(`{{ route('admin.properties.suspended') }}?search=${search}&page=${page}`, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('property-rows').innerHTML = data.rows;
-                        document.getElementById('pagination-links').innerHTML = data.pagination;
-                        document.body.scrollTo({
-                            top: 0,
-                            behavior: "smooth"
-                        });
+        //         fetch(`{{ route('admin.properties.suspended') }}?search=${search}&page=${page}`, {
+        //                 headers: {
+        //                     'X-Requested-With': 'XMLHttpRequest'
+        //                 }
+        //             })
+        //             .then(response => response.json())
+        //             .then(data => {
+        //                 document.getElementById('property-rows').innerHTML = data.rows;
+        //                 document.getElementById('pagination-links').innerHTML = data.pagination;
+        //                 document.body.scrollTo({
+        //                     top: 0,
+        //                     behavior: "smooth"
+        //                 });
 
 
-                        // Update active pagination number
-                        document.querySelectorAll('.pagination-link').forEach(link => {
-                            link.classList.remove('bg-blue-600', 'text-white');
-                            link.classList.add('text-blue-600', 'bg-white');
-                        });
-                        e.target.classList.add('bg-blue-600', 'text-white');
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-        });
+        //                 // Update active pagination number
+        //                 document.querySelectorAll('.pagination-link').forEach(link => {
+        //                     link.classList.remove('bg-blue-600', 'text-white');
+        //                     link.classList.add('text-blue-600', 'bg-white');
+        //                 });
+        //                 e.target.classList.add('bg-blue-600', 'text-white');
+        //             })
+        //             .catch(error => console.error('Error:', error));
+        //     }
+        // });
     </script>
 @endpush

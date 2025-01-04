@@ -73,10 +73,19 @@
             </div>
             <div class="container px-2 card overflow-x-auto shadow-md sm:rounded-lg mt-3">
                 <div class="relative">
-
+                    @if (permission_check('Property Delete'))
+                    <div class="p-2">
+                        <form method="POST" id="muli_form_"
+                            action="{{ route('admin.properties.multidestroy') }}">@csrf @method('DELETE')</form>
+                        <button form="muli_form_" onclick="confirmDeleteAll(event,'muli_form_')"  type="submit" role="button"  class="btn text-dark btn-sm btn-danger hover:text-light">Delete Selected items</button>
+                    </div>
+                    @endif
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
+                                <th  class="p-4 text-dark fw-bold">
+
+                                </th>
                                 <th colspan="3" class="p-4 text-dark fw-bold">
                                     Property
                                 </th>
@@ -113,7 +122,7 @@
 
                     <!-- Pagination -->
                     <div id="pagination-links" class="m-4">
-                        {{ $properties->links() }}
+                        {{ $properties->withQueryString()->links() }}
                         {{-- @include('admin.properties.pagination', compact('properties')) --}}
                     </div>
                 </div>
@@ -164,50 +173,50 @@
 
 @push('footer')
     <script>
-        function filterProperties(search, page = 1) {
-            fetch(`{{ route('admin.properties.approved') }}?search=${search}&page=${page}`, {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('property-rows').innerHTML = data.rows;
-                    document.getElementById('pagination-links').innerHTML = data.pagination;
-                })
-                .catch(error => console.error('Error:', error));
-        }
+        // function filterProperties(search, page = 1) {
+        //     fetch(`{{ route('admin.properties.approved') }}?search=${search}&page=${page}`, {
+        //             headers: {
+        //                 'X-Requested-With': 'XMLHttpRequest'
+        //             }
+        //         })
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             document.getElementById('property-rows').innerHTML = data.rows;
+        //             document.getElementById('pagination-links').innerHTML = data.pagination;
+        //         })
+        //         .catch(error => console.error('Error:', error));
+        // }
 
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('pagination-link')) {
-                e.preventDefault();
-                const page = e.target.dataset.page;
-                const search = document.getElementById('table-search').value;
+        // document.addEventListener('click', function(e) {
+        //     if (e.target.classList.contains('pagination-link')) {
+        //         e.preventDefault();
+        //         const page = e.target.dataset.page;
+        //         const search = document.getElementById('table-search').value;
 
-                fetch(`{{ route('admin.properties.approved') }}?search=${search}&page=${page}`, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('property-rows').innerHTML = data.rows;
-                        document.getElementById('pagination-links').innerHTML = data.pagination;
-                        document.body.scrollTo({
-                            top: 0,
-                            behavior: "smooth"
-                        });
+        //         fetch(`{{ route('admin.properties.approved') }}?search=${search}&page=${page}`, {
+        //                 headers: {
+        //                     'X-Requested-With': 'XMLHttpRequest'
+        //                 }
+        //             })
+        //             .then(response => response.json())
+        //             .then(data => {
+        //                 document.getElementById('property-rows').innerHTML = data.rows;
+        //                 document.getElementById('pagination-links').innerHTML = data.pagination;
+        //                 document.body.scrollTo({
+        //                     top: 0,
+        //                     behavior: "smooth"
+        //                 });
 
 
-                        // Update active pagination number
-                        document.querySelectorAll('.pagination-link').forEach(link => {
-                            link.classList.remove('bg-blue-600', 'text-white');
-                            link.classList.add('text-blue-600', 'bg-white');
-                        });
-                        e.target.classList.add('bg-blue-600', 'text-white');
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-        });
+        //                 // Update active pagination number
+        //                 document.querySelectorAll('.pagination-link').forEach(link => {
+        //                     link.classList.remove('bg-blue-600', 'text-white');
+        //                     link.classList.add('text-blue-600', 'bg-white');
+        //                 });
+        //                 e.target.classList.add('bg-blue-600', 'text-white');
+        //             })
+        //             .catch(error => console.error('Error:', error));
+        //     }
+        // });
     </script>
 @endpush

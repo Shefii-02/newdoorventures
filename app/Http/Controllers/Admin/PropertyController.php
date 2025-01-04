@@ -333,17 +333,40 @@ class PropertyController extends Controller
             default:
                 break;
         }
-
-        return redirect()->route('admin.properties.index')->with('success', 'Status updated successfully!');
+        Session::flash('success_msg', 'Status updated successfully!');
+        return redirect()->back();
     }
 
 
     /**
      * Remove the specified resource from storage.
      */
+
+
+    public function multiDestroy(Request $request)
+    {
+        if ($request->has('delete_property') && $request->filled('delete_property') && is_array($request->delete_property)) {
+            foreach ($request->delete_property ?? [] as $delId) {
+                DB::beginTransaction();
+                try {
+                    $property = Property::where('id', $delId)->first() ?? abort(404);
+                    $this->adDeleted($property);
+                    $property->delete();
+                    DB::commit();
+                } catch (Exception $e) {
+                    DB::rollBack();
+                    // Return error response if something goes wrong
+                    Session::flash('failed_msg', 'Failed..!' . $e->getMessage());
+                    return redirect()->back();
+                }
+            }
+            Session::flash('success_msg', 'Successfully Deleted');
+            return redirect()->back();
+        }
+    }
+
     public function destroy(Request $request, string $id)
     {
-
         if (!permission_check('Property Delete')) {
             return abort(404);
         }
@@ -376,16 +399,14 @@ class PropertyController extends Controller
                 DB::commit();
                 Session::flash('success_msg', 'Successfully Deleted');
                 if ($request->has('from') && $request->from == 'trash') {
-                    return redirect()->route('admin.trash.index')->with('success_msg', 'Property  deleted!');
+                    return redirect()->route('admin.trash.index');
                 }
-                return redirect()->route('admin.properties.index')->with('success_msg', 'Property deleted!');
+                return redirect()->back();
             } catch (Exception $e) {
                 DB::rollBack();
                 // Return error response if something goes wrong
-                return response()->json([
-                    'status' => 'failed_msg',
-                    'message' => $e->getMessage(),
-                ], 500);
+                Session::flash('failed_msg', 'Failed..!' . $e->getMessage());
+                return redirect()->back();
             }
         } else {
             DB::beginTransaction();
@@ -395,14 +416,12 @@ class PropertyController extends Controller
                 $property->delete();
                 DB::commit();
                 Session::flash('success_msg', 'Successfully Deleted');
-                return redirect()->route('admin.properties.index')->with('success_msg', 'Property deleted!');
+                return redirect()->back();
             } catch (Exception $e) {
                 DB::rollBack();
                 // Return error response if something goes wrong
-                return response()->json([
-                    'status' => 'failed_msg',
-                    'message' => $e->getMessage(),
-                ], 500);
+                Session::flash('failed_msg', 'Failed..!' . $e->getMessage());
+                return redirect()->back();
             }
         }
     }

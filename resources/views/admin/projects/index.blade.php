@@ -90,7 +90,7 @@
                                         Location
                                     </th>
                                     <th colspan="2" class="px-6 py-3 text-dark fw-bold">
-                                        Rera Status
+                                        Price
                                     </th>
                                     <th class="px-6 py-3 text-dark fw-bold">
                                         Leads

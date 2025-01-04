@@ -581,6 +581,28 @@
                                     </div>
                                 </div>
                             @endif
+                            <div class="container-fluid mb-5" id="rent-related">
+                                <div class="md:flex">
+                                    <div class="w-full p-1 ">
+                                        <div class="border-theme rounded-xl">
+                                            <div class="px-3 py-5">
+                                                <h4 class="fs-5  font-bold me-2 text-capitalize ">
+                                                    Similar {{ $property->type_name }} Properties and  Nearby
+                                                </h4>
+                                            </div>
+                                            <div class="px-2">
+                                                @include(
+                                                    'front.shortcuts.properties.items-scroll-related',
+                                                    ['properties' => $similarProperties]
+                                                )
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class=" mt-8 lg:w-1/3 md:w-1/2 md:p-4 md:mt-0">
                             <div class="sticky  " style="top: 11rem;z-index:999">
