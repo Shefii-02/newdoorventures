@@ -1859,9 +1859,9 @@
                                                         </div>
                                                     </div>
                                                     <label
-                                                        class="flex items-center space-x-2 text-dark cursor-pointer hidden">
+                                                        class="flex items-center space-x-2 text-dark cursor-pointer ">
                                                         <input type="radio" name="coverImage" form="propertyFrom"
-                                                            class="hidden" :value="image.name"
+                                                            class="" :value="image.name"
                                                             @change="setCoverImage(index)"
                                                             :checked="currentCover === index" />
                                                         <span>Make Cover Photo</span>

@@ -173,7 +173,7 @@ class AccountPropertyController extends Controller
         // SaveRulesInformation $saveRulesInformation
 
     ) {
-
+        
 
         // ->canPost()
         if (! auth('account')->user()) {
@@ -195,8 +195,10 @@ class AccountPropertyController extends Controller
 
             // Handle images upload
             if ($request->hasFile('images')) {
-                $imagePath = $this->storeFiles($request->file('images'));
+                $imagePath = $this->storeFiles($request->file('images'),$request->coverImage);
             }
+
+            
 
             // Handle videos upload
             if ($request->hasFile('videos')) {
@@ -219,7 +221,7 @@ class AccountPropertyController extends Controller
             $property->content          = $request->unique_info;
             $property->square           = $request->super_built_up_area;
             $property->price            = $request->price;
-            $property->images           = $imagePath;
+            $property->images           = isset($imagePath['filePaths']) ? $imagePath['filePaths'] : '';
             $property->video            = $videoPath;
             $property->unique_id        = auth('account')->id() . date('mYdhisa');
 
@@ -253,7 +255,7 @@ class AccountPropertyController extends Controller
             $property->all_include      = $request->has('all_include') ? 1 : 0;
             $property->tax_include      = $request->has('tax_include') ? 1 : 0;
             $property->negotiable       = $request->has('negotiable') ? 1 : 0;
-            $property->cover_image      = $request->has('coverImage') ? 1 : '';
+           
             $property->occupancy_type   = $request->has('occupancy_type') ? $request->occupancy_type : '';
             $property->available_for    = $request->has('available_for') ? $request->available_for : '';
             $property->plot_area        = $request->plot_area ?? '';
@@ -268,7 +270,7 @@ class AccountPropertyController extends Controller
             $property->work_stations    = $request->work_stations ?? 0;
             $property->chairs_count     = $request->chairs_count ?? 0;
             $property->plot_type        = $request->plot_type ?? '';
-
+            $property->cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : '';
 
             if (auth('account')->user()->auto_approvel == 1 && $request->moderation_status != 'draft') {
                 $property->moderation_status = 'approved';
@@ -301,39 +303,13 @@ class AccountPropertyController extends Controller
 
             $this->saveFacilitiesService($property, $request->input('facilities', []));
 
-            // $saveFacilitiesService->execute($property, $request->input('facilities', []));  // landmark
+           
 
             $this->propertyCategoryService($request, $property);
 
-            // $saveRulesInformation->execute($property, $request->type, $request->input('rule', []));
+            
             $this->saveRulesInformation($property, $request->input('rule', []));
 
-
-
-
-
-            // $property->fill(array_merge($this->processRequestData($request), [
-            //     'author_id' => auth('account')->id(),
-            //     
-            // ]));
-
-            // $property->expire_date = Carbon::now()->addDays(RealEstateHelper::propertyExpiredDays());
-
-            // if (setting('enable_post_approval', 1) == 0) {
-            //     $property->moderation_status = ModerationStatusEnum::APPROVED;
-            // }
-
-            // $property->save();
-
-            // if (RealEstateHelper::isEnabledCustomFields()) {
-            //     $this->saveCustomFields($property, $request->input('custom_fields', []));
-            // }
-
-            // $property->features()->sync($request->input('features', []));
-
-            // $saveFacilitiesService->execute($property, $request->input('facilities', []));
-
-            // $propertyCategoryService->execute($request, $property);
 
             // event(new CreatedContentEvent(PROPERTY_MODULE_SCREEN_NAME, $request, $property));
 
@@ -350,20 +326,6 @@ class AccountPropertyController extends Controller
                 $this->adPendingReview($property);
             }
             
-
-            // if (RealEstateHelper::isEnabledCreditsSystem()) {
-            //     $account = Account::query()->findOrFail(auth('account')->id());
-            //     $account->credits--;
-            //     $account->save();
-            // }
-
-            // EmailHandler::setModule(REAL_ESTATE_MODULE_SCREEN_NAME)
-            //     ->setVariableValues([
-            //         'post_name' => $property->name,
-            //         'post_url' => route('property.edit', $property->id),
-            //         'post_author' => $property->author->name,
-            //     ])
-            //     ->sendUsingTemplate('new-pending-property');
 
             DB::commit();
 
@@ -444,6 +406,7 @@ class AccountPropertyController extends Controller
         // SaveRulesInformation $saveRulesInformation
     ) {
 
+     
         $property = Property::where([
             'id' => $id,
             'author_id' => auth('account')->id(),
@@ -467,8 +430,9 @@ class AccountPropertyController extends Controller
 
             // Handle images upload
             if ($request->hasFile('images')) {
-                $imagePath = $this->storeFiles($request->file('images'));
+                $imagePath = $this->storeFiles($request->file('images'),$request->coverImage);
             }
+  
 
             // Handle videos upload
             if ($request->hasFile('videos')) {
@@ -488,7 +452,7 @@ class AccountPropertyController extends Controller
 
 
             // Merge the existing and new images and videos to get the final list
-            $NewimagePath = array_merge($imagePath ?? [], $request->existingImage ?? []);
+            $NewimagePath = array_merge($imagePath['filePaths'] ?? [], $request->existingImage ?? []);
             $NewvideoPath = array_merge($videoPath ?? [], $request->existingVideo ?? []);
 
             foreach ($removedImages ?? [] as $imageLoc) {
@@ -576,7 +540,7 @@ class AccountPropertyController extends Controller
             $property->all_include      = $request->has('all_include') ? 1 : 0;
             $property->tax_include      = $request->has('tax_include') ? 1 : 0;
             $property->negotiable       = $request->has('negotiable') ? 1 : 0;
-            $property->cover_image      = $request->has('coverImage') ? 1 : '';
+            $property->cover_image      = (isset($imagePath['coverImagePath']) && strlen($imagePath['coverImagePath']) > 3) ? $imagePath['coverImagePath'] : $request->coverImage;
             $property->occupancy_type   = $request->has('occupancy_type') ? $request->occupancy_type : '';
             $property->available_for    = $request->has('available_for') ? $request->available_for : '';
             $property->plot_area        = $request->plot_area ?? '';
@@ -684,6 +648,8 @@ class AccountPropertyController extends Controller
                 'reference_url' => route('user.properties.edit', $property->id),
             ]);
             DB::commit();
+
+       
 
             // SlugHelper::createSlug($property);
 
@@ -812,27 +778,33 @@ class AccountPropertyController extends Controller
     }
 
 
-    protected function storeFiles($files)
+    protected function storeFiles($files, $coverImage = null)
     {
-
-        $filePaths = []; // Array to store file paths with keys
-
-        // Loop through each file
+        $filePaths = [];
+        $coverImagePath = "";
+    
         foreach ($files ?? [] as $index => $file) {
-
-            // $fileName = auth('account')->user()->id . '-' . time() . '-' . Str::slug(File::basename($file->getClientOriginalName())) . '.' . $file->getClientOriginalExtension();
-
             $folderPath = 'properties';
+    
             $result = uploadFile($file, $folderPath, 'public', true);
-
-            if (isset($result)) {
-                $paths =  $result;
-                $filePaths[$index + 1] = $paths;
+    
+            if ($result) {
+                $filePaths[$index + 1] = $result;
+    
+                if ($file->getClientOriginalName() === $coverImage) {
+                    $coverImagePath = $result;
+                }
+            } else {
+                throw new \Exception("Failed to upload file: " . $file->getClientOriginalName());
             }
         }
-
-        return $filePaths;
+    
+        return [
+            'filePaths' => $filePaths,
+            'coverImagePath' => $coverImagePath,
+        ];
     }
+    
 
 
     protected function getYouTubeVideoId($url)
