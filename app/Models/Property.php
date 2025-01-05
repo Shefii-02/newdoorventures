@@ -109,21 +109,29 @@ class Property extends BaseModel
     {
         return $this->belongsToMany(Furnishing::class, 're_property_furnishing', 'property_id', 'furnishing_id');
     }
-    
+
     public function pg_rules()
     {
-        return $this->hasMany(RuleDetails::class, 'reference_id', 'id')->where('reference_type','App\Models\Property');
-
+        return $this->hasMany(RuleDetails::class, 'reference_id', 'id')->where('reference_type', 'App\Models\Property');
     }
 
+    // protected function image(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: function () {
+    //             return Arr::first($this->images) ?? null;
+    //         },
+    //     );
+    // }
     protected function image(): Attribute
     {
         return Attribute::make(
             get: function () {
-                return Arr::first($this->images) ?? null;
+                return !empty($this->cover_image) ? $this->cover_image : Arr::first($this->images) ?? null;
             },
         );
     }
+    
 
     public function video_collect()
     {
@@ -135,8 +143,8 @@ class Property extends BaseModel
         return $this->video_collect && $this->video_collect->url ? asset('images/' . $this->video_collect->url) : '';
     }
 
-   
-    
+
+
     protected function squareText(): Attribute
     {
         return Attribute::make(
@@ -145,7 +153,7 @@ class Property extends BaseModel
 
                 $unit = 'sq.ft';
 
-                return  (sprintf('%s %s', indian_number_format($square), __($unit)));
+                return (sprintf('%s %s', indian_number_format($square), __($unit)));
             },
         );
     }
@@ -159,12 +167,14 @@ class Property extends BaseModel
         );
     }
 
-    public function account(){
+    public function account()
+    {
         return $this->hasOne(Account::class,  'id', 'author_id');
     }
 
 
-    public function author() {
+    public function author()
+    {
         return $this->hasOne(Account::class,  'id', 'author_id');
     }
 
@@ -179,17 +189,17 @@ class Property extends BaseModel
 
     public function getYoutubeVideoUrlAttribute()
     {
-        return $this->youtube_video ? str_replace('https://youtu.be/','',$this->youtube_video) : null;
+        return $this->youtube_video ? str_replace('https://youtu.be/', '', $this->youtube_video) : null;
     }
-    
+
 
     public function getYoutubeVideoAttribute($value)
     {
         return $value ? 'https://youtu.be/' . $value : null;
     }
-    
 
-    
+
+
     public function currency(): BelongsTo
     {
         return $this->belongsTo(Currency::class);
@@ -236,7 +246,7 @@ class Property extends BaseModel
     }
 
     protected function categoryName(): Attribute
-    {   
+    {
         return Attribute::make(
             get: function () {
                 return $this->category->name;
@@ -249,13 +259,13 @@ class Property extends BaseModel
         return $this->attributes['type'] === 'sell' ? 'sale' : $this->attributes['type'];
     }
 
-    
+
 
     protected function imageThumb(): Attribute
     {
         return Attribute::make(
             get: function () {
-                return $this->image ? asset('images/'.$this->image) : null;
+                return $this->image ? asset('images/' . $this->image) : null;
             },
         );
     }
@@ -264,7 +274,7 @@ class Property extends BaseModel
     {
         return Attribute::make(
             get: function () {
-                return $this->image ? asset('images/'.$this->image) : null;
+                return $this->image ? asset('images/' . $this->image) : null;
             },
         );
     }
@@ -302,7 +312,7 @@ class Property extends BaseModel
 
                 $currency = $this->currency;
 
-               
+
 
                 return $this->price_formatted = format_price($this->price, 'IN');
             },
@@ -344,9 +354,8 @@ class Property extends BaseModel
 
 
 
-    public function getSlugAttribute($value){
+    public function getSlugAttribute($value)
+    {
         return $value;
     }
 }
-
-
