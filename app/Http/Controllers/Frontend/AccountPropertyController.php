@@ -263,6 +263,11 @@ class AccountPropertyController extends Controller
             $property->cabin            = $request->cabin ?? 0;
             $property->seats            = $request->seats ?? 0;
             $property->units_on_floor   = $request->units_on_floor ?? 0;
+            $property->ac_count         = $request->ac_count ?? 0;
+            $property->fans_count       = $request->fans_count ?? 0;
+            $property->work_stations    = $request->work_stations ?? 0;
+            $property->chairs_count     = $request->chairs_count ?? 0;
+
 
             if (auth('account')->user()->auto_approvel == 1 && $request->moderation_status != 'draft') {
                 $property->moderation_status = 'approved';
@@ -579,7 +584,11 @@ class AccountPropertyController extends Controller
             $property->cabin            = $request->cabin ?? 0;
             $property->seats            = $request->seats ?? 0;
             $property->units_on_floor   = $request->units_on_floor ?? 0;
-
+            $property->ac_count         = $request->ac_count ?? 0;
+            $property->fans_count       = $request->fans_count ?? 0;
+            $property->work_stations    = $request->work_stations ?? 0;
+            $property->chairs_count     = $request->chairs_count ?? 0;
+            
             if ($request->mode == 'sell') {
                 if ($request->property_status == 'sold') {
                     $property->status       = 'sold';

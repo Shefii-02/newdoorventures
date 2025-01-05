@@ -2,6 +2,14 @@
 @section('content')
 
     <div class="main">
+        <div id="pageTitleDescription" class="py-3">
+            <div class="container">
+            <h1 class="my-1 fw-bold fs-1">Welcome back {{ auth()->user()->name }},</h1>
+            <h4 class="fw-bold text-dark fs-3 mt-2">Sell or Rent your Property for <span
+                class="ms-1 bg-warning text-light px-2 py-1 rounded-5 fs-5"> FREE! </span> </h4>
+
+            </div>
+        </div>
         <div class="col-lg-12 mb-5">
             <div class="container">
                 <div class="row">

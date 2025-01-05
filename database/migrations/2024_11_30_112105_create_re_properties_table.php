@@ -78,6 +78,10 @@ return new class extends Migration
             $table->integer('cabin')->nullable()->default(0);
             $table->integer('seats')->nullable()->default(0);
             $table->integer('units_on_floor')->nullable()->default(0);
+            $table->integer('ac_count')->nullable()->default(0);
+            $table->integer('fans_count')->nullable()->default(0);
+            $table->integer('work_stations')->nullable()->default(0);
+            $table->integer('chairs_count')->nullable()->default(0);
             $table->softDeletes();
         });
     }
