@@ -120,11 +120,10 @@ class Property extends BaseModel
     {
         return Attribute::make(
             get: function () {
-                return $this->cover_image ?? Arr::first($this->images) ?? null;
+                return Arr::first($this->images) ?? null;
             },
         );
     }
-    
 
     public function video_collect()
     {
