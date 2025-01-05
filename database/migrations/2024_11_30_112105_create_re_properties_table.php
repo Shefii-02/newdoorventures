@@ -82,6 +82,7 @@ return new class extends Migration
             $table->integer('fans_count')->nullable()->default(0);
             $table->integer('work_stations')->nullable()->default(0);
             $table->integer('chairs_count')->nullable()->default(0);
+            $table->string('plot_type')->nullable();
             $table->softDeletes();
         });
     }

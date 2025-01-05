@@ -267,6 +267,7 @@ class AccountPropertyController extends Controller
             $property->fans_count       = $request->fans_count ?? 0;
             $property->work_stations    = $request->work_stations ?? 0;
             $property->chairs_count     = $request->chairs_count ?? 0;
+            $property->plot_type        = $request->plot_type ?? '';
 
 
             if (auth('account')->user()->auto_approvel == 1 && $request->moderation_status != 'draft') {
@@ -588,6 +589,7 @@ class AccountPropertyController extends Controller
             $property->fans_count       = $request->fans_count ?? 0;
             $property->work_stations    = $request->work_stations ?? 0;
             $property->chairs_count     = $request->chairs_count ?? 0;
+            $property->plot_type        = $request->plot_type ?? '';
             
             if ($request->mode == 'sell') {
                 if ($request->property_status == 'sold') {

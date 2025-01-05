@@ -38,6 +38,8 @@
                 transform: rotate(360deg);
             }
         }
+        
+        
     </style>
 @endpush
 
@@ -510,11 +512,10 @@
                                                     <!-- Project  -->
                                                     <div class="mb-2">
                                                         <label for="projects" class="mt-3 font-medium mb-2 ">Choose
-                                                            Project</label>
+                                                            Project</label><br>
                                                         <select form="propertyFrom" name="project" id="projects"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                                            <option value="" selected>None of the below
-                                                            </option>
+                                                            <option value="" selected>None of the below</option>
                                                             @foreach ($projects ?? [] as $project_item)
                                                                 <option @if ($property->project->id == $project_item->id) selected @endif
                                                                     value="{{ $project_item->id }}">
@@ -527,7 +528,8 @@
                                                 <div class="col-lg-6">
                                                     <!-- Property Name -->
                                                     <div class="relative z-0 w-full mb-3 group">
-                                                        <label for="projects" class="mt-3 font-medium mb-2 " id="property_heighlight_name"> Property
+                                                        <label for="" class="mt-3 font-medium mb-2 "
+                                                            id="property_heighlight_name"> Property
                                                             heighlight name <sup class="text-danger fs-4">*</sup></label>
                                                         <input form="propertyFrom" name="property_name" type="text"
                                                             autocomplete="off" id="name"
@@ -952,9 +954,9 @@
                                                             </div>
                                                         </div>
 
-                                                         {{-- //////////////////////////////////////////////// --}}
-                                                        
-                                                         <div class="mb-2 col-lg-6">
+                                                        {{-- //////////////////////////////////////////////// --}}
+
+                                                        <div class="mb-2 col-lg-6">
                                                             <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
                                                                     class="block mb-2 text-sm font-medium text-gray-500">
@@ -1117,56 +1119,109 @@
                                                     <div class="mt-3">
                                                         <div class="ShowWantedSectionsInPlot HideUnwantedSectionsInPg"
                                                             style="display: none">
-                                                            <!-- Plot Area Input -->
-                                                            <div class="mb-2 col-lg-6">
-                                                                <div class="relative">
-                                                                    <input form="propertyFrom" name="plot_area"
-                                                                        autocomplete="off" type="text" id="plot_area"
-                                                                        value="{{ $property->plot_area }}"
-                                                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                                                        class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
-                                                                        placeholder=" " />
-                                                                    <label for="plot_area"
-                                                                        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                                                                        Plot
-                                                                        Area</label>
+                                                            <div class="row">
+                                                                <!-- Plot Area Input -->
+                                                                <div class="mb-2 col-lg-6">
+                                                                    <label for="" class="mt-3 font-medium mb-2 ">
+                                                                        Plot Area </label>
+                                                                    <div class="relative">
+                                                                        <input form="propertyFrom" name="plot_area"
+                                                                            autocomplete="off" type="text"
+                                                                            id="plot_area"
+                                                                            value="{{ $property->plot_area }}"
+                                                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                                                            class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
+                                                                            placeholder=" " />
+
+                                                                        <div
+                                                                            class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
+                                                                            Sq.ft
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 col-lg-6">
+                                                                    <div class="mb-2 ">
+                                                                        <div class="relative">
+                                                                            <label for="plot_type"
+                                                                                class="mt-3 font-medium mb-2 ">
+                                                                                Plot Type </label>
+                                                                            <select form="propertyFrom" name="plot_type"
+                                                                                id="plot_type"
+                                                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                                                                <option value="" selected>None of the
+                                                                                    below
+                                                                                </option>
+                                                                                <option class="ResidentialAllowed"
+                                                                                    {{ $property->plot_type == 'Independent plots' ? 'selected' : '' }}
+                                                                                    value="Independent plots">Independent
+                                                                                    plots</option>
+                                                                                <option class="ResidentialAllowed"
+                                                                                    {{ $property->plot_type == 'Villa,Bungalow,Row houses' ? 'selected' : '' }}
+                                                                                    value="Villa,Bungalow,Row houses">
+                                                                                    Villa,Bungalow,Row houses</option>
+                                                                                <option class="ResidentialAllowed"
+                                                                                    {{ $property->plot_type == 'Builder Floor appartments' ? 'selected' : '' }}
+                                                                                    value="Builder Floor appartments">
+                                                                                    Builder Floor appartments</option>
+
+                                                                                <option class="CommercialAllowed"
+                                                                                    {{ $property->plot_type == 'Agricultural/Farm Land' ? 'selected' : '' }}
+                                                                                    value="Agricultural/Farm Land">
+                                                                                    Agricultural/Farm Land</option>
+                                                                                <option class="CommercialAllowed"
+                                                                                    {{ $property->plot_type == 'WareHouse plots' ? 'selected' : '' }}
+                                                                                    value="Warehouse Plots">WareHouse Plots
+                                                                                </option>
+                                                                                <option class="CommercialAllowed"
+                                                                                    {{ $property->plot_type == 'Industrial Spaces' ? 'selected' : '' }}
+                                                                                    value="Industrial Spaces">Industrial
+                                                                                    Spaces</option>
+                                                                                <option class="CommercialAllowed"
+                                                                                    {{ $property->plot_type == 'Retail Plots' ? 'selected' : '' }}
+                                                                                    value="Retail Plots">Retail Plots
+                                                                                </option>
+                                                                                <option class="CommercialAllowed"
+                                                                                    {{ $property->plot_type == 'Corporate Plot' ? 'selected' : '' }}
+                                                                                    value="Corporate Plot">Corporate Plot
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 col-lg-6 mt-3">
+                                                                    <h5 class="mt-3 fs-3 text-black font-bold">Boundary
+                                                                        Wall
+                                                                    </h5>
+                                                                    <!-- Open Sides  -->
                                                                     <div
-                                                                        class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
-                                                                        Sq.ft
+                                                                        class="mb-2 flex gap-3 mt-3 justify-content-between  ">
+                                                                        <label for="city"
+                                                                            class="block mb-2 text-sm font-medium text-gray-500">
+                                                                            No of Open Sides</label>
+                                                                        <div x-data="{ count: `{{ $property->open_sides }}` }"
+                                                                            class="flex items-center space-x-2">
+                                                                            <!-- Minus Button -->
+                                                                            <button @click="if (count > 1) count--"
+                                                                                class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                                -
+                                                                            </button>
+
+                                                                            <!-- Display Counter -->
+                                                                            <span class="text-md font-bold"
+                                                                                x-text="count"></span>
+                                                                            <input type="hidden" form="propertyFrom"
+                                                                                :value="count" name="open_sides">
+
+                                                                            <!-- Plus Button -->
+                                                                            <button @click="count++"
+                                                                                class="border fw-bold px-2 rounded rounded-5 text-theme">
+                                                                                +
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-2 col-lg-6 mt-3">
-                                                                <h5 class="mt-3 fs-3 text-black font-bold">Boundary Wall
-                                                                </h5>
-                                                                <!-- Open Sides  -->
-                                                                <div
-                                                                    class="mb-2 flex gap-3 mt-3 justify-content-between  ">
-                                                                    <label for="city"
-                                                                        class="block mb-2 text-sm font-medium text-gray-500">
-                                                                        No of Open Sides</label>
-                                                                    <div x-data="{ count: `{{ $property->open_sides }}` }"
-                                                                        class="flex items-center space-x-2">
-                                                                        <!-- Minus Button -->
-                                                                        <button @click="if (count > 1) count--"
-                                                                            class="border fw-bold px-2 rounded rounded-5 text-theme">
-                                                                            -
-                                                                        </button>
 
-                                                                        <!-- Display Counter -->
-                                                                        <span class="text-md font-bold"
-                                                                            x-text="count"></span>
-                                                                        <input type="hidden" form="propertyFrom"
-                                                                            :value="count" name="open_sides">
-
-                                                                        <!-- Plus Button -->
-                                                                        <button @click="count++"
-                                                                            class="border fw-bold px-2 rounded rounded-5 text-theme">
-                                                                            +
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                         <div
                                                             class="col-lg-12 HideUnwantedSectionsInPlot HideUnwantedSectionsInPg">
@@ -2790,6 +2845,14 @@
 
                         // Perform actions based on category
                         if (categoryName === 'Plot and Land') {
+                            if (this.currentType === 'Residential') {
+                                this.toggleSections('ResidentialAllowed', 'block');
+                                this.toggleSections('CommercialAllowed', 'none');
+                            } else {
+                                this.toggleSections('ResidentialAllowed', 'none');
+                                this.toggleSections('CommercialAllowed', 'block');
+                            }
+
                             HideUnwantedSectionsInPlot();
                         } else if (this.currentMode === 'pg') {
                             ShowWantedSectionInPg();
@@ -2807,10 +2870,10 @@
 
                         if (this.currentType === 'Commercial' && categoryName != 'Plot and Land') {
 
-                        document.getElementById('property_heighlight_name').textContent = 'Building Name';
+                            document.getElementById('property_heighlight_name').textContent = 'Building Name';
                         } else {
 
-                        document.getElementById('property_heighlight_name').textContent = 'Property Heighlight Name';
+                            document.getElementById('property_heighlight_name').textContent = 'Property Heighlight Name';
                         }
                     },
                 };
@@ -3182,5 +3245,20 @@
                     initAutocomplete();
                 }
             });
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script>
+           jQuery(document).ready(function($) {
+                $('#projects').select2({
+                    placeholder: "Select a project",
+                    allowClear: true,
+                    width: 'resolve'
+                });
+            });
+
         </script>
     @endpush

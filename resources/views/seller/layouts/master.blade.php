@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"></script>
 
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
-    @stack('header')
+
 
 
     <link media="all" type="text/css" rel="stylesheet" href="{{ asset('themes/dashboard/core.css') }}">
@@ -153,6 +153,26 @@
                 transform: rotate(360deg);
             }
         }
+
+        input.form-control, select.form-control, .select2.select2-container{
+            width: 100% !important;
+        }
+        .select2-container .select2-selection--single{
+            height: 40px !important;
+            border: var(--bb-border-width) var(--bb-border-style) var(--bb-border-color) !important;
+        }
+        .select2-container--default .select2-selection--single{
+            border-radius: 6px !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered{
+            line-height: 35px !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__clear{
+            height: 35px !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 36px !important;
+        }
     </style>
 
     <style>
@@ -253,6 +273,8 @@
             darkMode: 'class',
         }
     </script>
+
+@stack('header')
 
 </head>
 </head>
