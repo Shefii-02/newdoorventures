@@ -6130,6 +6130,9 @@ html.dark #topnav {
     z-index: 70;
     white-space: normal;
     font-weight: 400;
+    max-height: 350px;
+    overflow: auto;
+
 }
 
 .rounded-s-2xl {

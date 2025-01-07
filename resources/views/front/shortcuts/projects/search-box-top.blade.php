@@ -1,24 +1,15 @@
-<form x-data="projectFilters()" x-init="initFilters()" class="search-filter" target="_blank">
-    <div class="py-lg-5 py-sm-0">
+<form x-data="propertyFilters()" class="search-filter">
+    <div class="pt-5">
         <div class="row align-items-center">
             <!-- Property Type Dropdown -->
-            <div class="col-lg-4 mb-4 px-1">
-                <div>
+            <div class="col-lg-5 mb-4 px-1">
+                <div class="position-relative">
                     <div class="flex items-center space-x-3">
-                        {{-- <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
-                            class="border-theme px-3 py-2 rounded-s-2xl">
-                            <option value="null">Properties</option>
-                            <option {{ isset($type) && $type == 'sell' ? 'selected' : '' }} value="sell">Sale</option>
-                            <option {{ isset($type) && $type == 'rent' ? 'selected' : '' }} value="rent">Rent</option>
-                            <option value="pg">PG</option>
-                            <option value="plot">Plot</option>
-                            <option value="projects">Projects</option>
-                        </select> --}}
-                        <select x-model="filters.type" @change="updateVisibility(); applyFilters()"
+                        <select name="type" id="type" @change="applyFilters()"
                             class="border-theme px-3 py-2 rounded-s-2xl text-black">
-                            <option value="projects">Projects</option>
+                            <option value="">Projects</option>
                             <optgroup label="Residential" class="text-dark">
-                                <option value="null">All Residential</option>
+                                <option value="all-residential">All Residential</option>
                                 <option {{ isset($type) && $type == 'sell' ? 'selected' : '' }} value="sell">Sale
                                 </option>
                                 <option {{ isset($type) && $type == 'rent' ? 'selected' : '' }} value="rent">Rent
@@ -31,76 +22,97 @@
                                 <option value="commercial-sale">Sale</option>
                                 <option value="commercial-rent">Rent</option>
                             </optgroup>
-                         
+
                         </select>
-                        <input type="text" x-model="filters.k" @input="applyFilters()"
-                            class="border-theme px-3 py-1.5 w-full rounded-e-2xl text-black" placeholder="Search for properties">
+                        <input type="text" name="k" id="search-box-{{ $type }}"
+                            oninput="fetchSuggestions('{{ $type ?? 'default' }}')"
+                            onfocus="showSuggestions('{{ $type ?? 'default' }}')"
+                            class="border-theme px-3 py-1.5 w-full  text-black"
+                            placeholder="Search for locality,builder">
+                        <i id="loading-icon-{{ $type ?? 'default' }}"
+                            class="absolute hidden mdi mdi-loading mdi-spin top-5 right-5"></i>
+                        <button
+                            class="bi bi-search rounded-e-2xl bg-theme-light border-theme  px-3 py-1.5 ">Search</button>
                     </div>
+                </div>
+                <!-- Suggestions List -->
+                <div id="suggestions-list-{{ $type ?? 'default' }}"
+                    class="absolute z-10 w-full mt-1 bg-white shadow-md rounded-md dark:bg-slate-900 dark:text-white"
+                    style="display:none;">
+                    <ul id="suggestions-ul-{{ $type ?? 'default' }}" class="list-none p-0 m-0 max-h-48 overflow-auto">
+                    </ul>
                 </div>
             </div>
 
             <!-- City Dropdown -->
             <div class="col-lg-2 mb-4 px-1">
-                <select x-model="filters.city" @change="applyFilters()"
+                <select name="city" onchange="this.form.submit()"
                     class="w-full border-theme px-3 py-2 rounded-2xl text-black">
                     <option value="null" selected>Locality</option>
-                    <template x-for="city in cities" :key="city">
-                        <option :value="city" x-text="city"></option>
-                    </template>
+                    @foreach ($cities ?? [] as $city)
+                        <option value="{{ $city }}" {{ request()->get('city') == $city ? 'selected' : '' }}>
+                            {{ $city }}
+                        </option>
+                    @endforeach
+
                 </select>
             </div>
 
+
             <!-- Other Filters -->
-            <div class="col-lg-6 p-0 mb-3 filter-parent">
-                <div class="relative gap-1 flex align-items-center flex-wrap filter-options">
+            <div class="col-lg-5 p-0 mb-3">
+                <div class="relative gap-1 flex align-items-center">
                     <!-- Categories -->
-                    <template x-if="showFilters.categories">
-                        <div class="relative mb-2">
-                            <button type="button" @click="toggleDropdown('categories')"
-                                class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
-                                Categories<i
-                                    :class="openDropdown === 'categories' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                            </button>
-                            <div x-show="openDropdown === 'categories'" x-transition
-                                class="dropdown-box filter-web-dropdown">
-                                <div class="option-sections">
-                                    <ul class="ks-cboxtags p-0">
-                                        <template x-for="category in categories" :key="category.id">
-                                            <li>
-                                                <input type="checkbox" :id="'category' + category.id"
-                                                    :value="category.id"
-                                                    @change="toggleArrayFilter('categories', category.id)">
-                                                <label :for="'category' + category.id" x-text="category.name"></label>
-                                            </li>
-                                        </template>
-                                    </ul>
+
+                    <div class="relative mb-2">
+                        <button type="button" @click="toggleDropdown('categories')"
+                            class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
+                            Categories<i
+                                :class="openDropdown === 'categories' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </button>
+                        <div x-show="openDropdown === 'categories'" x-transition
+                            class="dropdown-box filter-web-dropdown">
+                            <div class="option-sections">
+                                <ul class="ks-cboxtags p-0">
+
+                                    @foreach ($categories ?? [] as $category)
+                                        <li>
+                                            <input type="checkbox" value="{{ $category->name }}"
+                                                {{ in_array($category->name, (array) request()->get('categories')) ? 'checked' : '' }}
+                                                name="categories[]" id="category{{ $category->id }}">
+                                            <label for="category{{ $category->id }}">{{ $category->name }}</label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                <div class="text-end">
+                                    <input type="submit" value="Search" @click="toggleDropdown('categories')"
+                                        class="btn btn-theme text-light" />
                                 </div>
                             </div>
                         </div>
-                    </template>
+                    </div>
+
 
 
                     <!-- Budget -->
-                    <template x-if="showFilters.budget">
-                        <div class="relative mb-2">
-                            <button type="button" @click="toggleDropdown('budget')"
-                                class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
-                                Budget<i
-                                    :class="openDropdown === 'budget' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                            </button>
-                            <div x-show="openDropdown === 'budget'" x-transition
-                                class="dropdown-box filter-web-dropdown">
-                                <div class="option-sections">
-                                    @include('front.shortcuts.filters.price-range-new', [
-                                        'min' => 0,
-                                        'max' => 500000000,
-                                        'step' => 500000,
-                                        'single_page' => true,
-                                    ])
-                                </div>
+
+                    <div class="relative mb-2">
+                        <button type="button" @click="toggleDropdown('budget')"
+                            class="flex filter-button border-theme py-1 rounded-2xl px-1.5 top-search-btn">
+                            Budget<i
+                                :class="openDropdown === 'budget' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
+                        </button>
+                        <div x-show="openDropdown === 'budget'" x-transition class="dropdown-box filter-web-dropdown">
+                            <div class="option-sections">
+                                @include('front.shortcuts.filters.price-range-new', [
+                                    'min' => 0,
+                                    'max' => 500000000,
+                                    'step' => 500000,
+                                    'single_page' => true,
+                                ])
                             </div>
                         </div>
-                    </template>
+                    </div>
 
 
                     <!-- Builders Filter -->
@@ -113,20 +125,22 @@
                         <div x-show="openDropdown === 'builder'" x-transition class="dropdown-box filter-web-dropdown">
                             <div class="option-sections">
                                 <ul class="ks-cboxtags p-0">
-                                    @foreach ($builders as $builder)
-                                        <li><input type="checkbox" value="freehold" id="builder_{{ $builder->id }}"
-                                                @change="toggleArrayFilter('builder', $builder->name)">
-                                            <label for="builder_{{ $builder->id }}"> {{ $builder->name }}
-                                            </label>
+                                    @foreach ($builders ?? [] as $builder)
+                                        <li>
+                                            <input type="checkbox" value="{{ $builder->name }}"
+                                                id="builder_{{ $builder->id }}" name="builder[]"
+                                                {{ in_array($builder->name, (array) request()->get('builder')) ? 'checked' : '' }}>
+                                            <label for="builder_{{ $builder->id }}"> {{ $builder->name }}</label>
                                         </li>
                                     @endforeach
                                 </ul>
+                                <div class="text-end">
+                                    <input type="submit" value="Search" @click="toggleDropdown('builder')"
+                                        class="btn btn-theme text-light" />
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
-
                     <!-- Constriction Statis Filter -->
                     <div class="relative mb-2">
                         <button type="button" @click="toggleDropdown('construction')"
@@ -139,27 +153,45 @@
                             class="dropdown-box filter-web-dropdown">
                             <div class="option-sections">
                                 <ul class="ks-cboxtags p-0">
-                                    <li><input type="checkbox" value="freehold" id="new_laucnh"
-                                            @change="toggleArrayFilter('construction', 'new_laucnh')">
-                                        <label for="new_laucnh"> New Launch
-                                        </label>
+                                    <li><input
+                                            {{ in_array('new_launch', (array) request()->get('construction')) ? 'checked' : '' }}
+                                            name="construction[]" type="checkbox" value="new_launch"
+                                            id="new_launch">
+                                        <label for="new_launch"> New Launch </label>
                                     </li>
-                                    <li><input type="checkbox" value="co-operative_society" id="under_construction"
-                                            @change="toggleArrayFilter('construction', 'under_construction')">
-                                        <label for="under_construction"> Under Construction
-                                        </label>
+                                    <li><input
+                                            {{ in_array('under_construction', (array) request()->get('construction')) ? 'checked' : '' }}
+                                            name="construction[]" type="checkbox" value="under_construction"
+                                            id="under_construction">
+                                        <label for="under_construction"> Under Construction </label>
                                     </li>
-                                    <li><input type="checkbox" value="power_of_attorney" id="ready_to_move"
-                                            @change="toggleArrayFilter('construction', 'ready_to_move')">
+                                    <li><input
+                                            {{ in_array('ready_to_move', (array) request()->get('construction')) ? 'checked' : '' }}
+                                            name="construction[]" type="checkbox" value="ready_to_move"
+                                            id="ready_to_move">
                                         <label for="ready_to_move">Ready to move</label>
                                     </li>
                                 </ul>
+                                <div class="text-end">
+                                    <input type="submit" value="Search" @click="toggleDropdown('construction')"
+                                        class="btn btn-theme text-light" />
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
+            </div>
+            <!-- Display Selected Items -->
+            <div id="selected-items-container-{{ $type ?? 'default' }}"
+                class="relative flex-wrap flex items-center mt-2 gap-2 bg-white rounded-md p-2">
+                <div id="selected-items-display-{{ $type ?? 'default' }}"
+                    class="flex flex-wrap gap-2 overflow-hidden">
+                    <!-- Dynamically generated selected items will go here -->
+                </div>
+                <!-- Show More Button -->
+                <span role="button" id="show-more-btn-{{ $type ?? 'default' }}"
+                    class="text-blue-500 text-sm mt-2 z-9" style="display: none"
+                    onclick="toggleShowMore('{{ $type ?? 'default' }}')">Show More</span>
             </div>
         </div>
     </div>
@@ -168,145 +200,57 @@
 
 @push('footer')
     <script>
-        function projectFilters() {
+        function propertyFilters() {
             return {
                 filters: {
                     k: '',
-                    city: 'null',
-                    categories: [],
-                    min_price: null,
-                    max_price: null,
-                    bedrooms: [],
-                    ownership: [],
-                    furnishing: [],
-                    // builders: [],
-                    type: null,
-                    purpose: []
                 },
-                cities: @json($cities),
-                categories: @json($categories),
-                builders: @json($builders),
                 openDropdown: '',
-                showFilters: {
-                    categories: true,
-                    purpose: false,
-                    bedrooms: false,
-                    budget: true,
-                    ownership: true,
-                },
-
-                // Initialize filters
-                initFilters() {
-                    // Parse the URL parameters and update the filters object
-                    const urlParams = new URLSearchParams(window.location.search);
-
-                    // Populate the filters from the URL parameters
-                    this.filters.k = urlParams.get('k') || '';
-                    this.filters.city = urlParams.get('city') || 'null';
-                    this.filters.type = `{{ isset($type) ? $type : '' }}`;
-                    this.filters.purpose = this.getArrayFromUrlParam(urlParams, 'purpose');
-                    this.filters.bedrooms = this.getArrayFromUrlParam(urlParams, 'bedrooms');
-                    this.filters.ownership = this.getArrayFromUrlParam(urlParams, 'ownership');
-                    this.filters.furnishing = this.getArrayFromUrlParam(urlParams, 'furnishing');
-                    this.filters.categories = this.getArrayFromUrlParam(urlParams, 'categories');
-
-                    this.filters.min_price = urlParams.get('min_price') || null;
-                    this.filters.max_price = urlParams.get('max_price') || null;
-                    this.checkFilterState();
-                    this.updateVisibility();
-                    this.applyFilters();
-                },
-
-                updateVisibility() {
-                    const type = this.filters.type;
-
-                    // this.showFilters.categories = ['pg', 'sell', 'rent', 'plot',''].includes(type);
-                    this.showFilters.purpose = ['sell', 'rent', 'plot'].includes(type);
-                    this.showFilters.bedrooms = ['sell', 'rent'].includes(type);
-                    this.showFilters.occupancy = ['pg'].includes(type);
-                    this.showFilters.availability = ['pg'].includes(type);
-                },
-
-                getArrayFromUrlParam(urlParams, param) {
-                    const paramValue = urlParams.get(param);
-                    return paramValue ? paramValue.split(',').map(value => value.trim()) : [];
-                },
-
-                // Check if filters should be checked based on URL params
-                checkFilterState() {
-                    // Check Categories
-
-                    this.categories.forEach(category => {
-
-                        if (this.filters.categories.includes(String(category.id))) {
-                            this.$nextTick(() => {
-                                const categoryCheckbox = document.getElementById('category' + category.id);
-                                console.log(categoryCheckbox.checked)
-                                if (categoryCheckbox) categoryCheckbox.checked = true;
-                            });
-                        }
-                    });
-
-                    // Check Bedrooms
-                    this.filters.bedrooms.forEach(bedroom => {
-                        this.$nextTick(() => {
-                            const bedroomCheckbox = document.getElementById('bedroom' + bedroom + '_buy');
-                            console.log(bedroomCheckbox.checked)
-                            if (bedroomCheckbox) bedroomCheckbox.checked = true;
-                        });
-                    });
-
-
-                },
 
                 // Toggle dropdown
                 toggleDropdown(name) {
                     this.openDropdown = this.openDropdown === name ? '' : name;
                 },
-
-                // Toggle array-based filter (e.g., categories, bedrooms, ownership)
-                toggleArrayFilter(filterName, value) {
-                    const filterArray = this.filters[filterName];
-                    if (filterArray.includes(value)) {
-                        this.filters[filterName] = filterArray.filter((item) => item !== value);
-                    } else {
-                        this.filters[filterName].push(value);
-                    }
-                    this.applyFilters();
-                },
-
                 // Apply filters with AJAX
                 applyFilters() {
-                    if (this.filters.type == 'projects') {
+                    var type = document.getElementById('type').value;
+                    if (type == 'projects') {
 
-                    } else if (this.filters.type == 'sell' && `{{ isset($type) && $type != 'sell' }}`) {
+                    } else if (type == 'sell') {
                         window.location.href = "{{ route('public.properties.sale') }}";
                         return;
-                    } else if (this.filters.type == 'rent' && `{{ isset($type) && $type != 'rent' }}`) {
+                    } else if (type == 'rent') {
                         window.location.href = "{{ route('public.properties.rent') }}";
                         return;
-                    } else if (this.filters.type == 'pg') {
+                    } else if (type == 'pg') {
                         window.location.href = "{{ route('public.properties.pg') }}";
                         return;
-                    } else if (this.filters.type == 'plot') {
+                    } else if (type == 'plot') {
                         window.location.href = "{{ route('public.properties.plot') }}";
+                        return;
+                    } else if (type == 'all-commercial') {
+                        window.location.href = "{{ route('public.properties.commercial') }}";
+                        return;
+                    } else if (type == 'commercial-sale') {
+                        window.location.href = "{{ route('public.properties.commercial', ['tab' => 'sale']) }}";
+                        return;
+                    } else if (type == 'commercial-rent') {
+                        window.location.href = "{{ route('public.properties.commercial', ['tab' => 'rent']) }}";
+                        return;
+                    } else if (type == 'all-residential') {
+
+                        window.location.href = "{{ route('public.properties') }}";
                         return;
                     }
 
                     document.body.scrollTop = 0, document.documentElement.scrollTop = 0
                     const params = new URLSearchParams(this.filters).toString();
-                    var url = `{{ route('public.projects') }}?${params}`;
-                    fetch(url, {
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest'
-                            },
-                        })
-                        .then((response) => response.json())
-                        .then((data) => {
-                            // window.history.pushState({}, '', url);
-                            document.getElementById('items-list').innerHTML = data.html;
-                        })
-                        .catch((error) => console.error('Error:', error));
+
+                    // Get the current URL and append the parameters
+                    const baseUrl = window.location.origin + window.location.pathname;
+                    const url = `${baseUrl}?${params}`;
+                    window.location = url;
+
                 },
             };
         }

@@ -131,7 +131,35 @@ class Property extends BaseModel
             },
         );
     }
+
+    protected function availableFor(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                return match ($value) {
+                    'male' => 'Boys',
+                    'female' => 'Girls',
+                    'any' => 'Boys & Girls (Coed)',
+                    default => $value,
+                };
+            },
+        );
+    }
+
+    protected function occupancyType(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                return match ($value) {
+                    'tripple' => '3+ more',
+                    default => $value,
+                };
+            },
+        );
+    }
+
     
+
 
     public function video_collect()
     {

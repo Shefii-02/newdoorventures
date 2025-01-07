@@ -3,7 +3,7 @@
     <div class="relative mt-2 filter-search-form filter-border flex flex-wrap gap-4"  >
         <div class="lg:grid-cols-3 ">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="girls" name="available_for[]" id="girls_{{ $type }}">
+              <input class="form-check-input" type="checkbox" value="male" name="available_for[]" id="girls_{{ $type }}">
               <label class="form-check-label ms-2 mt-0.5" for="girls_{{ $type }}">
                 Girls
               </label>
@@ -11,7 +11,7 @@
         </div>
         <div class="lg:grid-cols-3 ">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="boys" name="available_for[]" id="boys_{{ $type }}">
+              <input class="form-check-input" type="checkbox" value="female" name="available_for[]" id="boys_{{ $type }}">
               <label class="form-check-label ms-2 mt-0.5" for="boys_{{ $type }}">
                 Boys
               </label>

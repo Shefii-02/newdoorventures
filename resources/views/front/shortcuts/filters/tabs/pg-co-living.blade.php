@@ -46,12 +46,12 @@
                             <i :class="activeTab2 === 'budget_pg' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
                         </span>
 
-                        <span role="button" @click="activeTab2 = (activeTab2 === 'bedroom_pg' ? '' : 'bedroom_pg')"
+                        {{-- <span role="button" @click="activeTab2 = (activeTab2 === 'bedroom_pg' ? '' : 'bedroom_pg')"
                             :class="{ 'font-bold tab-active bg-theme-light': activeTab2 === 'bedroom_pg' }"
                             class="text-dark border rounded-3xl px-4 fs-6">
                             Bedroom
                             <i :class="activeTab2 === 'bedroom_pg' ? 'mdi mdi-chevron-up' : 'mdi mdi-chevron-down'"></i>
-                        </span>
+                        </span> --}}
 
                         <span role="button" @click="activeTab2 = (activeTab2 === 'sharing_pg' ? '' : 'sharing_pg')"
                             :class="{ 'font-bold tab-active bg-theme-light': activeTab2 === 'sharing_pg' }"
@@ -74,9 +74,9 @@
                         <div x-show="activeTab2 === 'budget_pg'" class="p-4 rounded-lg" x-cloak>
                             @include('front.shortcuts.filters.price-range-new', ['type' => $type,'min' => '1000','max'=> '100000','step'=>'500'])
                         </div>
-                        <div x-show="activeTab2 === 'bedroom_pg'" class="p-4 rounded-lg" x-cloak>
+                        {{-- <div x-show="activeTab2 === 'bedroom_pg'" class="p-4 rounded-lg" x-cloak>
                             @include("front.shortcuts.filters.bedroom-section", ['type' => $type])
-                        </div>
+                        </div> --}}
                         <div x-show="activeTab2 === 'sharing_pg'" class="p-4 rounded-lg" x-cloak>
                             @include("front.shortcuts.filters.sharing", ['type' => $type])
                         </div>

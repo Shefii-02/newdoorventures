@@ -38,6 +38,10 @@ class Investor extends BaseModel
         return $this->belongsTo(MediaFile::class, 'logo', 'id')->withDefault();
     }
 
+    public function projects(){
+        return $this->hasMany(Project::class, 'investor_id');
+    }
+
     public function getImageUrlAttribute()
     {
         return $this->image && $this->image->url ? asset('images/' . $this->image->url) : '';

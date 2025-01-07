@@ -67,7 +67,7 @@ class Project extends BaseModel
     ];
 
     protected $casts = [
-        'status' => ProjectStatusEnum::class,
+        'status' => SafeContent::class,
         'date_finish' => 'datetime',
         'date_sell' => 'datetime',
         'price_from' => 'float',

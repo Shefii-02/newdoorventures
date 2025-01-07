@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div class="col-lg-6 text-end">
-                <a href="{{ route('public.projects') }}" target="_blank">View all</a>
+                <a href="{{ route('public.projects', ['construction' => ['new_launch', 'ready_to_move']]) }}" target="_blank">View all</a>
             </div>
         </div>
 

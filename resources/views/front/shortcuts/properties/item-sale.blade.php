@@ -1,7 +1,7 @@
 <div role="button"
     class="p-2 mb-3 overflow-hidden duration-500 ease-in-out bg-white shadow property-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
    @include('front.shortcuts.properties.item-details',compact('property'))
-    <div class="p-6 flex flex-column justify-content-between">
+    <div class="p-1 flex flex-column justify-content-between">
         <ul
             class="flex items-center justify-between px-3 border mt-3 bg-gray-200 rounded-2 mb-0 list-none border-b dark:border-gray-800">
             @if ($numberBedrooms = $property->number_bedroom)

@@ -223,7 +223,7 @@ class PropertyController extends Controller
     public function create()
     {
         //
-        return abort(404);
+   
         $categories = Category::where('status', 'published')->get();
 
         $projects   = Project::get();
@@ -244,7 +244,7 @@ class PropertyController extends Controller
 
         $pg_rules = PgRules::orderBy('type', 'desc')->get();
 
-        return view('admin.properties.form', compact('categories', 'projects', 'has_rent', 'has_sell', 'has_pg', 'furnishing', 'features', 'facilities', 'customFields', 'pg_rules'));
+        return view('admin.properties.create', compact('categories', 'projects', 'has_rent', 'has_sell', 'has_pg', 'furnishing', 'features', 'facilities', 'customFields', 'pg_rules'));
     }
 
     /**

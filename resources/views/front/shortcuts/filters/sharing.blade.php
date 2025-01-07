@@ -3,28 +3,36 @@
     <div class="relative mt-2 filter-search-form filter-border flex flex-wrap  gap-8"  >
         <div class="lg:grid-cols-3 ">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="private-rooms" name="sharing[]" id="privateRooms_{{ $type }}">
+              <input class="form-check-input" type="checkbox" value="single" name="occupancy[]" id="privateRooms_{{ $type }}">
               <label class="form-check-label ms-2 mt-0.5" for="privateRooms_{{ $type }}">
-                Private Rooms
+                Single
               </label>
             </div>
         </div>
         <div class="lg:grid-cols-3 ">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="2-per-rooms" name="sharing[]" id="twoRooms_{{ $type }}">
+              <input class="form-check-input" type="checkbox" value="double" name="occupancy[]" id="twoRooms_{{ $type }}">
               <label class="form-check-label ms-2 mt-0.5" for="twoRooms_{{ $type }}">
-                2 per Rooms
+                Double
               </label>
             </div>
         </div>
         <div class="lg:grid-cols-3 ">
             <div class="form-check"> 
-              <input class="form-check-input" type="checkbox" value="2p-per-rooms" name="sharing[]" id="twoPlusRooms_{{ $type }}">
+              <input class="form-check-input" type="checkbox" value="other" name="occupancy[]" id="twoPlusRooms_{{ $type }}">
               <label class="form-check-label ms-2 mt-0.5" for="twoPlusRooms_{{ $type }}">
-                2+ per Rooms
+                3+ More
               </label>
             </div>
         </div>
+        <div class="lg:grid-cols-3 ">
+          <div class="form-check"> 
+            <input class="form-check-input" type="checkbox" value="capsule" name="occupancy[]" id="twoPlusRooms_{{ $type }}">
+            <label class="form-check-label ms-2 mt-0.5" for="twoPlusRooms_{{ $type }}">
+             Capsule
+            </label>
+          </div>
+      </div>
         
     </div>
   
