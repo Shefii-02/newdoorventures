@@ -222,7 +222,7 @@
                                                         <div x-data="imageUploader()" class="mx-auto  space-y-6">
                                                             <!-- Image Preview Grid -->
                                                             <div class="grid grid-cols-6 md:grid-cols-5 gap-4">
-                                                                @if (is_array($project->images))
+                                                                @if (isset($project) && is_array($project->images))
                                                                     @foreach ($project->images ?? [] as $key => $image)
                                                                         <div
                                                                             class="flex flex-col relative existing-data-box">
