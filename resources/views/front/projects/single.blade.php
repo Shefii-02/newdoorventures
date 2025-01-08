@@ -760,7 +760,7 @@
                     </div>
                 </div>
                 {{-- @if ($advertisement && $project->construction_status == 'new_launch') --}}
-                <div x-data="imageModal()" class="z-999">
+                <div x-data="imageModal()" class="z-999 position-relative">
                     <!-- Modal Background -->
                     <template x-if="showModal">
                         <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -793,43 +793,76 @@
 
 @push('footer')
     <script>
-        function imageModal() {
-            return {
+        // function imageModal() {
+        //     return {
                
-                images: @json($fullscreenAdvertisement),
-                currentImage: null,
-                showModal: true,
-                delay: 5000,
-                init() {
-                    // Wait for the specified delay, then show the modal
-                    setTimeout(() => {
-                        this.showNextImage(); // Load the next image
-                        this.showModal = true; // Show the modal
-                        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-                    }, this.delay);
-                },
+        //         images: @json($fullscreenAdvertisement),
+        //         currentImage: null,
+        //         showModal: true,
 
+        //         init() {
+        //             this.showNextImage();
+        //             document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        //         },
 
-                showNextImage() {
-                    // Retrieve the index of the last shown image from local storage
-                    let lastIndex = localStorage.getItem('lastShownIndex');
-                    lastIndex = lastIndex ? parseInt(lastIndex) : -1;
+        //         showNextImage() {
+        //             // Retrieve the index of the last shown image from local storage
+        //             let lastIndex = localStorage.getItem('lastShownIndex');
+        //             lastIndex = lastIndex ? parseInt(lastIndex) : -1;
 
-                    // Determine the next image index
-                    const nextIndex = (lastIndex + 1) % this.images.length;
+        //             // Determine the next image index
+        //             const nextIndex = (lastIndex + 1) % this.images.length;
 
-                    // Set the current image
-                    this.currentImage = '/images/'+this.images[nextIndex];
+        //             // Set the current image
+        //             this.currentImage = '/images/'+this.images[nextIndex];
 
-                    // Save the new index in local storage
-                    localStorage.setItem('lastShownIndex', nextIndex);
-                },
+        //             // Save the new index in local storage
+        //             localStorage.setItem('lastShownIndex', nextIndex);
+        //         },
 
-                closeModal() {
-                    this.showModal = false;
-                    document.body.style.overflow = 'auto'; // Re-enable scrolling
-                }
-            };
+        //         closeModal() {
+        //             this.showModal = false;
+        //             document.body.style.overflow = 'auto'; // Re-enable scrolling
+        //         }
+        //     };
+        // }
+        function imageModal() {
+    return {
+        images: @json($fullscreenAdvertisement),
+        currentImage: null,
+        showModal: false, // Initially hidden
+        delay: 3000, // Delay in milliseconds (5000ms = 5 seconds)
+
+        init() {
+            // Wait for the specified delay, then show the modal
+            setTimeout(() => {
+                this.showNextImage(); // Load the next image
+                this.showModal = true; // Show the modal
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            }, this.delay);
+        },
+
+        showNextImage() {
+            // Retrieve the index of the last shown image from local storage
+            let lastIndex = localStorage.getItem('lastShownIndex');
+            lastIndex = lastIndex ? parseInt(lastIndex) : -1;
+
+            // Determine the next image index
+            const nextIndex = (lastIndex + 1) % this.images.length;
+
+            // Set the current image
+            this.currentImage = '/images/' + this.images[nextIndex];
+
+            // Save the new index in local storage
+            localStorage.setItem('lastShownIndex', nextIndex);
+        },
+
+        closeModal() {
+            this.showModal = false;
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
         }
+    };
+}
+
     </script>
 @endpush
