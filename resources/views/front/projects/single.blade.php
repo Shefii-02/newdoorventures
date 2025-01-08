@@ -799,11 +799,16 @@
                 images: @json($fullscreenAdvertisement),
                 currentImage: null,
                 showModal: true,
-
+                delay: 5000,
                 init() {
-                    this.showNextImage();
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+                    // Wait for the specified delay, then show the modal
+                    setTimeout(() => {
+                        this.showNextImage(); // Load the next image
+                        this.showModal = true; // Show the modal
+                        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+                    }, this.delay);
                 },
+
 
                 showNextImage() {
                     // Retrieve the index of the last shown image from local storage
