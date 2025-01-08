@@ -852,7 +852,7 @@ class FrontendController extends Controller
 
 
             // Query 2: Search in 'locality'
-            $localities = Property::query()
+            $localities = Project::query()
                 ->where('locality', 'LIKE', "%{$keyword}%")
                 ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
                     $query->where('construction_status', $type);
@@ -868,7 +868,6 @@ class FrontendController extends Controller
                 })
                 ->distinct()
                 ->pluck('name')->toArray();
-                
         }
 
 

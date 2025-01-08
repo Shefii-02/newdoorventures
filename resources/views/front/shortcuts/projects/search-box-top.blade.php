@@ -7,7 +7,7 @@
                     <div class="flex items-center space-x-3">
                         <select name="type" id="type" @change="applyFilters()"
                             class="border-theme px-3 py-2 rounded-s-2xl text-black">
-                            <option value="">Projects</option>
+                            <option value="projects">Projects</option>
                             <optgroup label="Residential" class="text-dark">
                                 <option value="all-residential">All Residential</option>
                                 <option {{ isset($type) && $type == 'sell' ? 'selected' : '' }} value="sell">Sale
