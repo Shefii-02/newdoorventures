@@ -63,7 +63,7 @@
                     </a>
                 @endif
                 
-                <a class="ms-3" href="{{ route('admin.properties.show', $property->id) }}"
+                <a class="ms-3" href="{{ route('admin.properties.edit', $property->id) }}"
                     class="open-property-modal block hover:text-meta-1">
 
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

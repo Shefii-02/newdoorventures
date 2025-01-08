@@ -98,7 +98,7 @@
                                                             <div class="form-group mb-3">
                                                                 <label
                                                                     class="mb-3 block text-sm font-medium text-black dark:text-dark">Builder</label>
-    
+
                                                                 <select class="form-control form-select" id="builder"
                                                                     name="investor_id">
                                                                     <option value=""></option>
@@ -112,7 +112,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                   
+
 
                                                     <div class="mb-3">
                                                         <div class="slug-field-wrapper" data-field-name="name">
@@ -132,14 +132,14 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
+
                                                 </div>
 
                                                 <div class="mb-3 position-relative">
                                                     <label for="content"
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Content/Description</label>
-                                                    <textarea class="form-control tinyeditor" rows="4" placeholder="Write your content" id="content" name="content"
-                                                        cols="50">{{ old('content', $project->content ?? '') }}</textarea>
+                                                    <textarea class="form-control tinyeditor" rows="4" placeholder="Write your content" id="content"
+                                                        name="content" cols="50">{{ old('content', $project->content ?? '') }}</textarea>
                                                 </div>
 
                                                 <div class="mb-3 position-relative">
@@ -222,26 +222,44 @@
                                                         <div x-data="imageUploader()" class="mx-auto  space-y-6">
                                                             <!-- Image Preview Grid -->
                                                             <div class="grid grid-cols-6 md:grid-cols-5 gap-4">
-                                                                @foreach ($project->images ?? [] as $key => $image)
-                                                                    <div
-                                                                        class="relative group border rounded-lg overflow-hidden existing-data-box">
-                                                                        <img src="{{ asset('images/' . $image) }}"
-                                                                            class="thumbnail" alt="Uploaded Image">
-                                                                        <input type="hidden" value="{{ $image }}"
-                                                                            name="existingImage[]" />
-                                                                        <button type="button"
-                                                                            onclick="removeExistingRow(this)"
-                                                                            class="absolute bg-white p-1 right-0 top-0 rounded-full">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="red"
-                                                                                viewBox="0 0 20 20">
-                                                                                <path fill-rule="evenodd"
-                                                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                                                    clip-rule="evenodd" />
-                                                                            </svg>
-                                                                        </button>
-                                                                    </div>
-                                                                @endforeach
+                                                                @if (is_array($project->images))
+                                                                    @foreach ($project->images ?? [] as $key => $image)
+                                                                        <div
+                                                                            class="flex flex-col relative existing-data-box">
+                                                                            <div
+                                                                                class="relative group border rounded-lg overflow-hidden">
+                                                                                <img src="{{ asset('images/' . $image) }}"
+                                                                                    class="thumbnail"
+                                                                                    alt="Uploaded Image">
+                                                                                <input type="hidden"
+                                                                                    value="{{ $image }}"
+                                                                                    name="existingImage[]" />
+                                                                                <button type="button"
+                                                                                    onclick="removeExistingRow(this)"
+                                                                                    class="absolute bg-white p-1 right-0 top-0 rounded-full">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                        class="h-4 w-4" fill="red"
+                                                                                        viewBox="0 0 20 20">
+                                                                                        <path fill-rule="evenodd"
+                                                                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                                            clip-rule="evenodd" />
+                                                                                    </svg>
+                                                                                </button>
+                                                                            </div>
+                                                                            <label
+                                                                                class="flex items-center space-x-2 text-dark cursor-pointer">
+                                                                                <input type="radio" name="coverImage"
+                                                                                    value="{{ $image }}"
+                                                                                    @change="setCoverImage({{ $key + 200 }})"
+                                                                                    {{ $project->cover_image === $image ? 'checked' : '' }}>
+                                                                                <span class="ms-1">Make Cover Photo</span>
+                                                                            </label>
+                                                                            <span
+                                                                                x-show="currentCover === {{ $key + 200 }}"
+                                                                                class="absolute top-0 left-0 p-2 text-white bg-black opacity-50">Cover</span>
+                                                                        </div>
+                                                                    @endforeach
+                                                                @endif
 
 
                                                                 <!-- Existing Images -->
@@ -274,12 +292,12 @@
                                                                             </div>
                                                                         </div>
                                                                         <label
-                                                                            class="flex items-center space-x-2 text-dark cursor-pointer hidden">
+                                                                            class="flex items-center space-x-2 text-dark cursor-pointer ">
                                                                             <input type="radio" name="coverImage"
-                                                                                class="hidden" :value="image.name"
+                                                                                class="" :value="image.name"
                                                                                 @change="setCoverImage(index)"
                                                                                 :checked="currentCover === index" />
-                                                                            <span>Make Cover Photo</span>
+                                                                            <span class="ms-1">Make Cover Photo</span>
                                                                         </label>
                                                                         <span x-show="currentCover === index"
                                                                             class="absolute top-0 left-0 p-2 text-white bg-black opacity-50">Cover</span>
@@ -519,7 +537,7 @@
 
                                                 </div>
                                                 <div class="row">
-                                                    
+
                                                     <div class="col-lg-4">
                                                         <div class="form-group mb-3">
                                                             <label
@@ -551,7 +569,8 @@
                                                         <div class="form-group mb-3">
                                                             <label
                                                                 class="mb-3 block text-sm font-medium text-black dark:text-dark">
-                                                                RERA Registration Number ( if you have multiple number use ' , ' comma  )
+                                                                RERA Registration Number ( if you have multiple number use '
+                                                                , ' comma )
                                                             </label>
                                                             <input class="form-control"
                                                                 value="{{ old('rera_reg_no', $project->rera_reg_no ?? '') }}"
@@ -1549,5 +1568,17 @@
                 }
             };
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+                window.removeExistingRow = function(button) {
+                    // Locate the parent .existing-data-box and remove it
+                    const row = button.closest('.existing-data-box');
+                    if (row) {
+                        row.remove(); // Remove the div
+                    } else {
+                        console.error("Could not find the parent element to remove.");
+                    }
+                };
+            });
     </script>
 @endpush

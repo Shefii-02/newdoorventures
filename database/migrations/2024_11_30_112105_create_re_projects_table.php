@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('description', 400)->nullable();
             $table->longText('content')->nullable();
             $table->text('images')->nullable();
+            $table->string('cover_image', 250)->nullable();
             $table->string('location', 191)->nullable();
             $table->unsignedBigInteger('investor_id')->nullable();
             $table->integer('number_block')->nullable();

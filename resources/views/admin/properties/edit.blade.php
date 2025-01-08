@@ -100,7 +100,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 9 4-4-4-4" />
                         </svg>
-                        <a href="{{ route('admin.properties.index') }}"
+                        <a href="{{ url()->previous() }}"
                             class="ms-1 text-sm font-medium text-dark-700 hover:text-blue-600 md:ms-2 dark:text-dark-400 dark:hover:text-white">Properties</a>
                     </div>
                 </li>
@@ -2424,9 +2424,9 @@
                                     <li
                                     class="relative">
                                     <input form="propertyFrom" class="sr-only peer" type="radio"
-                                        {{ $property->moderation_status == 'approved' ? 'checked' : '' }} value="rented"
-                                        name="property_status" id="rented">
-                                    <label for="rented"
+                                        {{ $property->moderation_status == 'approved' ? 'checked' : '' }} value="approved"
+                                        name="property_status" id="approved">
+                                    <label for="approved"
                                         class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
                                         Approved
                                     </label>
@@ -3097,7 +3097,8 @@
                             this.responseMessage = data.message || 'Form submitted successfully!';
                             this.validationErrors = []; // Clear validation errors
                             this.showToastMessage(this.responseMessage, 'success');
-                            window.location = data.redirect;
+                            // window.location = data.redirect;
+                            window.location = `{{ url()->previous() }}`;
                         } catch (error) {
                             // Catch unexpected errors (e.g., network issues)
                             this.errorMessage = error.message || 'An error occurred during form submission';

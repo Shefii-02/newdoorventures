@@ -31,6 +31,7 @@ class Project extends BaseModel
         'content',
         'location',
         'images',
+        'cover_image',
         'status',
         'is_featured',
         'investor_id',
@@ -173,11 +174,20 @@ class Project extends BaseModel
         return $this->belongsToMany(Category::class, 're_project_categories');
     }
 
+    // protected function image(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: function () {
+    //             return Arr::first($this->images) ?? null;
+    //         },
+    //     );
+    // }
+
     protected function image(): Attribute
     {
         return Attribute::make(
             get: function () {
-                return Arr::first($this->images) ?? null;
+                return !empty($this->cover_image) ? $this->cover_image : Arr::first($this->images) ?? null;
             },
         );
     }

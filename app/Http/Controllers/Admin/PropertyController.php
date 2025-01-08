@@ -697,9 +697,9 @@ class PropertyController extends Controller
             foreach ($removedImages ?? [] as $imageLoc) {
                 try {
                     // Check if the original image file exists before unlinking
-                    $imagePath = public_path('images/' . $imageLoc);
-                    if (file_exists($imagePath)) {
-                        unlink($imagePath);
+                    $UnlinkimagePath = public_path('images/' . $imageLoc);
+                    if (file_exists($UnlinkimagePath)) {
+                        unlink($UnlinkimagePath);
                     }
                 } catch (Exception $e) {
                 }
@@ -819,7 +819,7 @@ class PropertyController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Successfully Updated',
-                'redirect' => route('admin.properties.index')
+                'redirect' => 'back'
             ]);
         } catch (\Exception $e) {
 

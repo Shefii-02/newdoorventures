@@ -95,7 +95,8 @@ class ProjectController extends Controller
             }
 
             if ($request->hasFile('new_normal_images')) {
-                $images = $this->storeFiles($request->file('new_normal_images'));
+                $imagePath = $this->storeFiles($request->file('new_normal_images'), $request->coverImage);
+                // $images = $this->storeFiles($request->file('new_normal_images'));
             } else {
                 $images = null;
             }
@@ -106,7 +107,10 @@ class ProjectController extends Controller
                 $master_images = [];
             }
 
-            $request->merge(['images' => $images, 'master_plan_images' => $master_images]);
+            $images           =  isset($imagePath['filePaths']) ? $imagePath['filePaths'] : '';
+            $cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : '';
+
+            $request->merge(['images' => $images, 'master_plan_images' => $master_images,'cover_image' => $cover_image]);
             $request->merge(['videos' => array_filter($videos)]);
 
             // $request->merge(['images' => array_filter($request->input('images', []))]);
@@ -207,8 +211,13 @@ class ProjectController extends Controller
 
             // Handle images upload
             if ($request->hasFile('new_normal_images')) {
-                $imagePath = $this->storeFiles($request->file('new_normal_images'));
+                $imagePath = $this->storeFiles($request->file('new_normal_images'), $request->coverImage);
+                // $imagePath = $this->storeFiles($request->file('new_normal_images'));
             }
+
+
+
+          
 
             if ($request->hasFile('new_master_plan_images')) {
                 $imagePath2 = $this->storeFiles($request->file('new_master_plan_images'));
@@ -221,15 +230,15 @@ class ProjectController extends Controller
 
 
             // Merge the existing and new images and videos to get the final list
-            $NewimagePath = array_merge($imagePath ?? [], $request->existingImage ?? []);
+            $NewimagePath = array_merge($imagePath['filePaths'] ?? [], $request->existingImage ?? []);
             $NewimagePath2 = array_merge($imagePath2 ?? [], $request->existingImageMaster ?? []);
 
             foreach ($removedImages ?? [] as $imageLoc) {
                 try {
                     // Check if the original image file exists before unlinking
-                    $imagePath = public_path('images/' . $imageLoc);
-                    if (file_exists($imagePath)) {
-                        unlink($imagePath);
+                    $UnlinkimagePath = public_path('images/' . $imageLoc);
+                    if (file_exists($UnlinkimagePath)) {
+                        unlink($UnlinkimagePath);
                     }
                 } catch (Exception $e) {
                    
@@ -266,7 +275,11 @@ class ProjectController extends Controller
             //     $master_images = [];
             // }
 
-            $request->merge(['images' => $NewimagePath, 'master_plan_images' => $NewimagePath2]);
+            // $images           =  isset($imagePath['filePaths']) ? $imagePath['filePaths'] : '';
+            $cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : '';
+          
+
+            $request->merge(['images' => $NewimagePath, 'master_plan_images' => $NewimagePath2, 'cover_image' => $cover_image]);
             $request->merge(['videos' => array_filter($videos)]);
 
 
@@ -417,26 +430,53 @@ class ProjectController extends Controller
     }
 
 
-    protected function storeFiles($files)
+    // protected function storeFiles($files)
+    // {
+
+    //     $filePaths = []; // Array to store file paths with keys
+
+    //     // Loop through each file
+    //     foreach ($files ?? [] as $index => $file) {
+
+    //         // $fileName = auth('account')->user()->id . '-' . time() . '-' . Str::slug(File::basename($file->getClientOriginalName())) . '.' . $file->getClientOriginalExtension();
+
+    //         $folderPath = 'projects';
+    //         $result = uploadFile($file, $folderPath, 'public', true);
+
+    //         if (isset($result)) {
+    //             $paths =  $result;
+    //             $filePaths[$index + 1] = $paths;
+    //         }
+    //     }
+
+    //     return $filePaths;
+    // }
+
+    protected function storeFiles($files, $coverImage = null)
     {
+        $filePaths = [];
+        $coverImagePath = "";
 
-        $filePaths = []; // Array to store file paths with keys
-
-        // Loop through each file
         foreach ($files ?? [] as $index => $file) {
-
-            // $fileName = auth('account')->user()->id . '-' . time() . '-' . Str::slug(File::basename($file->getClientOriginalName())) . '.' . $file->getClientOriginalExtension();
-
             $folderPath = 'projects';
+
             $result = uploadFile($file, $folderPath, 'public', true);
 
-            if (isset($result)) {
-                $paths =  $result;
-                $filePaths[$index + 1] = $paths;
+            if ($result) {
+                $filePaths[$index + 1] = $result;
+
+                if ($file->getClientOriginalName() === $coverImage) {
+                    $coverImagePath = $result;
+                }
+            } else {
+                throw new \Exception("Failed to upload file: " . $file->getClientOriginalName());
             }
         }
 
-        return $filePaths;
+        return [
+            'filePaths' => $filePaths,
+            'coverImagePath' => $coverImagePath,
+        ];
     }
 
 
