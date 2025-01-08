@@ -68,11 +68,7 @@ class FrontendController extends Controller
     public function properties(Request $request)
     {
         $type = $request->type ?? 'sale';
-        $query = Property::query()->where('moderation_status', 'approved')
-            ->where(function ($q) {
-                $q->where('status', "selling")
-                    ->orWhere('status', "renting");
-            });
+        $query = Property::query()->where('moderation_status', 'approved');
 
         if ($request->filled('type') && $request->type == 'commercial') {
             $mode  = $request->type;
@@ -149,19 +145,19 @@ class FrontendController extends Controller
 
         $builders = Investor::get();
         $cities = Property::where('type', 'sell')
-                            ->where('moderation_status', 'approved')
-                            ->distinct('locality')
-                            ->orderBy('locality', 'asc')
-                            ->pluck('locality');
+            ->where('moderation_status', 'approved')
+            ->distinct('locality')
+            ->orderBy('locality', 'asc')
+            ->pluck('locality');
 
         $categories = Category::where('status', 'published')->where('has_sell', 1)->get();
 
 
         $type = 'sell';
         $projects    = Project::WhereHas('properties', function ($subQuery) use ($type) {
-                                    $subQuery->where('type', $type)
-                                    ->where('moderation_status', 'approved');
-                                })->pluck('name');
+            $subQuery->where('type', $type)
+                ->where('moderation_status', 'approved');
+        })->pluck('name');
 
         $propertySearchKeywords = $this->propertySearchKeywords($request, $type);
 
@@ -208,19 +204,19 @@ class FrontendController extends Controller
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders = Investor::get();
         $cities = Property::where('type', 'sell')
-                            ->where('moderation_status', 'approved')
-                            ->distinct('locality')
-                            ->orderBy('locality', 'asc')
-                            ->pluck('locality');
+            ->where('moderation_status', 'approved')
+            ->distinct('locality')
+            ->orderBy('locality', 'asc')
+            ->pluck('locality');
 
         $categories = Category::where('status', 'published')->where('has_rent', 1)->get();
 
 
         $type = 'rent';
         $projects    = Project::WhereHas('properties', function ($subQuery) use ($type) {
-                                    $subQuery->where('type', $type)
-                                    ->where('moderation_status', 'approved');
-                                })->pluck('name');
+            $subQuery->where('type', $type)
+                ->where('moderation_status', 'approved');
+        })->pluck('name');
 
         $propertySearchKeywords = $this->propertySearchKeywords($request, $type);
         if (isset($propertySearchKeywords['properties'])) {
@@ -264,22 +260,19 @@ class FrontendController extends Controller
             ->whereHas('categories', function ($query) use ($category) {
                 $query->where('name', $category);
             })
-            ->where('moderation_status', 'approved')
-            ->where(function ($q) {
-                $q->where('status', "selling")
-                    ->orWhere('status', "renting");
-            });
+            ->where('moderation_status', 'approved');
 
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders   = Investor::get();
         $cities     = Property::query()
-                                ->whereHas('categories', function ($query) use ($category) {
-                                    $query->where('name', $category);
-                                })
-                                ->where('moderation_status', 'approved')
-                                ->groupBy('locality')->pluck('locality');
+            ->whereHas('categories', function ($query) use ($category) {
+                $query->where('name', $category);
+            })
+            ->where('moderation_status', 'approved')
+            ->groupBy('locality')->pluck('locality');
+
         $categories = Category::where('status', 'published')->get();
-        $type = 'plot';
+        $type       = 'plot';
         $propertySearchKeywords = $this->propertySearchKeywords($request, $type);
         if (isset($propertySearchKeywords['properties'])) {
             $keywordProperties = $propertySearchKeywords['properties'];
@@ -297,9 +290,14 @@ class FrontendController extends Controller
         // dd($keywordProperties,$projectProperties);
 
         $projects    = Project::WhereHas('properties', function ($subQuery) use ($type) {
-                            $subQuery->where('type', $type)
-                            ->where('moderation_status', 'approved');
-                        })->pluck('name');
+            $subQuery
+                ->where('moderation_status', 'approved')
+                ->whereHas('categories', function ($query) {
+                    $query->where('name', 'Plot and Land');
+                });
+        })->pluck('name');
+
+
 
         $properties = $property_query->get();
         $properties = $properties->merge($keywordProperties);
@@ -329,11 +327,11 @@ class FrontendController extends Controller
         $query = Property::query()->where('type', 'pg')->where('status', 'renting')->where('moderation_status', 'approved');
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders = Investor::get();
-         $cities = Property::where('type', 'sell')
-                            ->where('moderation_status', 'approved')
-                            ->distinct('locality')
-                            ->orderBy('locality', 'asc')
-                            ->pluck('locality');
+        $cities = Property::where('type', 'sell')
+            ->where('moderation_status', 'approved')
+            ->distinct('locality')
+            ->orderBy('locality', 'asc')
+            ->pluck('locality');
 
         $categories = Category::WhereHas('properties', function ($subQuery) use ($type) {
             $subQuery->where('type', $type)->where('moderation_status', 'approved');
@@ -357,9 +355,9 @@ class FrontendController extends Controller
         // dd($keywordProperties,$projectProperties);
 
         $projects    = Project::WhereHas('properties', function ($subQuery) use ($type) {
-                                    $subQuery->where('type', $type)
-                                    ->where('moderation_status', 'approved');
-                                })->pluck('name');
+            $subQuery->where('type', $type)
+                ->where('moderation_status', 'approved');
+        })->pluck('name');
 
 
         if ($request->filled('occupancy') && $request->occupancy !== '' && $request->occupancy != 'null') {
@@ -384,11 +382,10 @@ class FrontendController extends Controller
                 $availability = explode(',', $request->availability);
             }
 
-                $query->whereIn('available_for', $availability);
-            
+            $query->whereIn('available_for', $availability);
         }
 
-        
+
 
 
         $properties = $property_query->get();
@@ -418,26 +415,22 @@ class FrontendController extends Controller
     {
 
         $query          = Property::query()->where('mode', 'commercial')
-            ->where('moderation_status', 'approved')
-            ->where(function ($q) {
-                $q->where('status', "selling")
-                    ->orWhere('status', "renting");
-            });
+            ->where('moderation_status', 'approved');
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders       = Investor::get();
         $cities         = Property::where('mode', 'commercial')
-                                    ->where('moderation_status', 'approved')
-                                    ->groupBy('locality')
-                                    ->pluck('locality');
+            ->where('moderation_status', 'approved')
+            ->groupBy('locality')
+            ->pluck('locality');
 
         $type           = 'commercial';
 
         $categories     = Category::where('status', 'published')->where('has_commercial', 1)->get();
 
         $projects    = Project::WhereHas('properties', function ($subQuery) use ($type) {
-                                    $subQuery->where('type', $type)
-                                    ->where('moderation_status', 'approved');
-                                })->pluck('name');
+            $subQuery->where('mode', 'commercial')
+                ->where('moderation_status', 'approved');
+        })->pluck('name');
 
 
         $propertySearchKeywords = $this->propertySearchKeywords($request, $type);
@@ -487,6 +480,32 @@ class FrontendController extends Controller
 
 
 
+    public function searchByProjectTitle(Request $request, $properties, $type = '', $purpose = "Residential")
+    {
+        // Initialize the search title with the number of results and default category
+        $searchByTitle = $properties->count() . " results | ";
+        // Append keywords to the title if present in the request
+        if ($request->filled('s') && is_array($request->s) && count($request->s) > 0) {
+            $keywords = implode(', ', $request->s);
+            $searchByTitle .=  $keywords . ', ';
+        }
+        // if ($request->has('type') && $request->type != '') {
+        $searchByTitle .= ucfirst($type) . " Properties for " . $purpose;
+        // }
+
+        // Append city to the title if present in the request
+        if ($request->has('city') && $request->city != '') {
+            $cityName  =  $request->city  == 'null' ? 'all' :  $request->city;
+            $searchByTitle .= " in " . $cityName . ', Bangalore';
+        } else {
+            $searchByTitle .= " in Bangalore";
+        }
+
+
+
+        return $searchByTitle; // Return the generated search title
+    }
+
     public function projects(Request $request)
     {
         $query = Project::query();
@@ -505,11 +524,10 @@ class FrontendController extends Controller
         $categories = Category::where('status', 'published')->get();
         $builders =  Investor::WhereHas('projects')->get();
 
-       
 
 
-        $searchByTitle = $projects->count() . " results | projects  in " .
-            ($request->has('city') && ($request->city != 'null') ? $request->city . ', ' : '') . "Bangalore";
+        $searchByTitle = $this->searchByTitle($request, $projects, '', "");
+ 
 
         $pageTitle = 'All Real Estate Projects: New Launch, Ready to Launch & Under Construction in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Explore a variety of real estate projects including new launches, ready-to-launch, and under-construction properties in Bangalore and Karnataka. Find your dream home or investment opportunity today.';
@@ -661,73 +679,7 @@ class FrontendController extends Controller
         // return view('front.shortcuts.search-suggestion', compact('items'))->render();
     }
 
-    // public function searchProperties(Request $request)
-    // {
 
-    //     // // Keyword-based Search
-    //     if ($request->filled('k') && $request->k != '') {
-    //         $query = Property::query();
-    //         // Columns to retrieve
-    //         $query->where('moderation_status', 'approved'); // Approved properties only
-
-    //         // // Handle 'type' filters
-    //         if ($request->filled('type')) {
-    //             $type = $request->type;
-    //             switch ($type) {
-    //                 case 'sale':
-    //                     $query->where('type', 'sell')
-    //                         ->whereDoesntHave('categories', function ($subQuery) {
-    //                             $subQuery->where('name', 'Plot and Land');
-    //                         });
-    //                     break;
-    //                 case 'rent':
-    //                     $query->where('type', $type)
-    //                         ->whereDoesntHave('categories', function ($subQuery) {
-    //                             $subQuery->where('name', 'Plot and Land');
-    //                         });
-    //                     break;
-
-    //                 case 'pg':
-    //                     $query->where('type', 'pg');
-    //                     break;
-
-    //                 case 'plot':
-    //                     $query->whereHas('categories', function ($subQuery) {
-    //                         $subQuery->where('name', 'Plot and Land');
-    //                     });
-    //                     break;
-
-    //                 default:
-    //                     return collect(); // Return an empty collection if type is invalid
-    //             }
-    //         }
-
-    //         $keyword = $request->k;
-
-    //         $query->where(function ($q) use ($keyword) {
-    //             $q->where('name', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('slug', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('description', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('content', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('location', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('city', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('locality', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('sub_locality', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('number_bedroom', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('apartment', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('landmark', 'LIKE', "%{$keyword}%")
-    //                 ->orWhereHas('categories', function ($subQuery) use ($keyword) {
-    //                     $subQuery->where('name', 'LIKE', "%{$keyword}%");
-    //                 })
-    //                 ->orWhereHas('project', function ($subQuery) use ($keyword) {
-    //                     $subQuery->where('name', 'LIKE', "%{$keyword}%");
-    //                 });
-    //         });
-    //         return $query->get();
-    //     }
-
-    //     return collect();
-    // }
 
     public function searchProperties(Request $request)
     {
@@ -749,46 +701,72 @@ class FrontendController extends Controller
                 $type = 'sell';
             }
 
+            if ($type == 'plot') {
+                // Query 1: Search in 'city'
+                $cities = Property::query()->where('moderation_status', 'approved')
+                    ->where('city', 'LIKE', "%{$keyword}%")
+                    ->where('city', '!=', '')
+                    ->whereHas('categories', function ($query) {
+                        $query->where('name', 'Plot and Land');
+                    })
+                    ->distinct()
+                    ->pluck('city')->toArray();
 
 
-            // Query 1: Search in 'city'
-            $cities = Property::query()
-                ->where('moderation_status', 'approved')
-                ->where('city', 'LIKE', "%{$keyword}%")
-                ->where('city', '!=', '')
-                ->where('type', $type)
-                ->distinct()
-                ->pluck('city')->toArray();
+                // Query 2: Search in 'locality'
+                $localities = Property::query()
+                    ->where('moderation_status', 'approved')
+                    ->where('locality', 'LIKE', "%{$keyword}%")
+                    ->where('locality', '!=', '')
+                    ->whereHas('categories', function ($query) {
+                        $query->where('name', 'Plot and Land');
+                    })
+                    ->distinct()
+                    ->pluck('locality')->toArray();
 
-            // Query 2: Search in 'locality'
-            $localities = Property::query()
-                ->where('moderation_status', 'approved')
-                ->where('locality', 'LIKE', "%{$keyword}%")
-                ->where('locality', '!=', '')
-                ->where('type', $type)
-                ->distinct()
-                ->pluck('locality')->toArray();
+                // Query 3: Search in associated 'project name'
+                $projects = Project::WhereHas('properties', function ($subQuery) use ($type) {
+                    $subQuery
+                        ->where('moderation_status', 'approved')
+                        ->whereHas('categories', function ($query) {
+                            $query->where('name', 'Plot and Land');
+                        });
+                })
+                    ->whereHas('categories', function ($query) {
+                        $query->where('name', 'Plot and Land');
+                    })
+                    ->where('name', 'LIKE', "%{$keyword}%")
+                    ->distinct()
+                    ->pluck('name')->toArray();
+            } else {
+                // Query 1: Search in 'city'
+                $cities = Property::query()->where('moderation_status', 'approved')
+                    ->where('city', 'LIKE', "%{$keyword}%")
+                    ->where('city', '!=', '')
+                    ->where('type', $type)
+                    ->distinct()
+                    ->pluck('city')->toArray();
 
-            // Query 3: Search in associated 'project name'
-            $projects = Project::WhereHas('properties', function ($subQuery) use ($type) {
-                $subQuery->where('type', $type);
-            })
-                ->where('name', 'LIKE', "%{$keyword}%")
-                ->distinct()
-                ->pluck('name')->toArray();
 
-            // Combine all results into one array and filter out empty arrays
-            // $results = array_filter([
-            //     'cities' => $cities->toArray(),
-            //     'localities' => $localities->toArray(),
-            //     'projects' => $projects->toArray(),
-            // ]);
-            // Combine all the results
-            //         $results = array_merge($cities, $localities, $projects);
+                // Query 2: Search in 'locality'
+                $localities = Property::query()
+                    ->where('moderation_status', 'approved')
+                    ->where('locality', 'LIKE', "%{$keyword}%")
+                    ->where('locality', '!=', '')
+                    ->where('type', $type)
+                    ->distinct()
+                    ->pluck('locality')->toArray();
 
-            //  // Return the results as JSON
-            //         return response()->json($results);
-            // return $results;\
+                // Query 3: Search in associated 'project name'
+                $projects = Project::WhereHas('properties', function ($subQuery) use ($type) {
+                    $subQuery->where('type', $type);
+                })
+                    ->where('name', 'LIKE', "%{$keyword}%")
+                    ->distinct()
+                    ->pluck('name')->toArray();
+            }
+
+
 
             $results = [];
 
@@ -858,6 +836,15 @@ class FrontendController extends Controller
 
     public function searchProjects(Request $request)
     {
+        if ($request->has('s') && $request->filled('s')) {
+            $keywords = is_array($request->s) ? $request->s : [$request->s];
+
+            $projectIds = Project::whereIn('name', $keywords)->pluck('id');
+
+            $projects = Project::query()->orWhere('city', 'LIKE', "%{$keywords}%")
+                ->orWhere('locality', 'LIKE', "%{$keywords}%")
+                ->where('name', 'LIKE', "%{$keywords}%");
+        }
         // // Keyword-based Search
         if ($request->filled('k') && $request->k != '') {
             $query = Project::query();
@@ -936,8 +923,6 @@ class FrontendController extends Controller
             $query->where('locality', 'LIKE', '%' .  $request->location . '%');
         }
 
-
-
         // Category filter
         if ($request->filled('categories') && $request->categories !== '' && $request->categories != 'null') {
             if (is_array($request->categories)) {
@@ -973,9 +958,6 @@ class FrontendController extends Controller
             $query->whereIn('ownership', $ownership);
         }
 
-
-
-
         // Furnishing filter
         if ($request->filled('furnishing') && $request->furnishing !== '' && $request->furnishing != 'null') {
             $query->whereIn('furnishing', $request->furnishing);
@@ -996,9 +978,6 @@ class FrontendController extends Controller
             }
         }
 
-
-
-
         return $query;
     }
 
@@ -1010,6 +989,22 @@ class FrontendController extends Controller
                 ->orWhere('content', 'LIKE', '%' . $request->k . '%');
         }
 
+
+        if ($request->filled('s') && is_array($request->s)) {
+            foreach ($request->s as $keyword) {
+                if ($keyword != '' && $keyword != 'null') {
+
+                    $query->where(function ($query) use ($keyword) {
+                        $query->where('name', 'LIKE', '%' . $keyword . '%')
+                            ->orWhere('content', 'LIKE', '%' . $keyword . '%')
+                            ->orWhere('locality', 'LIKE', '%' . $keyword . '%');
+                        // ->orWhereHas('categories', function ($subQuery) use ($keyword) {
+                        //     $subQuery->where('name', 'LIKE', "%{$keyword}%");
+                        // });
+                    });
+                }
+            }
+        }
 
         // // City filter
         if ($request->filled('city') && $request->city !== '' && $request->city != 'null') {
@@ -1036,7 +1031,7 @@ class FrontendController extends Controller
             is_numeric($request->min_price) && is_numeric($request->max_price)
         ) {
             $query->where('price_from', '>=', $request->min_price)
-                  ->where('price_to', '<=', $request->max_price);
+                ->where('price_to', '<=', $request->max_price);
         }
 
 
@@ -1047,14 +1042,9 @@ class FrontendController extends Controller
             }
         }
 
-
-
         if ($request->filled('construction') && $request->construction !== '' && $request->construction != 'null') {
             $query->whereIn('construction_status', $request->construction);
         }
-        
-        
-
 
         return $query;
     }

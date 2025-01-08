@@ -68,25 +68,25 @@
             }
         }, {
             key: "keyword",
-            value: function() {
-                $(".search-filter").on("keyup", 'input[name="k"]', (function() {
-                    var e = $(this).closest("form"),
-                        n = e.find('input[name="k"]').parent();
-                        console.log(n)
-                    n.find(".mdi-loading").removeClass("hidden"), setTimeout((function() {
-                        var t = e.find('input[name="k"]').val(),
-                            i = e.find('input[name="type"]').val(),
-                            o = new URLSearchParams;
-                        o.append("type", i), o.append("k", t), o.append("minimal", !0);
-                        var a = "".concat(e.data("ajax-url"), "?").concat(o.toString());
-                        $.post(a, (function(e) {
-                            n.find(".mdi-loading").addClass("hidden"), n.append(e), n.find("#keyword-suggestion").removeClass("hidden")
-                        }))
-                    }), 500)
-                })).on("keydown", 'input[name="k"]', (function() {
-                    $(".search-filter").find("#keyword-suggestion").remove()
-                }))
-            }
+            // value: function() {
+            //     $(".search-filter").on("keyup", 'input[name="k"]', (function() {
+            //         var e = $(this).closest("form"),
+            //             n = e.find('input[name="k"]').parent();
+            //             console.log(n)
+            //         n.find(".mdi-loading").removeClass("hidden"), setTimeout((function() {
+            //             var t = e.find('input[name="k"]').val(),
+            //                 i = e.find('input[name="type"]').val(),
+            //                 o = new URLSearchParams;
+            //             o.append("type", i), o.append("k", t), o.append("minimal", !0);
+            //             var a = "".concat(e.data("ajax-url"), "?").concat(o.toString());
+            //             $.post(a, (function(e) {
+            //                 n.find(".mdi-loading").addClass("hidden"), n.append(e), n.find("#keyword-suggestion").removeClass("hidden")
+            //             }))
+            //         }), 500)
+            //     })).on("keydown", 'input[name="k"]', (function() {
+            //         $(".search-filter").find("#keyword-suggestion").remove()
+            //     }))
+            // }
         }, {
             key: "location",
             value: function() {

@@ -1,8 +1,8 @@
-<form x-data="propertyFilters()" x-init="initFilters()" class="search-filter">
-    <div class="py-5">
+<form x-data="propertyFilters()" class="search-filter">
+    <div class="pt-5">
         <div class="row align-items-center">
             <!-- Property Type Dropdown -->
-            <div class="col-lg-4 mb-4 px-1">
+            <div class="col-lg-5 mb-4 px-1">
                 <div class="position-relative">
                     <div class="flex items-center space-x-3">
                         <select name="type" id="type" @change="applyFilters()"
@@ -22,10 +22,10 @@
                             </optgroup>
                             <option value="projects">Projects</option>
                         </select>
-                        <input type="text" name="k" id="search-box-{{ $type }}"
+                        <input type="text" name="k" id="search-box-{{ $type }}" autocomplete="off"
                             oninput="fetchSuggestions('{{ $type ?? 'default' }}')"
                             onfocus="showSuggestions('{{ $type ?? 'default' }}')"
-                            class="border-theme px-3 py-1.5 w-full text-black" placeholder="Search for properties">
+                            class="border-theme px-3 py-1.5 w-full text-black" placeholder="Search for locality,project">
                         <i id="loading-icon-{{ $type ?? 'default' }}"
                             class="absolute hidden mdi mdi-loading mdi-spin top-5 right-5"></i>
                         <button
@@ -70,7 +70,7 @@
 
 
             <!-- Other Filters -->
-            <div class="col-lg-4 p-0 mb-3">
+            <div class="col-lg-3 p-0 mb-3">
                 <div class="relative gap-1 flex align-items-center">
                     <!-- Categories -->
 
@@ -140,24 +140,22 @@
                     </div>
                 </div>
             </div>
-               <!-- Display Selected Items -->
-               <div id="selected-items-container-{{ $type ?? 'default' }}"
-               class="relative flex-wrap flex items-center mt-2 gap-2 bg-white rounded-md p-2">
-               <div id="selected-items-display-{{ $type ?? 'default' }}"
-                   class="flex flex-wrap gap-2 overflow-hidden">
-                   <!-- Dynamically generated selected items will go here -->
-               </div>
-               <!-- Show More Button -->
-               <span role="button" id="show-more-btn-{{ $type ?? 'default' }}"
-                   class="text-blue-500 text-sm mt-2 z-9" style="display: none"
-                   onclick="toggleShowMore('{{ $type ?? 'default' }}')">Show More</span>
-           </div>
+            <!-- Display Selected Items -->
+            <div id="selected-items-container-{{ $type ?? 'default' }}"
+                class="relative flex-wrap flex items-center mt-2 gap-2 bg-white rounded-md p-2">
+                <div id="selected-items-display-{{ $type ?? 'default' }}" class="flex flex-wrap gap-2 overflow-hidden">
+                    <!-- Dynamically generated selected items will go here -->
+                </div>
+                <!-- Show More Button -->
+                <span role="button" id="show-more-btn-{{ $type ?? 'default' }}" class="text-blue-500 text-sm mt-2 z-9"
+                    style="display: none" onclick="toggleShowMore('{{ $type ?? 'default' }}')">Show More</span>
+            </div>
         </div>
     </div>
 </form>
 @php
 
-$type = 'plot';
+    $type = 'plot';
 @endphp
 
 @push('footer')

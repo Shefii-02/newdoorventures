@@ -24,7 +24,7 @@
                         <input type="text" name="k" id="search-box-{{ $type }}"
                             oninput="fetchSuggestions('{{ $type ?? 'default' }}')"
                             onfocus="showSuggestions('{{ $type ?? 'default' }}')"
-                            class="border-theme px-3 py-1.5 w-full text-black" placeholder="Search for properties">
+                            class="border-theme px-3 py-1.5 w-full text-black" placeholder="Search for locality">
                         <i id="loading-icon-{{ $type ?? 'default' }}"
                             class="absolute hidden mdi mdi-loading mdi-spin top-5 right-5"></i>
                         <button

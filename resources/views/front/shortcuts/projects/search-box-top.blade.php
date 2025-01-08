@@ -24,7 +24,7 @@
                             </optgroup>
 
                         </select>
-                        <input type="text" name="k" id="search-box-{{ $type }}"
+                        <input type="text" name="k" id="search-box-{{ $type }}" autocomplete="off"
                             oninput="fetchSuggestions('{{ $type ?? 'default' }}')"
                             onfocus="showSuggestions('{{ $type ?? 'default' }}')"
                             class="border-theme px-3 py-1.5 w-full  text-black"

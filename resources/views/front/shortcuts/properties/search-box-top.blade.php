@@ -24,10 +24,10 @@
                             <option value="projects">Projects</option>
                         </select>
 
-                        <input type="text" id="search-box-{{ $type }}"
+                        <input type="text" id="search-box-{{ $type }}" autocomplete="off"
                             oninput="fetchSuggestions('{{ $type ?? 'default' }}')"
                             onfocus="showSuggestions('{{ $type ?? 'default' }}')" name="k"
-                            class="border-theme px-3 py-1.5 w-full text-black" placeholder="Search for properties">
+                            class="border-theme px-3 py-1.5 w-full text-black" placeholder="Search for locality,project">
                         <i id="loading-icon-{{ $type ?? 'default' }}"
                             class="absolute hidden mdi mdi-loading mdi-spin top-5 right-5"></i>
 

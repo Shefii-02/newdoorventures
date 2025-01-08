@@ -49,34 +49,34 @@ class SearchFilter {
     keyword() {
         let timeout = null
 
-        $('.search-filter')
-            .on('keyup', 'input[name="k"]', function () {
-                const $currentTarget = $(this).closest('form')
-                const $searchForm = $currentTarget.find('input[name="k"]').parent()
+        // $('.search-filter')
+        //     .on('keyup', 'input[name="k"]', function () {
+        //         const $currentTarget = $(this).closest('form')
+        //         const $searchForm = $currentTarget.find('input[name="k"]').parent()
 
-                $searchForm.find('.mdi-loading').removeClass('hidden')
+        //         $searchForm.find('.mdi-loading').removeClass('hidden')
 
-                timeout = setTimeout(() => {
-                    const keyword = $currentTarget.find('input[name="k"]').val()
-                    const type = $currentTarget.find('input[name="type"]').val()
+        //         timeout = setTimeout(() => {
+        //             const keyword = $currentTarget.find('input[name="k"]').val()
+        //             const type = $currentTarget.find('input[name="type"]').val()
 
-                    const searchParams = new URLSearchParams();
-                    searchParams.append('type', type)
-                    searchParams.append('k', keyword)
-                    searchParams.append('minimal', true)
+        //             const searchParams = new URLSearchParams();
+        //             searchParams.append('type', type)
+        //             searchParams.append('k', keyword)
+        //             searchParams.append('minimal', true)
 
-                    const url = `${$currentTarget.data('ajax-url')}?${searchParams.toString()}`
+        //             const url = `${$currentTarget.data('ajax-url')}?${searchParams.toString()}`
 
-                    $.post(url, (response) => {
-                        $searchForm.find('.mdi-loading').addClass('hidden')
-                        $searchForm.append(response.data)
-                        $searchForm.find('#keyword-suggestion').removeClass('hidden')
-                    })
-                }, 500)
-            })
-            .on('keydown', 'input[name="k"]', function () {
-                $('.search-filter').find('#keyword-suggestion').remove()
-            })
+        //             $.post(url, (response) => {
+        //                 $searchForm.find('.mdi-loading').addClass('hidden')
+        //                 $searchForm.append(response.data)
+        //                 $searchForm.find('#keyword-suggestion').removeClass('hidden')
+        //             })
+        //         }, 500)
+        //     })
+        //     .on('keydown', 'input[name="k"]', function () {
+        //         $('.search-filter').find('#keyword-suggestion').remove()
+        //     })
     }
 
     location() {
