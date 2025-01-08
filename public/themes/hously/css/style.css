@@ -6328,3 +6328,10 @@ ul.ks-cboxtags li input[type="checkbox"]:focus+label {
 a:hover {
     color: var(--primary-color) !important;
 }
+
+
+.slick-slide img {
+    display: block;
+    object-fit: cover !important;
+    max-height: 250px !important;
+}
