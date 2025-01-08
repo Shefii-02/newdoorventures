@@ -1,7 +1,7 @@
 @php $numbers = $mores ?? false @endphp
 <div @class(['group relative overflow-hidden pt-[56.25%] rounded-2xl', 'hidden' => $hidden ?? false])>
     <a href="{{ asset('images/'.$image) }}" class="absolute inset-0 lightbox" data-group="lightbox-pt-images-{{ $property->id }}">
-        <img src="{{ asset('images/'.$image) }}" alt="{{ $property->name }}" class="w-full h-100">
+        <img src="{{ asset('images/'.$image) }}" alt="{{ $property->name }}" class="w-full h-100 object-cover">
 
         @if ($numbers > 5 || $numbers === 3)
             <div class="absolute inset-0 duration-500 ease-in-out bg-slate-900/70 group-hover:bg-slate-900/70"></div>
