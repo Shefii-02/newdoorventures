@@ -284,10 +284,10 @@
 
         function fetchSuggestions(type) {
 
-            const searchQuery = document.getElementById(`search-box-${type}`).value;
-            const loadingIcon = document.getElementById(`loading-icon-${type}`);
-            const suggestionsList = document.getElementById(`suggestions-list-${type}`);
-            const suggestionsUl = document.getElementById(`suggestions-ul-${type}`);
+            const searchQuery = document.getElementById(`search-box-projects`).value;
+            const loadingIcon = document.getElementById(`loading-icon-projects`);
+            const suggestionsList = document.getElementById(`suggestions-list-projects`);
+            const suggestionsUl = document.getElementById(`suggestions-ul-projects`);
 
             if (searchQuery.length > 1) {
                 loadingIcon.style.display = 'inline-block'; // Show loading icon
@@ -343,9 +343,9 @@
                 selectedItems[type].push(item);
                 updateSelectedItems(type);
             }
-            document.getElementById(`search-box-${type}`).value = '';
-            document.getElementById(`suggestions-list-${type}`).style.display = 'none';
-            document.getElementById(`suggestions-ul-${type}`).innerHTML = ''
+            document.getElementById(`search-box-projects`).value = '';
+            document.getElementById(`suggestions-list-projects`).style.display = 'none';
+            document.getElementById(`suggestions-ul-projects`).innerHTML = ''
         }
 
         function removeItem(type, item) {
@@ -356,7 +356,7 @@
         }
 
         function updateSelectedItems(type) {
-            const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
+            const selectedItemsDisplay = document.getElementById(`selected-items-display-projects`);
             selectedItemsDisplay.innerHTML = ''; // Clear previous items
 
             selectedItems[type].forEach(item => {
@@ -380,13 +380,13 @@
                 selectedItemsDisplay.appendChild(hiddenInput);
             });
 
-            const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
+            const showMoreBtn = document.getElementById(`show-more-btn-projects`);
             showMoreBtn.style.display = selectedItems[type].length > 5 ? 'block' : 'none';
         }
 
         function toggleShowMore(type) {
-            const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
-            const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
+            const selectedItemsDisplay = document.getElementById(`selected-items-display-projects`);
+            const showMoreBtn = document.getElementById(`show-more-btn-projects`);
 
             if (selectedItemsDisplay.style.maxHeight === '100%') {
                 selectedItemsDisplay.style.maxHeight = '30px';
@@ -398,7 +398,7 @@
         }
 
         function showSuggestions(type) {
-            const suggestionsList = document.getElementById(`suggestions-list-${type}`);
+            const suggestionsList = document.getElementById(`suggestions-list-projects`);
             if (suggestionsList.children.length > 0) {
                 suggestionsList.style.display = 'block';
             }

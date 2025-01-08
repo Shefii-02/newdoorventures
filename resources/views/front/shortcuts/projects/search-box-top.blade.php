@@ -24,22 +24,22 @@
                             </optgroup>
 
                         </select>
-                        <input type="text" name="k" id="search-box-{{ $type }}" autocomplete="off"
+                        <input type="text" name="k" id="search-box-projects" autocomplete="off"
                             oninput="fetchSuggestions('{{ $type ?? 'default' }}')"
                             onfocus="showSuggestions('{{ $type ?? 'default' }}')"
                             class="border-theme px-3 py-1.5 w-full  text-black"
                             placeholder="Search for locality,builder">
-                        <i id="loading-icon-{{ $type ?? 'default' }}"
+                        <i id="loading-icon-projects"
                             class="absolute hidden mdi mdi-loading mdi-spin top-5 right-5"></i>
                         <button
                             class="bi bi-search rounded-e-2xl bg-theme-light border-theme  px-3 py-1.5 ">Search</button>
                     </div>
                 </div>
                 <!-- Suggestions List -->
-                <div id="suggestions-list-{{ $type ?? 'default' }}"
+                <div id="suggestions-list-projects"
                     class="absolute z-10 w-full mt-1 bg-white shadow-md rounded-md dark:bg-slate-900 dark:text-white"
                     style="display:none;">
-                    <ul id="suggestions-ul-{{ $type ?? 'default' }}" class="list-none p-0 m-0 max-h-48 overflow-auto">
+                    <ul id="suggestions-ul-projects" class="list-none p-0 m-0 max-h-48 overflow-auto">
                     </ul>
                 </div>
             </div>
@@ -182,16 +182,16 @@
                 </div>
             </div>
             <!-- Display Selected Items -->
-            <div id="selected-items-container-{{ $type ?? 'default' }}"
+            <div id="selected-items-container-projects"
                 class="relative flex-wrap flex items-center mt-2 gap-2 bg-white rounded-md p-2">
-                <div id="selected-items-display-{{ $type ?? 'default' }}"
+                <div id="selected-items-display-projects"
                     class="flex flex-wrap gap-2 overflow-hidden">
                     <!-- Dynamically generated selected items will go here -->
                 </div>
                 <!-- Show More Button -->
-                <span role="button" id="show-more-btn-{{ $type ?? 'default' }}"
+                <span role="button" id="show-more-btn-projects"
                     class="text-blue-500 text-sm mt-2 z-9" style="display: none"
-                    onclick="toggleShowMore('{{ $type ?? 'default' }}')">Show More</span>
+                    onclick="toggleShowMore('projects')">Show More</span>
             </div>
         </div>
     </div>
