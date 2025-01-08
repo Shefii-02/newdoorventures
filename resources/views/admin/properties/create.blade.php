@@ -1645,7 +1645,7 @@
                                                             <div class="flex flex-wrap">
                                                                 <div class="flex items-center me-4 mb-2">
                                                                     <input form="propertyFrom" type="radio"
-                                                                        value="unfurnished" name="furnishing_status"
+                                                                        value="unfurnished" name="furnishing_status"   onclick="selectAllFurnishingItems('unfurnished')"
                                                                         x-model="furnishingStatus"
                                                                         id="unfurnished-radio"
                                                                         class="w-3 h-3 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
@@ -1655,7 +1655,7 @@
 
                                                                 <div class="flex items-center me-4 mb-2">
                                                                     <input form="propertyFrom" type="radio"
-                                                                        value="semi-furnished" name="furnishing_status"
+                                                                        value="semi-furnished" name="furnishing_status"  onclick="selectAllFurnishingItems('semi-furnished')"
                                                                         x-model="furnishingStatus"
                                                                         id="semi-furnished-radio"
                                                                         class="w-3 h-3 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
@@ -1664,7 +1664,7 @@
                                                                 </div>
                                                                 <div class="flex items-center me-4 mb-2">
                                                                     <input form="propertyFrom" type="radio"
-                                                                        value="furnished" name="furnishing_status"
+                                                                        value="furnished" name="furnishing_status" onclick="selectAllFurnishingItems('furnished')"
                                                                         x-model="furnishingStatus" id="furnished-radio"
                                                                         class="w-3 h-3 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
                                                                     <label for="furnished-radio"
@@ -1675,7 +1675,7 @@
 
                                                             <!-- Conditionally Display Content for Furnishing Status -->
                                                             {{-- furnishingStatus === 'furnished' || --}}
-                                                            <div x-show="furnishingStatus === 'semi-furnished'"
+                                                            <div x-show="furnishingStatus === 'furnished' || furnishingStatus === 'semi-furnished'"
                                                                 class="mt-2 border-top bg-body card p-3">
                                                                 <div class="row mt-3 ">
                                                                     @foreach ($furnishing ?? [] as $key_0 => $furnish_items)
@@ -2833,4 +2833,16 @@
                 });
             });
         </script>
+
+<script>
+    function selectAllFurnishingItems(value = 'unfurnished') {
+         if (value === 'furnished') {
+             // Check all checkboxes
+             $('input[name="furnishing[]"]').prop('checked', true);
+         } else {
+             // Uncheck all checkboxes
+             $('input[name="furnishing[]"]').prop('checked', false);
+         }
+     }
+ </script>
     @endpush

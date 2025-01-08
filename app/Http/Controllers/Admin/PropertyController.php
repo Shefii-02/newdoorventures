@@ -471,11 +471,11 @@ class PropertyController extends Controller
             $property->save();
 
 
-            if ($request->furnishing_status == 'furnished') {
-                $furnishingIds = Furnishing::whereStatus('published')->pluck('id');
+            // if ($request->furnishing_status == 'furnished') {
+            //     $furnishingIds = Furnishing::whereStatus('published')->pluck('id');
 
-                $request->merge(['furnishing' => $furnishingIds]);
-            }
+            //     $request->merge(['furnishing' => $furnishingIds]);
+            // }
 
 
             $property->features()->sync($request->input('amenities', []));
@@ -778,12 +778,12 @@ class PropertyController extends Controller
 
             $property->features()->sync($request->input('amenities', []));
 
-            if ($request->furnishing_status == 'furnished') {
+            // if ($request->furnishing_status == 'furnished') {
 
-                $furnishingIds = Furnishing::whereStatus('published')->pluck('id');
+            //     $furnishingIds = Furnishing::whereStatus('published')->pluck('id');
 
-                $request->merge(['furnishing' => $furnishingIds]);
-            }
+            //     $request->merge(['furnishing' => $furnishingIds]);
+            // }
 
             // if ($request->furnishing_status != 'unfurnished') {
             $property->furnishing()->sync($request->input('furnishing', []));

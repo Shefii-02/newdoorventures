@@ -229,14 +229,16 @@
                             </div>
 
                             <!--  Built & Suit -->
-                            <div style="display: none" class="ShowWantedSectionsInCommercialRent HideUnwantedSectionsInPlot HideUnwantedSectionsInPg  mt-2">
+                            <div style="display: none"
+                                class="ShowWantedSectionsInCommercialRent HideUnwantedSectionsInPlot HideUnwantedSectionsInPg  mt-2">
                                 <h6 class="mb-3 mt-3 font-medium">Commercial real estate agreement</h6>
                                 <div class="flex flex-wrap">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="BuiltSuit" name="built_suit" value="1">
+                                        <input class="form-check-input" type="checkbox" id="BuiltSuit" name="built_suit"
+                                            value="1">
                                         <label class="form-check-label" for="BuiltSuit">Built & Suit</label>
                                     </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -1658,6 +1660,7 @@
                                                             <div class="flex flex-wrap">
                                                                 <div class="flex items-center me-4 mb-2">
                                                                     <input form="propertyFrom" type="radio"
+                                                                        onclick="selectAllFurnishingItems('unfurnished')"
                                                                         value="unfurnished" name="furnishing_status"
                                                                         x-model="furnishingStatus"
                                                                         id="unfurnished-radio"
@@ -1669,6 +1672,7 @@
                                                                 <div class="flex items-center me-4 mb-2">
                                                                     <input form="propertyFrom" type="radio"
                                                                         value="semi-furnished" name="furnishing_status"
+                                                                        onclick="selectAllFurnishingItems('semi-furnished')"
                                                                         x-model="furnishingStatus"
                                                                         id="semi-furnished-radio"
                                                                         class="w-3 h-3 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
@@ -1678,6 +1682,7 @@
                                                                 <div class="flex items-center me-4 mb-2">
                                                                     <input form="propertyFrom" type="radio"
                                                                         value="furnished" name="furnishing_status"
+                                                                        onclick="selectAllFurnishingItems('furnished')"
                                                                         x-model="furnishingStatus" id="furnished-radio"
                                                                         class="w-3 h-3 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
                                                                     <label for="furnished-radio"
@@ -1688,7 +1693,7 @@
 
                                                             <!-- Conditionally Display Content for Furnishing Status -->
                                                             {{-- furnishingStatus === 'furnished' || --}}
-                                                            <div x-show="furnishingStatus === 'semi-furnished'"
+                                                            <div x-show="furnishingStatus === 'furnished' || furnishingStatus === 'semi-furnished'"
                                                                 class="mt-2 border-top bg-body card p-3">
                                                                 <div class="row mt-3 ">
                                                                     @foreach ($furnishing ?? [] as $key_0 => $furnish_items)
@@ -2495,7 +2500,7 @@
                             if (this.currentType === 'Residential' && categoryName != 'Plot and Land') {
                                 this.toggleSections('ShowWantedSectionsInCommercial', 'none');
                                 this.toggleSections('HideUnwantedSectionsInCommercial', 'block');
-                    
+
 
                             } else if (this.currentType === 'Commercial' && categoryName != 'Plot and Land') {
 
@@ -2504,13 +2509,12 @@
 
                             }
 
-                            if(this.currentType === 'Commercial' &&  this.currentMode === 'rent'){
+                            if (this.currentType === 'Commercial' && this.currentMode === 'rent') {
                                 this.toggleSections('ShowWantedSectionsInCommercialRent', 'block');
-                            }
-                            else{
+                            } else {
                                 this.toggleSections('ShowWantedSectionsInCommercialRent', 'none');
                             }
-                            
+
                         }
 
                         if (this.currentType === 'Commercial' && categoryName != 'Plot and Land') {
@@ -2884,5 +2888,17 @@
                     width: 'resolve'
                 });
             });
+        </script>
+
+        <script>
+           function selectAllFurnishingItems(value = 'unfurnished') {
+                if (value === 'furnished') {
+                    // Check all checkboxes
+                    $('input[name="furnishing[]"]').prop('checked', true);
+                } else {
+                    // Uncheck all checkboxes
+                    $('input[name="furnishing[]"]').prop('checked', false);
+                }
+            }
         </script>
     @endpush
