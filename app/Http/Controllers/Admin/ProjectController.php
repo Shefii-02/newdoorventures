@@ -42,9 +42,7 @@ class ProjectController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%$search%")
-                    ->orWhere('location', 'LIKE', "%$search%")
-                    ->orWhere('type', 'LIKE', "%$search%")
-                    ->orWhere('moderation_status', 'LIKE', "%$search%");
+                    ->orWhere('location', 'LIKE', "%$search%");
             });
             // $query->whereHas('account', function ($q) use ($search) {
             //     $q->where('first_name', 'LIKE', "%$search%")

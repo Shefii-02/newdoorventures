@@ -46,9 +46,15 @@
                         <h2 class="text-title-sm2 font-bold text-black dark:text-white">
                             Properties List
                         </h2>
-
+                        <div class="relative">
+                            @if (permission_check('Property Add'))
+                                <a class="bg-primary bg-warning hover:bg-opacity-90 inline-flex items-center justify-center px-6 py-2 rounded-md text-center text-sm text-white"
+                                    href="{{ route('admin.properties.create') }}">
+                                    Create
+                                </a>
+                            @endif
+                        </div>
                     </div>
-
                 </div>
 
                 <div class="conatiner px-2">
@@ -74,13 +80,14 @@
                 <div class="container px-2  overflow-x-auto shadow-md sm:rounded-lg mt-3">
                     <div class="relative">
                         @if (permission_check('Property Delete'))
-                        <div class="p-2">
-                            <form method="POST" id="muli_form_" action="{{ route('admin.properties.multidestroy') }}">@csrf
-                                @method('DELETE')</form>
-                            <button form="muli_form_" onclick="confirmDeleteAll(event,'muli_form_')" type="submit"
-                                role="button" class="btn text-dark btn-sm btn-danger hover:text-light">Delete Selected
-                                items</button>
-                        </div>
+                            <div class="p-2">
+                                <form method="POST" id="muli_form_" action="{{ route('admin.properties.multidestroy') }}">
+                                    @csrf
+                                    @method('DELETE')</form>
+                                <button form="muli_form_" onclick="confirmDeleteAll(event,'muli_form_')" type="submit"
+                                    role="button" class="btn text-dark btn-sm btn-danger hover:text-light">Delete Selected
+                                    items</button>
+                            </div>
                         @endif
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

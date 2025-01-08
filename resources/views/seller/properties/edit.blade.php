@@ -2051,35 +2051,38 @@
                                     <div x-data="imageUploader()" class="mx-auto bg-white shadow rounded-lg space-y-6">
                                         <!-- Image Preview Grid -->
                                         <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                                            @foreach ($property->images ?? [] as $key => $image)
-                                                <div class="flex flex-col relative existing-data-box">
-                                                    <div
-                                                        class="relative group border rounded-lg overflow-hidden ">
-                                                        <img src="{{ asset('images/' . $image) }}" class="thumbnail" style="height: 100px;width: 100%;"
-                                                            alt="Uploaded Image">
-                                                        <input type="hidden" form="propertyFrom"
-                                                            value="{{ $image }}" name="existingImage[]" />
-                                                        <button type="button" onclick="removeExistingRow(this)"
-                                                            class="absolute bg-white p-1 right-0 top-0 rounded-full">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
-                                                                fill="red" viewBox="0 0 20 20">
-                                                                <path fill-rule="evenodd"
-                                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                                    clip-rule="evenodd" />
-                                                            </svg>
-                                                        </button>
+                                            @if (is_array($property->images))
+                                                @foreach ($property->images ?? [] as $key => $image)
+                                                    <div class="flex flex-col relative existing-data-box">
+                                                        <div class="relative group border rounded-lg overflow-hidden ">
+                                                            <img src="{{ asset('images/' . $image) }}"
+                                                                class="thumbnail" style="height: 100px;width: 100%;"
+                                                                alt="Uploaded Image">
+                                                            <input type="hidden" form="propertyFrom"
+                                                                value="{{ $image }}" name="existingImage[]" />
+                                                            <button type="button" onclick="removeExistingRow(this)"
+                                                                class="absolute bg-white p-1 right-0 top-0 rounded-full">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                                                    fill="red" viewBox="0 0 20 20">
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                        clip-rule="evenodd" />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                        <label
+                                                            class="flex items-center space-x-2 text-dark cursor-pointer">
+                                                            <input type="radio" name="coverImage"
+                                                                form="propertyFrom" value="{{ $image }}"
+                                                                @change="setCoverImage({{ $key + 200 }})"
+                                                                {{ $property->cover_image === $image ? 'checked' : '' }}>
+                                                            <span>Make Cover Photo</span>
+                                                        </label>
+                                                        <span x-show="currentCover === {{ $key + 200 }}"
+                                                            class="absolute top-0 left-0 p-2 text-white bg-black opacity-50">Cover</span>
                                                     </div>
-                                                    <label class="flex items-center space-x-2 text-dark cursor-pointer">
-                                                        <input type="radio" name="coverImage" form="propertyFrom"
-                                                            value="{{ $image }}"
-                                                            @change="setCoverImage({{ $key + 200 }})"
-                                                            {{ $property->cover_image === $image ? 'checked' : '' }}>
-                                                        <span>Make Cover Photo</span>
-                                                    </label>
-                                                    <span x-show="currentCover === {{ $key + 200 }}"
-                                                        class="absolute top-0 left-0 p-2 text-white bg-black opacity-50">Cover</span>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
+                                            @endif
 
                                             <!-- Existing Images -->
                                             <template x-for="(image, index) in images" :key="index">

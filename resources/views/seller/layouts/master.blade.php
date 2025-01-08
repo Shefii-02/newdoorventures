@@ -62,11 +62,11 @@
     </style>
 
 
-    <link media="all" type="text/css" rel="stylesheet"
+    {{-- <link media="all" type="text/css" rel="stylesheet"
         href="https://stage.newdoorventures.in/vendor/core/core/base/libraries/toastr/toastr.min.css?v=1.8.6">
 
     <link media="all" type="text/css" rel="stylesheet"
-        href="https://stage.newdoorventures.in/vendor/core/core/base/css/core.css?v=1.8.6">
+        href="https://stage.newdoorventures.in/vendor/core/core/base/css/core.css?v=1.8.6"> --}}
 
 
     <link href="{{ asset('themes/dashboard/style.css') }}" rel="stylesheet">

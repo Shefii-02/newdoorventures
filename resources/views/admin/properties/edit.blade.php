@@ -1,5 +1,4 @@
-@extends('seller.layouts.master')
-
+@extends('admin.layouts.master')
 @push('header')
     <style>
         .loader-overlay {
@@ -38,7 +37,45 @@
                 transform: rotate(360deg);
             }
         }
+
+        .theme-toggle {
+            display: none !important;
+        }
+
+
+        input.form-control,
+        select.form-control,
+        .select2.select2-container {
+            width: 100% !important;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 40px !important;
+            border: var(--bb-border-width) var(--bb-border-style) var(--bb-border-color) !important;
+        }
+
+        .select2-container--default .select2-selection--single {
+            border-radius: 6px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 35px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__clear {
+            height: 35px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 36px !important;
+        }
     </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"></script> --}}
+
+    {{-- <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script> --}}
+    <link media="all" type="text/css" rel="stylesheet" href="{{ asset('themes/dashboard/core.css') }}">
+    <link href="{{ asset('themes/dashboard/style.css') }}" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -46,8 +83,8 @@
         <nav class="flex flex-wrap" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
-                    <a href="{{ route('user.dashboard') }}"
-                        class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                    <a href="{{ route('admin.dashboard.index') }}"
+                        class="inline-flex items-center text-sm font-medium text-dark-700 hover:text-blue-600 dark:text-dark-400 dark:hover:text-white">
                         <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 20">
                             <path
@@ -58,23 +95,23 @@
                 </li>
                 <li>
                     <div class="flex items-center">
-                        <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                        <svg class="rtl:rotate-180 w-3 h-3 text-dark-400 mx-1" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 9 4-4-4-4" />
                         </svg>
-                        <a href="{{ route('user.properties.index') }}"
-                            class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Properties</a>
+                        <a href="{{ route('admin.properties.index') }}"
+                            class="ms-1 text-sm font-medium text-dark-700 hover:text-blue-600 md:ms-2 dark:text-dark-400 dark:hover:text-white">Properties</a>
                     </div>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
-                        <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                        <svg class="rtl:rotate-180 w-3 h-3 text-dark-400 mx-1" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 9 4-4-4-4" />
                         </svg>
-                        <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Property Edit
+                        <span class="ms-1 text-sm font-medium text-dark-500 md:ms-2 dark:text-dark-400">Property Edit
                             "{{ $property->name }}"</span>
                     </div>
                 </li>
@@ -86,7 +123,7 @@
         <div class="" x-data="formHandler()">
 
             <form method="POST" @submit.prevent="submitForm" id="propertyFrom"
-                action="{{ route('user.properties.update', $property->id) }}" enctype="multipart/form-data">
+                action="{{ route('admin.properties.update', $property->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
             </form>
@@ -109,7 +146,7 @@
                             <div class="px-4 py-1 step-circle flex items-center justify-center h-5 w-5 border-2 rounded-full z-10"
                                 :class="{
                                     'active border-white-500 bg-theme text-white': index <= currentStep,
-                                    'border-gray-300 bg-vk-lt text-gray-500': index > currentStep
+                                    'border-gray-300 bg-vk-lt text-dark-500': index > currentStep
                                 }">
                                 <!-- Add click event to jump to specific step -->
                                 <span x-text="index + 1"></span>
@@ -118,7 +155,7 @@
                             <!-- Step Titles -->
                             <div class="ms-2 lg:ml-0 lg:mt-4">
                                 <p class="text-sm font-medium mb-3"
-                                    :class="{ 'text-blue-500': index === currentStep, 'text-gray-600': index !== currentStep }"
+                                    :class="{ 'text-blue-500': index === currentStep, 'text-dark-600': index !== currentStep }"
                                     x-text="step.title"></p>
                             </div>
                         </li>
@@ -127,7 +164,7 @@
                     <li class="flex items-center lg:relative  step-items">
                         <!-- Step Circle -->
                         <div
-                            class="px-4 py-1 bg-vk-lt step-circle2 border-gray-300 text-gray-500  flex items-center justify-center h-5 w-5 border-2 rounded-full z-10">
+                            class="px-4 py-1 bg-vk-lt step-circle2 border-gray-300 text-dark-500  flex items-center justify-center h-5 w-5 border-2 rounded-full z-10">
                             <span class=" text-dark"><i class="fs-3 fw-bold">✓</i></span>
                         </div>
 
@@ -154,14 +191,7 @@
                 <div class="space-y-8">
                     <!-- Step 1 -->
                     <div x-show="currentStep === 0" class="mt-2">
-                        <!-- Stepper Navigation -->
-                        <div id="pageTitleDescription">
-                            <h1 class="my-1 fw-bold fs-1">Welcome back {{ $user->name }},</h1>
-                            <h4 class="fw-bold text-dark fs-3 mt-2">Sell or Rent your Property</h4>
-                            <h6 class=" text-dark fs-5 mt-2">You are posting this property for <span
-                                    class="ms-1 bg-warning text-light px-2 py-1 rounded-5 fs-5"> FREE! </span> </h6>
-                            <br>
-                        </div>
+                        
                         <div x-data="propertyForm()" x-init="init()" class="p-2 space-y-2">
                             <!-- Mode Selection -->
                             <div>
@@ -204,7 +234,7 @@
                                                 @change="updateCategories()"
                                                 class="w-4 h-4 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                             <label :for="type.toLowerCase() + '-radio'"
-                                                class="ms-2 text-sm font-medium text-gray dark:text-gray"
+                                                class="ms-2 text-sm font-medium text-dark dark:text-dark"
                                                 x-text="type"></label>
                                         </div>
                                     </template>
@@ -255,7 +285,7 @@
                                                     name="recentLocation" class="hidden peer"
                                                     @change="fillForm(location)" />
                                                 <label :for="'location-' + location.id"
-                                                    class="inline-flex items-center justify-between w-full p-3 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100">
+                                                    class="inline-flex items-center justify-between w-full p-3 text-dark-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-dark-600 hover:bg-gray-100">
                                                     <div class="block">
                                                         <div class="w-full text-sm font-semibold" x-text="location.city">
                                                         </div>
@@ -266,18 +296,18 @@
                                             </li>
                                         </template>
                                         <li class="text-start">
-                                            <span class="fw-bold text-gray-500 my-2">Or</span>
+                                            <span class="fw-bold text-dark-500 my-2">Or</span>
                                         </li>
                                         <li>
                                             <label for="city-input"
-                                                class="block mb-2 text-sm font-medium text-gray-500">Add
+                                                class="block mb-2 text-sm font-medium text-dark-500">Add
                                                 location</label>
                                             <div class="flex">
                                                 <input type="text" id="city-input" x-model="form.city"
                                                     autocomplete="off" @input="checkForm"
                                                     class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                                 <span role="button"
-                                                    class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-e-md">
+                                                    class="inline-flex items-center px-3 text-sm text-dark-900 bg-gray-200 border border-e-0 border-gray-300 rounded-e-md">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                         fill="#cba641" class="bi bi-crosshair">
                                                         <path
@@ -297,10 +327,10 @@
                                     <div class="relative z-0 w-full mb-5 group">
                                         <input form="propertyFrom" name="city" type="text" id="city"
                                             autocomplete="off" x-model="form.city" @input="checkForm"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            class="block px-2.5  w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=" " />
                                         <label for="city"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">City<sup
+                                            class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">City<sup
                                                 class="text-danger fs-4">*</sup></label>
                                     </div>
 
@@ -308,19 +338,19 @@
                                     <div class="relative z-0 w-full mb-5 group">
                                         <input form="propertyFrom" name="locality" type="text" id="locality"
                                             autocomplete="off" x-model="form.locality" @input="checkForm"
-                                            class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            class="block px-2.5 w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=" " />
                                         <label for="locality"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Locality</label>
+                                            class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Locality</label>
                                     </div>
                                     <!-- Sub Locality Input -->
                                     <div class="relative z-0 w-full mb-5 group">
                                         <input form="propertyFrom" name="sub_locality" type="text" id="sub_locality"
                                             autocomplete="off" x-model="form.sub_locality" @input="checkForm"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            class="block px-2.5  w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=" " />
                                         <label for="sub_locality"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Sub
+                                            class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Sub
                                             Locality</label>
                                     </div>
 
@@ -332,10 +362,10 @@
                                     <div class="relative z-0 w-full mb-5 group">
                                         <input form="propertyFrom" name="apartment" type="text" id="appartment"
                                             autocomplete="off" x-model="form.appartment"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            class="block px-2.5  w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=" " />
                                         <label for="appartment"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Apartment
+                                            class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Apartment
                                             (Optional)</label>
                                     </div>
 
@@ -343,10 +373,10 @@
                                     <div class="relative z-0 w-full mb-5 group">
                                         <input form="propertyFrom" name="landmark" type="text" id="landmark"
                                             autocomplete="off" x-model="form.landmark"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            class="block px-2.5  w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder="" />
                                         <label for="landmark"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Landmark
+                                            class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Landmark
                                             (Optional)</label>
                                     </div>
                                 </div>
@@ -355,10 +385,10 @@
                                     <div class="relative z-0 w-full mb-5 group">
                                         <input form="propertyFrom" name="latitude" type="text" id="clatitudeity"
                                             autocomplete="off" x-model="form.latitude" @input="checkForm"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            class="block px-2.5  w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=" " />
                                         <label for="latitude"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Latitude<sup
+                                            class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Latitude<sup
                                                 class="text-danger fs-4">*</sup></label>
                                     </div>
 
@@ -366,16 +396,16 @@
                                     <div class="relative z-0 w-full mb-5 group">
                                         <input form="propertyFrom" name="longitude" type="text" id="longitude"
                                             autocomplete="off" x-model="form.longitude" @input="checkForm"
-                                            class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            class="block px-2.5 w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=" " />
                                         <label for="longitude"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Longitude</label>
+                                            class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Longitude</label>
                                     </div>
                                 </div>
                             </div> --}}
 
                             <div class="mx-2 mb-5">
-                                <label for="city-input" class="block mb-2 text-sm font-medium text-gray-500">
+                                <label for="city-input" class="block mb-2 text-sm font-medium text-dark-500">
                                     Enter Location/Address<sup class="text-danger fs-4">*</sup></label>
                                 <div class="relative z-0 w-full mb-5 group">
                                     <div class="flex">
@@ -384,7 +414,7 @@
                                             form="propertyFrom" autocomplete="off"
                                             class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                         {{-- <span role="button"
-                                                class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-e-md">
+                                                class="inline-flex items-center px-3 text-sm text-dark-900 bg-gray-200 border border-e-0 border-gray-300 rounded-e-md">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                     fill="#cba641" class="bi bi-crosshair">
                                                     <path
@@ -401,10 +431,10 @@
                                                 <input form="propertyFrom" name="city"
                                                     value="{{ $property ? $property->city : '' }}" type="text"
                                                     id="auto_city" autocomplete="off"
-                                                    class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    class="block px-2.5  w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                     placeholder=" " />
                                                 <label for="auto_city"
-                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                    class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
                                                     City<sup class="text-danger fs-4">*</sup></label>
                                             </div>
                                         </div>
@@ -414,10 +444,10 @@
                                                 <input form="propertyFrom" name="locality"
                                                     value="{{ $property ? $property->locality : '' }}" type="text"
                                                     id="auto_locality" autocomplete="off"
-                                                    class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    class="block px-2.5 w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                     placeholder=" " />
                                                 <label for="auto_locality"
-                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                    class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
                                                     Locality<sup class="text-danger fs-4">*</sup>
                                                 </label>
                                             </div>
@@ -428,10 +458,10 @@
                                                 <input form="propertyFrom" name="sub_locality"
                                                     value="{{ $property ? $property->sub_locality : '' }}" type="text"
                                                     id="auto_subLocality" autocomplete="off"
-                                                    class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    class="block px-2.5  w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                     placeholder=" " />
                                                 <label for="auto_subLocality"
-                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                    class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
                                                     Sub Locality (Optional)</label>
                                             </div>
                                         </div>
@@ -448,10 +478,10 @@
                                         <input form="propertyFrom" name="landmark"
                                             value="{{ $property ? $property->landmark : '' }}" type="text"
                                             id="auto_landmark" autocomplete="off"
-                                            class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            class="block px-2.5  w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=" " />
                                         <label for="auto_landmark"
-                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Landmark
+                                            class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Landmark
                                             (Optional)</label>
                                     </div>
                                 </div>
@@ -464,10 +494,10 @@
                                                 <input form="propertyFrom" name="latitude"
                                                     value="{{ $property ? $property->latitude : '' }}" type="text"
                                                     id="auto_latitude" autocomplete="off"
-                                                    class="block px-2.5  w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    class="block px-2.5  w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                     placeholder=" " />
                                                 <label for="auto_latitude"
-                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Latitude
+                                                    class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Latitude
                                                 </label>
                                             </div>
                                         </div>
@@ -477,10 +507,10 @@
                                                 <input form="propertyFrom" name="longitude"
                                                     value="{{ $property ? $property->longitude : '' }}" type="text"
                                                     id="auto_longitude" autocomplete="off"
-                                                    class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    class="block px-2.5 w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                     placeholder=" " />
                                                 <label for="auto_longitude"
-                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Longitude</label>
+                                                    class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Longitude</label>
                                             </div>
                                         </div>
                                     </div>
@@ -512,7 +542,7 @@
                                                         <label for="projects" class="mt-3 font-medium mb-2 ">Choose
                                                             Project</label><br>
                                                         <select form="propertyFrom" name="project" id="projects"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                                            class="bg-gray-50 border border-gray-300 text-dark-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                                             <option value="" selected>None of the below</option>
                                                             @foreach ($projects ?? [] as $project_item)
                                                                 <option @if ($property->project->id == $project_item->id) selected @endif
@@ -532,7 +562,7 @@
                                                         <input form="propertyFrom" name="property_name" type="text"
                                                             autocomplete="off" id="name"
                                                             value="{{ isset($property) && $property->name ? $property->name : '' }}"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                                            class="bg-gray-50 border border-gray-300 text-dark-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                                             placeholder=" "
                                                             placeholder="Like Example: 2BHK for remt or 3 BHK for sale ,...." />
 
@@ -545,9 +575,9 @@
                                                     <input form="propertyFrom" name="unit_info" type="text"
                                                         autocomplete="off" id="unit-info"
                                                         value="{{ isset($property) && $property->unit_info ? $property->unit_info : '' }}"
-                                                        class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+                                                        class="block px-2.5 w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
                                                     <label for="unit-info"
-                                                        class="absolute fs-3 text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                        class="absolute fs-3 text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
                                                         Flat/Villa/Building No</label>
                                                 </div>
                                             </div>
@@ -837,16 +867,16 @@
                                                                 <input form="propertyFrom" name="pantry" type="text"
                                                                     autocomplete="off" id="pantry"
                                                                     value="{{ $property->pantry }}"
-                                                                    class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+                                                                    class="block px-2.5 w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
                                                                 <label for="pantry"
-                                                                    class="absolute fs-3 text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                    class="absolute fs-3 text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
                                                                     Pantry</label>
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 col-lg-6">
                                                             <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
-                                                                    class="block mb-2 text-sm font-medium text-gray-500">
+                                                                    class="block mb-2 text-sm font-medium text-dark-500">
                                                                     Washroom
                                                                 </label>
                                                                 <div x-data="{ count: {{ $property->washroom }} }"
@@ -873,7 +903,7 @@
                                                         <div class="mb-2 col-lg-6">
                                                             <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
-                                                                    class="block mb-2 text-sm font-medium text-gray-500">
+                                                                    class="block mb-2 text-sm font-medium text-dark-500">
                                                                     Cabin
                                                                 </label>
                                                                 <div x-data="{ count: {{ $property->cabin }} }"
@@ -900,7 +930,7 @@
                                                         <div class="mb-2 col-lg-6">
                                                             <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
-                                                                    class="block mb-2 text-sm font-medium text-gray-500">
+                                                                    class="block mb-2 text-sm font-medium text-dark-500">
                                                                     Seats
                                                                 </label>
                                                                 <div x-data="{ count: {{ $property->seats }} }"
@@ -927,7 +957,7 @@
                                                         <div class="mb-2 col-lg-6">
                                                             <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
-                                                                    class="block mb-2 text-sm font-medium text-gray-500">
+                                                                    class="block mb-2 text-sm font-medium text-dark-500">
                                                                     Units on Floor
                                                                 </label>
                                                                 <div x-data="{ count: {{ $property->units_on_floor }} }"
@@ -957,7 +987,7 @@
                                                         <div class="mb-2 col-lg-6">
                                                             <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
-                                                                    class="block mb-2 text-sm font-medium text-gray-500">
+                                                                    class="block mb-2 text-sm font-medium text-dark-500">
                                                                     AC’s
                                                                 </label>
                                                                 <div x-data="{ count: {{ $property->ac_count }} }"
@@ -984,7 +1014,7 @@
                                                         <div class="mb-2 col-lg-6">
                                                             <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
-                                                                    class="block mb-2 text-sm font-medium text-gray-500">
+                                                                    class="block mb-2 text-sm font-medium text-dark-500">
                                                                     Fans
                                                                 </label>
                                                                 <div x-data="{ count: {{ $property->fans_count }} }"
@@ -1011,7 +1041,7 @@
                                                         <div class="mb-2 col-lg-6">
                                                             <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
-                                                                    class="block mb-2 text-sm font-medium text-gray-500">
+                                                                    class="block mb-2 text-sm font-medium text-dark-500">
                                                                     Work Stations
                                                                 </label>
                                                                 <div x-data="{ count: {{ $property->work_stations }} }"
@@ -1038,7 +1068,7 @@
                                                         <div class="mb-2 col-lg-6">
                                                             <div class="mb-2 flex gap-3 mt-3 justify-content-between ">
                                                                 <label for="city"
-                                                                    class="block mb-2 text-sm font-medium text-gray-500">
+                                                                    class="block mb-2 text-sm font-medium text-dark-500">
                                                                     Chairs
                                                                 </label>
                                                                 <div x-data="{ count: {{ $property->chairs_count }} }"
@@ -1085,7 +1115,7 @@
                                                                     class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
                                                                     placeholder=" " />
                                                                 <label for="total_floor"
-                                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Total
+                                                                    class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Total
                                                                     Floor<sup class="text-danger fs-4">*</sup></label>
                                                             </div>
                                                         </div>
@@ -1101,7 +1131,7 @@
                                                                     class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
                                                                     placeholder=" " />
                                                                 <label for="available_floor"
-                                                                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Available
+                                                                    class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Available
                                                                     Floor<sup class="text-danger fs-4">*</sup></label>
                                                             </div>
                                                         </div>
@@ -1145,7 +1175,7 @@
                                                                                 Plot Type </label>
                                                                             <select form="propertyFrom" name="plot_type"
                                                                                 id="plot_type"
-                                                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                                                                class="bg-gray-50 border border-gray-300 text-dark-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                                                                 <option value="" selected>None of the
                                                                                     below
                                                                                 </option>
@@ -1194,7 +1224,7 @@
                                                                     <div
                                                                         class="mb-2 flex gap-3 mt-3 justify-content-between  ">
                                                                         <label for="city"
-                                                                            class="block mb-2 text-sm font-medium text-gray-500">
+                                                                            class="block mb-2 text-sm font-medium text-dark-500">
                                                                             No of Open Sides</label>
                                                                         <div x-data="{ count: `{{ $property->open_sides }}` }"
                                                                             class="flex items-center space-x-2">
@@ -1235,7 +1265,7 @@
                                                                             class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
                                                                             placeholder=" " />
                                                                         <label for="carpet_area"
-                                                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                            class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
                                                                             Carpet
                                                                             Area<sup
                                                                                 class="text-danger fs-4">*</sup></label>
@@ -1257,7 +1287,7 @@
                                                                             class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
                                                                             placeholder=" " />
                                                                         <label for="built_up_area"
-                                                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                            class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
                                                                             Built-up Area</label>
                                                                         <div
                                                                             class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
@@ -1277,7 +1307,7 @@
                                                                             class="bg-gray-50 text-dark border border-gray-300 text-sm rounded-s-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 peer"
                                                                             placeholder=" " />
                                                                         <label for="super_built_up_area"
-                                                                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Super
+                                                                            class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Super
                                                                             Built-up Area</label>
                                                                         <div
                                                                             class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
@@ -1299,7 +1329,7 @@
                                                                     <div
                                                                         class="mb-2 flex gap-3 mt-3 justify-content-between">
                                                                         <label for="city"
-                                                                            class="block mb-2 text-sm font-medium text-gray-500">Covered
+                                                                            class="block mb-2 text-sm font-medium text-dark-500">Covered
                                                                             Parking</label>
                                                                         <div x-data="{ count: `{{ $property->covered_parking }}` }"
                                                                             class="flex items-center space-x-2">
@@ -1329,7 +1359,7 @@
                                                                     <div
                                                                         class="mb-2 flex gap-3 mt-3 justify-content-between">
                                                                         <label for="city"
-                                                                            class="block mb-2 text-sm font-medium text-gray-500">Open
+                                                                            class="block mb-2 text-sm font-medium text-dark-500">Open
                                                                             Parking</label>
                                                                         <div x-data="{ count: `{{ $property->open_parking }}` }"
                                                                             class="flex items-center space-x-2">
@@ -1376,7 +1406,7 @@
                                                                     x-model="propertyType"
                                                                     class="w-4 h-4 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                                                 <label for="readyto-radio"
-                                                                    class="ms-2 text-sm font-medium text-gray dark:text-gray">Ready
+                                                                    class="ms-2 text-sm font-medium text-dark dark:text-dark">Ready
                                                                     to move</label>
                                                             </div>
 
@@ -1388,7 +1418,7 @@
                                                                     x-model="propertyType"
                                                                     class="w-4 h-4 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                                                 <label for="under-radio"
-                                                                    class="ms-2 text-sm font-medium text-gray dark:text-gray">Under
+                                                                    class="ms-2 text-sm font-medium text-dark dark:text-dark">Under
                                                                     construction</label>
                                                             </div>
                                                         </div>
@@ -1406,7 +1436,7 @@
                                                                             name="property_age" x-model="propertyStatus"
                                                                             class="w-4 h-4 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
                                                                         <label role="button" for="age-0-1"
-                                                                            class="ms-2 text-sm font-medium text-gray dark:text-gray">0-1
+                                                                            class="ms-2 text-sm font-medium text-dark dark:text-dark">0-1
                                                                             Year</label>
                                                                     </div>
                                                                     <div class="flex items-center">
@@ -1415,7 +1445,7 @@
                                                                             name="property_age" x-model="propertyStatus"
                                                                             class="w-4 h-4 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
                                                                         <label role="button" for="age-1-5"
-                                                                            class="ms-2 text-sm font-medium text-gray dark:text-gray">1-5
+                                                                            class="ms-2 text-sm font-medium text-dark dark:text-dark">1-5
                                                                             Years</label>
                                                                     </div>
                                                                     <div class="flex items-center">
@@ -1424,7 +1454,7 @@
                                                                             value="5-10" x-model="propertyStatus"
                                                                             class="w-4 h-4 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
                                                                         <label role="button" for="age-5-10"
-                                                                            class="ms-2 text-sm font-medium text-gray dark:text-gray">5-10
+                                                                            class="ms-2 text-sm font-medium text-dark dark:text-dark">5-10
                                                                             Years</label>
                                                                     </div>
                                                                     <div class="flex items-center">
@@ -1433,7 +1463,7 @@
                                                                             name="property_age" x-model="propertyStatus"
                                                                             class="w-4 h-4 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
                                                                         <label role="button" for="age-10-plus"
-                                                                            class="ms-2 text-sm font-medium text-gray dark:text-gray">10+
+                                                                            class="ms-2 text-sm font-medium text-dark dark:text-dark">10+
                                                                             Years</label>
                                                                     </div>
                                                                 </div>
@@ -1454,7 +1484,7 @@
                                                                         max="{{ date('Y-m', strtotime(date('Y-m') . ' + 10 years')) }}"
                                                                         class="w-40 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500">
                                                                 </div>
-                                                                <span class="text-sm text-gray">Select the month and year
+                                                                <span class="text-sm text-dark">Select the month and year
                                                                     when
                                                                     possession will be available.</span>
 
@@ -1479,7 +1509,7 @@
                                                                         {{ $property->occupancy_type == 'single' ? 'checked' : 'checked' }}
                                                                         class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                                                     <label for="single"
-                                                                        class="ml-2 text-sm font-medium text-gray-900">Single</label>
+                                                                        class="ml-2 text-sm font-medium text-dark-900">Single</label>
                                                                 </div>
                                                                 <div class="flex items-center">
                                                                     <input type="radio" form="propertyFrom"
@@ -1488,7 +1518,7 @@
                                                                         {{ $property->occupancy_type == 'double' ? 'checked' : '' }}
                                                                         class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                                                     <label for="double"
-                                                                        class="ml-2 text-sm font-medium text-gray-900">Double</label>
+                                                                        class="ml-2 text-sm font-medium text-dark-900">Double</label>
                                                                 </div>
                                                                 <div class="flex items-center">
                                                                     <input type="radio" form="propertyFrom"
@@ -1497,7 +1527,7 @@
                                                                         {{ $property->occupancy_type == 'triple' ? 'checked' : '' }}
                                                                         class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                                                     <label for="triple"
-                                                                        class="ml-2 text-sm font-medium text-gray-900">3+
+                                                                        class="ml-2 text-sm font-medium text-dark-900">3+
                                                                         more</label>
                                                                 </div>
                                                                 <div class="flex items-center">
@@ -1507,7 +1537,7 @@
                                                                         {{ $property->occupancy_type == 'capsule' ? 'checked' : '' }}
                                                                         class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                                                     <label for="capsule"
-                                                                        class="ml-2 text-sm font-medium text-gray-900">Capsule</label>
+                                                                        class="ml-2 text-sm font-medium text-dark-900">Capsule</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1524,7 +1554,7 @@
                                                                         {{ $property->available_for == 'male' ? 'checked' : 'checked' }}
                                                                         class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                                                     <label for="male"
-                                                                        class="ml-2 text-sm font-medium text-gray-900">Boys</label>
+                                                                        class="ml-2 text-sm font-medium text-dark-900">Boys</label>
                                                                 </div>
                                                                 <div class="flex items-center">
                                                                     <input type="radio" form="propertyFrom"
@@ -1533,7 +1563,7 @@
                                                                         {{ $property->available_for == 'female' ? 'checked' : '' }}
                                                                         class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                                                     <label for="female"
-                                                                        class="ml-2 text-sm font-medium text-gray-900">Girls</label>
+                                                                        class="ml-2 text-sm font-medium text-dark-900">Girls</label>
                                                                 </div>
                                                                 <div class="flex items-center">
                                                                     <input type="radio" form="propertyFrom"
@@ -1542,7 +1572,7 @@
                                                                         {{ $property->available_for == 'any' ? 'checked' : '' }}
                                                                         class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                                                     <label for="any"
-                                                                        class="ml-2 text-sm font-medium text-gray-900">
+                                                                        class="ml-2 text-sm font-medium text-dark-900">
                                                                         Boys & Girls</label>
                                                                 </div>
                                                             </div>
@@ -1577,10 +1607,10 @@
                                                                                 type="text" autocomplete="off"
                                                                                 id="rule_{{ $ruleItem->id }}"
                                                                                 value="{{ $ruleValue ?? '' }}"
-                                                                                class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                                                class="block px-2.5 w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                                                 placeholder=" " />
                                                                             <label for="rule_{{ $ruleItem->id }}"
-                                                                                class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                                class="absolute text-sm text-dark-500 dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
                                                                                 {{ $ruleItem->name }}
                                                                             </label>
                                                                         </div>
@@ -1605,7 +1635,7 @@
                                                                                         class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2" />
                                                                                     <label
                                                                                         for="rule_{{ $Rkey }}_yes"
-                                                                                        class="ml-2 text-sm font-medium text-gray-900">
+                                                                                        class="ml-2 text-sm font-medium text-dark-900">
                                                                                         Yes
                                                                                     </label>
                                                                                 </div>
@@ -1620,7 +1650,7 @@
                                                                                         class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2" />
                                                                                     <label
                                                                                         for="rule_{{ $Rkey }}_no"
-                                                                                        class="ml-2 text-sm font-medium text-gray-900">
+                                                                                        class="ml-2 text-sm font-medium text-dark-900">
                                                                                         No
                                                                                     </label>
                                                                                 </div>
@@ -1678,9 +1708,9 @@
                                                                             type="text" autocomplete="off"
                                                                             value="{{ $customFields ? $customFields->value : '' }}"
                                                                             id="more-info-{{ $key }}"
-                                                                            class="block px-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+                                                                            class="block px-2.5 w-full text-sm text-dark-900 bg-transparent rounded-lg border-1 pt-3 pb-2 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
                                                                         <label for="more-info-{{ $key }}"
-                                                                            class="absolute fs-3 t dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-body dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                                                            class="absolute fs-3 t dark:text-dark-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-body dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
                                                                             {{ $option_item->name }}</label>
                                                                     </div>
                                                                 </div>
@@ -1819,7 +1849,7 @@
                                                                         id="unfurnished-radio"
                                                                         class="w-4 h-4 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
                                                                     <label for="unfurnished-radio"
-                                                                        class="ms-2 text-sm font-medium text-gray dark:text-gray">Unfurnished</label>
+                                                                        class="ms-2 text-sm font-medium text-dark dark:text-dark">Unfurnished</label>
                                                                 </div>
                                                                 <div class="flex items-center me-4 mb-2">
                                                                     <input form="propertyFrom" type="radio"
@@ -1828,7 +1858,7 @@
                                                                         id="semi-furnished-radio"
                                                                         class="w-4 h-4 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
                                                                     <label for="semi-furnished-radio"
-                                                                        class="ms-2 text-sm font-medium text-gray dark:text-gray">Semi-Furnished</label>
+                                                                        class="ms-2 text-sm font-medium text-dark dark:text-dark">Semi-Furnished</label>
                                                                 </div>
                                                                 <div class="flex items-center me-4 mb-2">
                                                                     <input form="propertyFrom" type="radio"
@@ -1836,7 +1866,7 @@
                                                                         x-model="furnishingStatus" id="furnished-radio"
                                                                         class="w-4 h-4 text-green-600 bg-gray-100 focus:ring-green-500 dark:focus:ring-green-600">
                                                                     <label for="furnished-radio"
-                                                                        class="ms-2 text-sm font-medium text-gray dark:text-gray">Furnished</label>
+                                                                        class="ms-2 text-sm font-medium text-dark dark:text-dark">Furnished</label>
                                                                 </div>
 
                                                             </div>
@@ -2051,6 +2081,7 @@
                                     <div x-data="imageUploader()" class="mx-auto bg-white shadow rounded-lg space-y-6">
                                         <!-- Image Preview Grid -->
                                         <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                                            @if(is_array($property->images))
                                             @foreach ($property->images ?? [] as $key => $image)
                                                 <div class="flex flex-col relative existing-data-box">
                                                     <div
@@ -2080,6 +2111,7 @@
                                                         class="absolute top-0 left-0 p-2 text-white bg-black opacity-50">Cover</span>
                                                 </div>
                                             @endforeach
+                                            @endif
 
                                             <!-- Existing Images -->
                                             <template x-for="(image, index) in images" :key="index">
@@ -2124,7 +2156,7 @@
                                                     <input name="images[]" form="propertyFrom" type="file"
                                                         accept="image/*" id="fileInput" class="hidden" multiple
                                                         @change="addImages($event)">
-                                                    <p class="text-gray-600">
+                                                    <p class="text-dark-600">
                                                         click to upload your images here.</p>
                                                     <p class="text-sm text-blue-500 font-medium hidden">Upload up to 30
                                                         images</p>
@@ -2138,9 +2170,9 @@
                             <div x-data="{ isModalOpen: false }" class="section mt-5">
                                 <div
                                     class="block w-full md:w-2/3 lg:w-1/2 mx-auto p-6 mt-3 border-dashed border-2 border-gray-300 rounded-lg bg-gray-100 shadow hover:bg-gray-50">
-                                    <h5 class="font-bold text-lg text-gray-700 text-center">Add YouTube Videos of Your
+                                    <h5 class="font-bold text-lg text-dark-700 text-center">Add YouTube Videos of Your
                                         Property</h5>
-                                    <h6 class="mt-3 font-medium text-sm text-gray-600 text-center">
+                                    <h6 class="mt-3 font-medium text-sm text-dark-600 text-center">
                                         A video is worth a thousand pictures. Properties with videos get higher page views.
                                     </h6>
 
@@ -2148,10 +2180,10 @@
                                         <input name="youtube_video" form="propertyFrom"
                                             value="{{ isset($property) && $property->youtube_video ? $property->youtube_video : '' }}"
                                             type="text" autocomplete="off" id="youtube_video"
-                                            class="block px-3 w-full text-sm text-gray-900 bg-transparent border rounded-lg py-3 appearance-none focus:outline-none focus:ring focus:ring-blue-200 peer"
+                                            class="block px-3 w-full text-sm text-dark-900 bg-transparent border rounded-lg py-3 appearance-none focus:outline-none focus:ring focus:ring-blue-200 peer"
                                             placeholder="Paste YouTube link of your video" />
                                         <label for="youtube_video"
-                                            class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-1/2  peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4">
+                                            class="absolute text-sm text-dark-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-1/2  peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4">
                                             Paste YouTube link of your video
                                         </label>
                                     </div>
@@ -2177,10 +2209,10 @@
                                                     <div>
                                                         <h3 class="text-xl font-medium text-dark-900 dark:text-white">How
                                                             to Add YouTube Video</h3>
-                                                        <h6 class="text-sm text-gray-600">A step-by-step guide</h6>
+                                                        <h6 class="text-sm text-dark-600">A step-by-step guide</h6>
                                                     </div>
                                                     <button @click="isModalOpen = false"
-                                                        class="text-gray-400 hover:bg-gray-200 rounded-lg text-sm  dark:hover:bg-gray-600">
+                                                        class="text-dark-400 hover:bg-gray-200 rounded-lg text-sm  dark:hover:bg-gray-600">
                                                         <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"
                                                             fill="none" viewBox="0 0 14 14">
                                                             <path stroke="currentColor" stroke-linecap="round"
@@ -2212,7 +2244,7 @@
                                                 <input form="propertyFrom" id="fileInputVideo" name="videos[]"
                                                     type="file" accept="video/*" class="hidden" multiple
                                                     @change="addVideos($event)">
-                                                <p class="text-gray-600">Drag & Drop your videos here or click to upload.
+                                                <p class="text-dark-600">Drag & Drop your videos here or click to upload.
                                                 </p>
                                                 <p class="text-sm text-blue-500 font-medium ">Upload multiple videos</p>
                                             </div>
@@ -2315,6 +2347,22 @@
                                     </li>
                                 </ul>
                             </div>
+                            <div class="mt-5">
+                                <h6 class="my-3 font-bold text-black fs-3">Property Owner Account<sup
+                                        class="text-danger fs-4">*</sup></h6>
+
+                                <select form="propertyFrom" name="account" id="accounts"
+                                    class="bg-gray-50 border border-gray-300 text-dark-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                    <option value="" selected>None of the below
+                                    </option>
+                                    @foreach ($accounts ?? [] as $account_item)
+                                        <option value="{{ $account_item->id }}" {{ $account_item->id == $property->author_id ? 'selected' :'' }}>
+                                            {{ $account_item->name }} <small class="text-danger">{{ $account_item->is_staff ? '(staff)' : '(public)' }}</small></option>
+                                    @endforeach
+
+                                </select>
+
+                            </div>
 
                             <div class="mt-5">
                                 <h6 class="my-4 fs-3 text-black font-bold">Price Details</h6>
@@ -2326,7 +2374,7 @@
                                         autocomplete="off" placeholder="Enter price" oninput="convertToWords()"
                                         name="price" />
 
-                                    <p class="mt-4 text-gray-700">Price in words: <span id="priceInWords"></span></p>
+                                    <p class="mt-4 text-dark-700">Price in words: <span id="priceInWords"></span></p>
                                 </div>
                                 <div class="mt-3 flex gap-3 flex-wrap">
                                     <label class="flex items-center">
@@ -2356,27 +2404,7 @@
                                     class="block w-full mt-2 p-2 border rounded-lg" placeholder="Write your thoughts here...">{{ $property->content }}</textarea>
                             </div>
 
-                            {{-- <div class="mt-5">
-                                <h6 class="font-medium">Mark as moderation status <sup class="text-danger fs-4">*</sup></h6>
-                                <ul class="flex gap-5 mt-3">
-                                    <li class="relative">
-                                        <input form="propertyFrom" class="sr-only peer" checked type="radio"
-                                            value="draft" name="moderation_status" id="draft">
-                                        <label for="draft"
-                                            class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
-                                            Draft
-                                        </label>
-                                    </li>
-                                    <li class="relative">
-                                        <input form="propertyFrom" class="sr-only peer" type="radio"
-                                            value="pending" name="moderation_status" id="pending">
-                                        <label for="pending"
-                                            class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
-                                            Under review 
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div> --}}
+                            
 
                             <div class="mt-5">
                                 <h6 class="font-medium">Mark as property status <sup class="text-danger fs-4">*</sup>
@@ -2385,31 +2413,31 @@
 
                                     <li class="relative">
                                         <input form="propertyFrom" class="sr-only peer"
-                                            {{ $property->status == 'not_available' ? 'checked' : '' }} type="radio"
-                                            value="not_available" name="property_status" id="not_available">
-                                        <label for="not_available"
+                                            {{ $property->moderation_status == 'suspended' ? 'checked' : '' }} type="radio"
+                                            value="suspended" name="property_status" id="suspended">
+                                        <label for="suspended"
                                             class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
-                                            Not available
+                                            Suspend
                                         </label>
                                     </li>
 
-
+                                    <li
+                                    class="relative">
+                                    <input form="propertyFrom" class="sr-only peer" type="radio"
+                                        {{ $property->moderation_status == 'approved' ? 'checked' : '' }} value="rented"
+                                        name="property_status" id="rented">
+                                    <label for="rented"
+                                        class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
+                                        Approved
+                                    </label>
+                                </li>
                                     @if ($property->type == 'sell')
-                                        <li
-                                            class="relative {{ $property->moderation_status == 'sold' || $property->moderation_status == 'pending' ? 'd-none' : '' }}">
-                                            <input form="propertyFrom" class="sr-only peer" checked type="radio"
-                                                {{ $property->status == 'selling' ? 'checked' : '' }} value="selling"
-                                                name="property_status" id="selling">
-                                            <label for="selling"
-                                                class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
-                                                Selling
-                                            </label>
-                                        </li>
+                                   
 
                                         <li
                                             class="relative {{ $property->moderation_status == 'pending' ? 'd-none' : '' }}">
                                             <input form="propertyFrom" class="sr-only peer" type="radio"
-                                                {{ $property->status == 'sold' ? 'checked' : '' }} value="sold"
+                                                {{ $property->moderation_status == 'sold' ? 'checked' : '' }} value="sold"
                                                 name="property_status" id="sold">
                                             <label for="sold"
                                                 class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
@@ -2417,21 +2445,12 @@
                                             </label>
                                         </li>
                                     @elseif($property->type == 'rent' || $property->type == 'pg')
-                                        <li
-                                            class="relative {{ $property->moderation_status == 'rented' || $property->moderation_status == 'pending' ? 'd-none' : '' }}">
-                                            <input form="propertyFrom" class="sr-only peer" type="radio"
-                                                {{ $property->status == 'renting' ? 'checked' : '' }} value="renting"
-                                                name="property_status" id="renting">
-                                            <label for="renting"
-                                                class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
-                                                Renting
-                                            </label>
-                                        </li>
+                                     
 
                                         <li
                                             class="relative {{ $property->moderation_status == 'pending' ? 'd-none' : '' }}">
                                             <input form="propertyFrom" class="sr-only peer" type="radio"
-                                                {{ $property->status == 'rented' ? 'checked' : '' }} value="rented"
+                                                {{ $property->moderation_status == 'rented' ? 'checked' : '' }} value="rented"
                                                 name="property_status" id="rented">
                                             <label for="rented"
                                                 class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
@@ -2440,20 +2459,7 @@
                                         </li>
                                     @endif
 
-                                    @if (
-                                        $property->moderation_status == 'not_available' ||
-                                            $property->moderation_status == 'draft' ||
-                                            $property->moderation_status == 'pending')
-                                        <li class="relative">
-                                            <input form="propertyFrom" class="sr-only peer" type="radio"
-                                                {{ $property->moderation_status == 'pending' ? 'checked' : '' }}
-                                                value="pending" name="property_status" id="pending">
-                                            <label for="pending"
-                                                class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
-                                                {{ $property->moderation_status == 'pending' ? 'Under Review' : 'Submit for review' }}
-                                            </label>
-                                        </li>
-                                    @endif
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -2463,7 +2469,7 @@
                 <!-- Navigation Buttons -->
                 <div class="flex justify-end mt-2">
                     <button type="button" @click="prevStep"
-                        class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
+                        class="px-6 py-2 bg-gray-300 text-dark-700 rounded-lg hover:bg-gray-400"
                         x-show="currentStep > 0">
                         Back
                     </button>
@@ -3065,7 +3071,7 @@
 
                         try {
                             const response = await fetch(
-                                `{{ route('user.properties.update', $property->id) }}`, {
+                                `{{ route('admin.properties.update', $property->id) }}`, {
                                     method: 'POST',
                                     headers: {
                                         // 'Content-Type': 'application/x-www-form-urlencoded', // Important for serialized data

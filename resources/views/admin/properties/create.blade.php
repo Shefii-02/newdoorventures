@@ -38,27 +38,54 @@
             }
         }
 
-        .theme-toggle{
+        .theme-toggle {
             display: none !important;
         }
+
+
+        input.form-control,
+        select.form-control,
+        .select2.select2-container {
+            width: 100% !important;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 40px !important;
+            border: var(--bb-border-width) var(--bb-border-style) var(--bb-border-color) !important;
+        }
+
+        .select2-container--default .select2-selection--single {
+            border-radius: 6px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 35px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__clear {
+            height: 35px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 36px !important;
+        }
     </style>
-      <script src="https://cdn.tailwindcss.com"></script>
-      {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"></script> --}}
-  
-      {{-- <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script> --}}
-      <link media="all" type="text/css" rel="stylesheet" href="{{ asset('themes/dashboard/core.css') }}">
-      <link href="{{ asset('themes/dashboard/style.css') }}" rel="stylesheet">
-  
+    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"></script> --}}
+
+    {{-- <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script> --}}
+    <link media="all" type="text/css" rel="stylesheet" href="{{ asset('themes/dashboard/core.css') }}">
+    <link href="{{ asset('themes/dashboard/style.css') }}" rel="stylesheet">
 @endpush
 @section('content')
     <div class="container">
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
-                    <a href="{{ route('user.dashboard') }}"
-                        class="inline-flex items-center text-sm font-medium text-dark-700 hover:text-blue-600 dark:text-dark-400 dark:hover:text-white">
-                        <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            viewBox="0 0 20 20">
+                    <a href="{{ route('admin.dashboard.index') }}"
+                        class="inline-flex items-center text-sm font-medium text-dark-700 hover:text-blue-600 dark:text-dark-400 dark:hover:text-theme">
+                        <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor" viewBox="0 0 20 20">
                             <path
                                 d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
                         </svg>
@@ -72,8 +99,8 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 9 4-4-4-4" />
                         </svg>
-                        <a href="{{ route('user.properties.index') }}"
-                            class="ms-1 text-sm font-medium text-dark-700 hover:text-blue-600 md:ms-2 dark:text-dark-400 dark:hover:text-white">Properties</a>
+                        <a href="{{ route('admin.properties.index') }}"
+                            class="ms-1 text-sm font-medium text-dark-700 hover:text-blue-600 md:ms-2 dark:text-dark-400 dark:hover:text-theme">Properties</a>
                     </div>
                 </li>
                 <li aria-current="page">
@@ -92,10 +119,10 @@
     </div>
 
     <div x-data="stepper()" class="container bg-white rounded-lg shadow-lg p-lg-6 p-2.5 mt-5">
-        <div class="pb-5" x-data="formHandler()">
+        <div class="pb-1" x-data="formHandler()">
 
             <form method="POST" @submit.prevent="submitForm" id="propertyFrom"
-                action="{{ route('user.properties.store') }}" enctype="multipart/form-data">
+                action="{{ route('admin.properties.store') }}" enctype="multipart/form-data">
                 @csrf
             </form>
 
@@ -168,7 +195,7 @@
                 <div class="space-y-8">
                     <!-- Step 1 -->
                     <div x-show="currentStep === 0" class="mt-2">
-                      
+
                         <div x-data="propertyForm()" x-init="init()" class="p-2 space-y-2">
                             <!-- Mode Selection -->
                             <div>
@@ -313,9 +340,9 @@
                                             </span> --}}
                                         </div>
 
-                                        
+
                                     </div>
-                                   
+
 
                                 </div>
 
@@ -1817,8 +1844,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <label
-                                                        class="flex items-center space-x-2 text-dark cursor-pointer ">
+                                                    <label class="flex items-center space-x-2 text-dark cursor-pointer ">
                                                         <input type="radio" name="coverImage" form="propertyFrom"
                                                             class="" :value="image.name"
                                                             @change="setCoverImage(index)"
@@ -1871,7 +1897,7 @@
                                     </div>
                                 </div>
 
-                               
+
                             </div>
 
 
@@ -1965,6 +1991,23 @@
                             </div>
 
                             <div class="mt-5">
+                                <h6 class="my-3 font-bold text-black fs-3">Property Owner Account<sup
+                                        class="text-danger fs-4">*</sup></h6>
+
+                                <select form="propertyFrom" name="account" id="accounts"
+                                    class="bg-gray-50 border border-gray-300 text-dark-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                    <option value="" selected>None of the below
+                                    </option>
+                                    @foreach ($accounts ?? [] as $account_item)
+                                        <option value="{{ $account_item->id }}">
+                                            {{ $account_item->name }} <small class="text-danger">{{ $account_item->is_staff ? '(staff)' : '(public)' }}</small></option>
+                                    @endforeach
+
+                                </select>
+
+                            </div>
+
+                            <div class="mt-5">
                                 <h6 class="mt-3 font-bold text-black fs-3">Price Details</h6>
                                 <div class="bg-white shadow rounded-lg">
                                     <h5 class="font-medium my-3 ">Enter Price<sup class="text-danger fs-4">*</sup></h5>
@@ -1999,29 +2042,6 @@
                             </div>
 
 
-                            <div class="mt-5">
-                                <h6 class="mt-3 font-bold text-black fs-3">Mark as moderation status <sup
-                                        class="text-danger fs-4">*</sup>
-                                </h6>
-                                <ul class="flex gap-5 mt-3 flex-wrap">
-                                    <li class="relative">
-                                        <input form="propertyFrom" class="sr-only peer" checked type="radio"
-                                            value="draft" name="moderation_status" id="draft">
-                                        <label for="draft"
-                                            class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
-                                            Draft
-                                        </label>
-                                    </li>
-                                    <li class="relative">
-                                        <input form="propertyFrom" class="sr-only peer" type="radio"
-                                            value="pending" name="moderation_status" id="pending">
-                                        <label for="pending"
-                                            class="mx-1 px-3 py-1 bg-white border rounded-lg cursor-pointer peer-checked:ring-2 peer-checked:ring-green-500">
-                                            Submit for review
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
 
                         </div>
                     </div>
@@ -2590,7 +2610,7 @@
                         const formData = new FormData(formElement);
 
                         try {
-                            const response = await fetch(`{{ route('user.properties.store') }}`, {
+                            const response = await fetch(`{{ route('admin.properties.store') }}`, {
                                 method: 'POST',
                                 headers: {
                                     'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include Laravel CSRF token
@@ -2778,6 +2798,12 @@
             jQuery(document).ready(function($) {
                 $('#projects').select2({
                     placeholder: "Select a project",
+                    allowClear: true,
+                    width: 'resolve'
+                });
+
+                $('#accounts').select2({
+                    placeholder: "Select a Account",
                     allowClear: true,
                     width: 'resolve'
                 });
