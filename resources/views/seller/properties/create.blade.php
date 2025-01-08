@@ -227,6 +227,19 @@
                                     </template>
                                 </ul>
                             </div>
+
+                            <!--  Built & Suit -->
+                            <div style="display: none" class="ShowWantedSectionsInCommercialRent HideUnwantedSectionsInPlot HideUnwantedSectionsInPg  mt-2">
+                                <h6 class="mb-3 mt-3 font-medium">Commercial real estate agreement</h6>
+                                <div class="flex flex-wrap">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="BuiltSuit" name="built_suit" value="1">
+                                        <label class="form-check-label" for="BuiltSuit">Built & Suit</label>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -1858,8 +1871,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <label
-                                                        class="flex items-center space-x-2 text-dark cursor-pointer ">
+                                                    <label class="flex items-center space-x-2 text-dark cursor-pointer ">
                                                         <input type="radio" name="coverImage" form="propertyFrom"
                                                             class="" :value="image.name"
                                                             @change="setCoverImage(index)"
@@ -2483,11 +2495,22 @@
                             if (this.currentType === 'Residential' && categoryName != 'Plot and Land') {
                                 this.toggleSections('ShowWantedSectionsInCommercial', 'none');
                                 this.toggleSections('HideUnwantedSectionsInCommercial', 'block');
+                    
+
                             } else if (this.currentType === 'Commercial' && categoryName != 'Plot and Land') {
 
                                 this.toggleSections('HideUnwantedSectionsInCommercial', 'none');
                                 this.toggleSections('ShowWantedSectionsInCommercial', 'block');
+
                             }
+
+                            if(this.currentType === 'Commercial' &&  this.currentMode === 'rent'){
+                                this.toggleSections('ShowWantedSectionsInCommercialRent', 'block');
+                            }
+                            else{
+                                this.toggleSections('ShowWantedSectionsInCommercialRent', 'none');
+                            }
+                            
                         }
 
                         if (this.currentType === 'Commercial' && categoryName != 'Plot and Land') {

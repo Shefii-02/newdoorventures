@@ -258,6 +258,19 @@
                                     </template>
                                 </ul>
                             </div>
+
+                             <!--  Built & Suit -->
+                             <div style="display: none" class="ShowWantedSectionsInCommercialRent HideUnwantedSectionsInPlot HideUnwantedSectionsInPg  mt-2">
+                                <h6 class="mb-3 mt-3 font-medium">Commercial real estate agreement</h6>
+                                <div class="flex flex-wrap">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" {{ $property->built_suit == 1 ? 'checked' : '' }} type="checkbox" id="BuiltSuit" name="built_suit" value="1">
+                                        <label class="form-check-label" for="BuiltSuit">Built & Suit</label>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -2879,6 +2892,13 @@
 
                                 this.toggleSections('HideUnwantedSectionsInCommercial', 'none');
                                 this.toggleSections('ShowWantedSectionsInCommercial', 'block');
+                            }
+
+                            if(this.currentType === 'Commercial' &&  this.currentMode === 'rent'){
+                                this.toggleSections('ShowWantedSectionsInCommercialRent', 'block');
+                            }
+                            else{
+                                this.toggleSections('ShowWantedSectionsInCommercialRent', 'none');
                             }
                         }
 

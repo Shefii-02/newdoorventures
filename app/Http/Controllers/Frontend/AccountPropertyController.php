@@ -271,6 +271,7 @@ class AccountPropertyController extends Controller
             $property->chairs_count     = $request->chairs_count ?? 0;
             $property->plot_type        = $request->plot_type ?? '';
             $property->cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : '';
+            $property->built_suit       = $request->has('built_suit') ? 1 : 0;
 
             if (auth('account')->user()->auto_approvel == 1 && $request->moderation_status != 'draft') {
                 $property->moderation_status = 'approved';
@@ -554,6 +555,7 @@ class AccountPropertyController extends Controller
             $property->work_stations    = $request->work_stations ?? 0;
             $property->chairs_count     = $request->chairs_count ?? 0;
             $property->plot_type        = $request->plot_type ?? '';
+            $property->built_suit       = $request->has('built_suit') ? 1 : 0;
             
             if ($request->mode == 'sell') {
                 if ($request->property_status == 'sold') {

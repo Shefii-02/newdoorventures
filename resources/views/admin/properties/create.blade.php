@@ -258,6 +258,20 @@
                                     </template>
                                 </ul>
                             </div>
+
+                            <!--  Built & Suit -->
+                            <div style="display: none"
+                                class="ShowWantedSectionsInCommercialRent HideUnwantedSectionsInPlot HideUnwantedSectionsInPg  mt-2">
+                                <h6 class="mb-3 mt-3 font-medium">Commercial real estate agreement</h6>
+                                <div class="flex flex-wrap">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="BuiltSuit" name="built_suit"
+                                            value="1">
+                                        <label class="form-check-label" for="BuiltSuit">Built & Suit</label>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -2000,7 +2014,9 @@
                                     </option>
                                     @foreach ($accounts ?? [] as $account_item)
                                         <option value="{{ $account_item->id }}">
-                                            {{ $account_item->name }} <small class="text-danger">{{ $account_item->is_staff ? '(staff)' : '(public)' }}</small></option>
+                                            {{ $account_item->name }} <small
+                                                class="text-danger">{{ $account_item->is_staff ? '(staff)' : '(public)' }}</small>
+                                        </option>
                                     @endforeach
 
                                 </select>
@@ -2428,6 +2444,13 @@
 
                                 this.toggleSections('HideUnwantedSectionsInCommercial', 'none');
                                 this.toggleSections('ShowWantedSectionsInCommercial', 'block');
+                            }
+
+                            if(this.currentType === 'Commercial' &&  this.currentMode === 'rent'){
+                                this.toggleSections('ShowWantedSectionsInCommercialRent', 'block');
+                            }
+                            else{
+                                this.toggleSections('ShowWantedSectionsInCommercialRent', 'none');
                             }
                         }
 
