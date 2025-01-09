@@ -50,6 +50,11 @@ class ProjectController extends Controller
             // });
         }
 
+        if($request->has('created_at') && $request->created_at != ''){
+            $query->where('created_at', '<=', date('Y-m-d 00:00:00',strtotime($request->created_at)));
+            $query->where('created_at', '<=', date('Y-m-d 23:59:59',strtotime($request->created_at)));
+        }
+
         $projects = $query->paginate(10);
 
         return view('admin.projects.index', compact('projects'));
