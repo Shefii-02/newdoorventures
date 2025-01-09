@@ -1,4 +1,4 @@
-@foreach ($projects as $project)
+@forelse ($projects as $project)
     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
         <td class="w-4 p-4 " colspan="3">
             <a href="#" role="button" title="{{ $project->name }}">
@@ -15,8 +15,8 @@
                 title="{{ $project->location }}">{{ Str::limit($project->location ?? '---', '15', '....') }}</span>
         </td>
         <td class="px-2 py-1 text-center" colspan="2">
-            <span class="text-sm" role="button"
-                title="{{ '₹' . $project->price }}"> {{ __(':from - :to', ['from' => shorten_price($project->price_from), 'to' => shorten_price($project->price_to)]) }}</span>
+            <span class="text-sm" role="button" title="{{ '₹' . $project->price }}">
+                {{ __(':from - :to', ['from' => shorten_price($project->price_from), 'to' => shorten_price($project->price_to)]) }}</span>
         </td>
         <td class="px-2 py-1 text-center">
             <span class="text-sm">{{ $project->leads_count ?? 0 }}</span>
@@ -31,7 +31,8 @@
         <td class="px-2 py-1 text-end">
             <div class="btn-group pe-3">
                 @if (permission_check('Project Edit'))
-                    <a  class="ms-2" target="_blank" href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}">
+                    <a class="ms-2" target="_blank"
+                        href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug]) }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-eye" viewBox="0 0 16 16">
                             <path
@@ -54,8 +55,7 @@
                     <form method="POST" id="form_{{ $project->id }}"
                         action="{{ route('admin.projects.destroy', $project->id) }}">@csrf @method('DELETE')</form>
                     <button form="form_{{ $project->id }}" type="button"
-                        onclick="confirmDelete({{ $project->id }})"
-                        class="mx-auto block hover:text-meta-1 ms-3">
+                        onclick="confirmDelete({{ $project->id }})" class="mx-auto block hover:text-meta-1 ms-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-trash" viewBox="0 0 16 16">
                             <path
@@ -70,4 +70,11 @@
             </div>
         </td>
     </tr>
-@endforeach
+@else
+<tr>
+    <td colspan="6">
+    <span class="py-4 text-center">        No Data Found
+    </span>
+    </td>
+</tr>
+@endforelse
