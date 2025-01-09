@@ -32,8 +32,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        if (!permission_check('Project List'))
-        {
+        if (!permission_check('Project List')) {
             return abort(404);
         }
 
@@ -54,11 +53,11 @@ class ProjectController extends Controller
         if ($request->has('created_at') && $request->created_at != '') {
             $startOfDay = date('Y-m-d 00:00:00', strtotime($request->created_at));
             $endOfDay = date('Y-m-d 23:59:59', strtotime($request->created_at));
-            
+
             $query->where('created_at', '>=', $startOfDay)
-                  ->where('created_at', '<=', $endOfDay);
+                ->where('created_at', '<=', $endOfDay);
         }
-        
+
 
         $projects = $query->paginate(10);
 
@@ -70,8 +69,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        if (!permission_check('Project Add'))
-        {
+        if (!permission_check('Project Add')) {
             return abort(404);
         }
 
@@ -81,9 +79,9 @@ class ProjectController extends Controller
         $categories   = Category::get();
         $builders     = Investor::get();
         $features     = Feature::get();
-        $specifications = DB::table('specifications')->orderBy('display_order','asc')->get();
-    
-        return view('admin.projects.form', compact('configration', 'facilities', 'categories', 'builders', 'features','specifications'));
+        $specifications = DB::table('specifications')->orderBy('display_order', 'asc')->get();
+
+        return view('admin.projects.form', compact('configration', 'facilities', 'categories', 'builders', 'features', 'specifications'));
     }
 
     /**
@@ -92,8 +90,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
 
-        if (!permission_check('Project Add'))
-        {
+        if (!permission_check('Project Add')) {
             return abort(404);
         }
 
@@ -120,7 +117,7 @@ class ProjectController extends Controller
             $images           =  isset($imagePath['filePaths']) ? $imagePath['filePaths'] : '';
             $cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : '';
 
-            $request->merge(['images' => $images, 'master_plan_images' => $master_images,'cover_image' => $cover_image]);
+            $request->merge(['images' => $images, 'master_plan_images' => $master_images, 'cover_image' => $cover_image]);
             $request->merge(['videos' => array_filter($videos)]);
 
             // $request->merge(['images' => array_filter($request->input('images', []))]);
@@ -159,8 +156,10 @@ class ProjectController extends Controller
             ]);
         } catch (\Exception $e) {
 
-            Log::notice("message");('Validation failed: Project error');
-            Log::info("message");('Time ' . date('d-m-Y H:i:s'));
+            Log::notice("message");
+            ('Validation failed: Project error');
+            Log::info("message");
+            ('Time ' . date('d-m-Y H:i:s'));
             Log::error('Validation Errors: ' . $e);
 
             DB::rollBack();
@@ -186,8 +185,7 @@ class ProjectController extends Controller
     public function edit(string $id)
     {
 
-        if (!permission_check('Project Edit'))
-        {
+        if (!permission_check('Project Edit')) {
             return abort(404);
         }
 
@@ -198,8 +196,8 @@ class ProjectController extends Controller
         $categories   = Category::get();
         $builders     = Investor::get();
         $features     = Feature::get();
-        $specifications = DB::table('specifications')->orderBy('display_order','asc')->get();
-        return view('admin.projects.form', compact('configration', 'facilities', 'categories', 'builders', 'features', 'project','specifications'));
+        $specifications = DB::table('specifications')->orderBy('display_order', 'asc')->get();
+        return view('admin.projects.form', compact('configration', 'facilities', 'categories', 'builders', 'features', 'project', 'specifications'));
     }
 
     /**
@@ -208,8 +206,7 @@ class ProjectController extends Controller
     public function update(Request $request, string $id)
     {
 
-        if (!permission_check('Project Edit'))
-        {
+        if (!permission_check('Project Edit')) {
             return abort(404);
         }
 
@@ -218,7 +215,7 @@ class ProjectController extends Controller
         try {
             $project = Project::query()->findOrFail($id);
 
-        
+
             $imagePath = null;
             $imagePath2 = null;
 
@@ -230,17 +227,21 @@ class ProjectController extends Controller
 
 
 
-          
+
 
             if ($request->hasFile('new_master_plan_images')) {
                 $imagePath2 = $this->storeFiles($request->file('new_master_plan_images'));
             }
-            
+
 
             // Find images and videos that were removed by comparing with the new ones
-            $removedImages  = array_diff($project->images ?? [], $request->existingImage ?? []);
-            $removedImages2 = array_diff($project->master_plan_images ?? [], $request->existingImageMaster ?? []);
+            if (is_array($project->images)) {
+                $removedImages  = array_diff($project->images ?? [], $request->existingImage ?? []);
+            }
+            if (is_array($project->master_plan_images)) {
 
+                $removedImages2 = array_diff($project->master_plan_images ?? [], $request->existingImageMaster ?? []);
+            }
 
             // Merge the existing and new images and videos to get the final list
             $NewimagePath = array_merge($imagePath['filePaths'] ?? [], $request->existingImage ?? []);
@@ -254,7 +255,6 @@ class ProjectController extends Controller
                         unlink($UnlinkimagePath);
                     }
                 } catch (Exception $e) {
-                   
                 }
             }
 
@@ -266,7 +266,6 @@ class ProjectController extends Controller
                         unlink($imagePath2);
                     }
                 } catch (Exception $e) {
-                   
                 }
             }
 
@@ -290,7 +289,7 @@ class ProjectController extends Controller
 
             // $images           =  isset($imagePath['filePaths']) ? $imagePath['filePaths'] : '';
             $cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : '';
-          
+
 
             $request->merge(['images' => $NewimagePath, 'master_plan_images' => $NewimagePath2, 'cover_image' => $cover_image]);
             $request->merge(['videos' => array_filter($videos)]);
@@ -307,7 +306,7 @@ class ProjectController extends Controller
             $this->saveCustomFields($project, $request->input('custom_fields', []));
 
             $this->saveConfigrationFields($project, $request->input('configration', []));
-          
+
             $this->saveSpecificationFields($project, $request);
 
             $this->savePriceUnitFields($project, $request->input('unitDetails', []));
@@ -339,19 +338,18 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id,Request $request)
+    public function destroy(string $id, Request $request)
     {
         //
 
-        if (!permission_check('Project Delete'))
-        {
+        if (!permission_check('Project Delete')) {
             return abort(404);
         }
 
         if (auth('web')->user()->acc_type == 'superadmin') {
-            
+
             $project = Project::withTrashed()->whereId($id)->first() ?? abort(404);
-    
+
             DB::beginTransaction();
             try {
                 foreach ($project->images  ?? [] as $imageLoc) {
@@ -364,13 +362,13 @@ class ProjectController extends Controller
                 FacilityDistance::where('reference_id', $project->id)->delete();
                 DB::table('re_custom_field_values')->where('reference_type', 'App\Models\Project')->where('reference_id', $project->id)->delete();
                 ConfigrationDetail::where('reference_id', $project->id)
-                            ->where('reference_type', 'App\Models\Project')
-                            ->delete();
+                    ->where('reference_type', 'App\Models\Project')
+                    ->delete();
                 ProjectSpecification::where('project_id', $project->id)->delete();
                 ProjectPriceVariations::where('project_id', $project->id)->delete();
                 $project->categories()->detach();
                 $project->features()->detach();
-                
+
                 $project->forceDelete();
                 // $property->delete();
                 DB::commit();
@@ -404,8 +402,6 @@ class ProjectController extends Controller
                 ], 500);
             }
         }
-
-
     }
 
 
@@ -576,7 +572,7 @@ class ProjectController extends Controller
             ->delete();
 
         foreach ($configrationFields ?? [] as $confValue) {
-           
+
             if ($confValue['id'] != '') {
                 $confItm                  = new ConfigrationDetail();
                 $confItm->reference_id    = $project->id;
@@ -585,7 +581,6 @@ class ProjectController extends Controller
                 $confItm->reference_type  = 'App\Models\Project';
                 $confItm->save();
             }
-     
         }
     }
 
@@ -603,7 +598,7 @@ class ProjectController extends Controller
             // } else {
             //     $path = isset($specValue['eXimagePath']) ?? null;
             // }
-            if($specValue['description'] != '' || $specValue['description'] != null){
+            if ($specValue['description'] != '' || $specValue['description'] != null) {
                 $specification              = new ProjectSpecification();
                 $specification->project_id    = $project->id;
                 $specification->name          = $specValue['name'];;

@@ -687,8 +687,12 @@ class PropertyController extends Controller
 
 
             // Find images and videos that were removed by comparing with the new ones
-            // $removedImages = array_diff($property->images ?? [], $request->existingImage ?? []);
-            // $removedVideos = array_diff($property->video ?? [], $request->existingVideo ?? []);
+            if (is_array($property->images)) {
+                $removedImages = array_diff($property->images ?? [], $request->existingImage ?? []);
+            }
+            if (is_array($property->video)) {
+                $removedVideos = array_diff($property->video ?? [], $request->existingVideo ?? []);
+            }
 
             // Merge the existing and new images and videos to get the final list
             $NewimagePath = array_merge($imagePath['filePaths'] ?? [], $request->existingImage ?? []);
