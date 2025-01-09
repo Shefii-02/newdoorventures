@@ -70,7 +70,7 @@
             </div>
         </td>
     </tr>
-@else
+@empty
 <tr>
     <td colspan="6">
     <span class="py-4 text-center">        No Data Found
