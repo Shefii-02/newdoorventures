@@ -11,7 +11,7 @@ require __DIR__ . '/auth.php';
 
 Route::get('/mail', function () {
     try {
-        Mail1::raw('Hello World!', function ($message) {
+        Mail::raw('Hello World!', function ($message) {
             $message->to('shefii.indigital@gmail.com') // Set the recipient's email address
                     ->subject('Test Email');          // Set the subject of the email
         });
@@ -21,6 +21,11 @@ Route::get('/mail', function () {
         echo "Failed to send email. Error: " . $e->getMessage();
     }
 });
+
+
+Route::post('/log-validation-error', [App\Http\Controllers\LogController::class, 'logValidationError'])
+    ->name('log.validation.error');
+
 
 require __DIR__ . '/route/admin.php';
 

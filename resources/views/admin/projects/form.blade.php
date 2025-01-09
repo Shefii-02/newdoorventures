@@ -1324,6 +1324,18 @@
                         if (!response.ok) {
                             const errorData = await response.json();
                             this.validationErrors = errorData.errors || [];
+                            if (this.validationErrors.length <= 0) {
+                                // Send the response data to the backend for logging
+                                await fetch('{{ route('log.validation.error') }}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    body: JSON.stringify({ response: errorData })
+                                });
+                            }
+                            
                             this.showToastMessage('Validation failed.', 'error');
                             return; // Stop further execution if validation fails
                         }
@@ -1354,7 +1366,7 @@
                         </ul>
                     `;
                     } else {
-                        this.toastMessage = message;
+                        this.toastMessage = message+'...';
                     }
 
                     this.showToast = true;
