@@ -72,7 +72,7 @@
     </tr>
 @empty
 <tr>
-    <td colspan="6">
+    <td colspan="9" class="text-center">
     <span class="py-4 text-center">        No Data Found
     </span>
     </td>
