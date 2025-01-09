@@ -7,7 +7,7 @@
                 <span class="fw-bold text-left text-dark-emphasis ">{{ Str::limit($project->name, '15', '...') }}</span>
             </a>
         </td>
-        <th scope="row" class="px-2 py-1 text-center font-medium text-capitalize">
+        <th scope="row" class="px-2 py-1 text-start font-medium text-capitalize">
             <span class="text-sm">{{ isset($project->investor) ? $project->investor->name : '' }}</span>
         </th>
         <td class="px-2 py-1 text-center">
@@ -23,6 +23,9 @@
         </td>
         <td class="px-2 py-1 text-center">
             <span class="text-sm">{{ $project->views }}</span>
+        </td>
+        <td class="px-2 py-1 text-center">
+            <span class="text-sm">{{ $project->created_at }}</span>
         </td>
 
         <td class="px-2 py-1 text-end">

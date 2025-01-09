@@ -114,6 +114,9 @@
                                     <th class="px-6 py-3 text-dark fw-bold">
                                         Views
                                     </th>
+                                    <th class="px-6 py-3 text-dark fw-bold">
+                                        Created at
+                                    </th>
                                     <th class="px-6 py-3 text-dark fw-bold text-end">
                                         Action
                                     </th>
