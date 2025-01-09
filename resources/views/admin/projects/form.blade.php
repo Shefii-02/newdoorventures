@@ -252,7 +252,8 @@
                                                                                     value="{{ $image }}"
                                                                                     @change="setCoverImage({{ $key + 200 }})"
                                                                                     {{ $project->cover_image === $image ? 'checked' : '' }}>
-                                                                                <span class="ms-1">Make Cover Photo</span>
+                                                                                <span class="ms-1">Make Cover
+                                                                                    Photo</span>
                                                                             </label>
                                                                             <span
                                                                                 x-show="currentCover === {{ $key + 200 }}"
@@ -958,7 +959,7 @@
                             </div>
 
 
-                            
+
                             <div class="px-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
@@ -1319,74 +1320,127 @@
                                 },
                                 body: formData // Use FormData as request body
                             });
-
+                        console.log(response.status)
+                        console.log(response)
                         // Handle validation errors (422)
-                        if (!response.ok) {
-                            const errorData = await response.json();
-                            this.validationErrors = errorData.errors || [];
-                            if (this.validationErrors.length <= 0) {
-                                // Send the response data to the backend for logging
+                        if (response.status == 200) {
+                            // Handle successful response
+                            const data = await response.json();
+                            this.responseMessage = data.message || 'Form submitted successfully!';
+                            this.validationErrors = []; // Clear validation errors
+                            this.showToastMessage(this.responseMessage, 'success');
+                            window.location = data.redirect;
+                        } else if (!response.ok) {
+                            try {
+                                // Attempt to parse the response as JSON
+                                errorData = await response.json();
+                                this.validationErrors = errorData.errors || [];
+
+                                if (this.validationErrors.length <= 0) {
+                                    // Send the response data to the backend for logging
+                                    await fetch('{{ route('log.validation.error') }}', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        },
+                                        body: JSON.stringify({
+                                            response: errorData
+                                        })
+                                    });
+                                }
+
+                                this.showToastMessage('Validation failed.', 'error');
+                            } catch (parseError) {
+                                // If parsing fails, handle it as a non-JSON response
+                                const textError = await response.statusText;
+                           
+
+                                this.showToastMessage(textError+'! An unexpected error occurred. Please check the logs.', 'error');
+
+                                // Optionally, send raw response text to the backend for logging
                                 await fetch('{{ route('log.validation.error') }}', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                                     },
-                                    body: JSON.stringify({ response: errorData })
+                                    body: JSON.stringify({
+                                        response: textError
+                                    })
                                 });
                             }
-                            
-                            this.showToastMessage('Validation failed.', 'error');
+
                             return; // Stop further execution if validation fails
                         }
+                        // const errorData = await response.json();
+                        // this.validationErrors = errorData.errors || [];
+                        // if (this.validationErrors.length <= 0) {
+                        //     // Send the response data to the backend for logging
+                        //     await fetch('{{ route('log.validation.error') }}', {
+                        //         method: 'POST',
+                        //         headers: {
+                        //             'Content-Type': 'application/json',
+                        //             'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        //         },
+                        //         body: JSON.stringify({
+                        //             response: errorData
+                        //         })
+                        //     });
+                        // }
 
-                        // Handle successful response
-                        const data = await response.json();
-                        this.responseMessage = data.message || 'Form submitted successfully!';
-                        this.validationErrors = []; // Clear validation errors
-                        this.showToastMessage(this.responseMessage, 'success');
-                        window.location = data.redirect;
-                    } catch (error) {
+                        // this.showToastMessage('Validation failed.', 'error');
+                        // return; // Stop further execution if validation fails
+                        // }
+                    }catch (error) {
+                    console.log(error);
+                    if (error.status === '500') {
+                        console.log(1)
+                        this.showToastMessage(error.statusText, 'error');
+
+                    } else {
                         // Catch unexpected errors (e.g., network issues)
                         this.errorMessage = error.message || 'An error occurred during form submission';
                         this.responseMessage = ''; // Clear success messages
                         this.showToastMessage(this.errorMessage, 'error');
                     }
-                },
 
-                showToastMessage(message, type) {
-                    this.toastType = type;
+                }
+            },
 
-                    if (type === 'error' && this.validationErrors.length > 0) {
-                        // Construct an unordered list of errors
-                        this.toastMessage = `
+            showToastMessage(message, type) {
+                this.toastType = type;
+
+                if (type === 'error' && this.validationErrors.length > 0) {
+                    // Construct an unordered list of errors
+                    this.toastMessage = `
                         <strong>${message}</strong>
                         <ul>
                             ${this.validationErrors.map(error => `<li>${error}</li>`).join('')}
                         </ul>
                     `;
-                    } else {
-                        this.toastMessage = message+'...';
-                    }
-
-                    this.showToast = true;
-                    setTimeout(() => {
-                        this.showToast = false; // Hide toast after 3 seconds
-                    }, 3000);
+                } else {
+                    this.toastMessage = message + '...';
                 }
-            };
+
+                this.showToast = true;
+                setTimeout(() => {
+                    this.showToast = false; // Hide toast after 3 seconds
+                }, 3000);
+            }
+        };
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-                window.removeExistingRow = function(button) {
-                    // Locate the parent .existing-data-box and remove it
-                    const row = button.closest('.existing-data-box');
-                    if (row) {
-                        row.remove(); // Remove the div
-                    } else {
-                        console.error("Could not find the parent element to remove.");
-                    }
-                };
-            });
+            window.removeExistingRow = function(button) {
+                // Locate the parent .existing-data-box and remove it
+                const row = button.closest('.existing-data-box');
+                if (row) {
+                    row.remove(); // Remove the div
+                } else {
+                    console.error("Could not find the parent element to remove.");
+                }
+            };
+        });
     </script>
 @endpush
