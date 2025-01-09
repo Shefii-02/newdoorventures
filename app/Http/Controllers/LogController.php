@@ -12,7 +12,7 @@ class LogController extends Controller
         date_default_timezone_set("Asia/Calcutta");   //India time (GMT+5:30)
 
         // Log the response data from the client
-        Log::notice("message");('Validation failed: Property/Property error');
+        Log::notice("message");('Validation failed: Project/Property error');
         Log::info("message");('Time ' . date('d-m-Y H:i:s'));
         Log::error('Validation Errors: ' . json_encode($request->response));
 

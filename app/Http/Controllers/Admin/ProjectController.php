@@ -20,6 +20,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -158,6 +159,9 @@ class ProjectController extends Controller
             ]);
         } catch (\Exception $e) {
 
+            Log::notice("message");('Validation failed: Project error');
+            Log::info("message");('Time ' . date('d-m-Y H:i:s'));
+            Log::error('Validation Errors: ' . $e);
 
             DB::rollBack();
             // Return error response if something goes wrong
