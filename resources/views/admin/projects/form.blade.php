@@ -102,7 +102,7 @@
                                                                 <select class="form-control form-select" id="builder"
                                                                     name="investor_id">
                                                                     <option value=""></option>
-                                                                    @foreach ($builders as $builder)
+                                                                    @foreach ($builders ?? [] as $builder)
                                                                         <option value="{{ $builder->id }}"
                                                                             @if (isset($project) && $builder->id == $project->investor_id) selected @endif>
                                                                             {{ $builder->name }}
@@ -481,7 +481,7 @@
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Categories</label>
                                                     <ul class="list-unstyled  col-lg-12">
                                                         <div class="row">
-                                                            @foreach ($categories as $category)
+                                                            @foreach ($categories ?? [] as $category)
                                                                 <li class="col-lg-4">
                                                                     <label class="form-check">
                                                                         <input type="radio" name="categories[]"
@@ -608,7 +608,7 @@
                                                             }
                                                         }">
                                                             @if (isset($project))
-                                                                @foreach ($project->priceVariations as $key => $priceVari)
+                                                                @foreach ($project->priceVariations ?? [] as $key => $priceVari)
                                                                     <div class="row g-3 mb-2 position-relative">
                                                                         <!-- Unit Type -->
                                                                         <div class="col-md-4">
@@ -758,7 +758,7 @@
                                                                                             class="form-control">
                                                                                             <option value="">Select
                                                                                                 Facility</option>
-                                                                                            @foreach ($facilities as $facilityVal)
+                                                                                            @foreach ($facilities ?? [] as $facilityVal)
                                                                                                 <option
                                                                                                     @if ($project && $facilityVal->id == $facilityItem->pivot->facility_id) selected @endif
                                                                                                     value="{{ $facilityVal->id }}">
@@ -969,7 +969,7 @@
                                     <div class="card-body">
                                         <div class="col-lg-12">
                                             <div class="row">
-                                                @foreach ($features as $feature)
+                                                @foreach ($features ?? [] as $feature)
                                                     <div class="col-lg-3">
                                                         <div class="d-flex  align-items-center">
                                                             <label class="form-check form-check-inline mb-3"><input

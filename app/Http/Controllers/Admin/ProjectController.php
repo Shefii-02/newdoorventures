@@ -225,10 +225,6 @@ class ProjectController extends Controller
                 // $imagePath = $this->storeFiles($request->file('new_normal_images'));
             }
 
-
-
-
-
             if ($request->hasFile('new_master_plan_images')) {
                 $imagePath2 = $this->storeFiles($request->file('new_master_plan_images'));
             }
@@ -245,7 +241,7 @@ class ProjectController extends Controller
 
             // Merge the existing and new images and videos to get the final list
             $NewimagePath = array_merge($imagePath['filePaths'] ?? [], $request->existingImage ?? []);
-            $NewimagePath2 = array_merge($imagePath2 ?? [], $request->existingImageMaster ?? []);
+            $NewimagePath2 = array_merge($imagePath2['filePaths'] ?? [], $request->existingImageMaster ?? []);
 
             foreach ($removedImages ?? [] as $imageLoc) {
                 try {
@@ -261,9 +257,9 @@ class ProjectController extends Controller
             foreach ($removedImages2 ?? [] as $imageLoc2) {
                 try {
                     // Check if the original image file exists before unlinking
-                    $imagePath2 = public_path('images/' . $imageLoc2);
-                    if (file_exists($imagePath2)) {
-                        unlink($imagePath2);
+                    $UnlinkimagePath2 = public_path('images/' . $imageLoc2);
+                    if (file_exists($UnlinkimagePath2)) {
+                        unlink($UnlinkimagePath2);
                     }
                 } catch (Exception $e) {
                 }
