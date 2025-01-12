@@ -709,7 +709,8 @@
                                                                                 oninput="convertToWords('unit{{ $key }}')"
                                                                                 id="priceInputunit{{ $key }}"
                                                                                 placeholder="Enter price" />
-                                                                            <p class="mt-4 fs-6 my-1.5 text-[#9D5425]">Price in words:
+                                                                            <p class="mt-4 fs-6 my-1.5 text-[#9D5425]">
+                                                                                Price in words:
                                                                                 <span id="unit{{ $key }}"></span>
                                                                             </p>
                                                                         </div>
@@ -769,8 +770,8 @@
                                                                             :id="`priceInputunit${index}`"
                                                                             class="form-control" placeholder="Enter price"
                                                                             x-model="item.price" />
-                                                                        <p class="mt-4 fs-6 my-1.5 text-[#9D5425]">Price in words: <span
-                                                                                :id="`unit${index}`"></span></p>
+                                                                        <p class="mt-4 fs-6 my-1.5 text-[#9D5425]">Price in
+                                                                            words: <span :id="`unit${index}`"></span></p>
                                                                     </div>
 
                                                                     <!-- Remove Button -->
@@ -1068,6 +1069,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="px-3">
+                                <div class=" mb-3">
+                                    <div class="col-lg-12">
+                                        <label class="font-bold text-black dark:text-white mb-2"> Keywords <span class="small text-[#637381]">(if you have multiple words use ' , ' comma)</span> </label>
+                                        <textarea class="form-control" cols="3" placeholder="bangalore central,bengaluru central,..." name="keywords">{{ isset($project) ? $project->keywords : '' }}</textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+
                             <div class="p-3">
                                 <div class="text-start">
                                     <button class="btn bg-success text-light w-100" type="submit">Save</button>

@@ -84,6 +84,7 @@ return new class extends Migration
             $table->integer('chairs_count')->nullable()->default(0);
             $table->string('plot_type')->nullable();
             $table->string('built_suit')->nullable()->default(0);
+            $table->longText('keywords')->nullable();
             $table->softDeletes();
         });
     }

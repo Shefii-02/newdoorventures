@@ -55,6 +55,7 @@ class Property extends BaseModel
         'longitude',
         'unique_id',
         'moderation_status',
+        'keywords',
     ];
 
     protected $casts = [

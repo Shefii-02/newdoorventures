@@ -59,6 +59,7 @@ return new class extends Migration
             $table->text('locality')->nullable();
             $table->text('sub_locality')->nullable();
             $table->text('landmark')->nullable();
+            $table->longText('keywords')->nullable();
             $table->softDeletes();
         });
     }

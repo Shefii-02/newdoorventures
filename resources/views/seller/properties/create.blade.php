@@ -2094,6 +2094,16 @@
                                     class="block w-full mt-2 p-2 border rounded-lg" placeholder="Write your thoughts here..."></textarea>
                             </div>
 
+                            <div class="mt-5">
+                                <div class="mt-3 font-bold text-black fs-3">
+                                    <label class="font-bold text-black dark:text-white mb-2"> Keywords <span
+                                            class="small text-[#637381]">(if you have multiple words use ' , '
+                                            comma)</span> </label>
+                                    <textarea form="propertyFrom" rows="4" autocomplete="off" class="block w-full mt-2 p-2 border rounded-lg" cols="3"
+                                        placeholder="bangalore central,bengaluru central,..." name="keywords">{{ isset($property) ? $property->keywords : '' }}</textarea>
+                                </div>
+                            </div>
+
 
                             <div class="mt-5">
                                 <h6 class="mt-3 font-bold text-black fs-3">Mark as moderation status <sup

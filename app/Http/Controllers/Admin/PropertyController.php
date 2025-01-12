@@ -472,7 +472,8 @@ class PropertyController extends Controller
             $property->cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : '';
             $property->moderation_status = 'approved';
             $property->built_suit       = $request->has('built_suit') ? 1 : 0;
-
+            $property->keywords         = $request->keywords ?? '';
+            
             if ($request->mode == 'sell') {
                 $property->status       = 'selling';
             } else {
@@ -784,7 +785,7 @@ class PropertyController extends Controller
             $property->plot_type        = $request->plot_type ?? '';
             $property->moderation_status = $request->property_status ?? 'pending';
             $property->built_suit       = $request->has('built_suit') ? 1 : 0;
-
+            $property->keywords         = $request->keywords ?? '';
             $property->save();
 
             $property->features()->sync($request->input('amenities', []));

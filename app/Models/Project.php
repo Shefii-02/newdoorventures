@@ -65,6 +65,7 @@ class Project extends BaseModel
         'sub_locality', 
         'landmark',
         'possession',
+        'keywords',
     ];
 
     protected $casts = [
