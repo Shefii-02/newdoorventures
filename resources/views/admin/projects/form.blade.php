@@ -503,7 +503,7 @@
                                                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');convertToWords('price_from')"
                                                         value="{{ old('price_from', $project->price_from ?? '') }}"
                                                         name="price_from" type="text" id="priceInputprice_from">
-                                                    <p class="mt-4 text-dark-700">Price in words: <span
+                                                    <p class="mt-4  fs-6 my-1.5 text-[#9D5425]">Price in words: <span
                                                             id="price_from"></span></p>
                                                 </div>
                                                 <div class="form-group mb-3 col-md-6">
@@ -514,7 +514,7 @@
                                                         value="{{ old('price_to', $project->price_to ?? '') }}"
                                                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');convertToWords('price_to')"
                                                         name="price_to" type="text" id="priceInputprice_to">
-                                                    <p class="mt-4 text-dark-700">Price in words: <span
+                                                    <p class="mt-4 fs-6 my-1.5 text-[#9D5425]">Price in words: <span
                                                             id="price_to"></span></p>
                                                 </div>
                                                 <div class="form-group mb-3 col-md-3 d-none">
@@ -697,7 +697,12 @@
                                                                                 value="{{ $priceVari['price'] }}"
                                                                                 name="unitDetails[100{{ $key }}][price]"
                                                                                 class="form-control"
+                                                                                oninput="convertToWords('unit{{ $key }}')"
+                                                                                id="priceInputunit{{ $key }}"
                                                                                 placeholder="Enter price" />
+                                                                            <p class="mt-4 fs-6 my-1.5 text-[#9D5425]">Price in words:
+                                                                                <span id="unit{{ $key }}"></span>
+                                                                            </p>
                                                                         </div>
 
                                                                         <!-- Remove Button -->
@@ -751,8 +756,12 @@
                                                                             Inclusive)</label>
                                                                         <input type="number"
                                                                             :name="`unitDetails[${index}][price]`"
+                                                                            :oninput="`convertToWords('unit${index}')`"
+                                                                            :id="`priceInputunit${index}`"
                                                                             class="form-control" placeholder="Enter price"
                                                                             x-model="item.price" />
+                                                                        <p class="mt-4 fs-6 my-1.5 text-[#9D5425]">Price in words: <span
+                                                                                :id="`unit${index}`"></span></p>
                                                                     </div>
 
                                                                     <!-- Remove Button -->
@@ -1576,16 +1585,24 @@
     </script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-    jQuery(document).ready(function($) {
-        $('#builder').select2({
-            placeholder: "Select a builder",
-            allowClear: true,
-            width: 'resolve'
+        jQuery(document).ready(function($) {
+            $('#builder').select2({
+                placeholder: "Select a builder",
+                allowClear: true,
+                width: 'resolve'
+            });
         });
-    });
+    </script>
+
+    <script>
+        @if (isset($project))
+            @foreach ($project->priceVariations ?? [] as $key => $priceVari)
+                convertToWords('unit{{ $key }}');
+            @endforeach
+        @endif
     </script>
 @endpush
