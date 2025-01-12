@@ -132,7 +132,15 @@
                                     <input x-ref="fileInput" type="file" id="dropzone-file" class="hidden" name="icon"
                                         @change="handleFileUpload" />
                                 </label>
+
                             </div>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label class="mb-3 block text-sm font-medium text-black dark:text-dark">Type</label>
+                            <select class="form-control" name="type">
+                                <option value="full_screen">Full screen</option>
+                                <option value="page_side">Page Side</option>
+                            </select>
                         </div>
 
 

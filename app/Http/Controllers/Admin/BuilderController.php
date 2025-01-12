@@ -19,7 +19,17 @@ class BuilderController extends Controller
             return abort(404);
         }
 
-       $builders = Investor::orderBy('created_at', 'desc')->get();
+    //    $builders = Investor::orderBy('created_at', 'desc')->get();
+
+       $query = Investor::orderBy('created_at', 'desc');
+       if ($request->has('search') && $request->search != '') {
+           $search = $request->search;
+           $query->where(function ($q) use ($search) {
+               $q->where('name', 'LIKE', "%$search%");
+           });
+       }
+
+       $builders = $query->get();
 
        return view('admin.builders.index',compact('builders'));
    }

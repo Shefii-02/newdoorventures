@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="py-4">
-                    <h3 class="fw-bold fs-4">New Launch and Ready to move projects</h3>
-                    <h6 class="font-semibold"> Where you can start living</h6>
+                    <h3 class="fw-bold fs-4">New Launched Projects</h3>
+                    <h6 class="font-semibold"> </h6>
                 </div>
             </div>
             <div class="col-lg-6 text-end">
@@ -14,7 +14,7 @@
 
         <div
             data-slick='{
-            "slidesToShow": 6,
+            "slidesToShow": 5,
             "slidesToScroll": 1,
             "arrows": true,
             "dots": false,
@@ -28,7 +28,7 @@
         }'>
             @foreach($readyToMoveProjects ?? [] as $project)
                 <div class="mx-4 text-center">
-                    <a target="_blank" href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}">
+                    <a target="_blank" title="{{ $project->name }}" href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}">
                         <img class="rounded-circle"
                         src="{{ asset('images/'.$project->image) }}" onerror="this.src='/themes/images/dummy-image.webp'" alt="{{ $project->name }}" >
                         <h4 class="small fs-16 fw-bold fs-6 truncate">{{ $project->name }}</h4>

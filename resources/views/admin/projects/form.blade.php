@@ -939,7 +939,7 @@
                             <div class="px-3">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <h4 class="font-bold text-black dark:text-white"> Configration </h4>
+                                        <h4 class="font-bold text-black dark:text-white"> Configuration </h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
