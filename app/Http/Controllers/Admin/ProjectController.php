@@ -295,7 +295,7 @@ class ProjectController extends Controller
             // $images           =  isset($imagePath['filePaths']) ? $imagePath['filePaths'] : '';
             $cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : '';
 
-dd($NewimagePath2);
+
             $request->merge(['images' => $NewimagePath, 'master_plan_images' => $NewimagePath2, 'cover_image' => $cover_image]);
             $request->merge(['videos' => array_filter($videos)]);
 
