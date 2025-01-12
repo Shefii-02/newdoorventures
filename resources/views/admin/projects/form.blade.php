@@ -1,5 +1,34 @@
 @extends('admin.layouts.master')
+@push('header')
+    <style>
+        input.form-control,
+        select.form-control,
+        .select2.select2-container {
+            width: 100% !important;
+        }
 
+        .select2-container .select2-selection--single {
+            height: 40px !important;
+            border: 1px solid #ced4da !important;
+        }
+
+        .select2-container--default .select2-selection--single {
+            border-radius: 6px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 35px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__clear {
+            height: 35px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 36px !important;
+        }
+    </style>
+@endpush
 @section('content')
     <div class="py-4">
         <div
@@ -346,27 +375,28 @@
                                                             <div class="grid grid-cols-6 md:grid-cols-5 gap-4">
                                                                 @foreach ($project->master_plan_images ?? [] as $key => $plan_images)
                                                                     @if (is_array($plan_images))
-                                                                    @foreach($plan_images ?? [] as $mas_image)
-                                                                        <div
-                                                                            class="relative group border rounded-lg overflow-hidden existing-data-box">
-                                                                            <img src="{{ asset('images/' . $mas_image) }}"
-                                                                                class="thumbnail" alt="Uploaded Image">
-                                                                            <input type="hidden"
-                                                                                value="{{ $mas_image }}"
-                                                                                name="existingImageMaster[]" />
-                                                                            <button type="button"
-                                                                                onclick="removeExistingRow2(this)"
-                                                                                class="absolute bg-white p-1 right-0 top-0 rounded-full">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                    class="h-4 w-4" fill="red"
-                                                                                    viewBox="0 0 20 20">
-                                                                                    <path fill-rule="evenodd"
-                                                                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                                                        clip-rule="evenodd" />
-                                                                                </svg>
-                                                                            </button>
-                                                                        </div>
-                                                                    @endforeach
+                                                                        @foreach ($plan_images ?? [] as $mas_image)
+                                                                            <div
+                                                                                class="relative group border rounded-lg overflow-hidden existing-data-box">
+                                                                                <img src="{{ asset('images/' . $mas_image) }}"
+                                                                                    class="thumbnail"
+                                                                                    alt="Uploaded Image">
+                                                                                <input type="hidden"
+                                                                                    value="{{ $mas_image }}"
+                                                                                    name="existingImageMaster[]" />
+                                                                                <button type="button"
+                                                                                    onclick="removeExistingRow2(this)"
+                                                                                    class="absolute bg-white p-1 right-0 top-0 rounded-full">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                        class="h-4 w-4" fill="red"
+                                                                                        viewBox="0 0 20 20">
+                                                                                        <path fill-rule="evenodd"
+                                                                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                                            clip-rule="evenodd" />
+                                                                                    </svg>
+                                                                                </button>
+                                                                            </div>
+                                                                        @endforeach
                                                                     @else
                                                                         <div
                                                                             class="relative group border rounded-lg overflow-hidden existing-data-box">
@@ -471,19 +501,21 @@
                                                     <input class="form-control input-mask-number"
                                                         placeholder="Lowest price"
                                                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');convertToWords('price_from')"
-                                                        value="{{ old('price_from', $project->price_from ?? '') }}" 
+                                                        value="{{ old('price_from', $project->price_from ?? '') }}"
                                                         name="price_from" type="text" id="priceInputprice_from">
-                                                        <p class="mt-4 text-dark-700">Price in words: <span id="price_from"></span></p>
+                                                    <p class="mt-4 text-dark-700">Price in words: <span
+                                                            id="price_from"></span></p>
                                                 </div>
                                                 <div class="form-group mb-3 col-md-6">
                                                     <label for="price_to"
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Max
                                                         price</label>
                                                     <input class="form-control input-mask-number" placeholder="Max price"
-                                                        value="{{ old('price_to', $project->price_to ?? '') }}" 
+                                                        value="{{ old('price_to', $project->price_to ?? '') }}"
                                                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');convertToWords('price_to')"
                                                         name="price_to" type="text" id="priceInputprice_to">
-                                                        <p class="mt-4 text-dark-700">Price in words: <span id="price_to"></span></p>
+                                                    <p class="mt-4 text-dark-700">Price in words: <span
+                                                            id="price_to"></span></p>
                                                 </div>
                                                 <div class="form-group mb-3 col-md-3 d-none">
                                                     <label for="resale_properties"
@@ -1471,16 +1503,16 @@
             };
         });
     </script>
-     {{-- convert price to words --}}
+    {{-- convert price to words --}}
 
-     <script>
+    <script>
         // Function to convert number to words
         function convertToWords(divId) {
-            const num = document.getElementById('priceInput'+divId).value;
+            const num = document.getElementById('priceInput' + divId).value;
             // Ensure the input is within the maximum allowed value (₹100 Crore)
             if (num > 999999999) {
                 alert('Price cannot exceed ₹99.9 Crore');
-                document.getElementById('priceInput'+divId).value = 999999999; // Set to the maximum value
+                document.getElementById('priceInput' + divId).value = 999999999; // Set to the maximum value
                 return;
             }
 
@@ -1526,8 +1558,22 @@
 
             return words.join(' ').trim();
         }
- 
+
         convertToWords('price_from')
         convertToWords('price_to')
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+    jQuery(document).ready(function($) {
+        $('#builder').select2({
+            placeholder: "Select a builder",
+            allowClear: true,
+            width: 'resolve'
+        });
+    });
     </script>
 @endpush
