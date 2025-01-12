@@ -39,7 +39,7 @@
 
         <div class="flex items-center gap-3 2xsm:gap-7">
             <ul class="flex items-center gap-2 2xsm:gap-4 theme-toggle">
-                <a href="{{ url('/') }}" class="btn">Go to Website</a>
+                <a href="{{ url('/') }}" class="btn border py-2" target="_new">Go to Website</a>
                 <li>
                     <!-- Dark Mode Toggler -->
                     <label :class="darkMode ? 'bg-primary' : 'bg-stroke'"
