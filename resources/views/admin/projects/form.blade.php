@@ -564,7 +564,7 @@
                                                             class="mb-3 block text-sm font-medium text-black dark:text-dark">Construction
                                                             Status</label>
                                                         <div class="row px-3">
-                                                            <div class="form-check col-lg-4">
+                                                            <div class="form-check col-lg-3">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="construction_status" id="new_launch"
                                                                     @if (isset($project) && $project->construction_status == 'new_launch') checked @endif
@@ -573,7 +573,7 @@
                                                                     New Launch
                                                                 </label>
                                                             </div>
-                                                            <div class="form-check col-lg-4">
+                                                            <div class="form-check col-lg-3">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="construction_status" id="under_construction"
                                                                     @if (isset($project) && $project->construction_status == 'under_construction') checked @endif
@@ -582,13 +582,22 @@
                                                                     Under Construction
                                                                 </label>
                                                             </div>
-                                                            <div class="form-check col-lg-4">
+                                                            <div class="form-check col-lg-3">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="construction_status" id="ready_to_move"
                                                                     @if (isset($project) && $project->construction_status == 'ready_to_move') checked @endif
                                                                     value="ready_to_move">
                                                                 <label class="form-check-label" for="ready_to_move">
                                                                     Ready to Move
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check col-lg-3">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="construction_status" id="old_projects"
+                                                                    @if (isset($project) && $project->construction_status == 'old_projects') checked @endif
+                                                                    value="old_projects">
+                                                                <label class="form-check-label" for="old_projects">
+                                                                    Old Projects
                                                                 </label>
                                                             </div>
                                                         </div>
