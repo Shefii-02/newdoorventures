@@ -865,6 +865,10 @@ class PropertyController extends Controller
             Session::flash('success_msg', 'Successfully Deleted');
             return redirect()->back();
         }
+        else{
+            Session::flash('failed_msg', 'Please selected at least one item');
+            return redirect()->back();
+        }
     }
 
     public function destroy(Request $request, string $id)

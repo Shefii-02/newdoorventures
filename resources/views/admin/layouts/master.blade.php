@@ -40,6 +40,14 @@
         button.swal2-confirm.swal2-styled {
             background: #008000;
         }
+
+        ::selection {
+
+            background-color: rgb(203 166 65 / 1) !important;
+
+            color: rgb(248, 248, 248) !important;
+
+        }
     </style>
 </head>
 
@@ -153,7 +161,7 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
             });
         }
 
-        function confirmDeleteAll(event,$form) {
+        function confirmDeleteAll(event, $form) {
             event.preventDefault();
             Swal.fire({
                 title: 'Are you sure?',
