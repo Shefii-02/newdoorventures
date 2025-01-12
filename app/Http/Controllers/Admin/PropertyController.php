@@ -645,7 +645,7 @@ class PropertyController extends Controller
         // StorePropertyCategoryService $propertyCategoryService,
         // SaveFacilitiesService $saveFacilitiesService,
         // SaveRulesInformation $saveRulesInformation
-    ) {
+    ) { 
 
 
         $property = Property::where([
