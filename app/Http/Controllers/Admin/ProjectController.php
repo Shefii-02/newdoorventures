@@ -111,11 +111,12 @@ class ProjectController extends Controller
             if ($request->hasFile('new_master_plan_images')) {
                 $master_images = $this->storeFiles($request->file('new_master_plan_images'));
             } else {
-                $master_images = [];
+                $master_images = null;
             }
 
             $images           =  isset($imagePath['filePaths']) ? $imagePath['filePaths'] : '';
             $cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : '';
+            $master_images    =  isset($master_images['filePaths']) ? $imagePath['filePaths'] : '';
 
             $request->merge(['images' => $images, 'master_plan_images' => $master_images, 'cover_image' => $cover_image]);
             $request->merge(['videos' => array_filter($videos)]);
@@ -294,7 +295,7 @@ class ProjectController extends Controller
             // $images           =  isset($imagePath['filePaths']) ? $imagePath['filePaths'] : '';
             $cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : '';
 
-
+dd($NewimagePath2);
             $request->merge(['images' => $NewimagePath, 'master_plan_images' => $NewimagePath2, 'cover_image' => $cover_image]);
             $request->merge(['videos' => array_filter($videos)]);
 
