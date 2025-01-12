@@ -1526,7 +1526,7 @@
 
             return words.join(' ').trim();
         }
-
+ 
         convertToWords('price_from')
         convertToWords('price_to')
     </script>
