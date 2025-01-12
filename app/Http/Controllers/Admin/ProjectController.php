@@ -230,23 +230,20 @@ class ProjectController extends Controller
                 $imagePath2 = $this->storeFiles($request->file('new_master_plan_images'));
             }
 
-       
+
 
             // Find images and videos that were removed by comparing with the new ones
             if (is_array($project->images)) {
                 $removedImages  = array_diff($project->images ?? [], $request->existingImage ?? []);
             }
             if (is_array($project->master_plan_images)) {
-                if(isset($project->master_plan_images['filePaths'])){
+                if (isset($project->master_plan_images['filePaths'])) {
                     $removedImages2 = array_diff($project->master_plan_images['filePaths'] ?? [], $request->existingImageMaster ?? []);
-                }
-                else{
+                } else {
                     $removedImages2 = array_diff($project->master_plan_images ?? [], $request->existingImageMaster ?? []);
                 }
-                
-           
             }
-  
+
 
             // Merge the existing and new images and videos to get the final list
             $NewimagePath = array_merge($imagePath['filePaths'] ?? [], $request->existingImage ?? []);
@@ -501,18 +498,27 @@ class ProjectController extends Controller
 
         // Validate the host
         $validHosts = ['www.youtube.com', 'youtube.com', 'm.youtube.com', 'youtu.be'];
-        if (!in_array($parsedUrl['host'], $validHosts)) {
+        if (!isset($parsedUrl['host']) || !in_array($parsedUrl['host'], $validHosts)) {
             return false; // Not a valid YouTube URL
         }
 
         // Handle short URLs (youtu.be)
         if ($parsedUrl['host'] === 'youtu.be') {
-            return trim($parsedUrl['path'], '/'); // Video ID is in the path
+            return isset($parsedUrl['path']) ? ltrim($parsedUrl['path'], '/') : false;
         }
 
-        // Handle long URLs (youtube.com)
-        parse_str($parsedUrl['query'] ?? '', $queryParams);
-        return $queryParams['v'] ?? false; // Return video ID if it exists, or false otherwise
+        // Handle YouTube Shorts URLs
+        if (isset($parsedUrl['path']) && str_starts_with($parsedUrl['path'], '/shorts/')) {
+            return str_replace('/shorts/', '', $parsedUrl['path']);
+        }
+
+        // Handle regular YouTube video URLs (youtube.com)
+        if (isset($parsedUrl['query'])) {
+            parse_str($parsedUrl['query'], $queryParams);
+            return $queryParams['v'] ?? false;
+        }
+
+        return false; // No valid video ID found
     }
 
     protected function saveCustomFields(Project $project, array $customFields = []): void

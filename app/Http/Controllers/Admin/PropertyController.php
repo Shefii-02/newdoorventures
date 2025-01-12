@@ -312,22 +312,32 @@ class PropertyController extends Controller
     {
         // Parse the URL
         $parsedUrl = parse_url($url);
-
+    
         // Validate the host
         $validHosts = ['www.youtube.com', 'youtube.com', 'm.youtube.com', 'youtu.be'];
-        if (!in_array($parsedUrl['host'], $validHosts)) {
+        if (!isset($parsedUrl['host']) || !in_array($parsedUrl['host'], $validHosts)) {
             return false; // Not a valid YouTube URL
         }
-
+    
         // Handle short URLs (youtu.be)
         if ($parsedUrl['host'] === 'youtu.be') {
-            return trim($parsedUrl['path'], '/'); // Video ID is in the path
+            return isset($parsedUrl['path']) ? ltrim($parsedUrl['path'], '/') : false;
         }
-
-        // Handle long URLs (youtube.com)
-        parse_str($parsedUrl['query'] ?? '', $queryParams);
-        return $queryParams['v'] ?? false; // Return video ID if it exists, or false otherwise
+    
+        // Handle YouTube Shorts URLs
+        if (isset($parsedUrl['path']) && str_starts_with($parsedUrl['path'], '/shorts/')) {
+            return str_replace('/shorts/', '', $parsedUrl['path']);
+        }
+    
+        // Handle regular YouTube video URLs (youtube.com)
+        if (isset($parsedUrl['query'])) {
+            parse_str($parsedUrl['query'], $queryParams);
+            return $queryParams['v'] ?? false;
+        }
+    
+        return false; // No valid video ID found
     }
+    
 
 
     /**
@@ -498,13 +508,13 @@ class PropertyController extends Controller
 
             // event(new CreatedContentEvent(PROPERTY_MODULE_SCREEN_NAME, $request, $property));
 
-            AccountActivityLog::query()->create([
-                'action' => 'create_property',
-                'reference_name' => $property->name,
-                'reference_url' => route('admin.properties.edit', $property->id),
-            ]);
+            // AccountActivityLog::query()->create([
+            //     'action' => 'create_property',
+            //     'reference_name' => $property->name,
+            //     'reference_url' => route('admin.properties.edit', $property->id),
+            // ]);
 
-            $this->adApproved($property);
+            // $this->adApproved($property);
             DB::commit();
             Session::flash('success_msg', 'Successfully Created');
 
@@ -653,9 +663,7 @@ class PropertyController extends Controller
 
         ])->first() ?? abort(404);
 
-        if (! $property) {
-            abort(404);
-        }
+ 
 
         DB::beginTransaction();
 
@@ -807,11 +815,11 @@ class PropertyController extends Controller
             $this->saveRulesInformation($property, $request->input('rule', []));
 
 
-            AccountActivityLog::query()->create([
-                'action' => 'update_property',
-                'reference_name' => $property->name,
-                'reference_url' => route('admin.properties.edit', $property->id),
-            ]);
+            // AccountActivityLog::query()->create([
+            //     'action' => 'update_property',
+            //     'reference_name' => $property->name,
+            //     'reference_url' => route('admin.properties.edit', $property->id),
+            // ]);
             DB::commit();
 
 

@@ -104,7 +104,7 @@ class AccountPropertyController extends Controller
             });
         }
 
-        if($request->has('type') && $request->type != 'all'){
+        if ($request->has('type') && $request->type != 'all') {
             $type = $request->type;
             $query->where(function ($q) use ($type) {
                 $q->where('type', $type);
@@ -173,7 +173,7 @@ class AccountPropertyController extends Controller
         // SaveRulesInformation $saveRulesInformation
 
     ) {
-        
+
 
         // ->canPost()
         if (! auth('account')->user()) {
@@ -195,10 +195,10 @@ class AccountPropertyController extends Controller
 
             // Handle images upload
             if ($request->hasFile('images')) {
-                $imagePath = $this->storeFiles($request->file('images'),$request->coverImage);
+                $imagePath = $this->storeFiles($request->file('images'), $request->coverImage);
             }
 
-            
+
 
             // Handle videos upload
             if ($request->hasFile('videos')) {
@@ -251,11 +251,11 @@ class AccountPropertyController extends Controller
             $property->property_age     = $request->property_age;
             $property->possession       = $request->possession;
             $property->ownership        = $request->ownership;
-            $property->other_rooms      = $request->has('other_rooms') && count($request->other_rooms) > 0 ? implode(',',$request->other_rooms) : null; 
+            $property->other_rooms      = $request->has('other_rooms') && count($request->other_rooms) > 0 ? implode(',', $request->other_rooms) : null;
             $property->all_include      = $request->has('all_include') ? 1 : 0;
             $property->tax_include      = $request->has('tax_include') ? 1 : 0;
             $property->negotiable       = $request->has('negotiable') ? 1 : 0;
-           
+
             $property->occupancy_type   = $request->has('occupancy_type') ? $request->occupancy_type : '';
             $property->available_for    = $request->has('available_for') ? $request->available_for : '';
             $property->plot_area        = $request->plot_area ?? '';
@@ -289,14 +289,14 @@ class AccountPropertyController extends Controller
 
             // if($request->furnishing_status =='furnished'){
             //     $furnishingIds = Furnishing::whereStatus('published')->pluck('id');
-                
+
             //     $request->merge(['furnishing' => $furnishingIds]);
             // }
 
-      
+
             $property->features()->sync($request->input('amenities', []));
             // if ($request->furnishing_status != 'unfurnished') {
-                $property->furnishing()->sync($request->input('furnishing', []));
+            $property->furnishing()->sync($request->input('furnishing', []));
             // }
 
             $this->saveCustomFields($property, $request->input('custom_fields', [])); //moredetail
@@ -304,11 +304,11 @@ class AccountPropertyController extends Controller
 
             $this->saveFacilitiesService($property, $request->input('facilities', []));
 
-           
+
 
             $this->propertyCategoryService($request, $property);
 
-            
+
             $this->saveRulesInformation($property, $request->input('rule', []));
 
 
@@ -322,11 +322,10 @@ class AccountPropertyController extends Controller
 
             if (auth('account')->user()->auto_approvel == 1 && $request->moderation_status != 'draft') {
                 $this->adApproved($property);
-            }
-            else{
+            } else {
                 $this->adPendingReview($property);
             }
-            
+
 
             DB::commit();
 
@@ -407,7 +406,7 @@ class AccountPropertyController extends Controller
         // SaveRulesInformation $saveRulesInformation
     ) {
 
-     
+
         $property = Property::where([
             'id' => $id,
             'author_id' => auth('account')->id(),
@@ -431,9 +430,9 @@ class AccountPropertyController extends Controller
 
             // Handle images upload
             if ($request->hasFile('images')) {
-                $imagePath = $this->storeFiles($request->file('images'),$request->coverImage);
+                $imagePath = $this->storeFiles($request->file('images'), $request->coverImage);
             }
-  
+
 
             // Handle videos upload
             if ($request->hasFile('videos')) {
@@ -542,7 +541,7 @@ class AccountPropertyController extends Controller
             $property->possession       = $request->possession;
             $property->ownership        = $request->ownership;
             $property->open_sides       = $request->open_sides;
-            $property->other_rooms      = $request->has('other_rooms') && count($request->other_rooms) > 0 ? implode(',',$request->other_rooms) : null; 
+            $property->other_rooms      = $request->has('other_rooms') && count($request->other_rooms) > 0 ? implode(',', $request->other_rooms) : null;
             $property->all_include      = $request->has('all_include') ? 1 : 0;
             $property->tax_include      = $request->has('tax_include') ? 1 : 0;
             $property->negotiable       = $request->has('negotiable') ? 1 : 0;
@@ -561,7 +560,7 @@ class AccountPropertyController extends Controller
             $property->chairs_count     = $request->chairs_count ?? 0;
             $property->plot_type        = $request->plot_type ?? '';
             $property->built_suit       = $request->has('built_suit') ? 1 : 0;
-            
+
             if ($request->mode == 'sell') {
                 if ($request->property_status == 'sold') {
                     $property->status       = 'sold';
@@ -600,16 +599,16 @@ class AccountPropertyController extends Controller
             $property->features()->sync($request->input('amenities', []));
 
             // if($request->furnishing_status =='furnished'){
-         
+
             //     $furnishingIds = Furnishing::whereStatus('published')->pluck('id');
-          
+
             //     $request->merge(['furnishing' => $furnishingIds]);
             // }
 
             // if ($request->furnishing_status != 'unfurnished') {
-                $property->furnishing()->sync($request->input('furnishing', []));
+            $property->furnishing()->sync($request->input('furnishing', []));
             // }
-           
+
 
 
             $this->saveCustomFields($property, $request->input('custom_fields', [])); //moredetail
@@ -656,7 +655,7 @@ class AccountPropertyController extends Controller
             ]);
             DB::commit();
 
-       
+
 
             // SlugHelper::createSlug($property);
 
@@ -789,15 +788,15 @@ class AccountPropertyController extends Controller
     {
         $filePaths = [];
         $coverImagePath = "";
-    
+
         foreach ($files ?? [] as $index => $file) {
             $folderPath = 'properties';
-    
+
             $result = uploadFile($file, $folderPath, 'public', true);
-    
+
             if ($result) {
                 $filePaths[$index + 1] = $result;
-    
+
                 if ($file->getClientOriginalName() === $coverImage) {
                     $coverImagePath = $result;
                 }
@@ -805,13 +804,13 @@ class AccountPropertyController extends Controller
                 throw new \Exception("Failed to upload file: " . $file->getClientOriginalName());
             }
         }
-    
+
         return [
             'filePaths' => $filePaths,
             'coverImagePath' => $coverImagePath,
         ];
     }
-    
+
 
 
     protected function getYouTubeVideoId($url)
@@ -821,17 +820,26 @@ class AccountPropertyController extends Controller
 
         // Validate the host
         $validHosts = ['www.youtube.com', 'youtube.com', 'm.youtube.com', 'youtu.be'];
-        if (!in_array($parsedUrl['host'], $validHosts)) {
+        if (!isset($parsedUrl['host']) || !in_array($parsedUrl['host'], $validHosts)) {
             return false; // Not a valid YouTube URL
         }
 
         // Handle short URLs (youtu.be)
         if ($parsedUrl['host'] === 'youtu.be') {
-            return trim($parsedUrl['path'], '/'); // Video ID is in the path
+            return isset($parsedUrl['path']) ? ltrim($parsedUrl['path'], '/') : false;
         }
 
-        // Handle long URLs (youtube.com)
-        parse_str($parsedUrl['query'] ?? '', $queryParams);
-        return $queryParams['v'] ?? false; // Return video ID if it exists, or false otherwise
+        // Handle YouTube Shorts URLs
+        if (isset($parsedUrl['path']) && str_starts_with($parsedUrl['path'], '/shorts/')) {
+            return str_replace('/shorts/', '', $parsedUrl['path']);
+        }
+
+        // Handle regular YouTube video URLs (youtube.com)
+        if (isset($parsedUrl['query'])) {
+            parse_str($parsedUrl['query'], $queryParams);
+            return $queryParams['v'] ?? false;
+        }
+
+        return false; // No valid video ID found
     }
 }
