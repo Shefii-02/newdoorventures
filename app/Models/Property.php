@@ -159,8 +159,6 @@ class Property extends BaseModel
         );
     }
 
-    
-
 
     public function video_collect()
     {

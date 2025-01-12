@@ -60,9 +60,9 @@ class Project extends BaseModel
         'rent_properties',
         'resale_properties',
         'construction_status',
-        'city', 
-        'locality', 
-        'sub_locality', 
+        'city',
+        'locality',
+        'sub_locality',
         'landmark',
         'possession',
         'keywords',
@@ -108,15 +108,15 @@ class Project extends BaseModel
 
     public function getYoutubeVideoUrlAttribute()
     {
-        return $this->youtube_video ? str_replace('https://youtu.be/','',$this->youtube_video) : null;
+        return $this->youtube_video ? str_replace('https://youtu.be/', '', $this->youtube_video) : null;
     }
-    
+
 
     public function getYoutubeVideoAttribute($value)
     {
         return $value ? 'https://youtu.be/' . $value : null;
     }
-    
+
 
 
     /**
@@ -134,7 +134,7 @@ class Project extends BaseModel
 
     public function investor()
     {
-        return $this->hasOne(Investor::class,'id','investor_id');
+        return $this->hasOne(Investor::class, 'id', 'investor_id');
     }
 
     public function features(): BelongsToMany
@@ -144,14 +144,14 @@ class Project extends BaseModel
 
     public function specifications()
     {
-        return $this->hasMany(Specification::class,'project_id', 'id');
+        return $this->hasMany(Specification::class, 'project_id', 'id');
     }
 
     public function priceVariations()
     {
-        return $this->hasMany(ProjectPriceVariations::class,'project_id', 'id');
+        return $this->hasMany(ProjectPriceVariations::class, 'project_id', 'id');
     }
-    
+
 
     public function facilities(): BelongsToMany
     {
@@ -270,7 +270,18 @@ class Project extends BaseModel
         return $this->morphMany(CustomFieldValue::class, 'reference', 'reference_type', 'reference_id')->with('customField.options');
     }
 
-   
+    protected function constructionStatus(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                return match ($value) {
+                    'old_projects' => 'Ready to move',
+                    default => $value,
+                };
+            },
+        );
+    }
+
 
     protected function customFieldsArray(): Attribute
     {
