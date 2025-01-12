@@ -1502,6 +1502,18 @@
                 }
             };
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            window.removeExistingRow2 = function(button) {
+                // Locate the parent .existing-data-box and remove it
+                const row = button.closest('.existing-data-box');
+                if (row) {
+                    row.remove(); // Remove the div
+                } else {
+                    console.error("Could not find the parent element to remove.");
+                }
+            };
+        });
     </script>
     {{-- convert price to words --}}
 
