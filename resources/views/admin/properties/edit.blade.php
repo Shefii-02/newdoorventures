@@ -1962,9 +1962,9 @@
                                                             this.facilities.push({ id: '', distance: '' });
                                                         },
                                                         removeFacility(index) {
-                                                            if (this.facilities.length > 1) {
+                                                            {{-- if (this.facilities.length > 1) { --}}
                                                                 this.facilities.splice(index, 1);
-                                                            }
+                                                            {{-- } --}}
                                                         }
                                                     }">
                                                         @foreach ($facilitiesList as $keyFac => $exFacility)
@@ -2019,7 +2019,7 @@
                                                         <!-- Dynamic Facility List -->
                                                         <template x-for="(facility, index) in facilities"
                                                             :key="index">
-                                                            <div class="col-lg-12 items-center space-x-4 mb-4">
+                                                            <div class="col-lg-12 items-center  mb-4">
                                                                 <div class="row">
                                                                     <!-- Facility Select Box -->
                                                                     <div class="col-lg-6 mb-2">

@@ -1761,9 +1761,9 @@
                                                                 this.facilities.push({ id: '', distance: '' });
                                                             },
                                                             removeFacility(index) {
-                                                                if (this.facilities.length > 1) {
+                                                                {{-- if (this.facilities.length > 1) { --}}
                                                                     this.facilities.splice(index, 1);
-                                                                }
+                                                                {{-- } --}}
                                                             }
                                                         }">
                                                             <!-- Dynamic Facility List -->

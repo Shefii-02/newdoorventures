@@ -463,7 +463,11 @@ class FrontendController extends Controller
             return response()->json(['html' => $html]);
         }
 
-        $readyToMoveProjects = Project::where('construction_status', 'ready_to_move')->orWhere('construction_status', 'new_launch')->get();
+        $readyToMoveProjects = Project::whereIn('construction_status', [
+            'ready_to_move',
+            'new_launch',
+            'under_construction',
+        ])->get();
         $newLaunchProjects = Project::where('construction_status', 'new_launch')->get();
 
 
