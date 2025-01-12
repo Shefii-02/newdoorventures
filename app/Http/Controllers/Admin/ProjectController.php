@@ -229,15 +229,23 @@ class ProjectController extends Controller
                 $imagePath2 = $this->storeFiles($request->file('new_master_plan_images'));
             }
 
+       
 
             // Find images and videos that were removed by comparing with the new ones
             if (is_array($project->images)) {
                 $removedImages  = array_diff($project->images ?? [], $request->existingImage ?? []);
             }
             if (is_array($project->master_plan_images)) {
-
-                $removedImages2 = array_diff($project->master_plan_images ?? [], $request->existingImageMaster ?? []);
+                if(isset($project->master_plan_images['filePaths'])){
+                    $removedImages2 = array_diff($project->master_plan_images['filePaths'] ?? [], $request->existingImageMaster ?? []);
+                }
+                else{
+                    $removedImages2 = array_diff($project->master_plan_images ?? [], $request->existingImageMaster ?? []);
+                }
+                
+           
             }
+  
 
             // Merge the existing and new images and videos to get the final list
             $NewimagePath = array_merge($imagePath['filePaths'] ?? [], $request->existingImage ?? []);
