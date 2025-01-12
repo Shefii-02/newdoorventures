@@ -50,7 +50,7 @@ class AdvertisementController extends Controller
             $advertisement = Advertisement::query()->create($request->input());
             $result = uploadFile($request->file('icon'), 'general');
             $advertisement->image = $result;
-            $advertisement->type = $request->type;
+            $advertisement->text = $request->type;
             
             $advertisement->save();
             Db::commit();
@@ -108,7 +108,7 @@ class AdvertisementController extends Controller
                 $result = uploadFile($request->file('icon'), 'general');
                 $advertisement->image = $result;
             }
-            $advertisement->type = $request->type;
+            $advertisement->text = $request->type;
             $advertisement->save();
 
             Db::commit();
