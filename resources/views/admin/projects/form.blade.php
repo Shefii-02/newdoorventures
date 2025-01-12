@@ -591,10 +591,11 @@
                                                                     Ready to Move
                                                                 </label>
                                                             </div>
+                                                            
                                                             <div class="form-check col-lg-3">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="construction_status" id="old_projects"
-                                                                    @if (isset($project) && $project->construction_status == 'old_projects') checked @endif
+                                                                    @if (isset($project) && $project->construction_status == 'Ready to move') checked @endif
                                                                     value="old_projects">
                                                                 <label class="form-check-label" for="old_projects">
                                                                     Old Projects

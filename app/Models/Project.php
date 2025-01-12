@@ -282,6 +282,14 @@ class Project extends BaseModel
         );
     }
 
+    protected function setConstructionStatus(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => $value === 'Ready to move' ? 'old_projects' : $value,
+        );
+    }
+    
+
 
     protected function customFieldsArray(): Attribute
     {
