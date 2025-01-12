@@ -649,8 +649,7 @@ class PropertyController extends Controller
 
 
         $property = Property::where([
-            'id' => $id,
-            'author_id' => auth('account')->id(),
+            'id' => $id
 
         ])->first() ?? abort(404);
 
