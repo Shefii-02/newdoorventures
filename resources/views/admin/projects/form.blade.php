@@ -345,24 +345,49 @@
                                                             <!-- Existing Images -->
                                                             <div class="grid grid-cols-6 md:grid-cols-5 gap-4">
                                                                 @foreach ($project->master_plan_images ?? [] as $key => $plan_images)
-                                                                    <div
-                                                                        class="relative group border rounded-lg overflow-hidden existing-data-box">
-                                                                        <img src="{{ asset('images/' . $plan_images) }}"
-                                                                            class="thumbnail" alt="Uploaded Image">
-                                                                        <input type="hidden" value="{{ $plan_images }}"
-                                                                            name="existingImageMaster[]" />
-                                                                        <button type="button"
-                                                                            onclick="removeExistingRow2(this)"
-                                                                            class="absolute bg-white p-1 right-0 top-0 rounded-full">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="red"
-                                                                                viewBox="0 0 20 20">
-                                                                                <path fill-rule="evenodd"
-                                                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                                                    clip-rule="evenodd" />
-                                                                            </svg>
-                                                                        </button>
-                                                                    </div>
+                                                                    @if (is_array($plan_images))
+                                                                    @foreach($plan_images ?? [] as $mas_image)
+                                                                        <div
+                                                                            class="relative group border rounded-lg overflow-hidden existing-data-box">
+                                                                            <img src="{{ asset('images/' . $mas_image) }}"
+                                                                                class="thumbnail" alt="Uploaded Image">
+                                                                            <input type="hidden"
+                                                                                value="{{ $mas_image }}"
+                                                                                name="existingImageMaster[]" />
+                                                                            <button type="button"
+                                                                                onclick="removeExistingRow2(this)"
+                                                                                class="absolute bg-white p-1 right-0 top-0 rounded-full">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    class="h-4 w-4" fill="red"
+                                                                                    viewBox="0 0 20 20">
+                                                                                    <path fill-rule="evenodd"
+                                                                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                                        clip-rule="evenodd" />
+                                                                                </svg>
+                                                                            </button>
+                                                                        </div>
+                                                                    @endforeach
+                                                                    @else
+                                                                        <div
+                                                                            class="relative group border rounded-lg overflow-hidden existing-data-box">
+                                                                            <img src="{{ asset('images/' . $plan_images) }}"
+                                                                                class="thumbnail" alt="Uploaded Image">
+                                                                            <input type="hidden"
+                                                                                value="{{ $plan_images }}"
+                                                                                name="existingImageMaster[]" />
+                                                                            <button type="button"
+                                                                                onclick="removeExistingRow2(this)"
+                                                                                class="absolute bg-white p-1 right-0 top-0 rounded-full">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    class="h-4 w-4" fill="red"
+                                                                                    viewBox="0 0 20 20">
+                                                                                    <path fill-rule="evenodd"
+                                                                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                                        clip-rule="evenodd" />
+                                                                                </svg>
+                                                                            </button>
+                                                                        </div>
+                                                                    @endif
                                                                 @endforeach
 
                                                                 <!-- Alpine.js Managed Image Previews -->
@@ -445,18 +470,20 @@
                                                         price</label>
                                                     <input class="form-control input-mask-number"
                                                         placeholder="Lowest price"
-                                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                                        value="{{ old('price_from', $project->price_from ?? '') }}"
-                                                        name="price_from" type="text" id="price_from">
+                                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');convertToWords('price_from')"
+                                                        value="{{ old('price_from', $project->price_from ?? '') }}" 
+                                                        name="price_from" type="text" id="priceInputprice_from">
+                                                        <p class="mt-4 text-dark-700">Price in words: <span id="price_from"></span></p>
                                                 </div>
                                                 <div class="form-group mb-3 col-md-6">
                                                     <label for="price_to"
                                                         class="mb-3 block text-sm font-medium text-black dark:text-dark">Max
                                                         price</label>
                                                     <input class="form-control input-mask-number" placeholder="Max price"
-                                                        value="{{ old('price_to', $project->price_to ?? '') }}"
-                                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                                        name="price_to" type="text" id="price_to">
+                                                        value="{{ old('price_to', $project->price_to ?? '') }}" 
+                                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');convertToWords('price_to')"
+                                                        name="price_to" type="text" id="priceInputprice_to">
+                                                        <p class="mt-4 text-dark-700">Price in words: <span id="price_to"></span></p>
                                                 </div>
                                                 <div class="form-group mb-3 col-md-3 d-none">
                                                     <label for="resale_properties"
@@ -1354,9 +1381,10 @@
                             } catch (parseError) {
                                 // If parsing fails, handle it as a non-JSON response
                                 const textError = await response.statusText;
-                           
 
-                                this.showToastMessage(textError+'! An unexpected error occurred. Please check the logs.', 'error');
+
+                                this.showToastMessage(textError +
+                                    '! An unexpected error occurred. Please check the logs.', 'error');
 
                                 // Optionally, send raw response text to the backend for logging
                                 await fetch('{{ route('log.validation.error') }}', {
@@ -1392,43 +1420,43 @@
                         // this.showToastMessage('Validation failed.', 'error');
                         // return; // Stop further execution if validation fails
                         // }
-                    }catch (error) {
-                    console.log(error);
-                    if (error.status === '500') {
-                        console.log(1)
-                        this.showToastMessage(error.statusText, 'error');
+                    } catch (error) {
+                        console.log(error);
+                        if (error.status === '500') {
+                            console.log(1)
+                            this.showToastMessage(error.statusText, 'error');
 
-                    } else {
-                        // Catch unexpected errors (e.g., network issues)
-                        this.errorMessage = error.message || 'An error occurred during form submission';
-                        this.responseMessage = ''; // Clear success messages
-                        this.showToastMessage(this.errorMessage, 'error');
+                        } else {
+                            // Catch unexpected errors (e.g., network issues)
+                            this.errorMessage = error.message || 'An error occurred during form submission';
+                            this.responseMessage = ''; // Clear success messages
+                            this.showToastMessage(this.errorMessage, 'error');
+                        }
+
                     }
+                },
 
-                }
-            },
+                showToastMessage(message, type) {
+                    this.toastType = type;
 
-            showToastMessage(message, type) {
-                this.toastType = type;
-
-                if (type === 'error' && this.validationErrors.length > 0) {
-                    // Construct an unordered list of errors
-                    this.toastMessage = `
+                    if (type === 'error' && this.validationErrors.length > 0) {
+                        // Construct an unordered list of errors
+                        this.toastMessage = `
                         <strong>${message}</strong>
                         <ul>
                             ${this.validationErrors.map(error => `<li>${error}</li>`).join('')}
                         </ul>
                     `;
-                } else {
-                    this.toastMessage = message + '...';
-                }
+                    } else {
+                        this.toastMessage = message + '...';
+                    }
 
-                this.showToast = true;
-                setTimeout(() => {
-                    this.showToast = false; // Hide toast after 3 seconds
-                }, 3000);
-            }
-        };
+                    this.showToast = true;
+                    setTimeout(() => {
+                        this.showToast = false; // Hide toast after 3 seconds
+                    }, 3000);
+                }
+            };
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -1442,5 +1470,64 @@
                 }
             };
         });
+    </script>
+     {{-- convert price to words --}}
+
+     <script>
+        // Function to convert number to words
+        function convertToWords(divId) {
+            const num = document.getElementById('priceInput'+divId).value;
+            // Ensure the input is within the maximum allowed value (₹100 Crore)
+            if (num > 999999999) {
+                alert('Price cannot exceed ₹99.9 Crore');
+                document.getElementById('priceInput'+divId).value = 999999999; // Set to the maximum value
+                return;
+            }
+
+            // Convert the number to words
+            const words = numberToWords(parseInt(num));
+            document.getElementById(divId).textContent = '₹ ' + (words || 'Zero');
+        }
+
+        function numberToWords(num) {
+            if (isNaN(num) || num === 0) return 'Zero';
+
+            const a = [
+                '', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+                'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen',
+                'Seventeen', 'Eighteen', 'Nineteen'
+            ];
+            const b = [
+                '', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'
+            ];
+            const c = ['Crore', 'Lakh', 'Thousand', 'Hundred', ''];
+
+            // Define how to split numbers in the Indian system
+            const divisors = [10000000, 100000, 1000, 100, 1];
+            let words = [];
+
+            for (let i = 0; i < divisors.length; i++) {
+                const divisor = divisors[i];
+                const quotient = Math.floor(num / divisor);
+                if (quotient > 0) {
+                    if (i === 3 && quotient < 10 && words.length > 0) {
+                        // Special handling for numbers below 10 in the "Hundred" place
+                        words.push('and');
+                    }
+                    if (quotient < 20) {
+                        words.push(a[quotient]);
+                    } else {
+                        words.push(b[Math.floor(quotient / 10)] + (quotient % 10 > 0 ? ' ' + a[quotient % 10] : ''));
+                    }
+                    if (c[i]) words.push(c[i]); // Add the place (Crore, Lakh, etc.)
+                    num %= divisor; // Update the remainder
+                }
+            }
+
+            return words.join(' ').trim();
+        }
+
+        convertToWords('price_from')
+        convertToWords('price_to')
     </script>
 @endpush
