@@ -50,7 +50,7 @@
                                         <span class="ps-4">{{ $project->city }}.</span>
                                     </p>
                                 @endif
-                                <div class="flex flex-column flex-wrap gap-3 items-center justify-between pt-4 ps-0 mb-0 list-none">
+                                <div class="flex flex-column flex-wrap gap-3  justify-between pt-4 ps-0 mb-0 list-none">
                                     @if ($project->price_from || $project->price_to)
                                         <li>
                                             <span class="text-slate-400 text-sm">{{ __('Price') }}</span>
