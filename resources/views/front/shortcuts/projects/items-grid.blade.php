@@ -3,7 +3,7 @@
         <div class="col-lg-10">
             <div class="row">
                 @foreach ($projects as $project)
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 mb-3">
                         <div
                             class="overflow-hidden duration-500 ease-in-out bg-white shadow project-item group rounded-xl dark:bg-slate-800 hover:shadow-lg dark:shadow-gray-700 dark:hover:shadow-gray-700">
                             <div class="relative overflow-hidden">
