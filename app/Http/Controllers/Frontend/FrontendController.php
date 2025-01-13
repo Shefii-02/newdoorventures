@@ -48,8 +48,9 @@ class FrontendController extends Controller
             $keywords = implode(', ', $request->s);
             $searchByTitle .=  $keywords . ', ';
         }
+        
         // if ($request->has('type') && $request->type != '') {
-        $searchByTitle .= ucfirst($type) . " Properties for " . $purpose;
+        $searchByTitle .= $purpose . " Properties for " . ucfirst($type);
         // }
 
         // Append city to the title if present in the request
