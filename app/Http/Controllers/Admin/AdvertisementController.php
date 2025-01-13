@@ -45,11 +45,13 @@ class AdvertisementController extends Controller
     public function store(Request $request)
     {
         //
+        if($request->hasFile('icon')){
         DB::beginTransaction();
         try {
             $advertisement = Advertisement::query()->create($request->input());
             $result = uploadFile($request->file('icon'), 'general');
             $advertisement->image = $result;
+            $advertisement->redirection = $request->redirection;
             $advertisement->text = $request->type;
             
             $advertisement->save();
@@ -63,6 +65,11 @@ class AdvertisementController extends Controller
 
         Session::flash('success_msg', 'Successfully Added');
         return redirect()->route('admin.advertisement.index');
+    }
+    else{
+        Session::flash('failed_msg', 'Failed..! please sleect a image');
+        return redirect()->back();
+    }
     }
 
     /**
@@ -108,6 +115,7 @@ class AdvertisementController extends Controller
                 $result = uploadFile($request->file('icon'), 'general');
                 $advertisement->image = $result;
             }
+            $advertisement->redirection = $request->redirection;
             $advertisement->text = $request->type;
             $advertisement->save();
 

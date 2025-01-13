@@ -138,14 +138,17 @@
                         <div class="col-lg-6 mb-3">
                             <label class="mb-3 block text-sm font-medium text-black dark:text-dark">Type</label>
                             <select class="form-control" name="type">
-                                <option value="full_screen">Full screen</option>
-                                <option value="page_side">Page Side</option>
+                                <option value="full_screen" {{ isset($advertisement) && $advertisement->text == 'full_screen' ? 'selected' : '' }}>Full screen</option>
+                                <option value="page_list" {{ isset($advertisement) && $advertisement->text == 'page_list' ? 'selected' : '' }}>Page List</option>
                             </select>
                         </div>
-
-
-
-
+                        <div class="mb-2 w-1/2">
+                            <label class="block mb-2 text-sm font-medium text-black dark:text-dark">Redirect Url</label>
+                            <input type="url" autocomplete="off" name="redirection" class="form-control" value="{{ old('redirection', $advertisement->redirection ?? '') }}" />
+                            @error('redirection')
+                                <span class="fw-bold text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                         <!-- Submit Button -->
                         <div class="mt-4">
                             <button type="submit"

@@ -61,7 +61,9 @@
                         <div class="w-2/12 xl:w-3/12">
                             <span class="font-medium">Image</span>
                         </div>
-
+                        <div class="w-2/12 xl:w-3/12">
+                            <span>Type</span>
+                        </div>
                         <div class=" w-2/12 text-center 2xsm:block md:w-1/12">
                             <span class="font-medium">Actions</span>
                         </div>
@@ -77,7 +79,9 @@
                                         <img src="{{ asset('images/' . $adv->image) }}" style="width: 35px">
                                     </div>
                                 </div>
-
+                                <div class="w-2/12 xl:w-3/12 text-capitalize">
+                                    <span>{{ str_replace('_',' ',$adv->text) }}</span>
+                                </div>
                                 <div class=" w-2/12 2xsm:block md:w-1/12">
                                     <div class="flex justify-between">
                                         <a href="{{ route('admin.advertisement.edit', $adv->id) }}"

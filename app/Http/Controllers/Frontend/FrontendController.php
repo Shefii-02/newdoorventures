@@ -846,32 +846,32 @@ class FrontendController extends Controller
 
             // Query 1: Search in 'city'
             $cities = Project::query()
-                ->where('city', 'LIKE', "%{$keyword}%")
-                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
-                    $query->where('construction_status', $type);
-                })
-                ->where('city', '!=', '')
-                ->distinct()
-                ->pluck('city')->toArray();
+                                ->where('city', 'LIKE', "%{$keyword}%")
+                                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
+                                    $query->where('construction_status', $type);
+                                })
+                                ->where('city', '!=', '')
+                                ->distinct()
+                                ->pluck('city')->toArray();
 
 
             // Query 2: Search in 'locality'
             $localities = Project::query()
-                ->where('locality', 'LIKE', "%{$keyword}%")
-                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
-                    $query->where('construction_status', $type);
-                })
-                ->where('locality', '!=', '')
-                ->distinct()
-                ->pluck('locality')->toArray();
+                                    ->where('locality', 'LIKE', "%{$keyword}%")
+                                    ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
+                                        $query->where('construction_status', $type);
+                                    })
+                                    ->where('locality', '!=', '')
+                                    ->distinct()
+                                    ->pluck('locality')->toArray();
 
             // Query 3: Search in associated 'project name'
             $projects = Project::where('name', 'LIKE', "%{$keyword}%")
-                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
-                    $query->where('construction_status', $type);
-                })
-                ->distinct()
-                ->pluck('name')->toArray();
+                                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
+                                    $query->where('construction_status', $type);
+                                })
+                                ->distinct()
+                                ->pluck('name')->toArray();
         }
 
 
