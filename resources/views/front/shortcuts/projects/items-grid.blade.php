@@ -113,9 +113,13 @@
                 </div>
             </div>
             {{-- advertisement --}}
-            <div class="py-4">
-                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/aae8da113086087.60212ba3b3ae2.jpg">
-            </div>
+            
+            @php
+                $projectProperties = collect();
+                $properties        = collect();
+            @endphp
+
+            @include('front.shortcuts.properties.advertisement',compact('projectProperties','properties'))
 
         </div>
     </div>

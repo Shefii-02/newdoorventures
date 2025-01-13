@@ -494,7 +494,7 @@ class FrontendController extends Controller
             $searchByTitle .=  $keywords . ', ';
         }
         // if ($request->has('type') && $request->type != '') {
-        $searchByTitle .= ucfirst($type) . " Properties for " . $purpose;
+        $searchByTitle .= ucfirst($type) . " Projects";
         // }
 
         // Append city to the title if present in the request
@@ -510,6 +510,7 @@ class FrontendController extends Controller
         return $searchByTitle; // Return the generated search title
     }
 
+    
     public function projects(Request $request)
     {
         $query = Project::query();
@@ -529,7 +530,7 @@ class FrontendController extends Controller
         $categories = Category::where('status', 'published')->get();
         $builders =  Investor::WhereHas('projects')->get();
 
-        $searchByTitle = $this->searchByTitle($request, $projects, '', "");
+        $searchByTitle = $this->searchByProjectTitle($request, $projects, '', "");
 
         $pageTitle = 'All Real Estate Projects: New Launch, Ready to Launch & Under Construction in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Explore a variety of real estate projects including new launches, ready-to-launch, and under-construction properties in Bangalore and Karnataka. Find your dream home or investment opportunity today.';

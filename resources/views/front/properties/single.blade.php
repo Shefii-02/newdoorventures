@@ -587,7 +587,7 @@
                                         <div class="border-theme rounded-xl">
                                             <div class="px-3 py-5">
                                                 <h4 class="fs-5  font-bold me-2 text-capitalize ">
-                                                    Similar {{ $property->type_name }} Properties and  Nearby
+                                                    Similar Properties for {{ $property->type_name }}  Nearby
                                                 </h4>
                                             </div>
                                             <div class="px-2">

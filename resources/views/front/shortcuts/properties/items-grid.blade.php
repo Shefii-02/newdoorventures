@@ -4,7 +4,7 @@
             <div class="row">
                 @foreach ($properties ?? [] as $Pkey => $property)
                     @if ($property->type == 'pg')
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 mb-3   ">
                             @include('front.shortcuts.properties.item-pg', compact('property'))
                         </div>
                     @elseif($property->category->name == 'Plot and Land')
@@ -12,11 +12,11 @@
                             @include('front.shortcuts.properties.item-plot', compact('property'))
                         </div>
                     @elseif($property->type == 'rent')
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 mb-3">
                             @include('front.shortcuts.properties.item-rent', compact('property'))
                         </div>
                     @else
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 mb-3">
                             @include('front.shortcuts.properties.item-sale', compact('property'))
                         </div>
                     @endif
