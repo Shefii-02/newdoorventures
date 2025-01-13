@@ -115,12 +115,9 @@
             </div>
             {{-- advertisement --}}
             
-            @php
-                $projectProperties = collect();
-                $properties        = collect();
-            @endphp
+        
 
-            @include('front.shortcuts.properties.advertisement',compact('projectProperties','properties'))
+            @include('front.shortcuts.projects.advertisement',compact('projects'))
 
         </div>
     </div>
