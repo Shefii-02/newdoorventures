@@ -815,7 +815,7 @@
                     </a>
                     <!-- Close Button -->
                     <button @click="closeModal()"
-                        class="absolute x-btn text-theme bg-red-500  rounded-full p-2">
+                        class="absolute x-btn text-light bg-red-500  rounded-full p-2">
                         ✕
                     </button>
                 </div>
