@@ -207,7 +207,7 @@
                                 © 2024 New Door Ventures. All right reserved. 
                                 <a class="text-theme mt-2 dark:text-black" href="https://www.newdoorventures.co.in" target="_new">www.newdoorventures.co.in</a>
                             </p>
-                            Made with <i class="bi bi-heart text-danger"></i> by <a
+                            Made with <i class="bi bi-heart text-danger"></i> by <a target="_blank"
                                         href="https://whizcreativetech.com/"><b>Whiz Creative Tech</b></a>
                         </div>
 
