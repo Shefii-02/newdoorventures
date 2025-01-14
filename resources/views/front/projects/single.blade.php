@@ -182,7 +182,7 @@
                             </button>
                         </li>
                     @endif
-                    
+
                     @if ($project->latitude && $project->longitude)
                         <li role="presentation" class="inline-block">
                             <button @click="scrollToSection('Location')"
@@ -430,7 +430,7 @@
                                     </div>
                                 </div>
                             @endif
-                         
+
                             @if ($project->specifications->count())
                                 <div class="container-fluid mb-5 section" id="Specifications"
                                     :class="{ 'active': activeSection === 'Specifications' }">
@@ -465,12 +465,12 @@
                                 </div>
                             @endif
                             <div class="container-fluid mb-5 section">
-                                
+
                                 <a href="https://www.indoordesigns.in" target="_blank">
                                     <div class="py-2">
                                         <img src="{{ asset('themes/images/in-door-ad.png') }}" class="w-100 rounded-2">
                                     </div>
-                                    
+
                                 </a>
                             </div>
                             {{-- @if ($project->construction_status != 'ready_to_move') --}}
@@ -491,7 +491,8 @@
                                                                 <span
                                                                     class="text-medium font-bold ">{{ $sell_properties->count() }}
                                                                     Resale</span>
-                                                                <a target="_blank" href="{{ route('public.properties.sale',['project' => $project->name,'type'=>'sell']) }}"
+                                                                <a target="_blank"
+                                                                    href="{{ route('public.properties.sale', ['project' => $project->name, 'type' => 'sell']) }}"
                                                                     class="text-sm text-gray-500 text-decoration-underline">
                                                                     Properties in this project</a>
                                                             </div>
@@ -507,7 +508,8 @@
                                                                 <span
                                                                     class="text-medium font-bold ">{{ $rent_properties->count() }}
                                                                     Rental</span>
-                                                                <a target="_blank" href="{{ route('public.properties.rent',['project' => $project->name,'type'=>'sell']) }}"
+                                                                <a target="_blank"
+                                                                    href="{{ route('public.properties.rent', ['project' => $project->name, 'type' => 'sell']) }}"
                                                                     class="text-sm text-gray-500 text-decoration-underline">
                                                                     Properties in this project</a>
                                                             </div>
@@ -591,7 +593,8 @@
                                                                     </td>
                                                                     <td>
                                                                         <div class="infomarker text-start">
-                                                                            <h5><a href="{{ $project->url }}" target="_blank"
+                                                                            <h5><a href="{{ $project->url }}"
+                                                                                    target="_blank"
                                                                                     target="_blank">{!! $project->name !!}</a>
                                                                             </h5>
                                                                             <div class="text-info">
@@ -765,10 +768,11 @@
                     <template x-if="showModal">
                         <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                             <!-- Modal Content -->
-                            <div class="relative bg-white rounded-lg shadow-lg p-0" style="width: 500px; height: 350px;">
-                                <!-- Advertisement Image -->
-                                <img :src="currentImage" alt="Ad Image" class="w-full h-full rounded-lg">
-
+                            <div class="relative bg-white rounded-lg shadow-lg p-0">
+                                <a :href="currentAction" target="_blank">
+                                    <!-- Advertisement Image -->
+                                    <img :src="currentImage" alt="Ad Image" class="w-full h-full rounded-lg">
+                                </a>
                                 <!-- Close Button -->
                                 <button @click="closeModal()"
                                     class="absolute top-0 right-0 text-white bg-red-500 bg-opacity-75 rounded-full p-2 hover:bg-opacity-100 focus:outline-none">
@@ -792,77 +796,69 @@
 
 
 @push('footer')
+    <div x-data="imageModal()" class="z-999 position-relative">
+        <!-- Modal Background -->
+        <template x-if="showModal">
+            <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                <!-- Modal Content -->
+                <div class="relative bg-white rounded-lg shadow-lg p-0">
+                    <a :href="currentAction" target="_blank">
+                        <!-- Advertisement Image -->
+                        <img :src="currentImage" alt="Ad Image" class="w-full h-full rounded-lg">
+                    </a>
+                    <!-- Close Button -->
+                    <button @click="closeModal()"
+                        class="absolute top-0 right-0 text-white bg-red-500 bg-opacity-75 rounded-full p-2 hover:bg-opacity-100 focus:outline-none">
+                        ✕
+                    </button>
+                </div>
+            </div>
+        </template>
+
+        <!-- Optional Button to Show Modal Again -->
+        <button @click="showModal = true; document.body.style.overflow = 'hidden'"
+            class="fixed top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded shadow">
+            Show Advertisement
+        </button>
+    </div>
+
     <script>
-        // function imageModal() {
-        //     return {
-               
-        //         images: @json($fullscreenAdvertisement),
-        //         currentImage: null,
-        //         showModal: true,
-
-        //         init() {
-        //             this.showNextImage();
-        //             document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-        //         },
-
-        //         showNextImage() {
-        //             // Retrieve the index of the last shown image from local storage
-        //             let lastIndex = localStorage.getItem('lastShownIndex');
-        //             lastIndex = lastIndex ? parseInt(lastIndex) : -1;
-
-        //             // Determine the next image index
-        //             const nextIndex = (lastIndex + 1) % this.images.length;
-
-        //             // Set the current image
-        //             this.currentImage = '/images/'+this.images[nextIndex];
-
-        //             // Save the new index in local storage
-        //             localStorage.setItem('lastShownIndex', nextIndex);
-        //         },
-
-        //         closeModal() {
-        //             this.showModal = false;
-        //             document.body.style.overflow = 'auto'; // Re-enable scrolling
-        //         }
-        //     };
-        // }
         function imageModal() {
-    return {
-        images: @json($fullscreenAdvertisement),
-        currentImage: null,
-        showModal: false, // Initially hidden
-        delay: 3000, // Delay in milliseconds (5000ms = 5 seconds)
+            return {
+                images: @json($fullscreenAdvertisement ?? []),
+                currentImage: null,
+                currentAction: '#',
+                showModal: false,
+                delay: 3000, // Delay in milliseconds
 
-        init() {
-            // Wait for the specified delay, then show the modal
-            setTimeout(() => {
-                this.showNextImage(); // Load the next image
-                this.showModal = true; // Show the modal
-                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-            }, this.delay);
-        },
+                init() {
+                    if (this.images.length > 0) {
+                        // Wait for the specified delay, then show the modal
+                        setTimeout(() => {
+                            this.showNextImage();
+                            this.showModal = true;
+                            document.body.style.overflow = 'hidden';
+                        }, this.delay);
+                    }
+                },
 
-        showNextImage() {
-            // Retrieve the index of the last shown image from local storage
-            let lastIndex = localStorage.getItem('lastShownIndex');
-            lastIndex = lastIndex ? parseInt(lastIndex) : -1;
+                showNextImage() {
+                    let lastIndex = localStorage.getItem('lastShownIndex');
+                    lastIndex = lastIndex ? parseInt(lastIndex, 10) : -1;
 
-            // Determine the next image index
-            const nextIndex = (lastIndex + 1) % this.images.length;
+                    const nextIndex = (lastIndex + 1) % this.images.length;
 
-            // Set the current image
-            this.currentImage = '/images/' + this.images[nextIndex];
+                    this.currentImage = '/images/' + this.images[nextIndex]['image'];
+                    this.currentAction = this.images[nextIndex]['redirection'];
 
-            // Save the new index in local storage
-            localStorage.setItem('lastShownIndex', nextIndex);
-        },
+                    localStorage.setItem('lastShownIndex', nextIndex);
+                },
 
-        closeModal() {
-            this.showModal = false;
-            document.body.style.overflow = 'auto'; // Re-enable scrolling
+                closeModal() {
+                    this.showModal = false;
+                    document.body.style.overflow = 'auto';
+                }
+            };
         }
-    };
-}
-
     </script>
 @endpush
