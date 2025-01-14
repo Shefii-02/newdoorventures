@@ -770,7 +770,7 @@
                     </div>
                 </div>
                 {{-- @if ($advertisement && $project->construction_status == 'new_launch') --}}
-                <div x-data="imageModal()" class="z-999 position-relative">
+                {{-- <div x-data="imageModal()" class="z-999 position-relative">
                     <!-- Modal Background -->
                     <template x-if="showModal">
                         <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -794,7 +794,7 @@
                         class="fixed top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded shadow">
                         Show Advertisement
                     </button>
-                </div>
+                </div> --}}
 
                 {{-- @endif --}}
             </div>
@@ -815,7 +815,7 @@
                     </a>
                     <!-- Close Button -->
                     <button @click="closeModal()"
-                        class="absolute top-0 right-0 text-white bg-red-500 bg-opacity-75 rounded-full p-2 hover:bg-opacity-100 focus:outline-none">
+                        class="absolute x-btn text-theme bg-red-500  rounded-full p-2">
                         ✕
                     </button>
                 </div>
