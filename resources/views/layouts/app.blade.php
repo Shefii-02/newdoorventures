@@ -426,7 +426,7 @@
 
     {{-- <script src="{{ asset('vendor/core/plugins/language/js/language-public.js?v=2.2.0') }}"></script> --}}
     <script src="{{ asset('themes/hously/js/cookie-consent/js/cookie-consent.js') }}"></script>
-    <script src="{{ asset('themes/hously/js/app2cb4.js') }}"></script>
+    <script src="{{ asset('themes/hously/js/app2cb4.js?v=1.0') }}"></script>
     <script src="{{ asset('themes/hously/js/script2cb4.js') }}"></script>
 
     <script>
