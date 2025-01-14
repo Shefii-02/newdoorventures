@@ -205,10 +205,10 @@
                         <div class="text-center md:text-start">
                             <p class="mb-0 text-gray-300">
                                 © 2024 New Door Ventures. All right reserved. 
-                                <a class="text-theme mt-2 dark:text-black" href="https://www.newdoorventures.co.in" target="_new">www.newdoorventures.co.in</a>
+                                <a class="text-light mt-2 dark:text-black" href="https://www.newdoorventures.co.in" target="_new">www.newdoorventures.co.in</a>
                             </p>
-                            Made with <i class="bi bi-heart text-danger"></i> by <a target="_blank"
-                                        href="https://whizcreativetech.com/"><b>Whiz Creative Tech</b></a>
+                            <p class="mb-0 text-gray-300">Made with <i class="mdi mdi-heart text-danger"></i> by <a target="_blank"
+                                        href="https://whizcreativetech.com/"><b>Whiz Creative Tech</b></a></p>
                         </div>
 
                         <ul class="p-0 m-0 space-x-1 text-center list-none md:text-end">
