@@ -380,7 +380,7 @@
                                                     <h4 class="fs-5 font-bold me-2">About Project </h4>
                                                     <div class="row align-items-center">
                                                         <div class="col-lg-4 d-flex align-items-center">
-                                                            <img class="rounded-xl w-30 w-1/2 h-16"
+                                                            <img class="rounded-xl w-30 w-1/2 h-16" loading="lazy"
                                                                 src="{{ asset('images/' . $property->project->image) }}">
                                                             <div class="p-3 ">
                                                                 <span
@@ -445,7 +445,7 @@
                                                     <div class="row align-items-center px-3">
                                                         @foreach ($property->furnishing ?? [] as $furnishingItem)
                                                             <div class="col-lg-3 d-flex align-items-center">
-                                                                <img class="rounded-xl w-6 w-1/2 h-6"
+                                                                <img class="rounded-xl w-6 w-1/2 h-6" loading="lazy"
                                                                     src="{{ $furnishingItem->image_url }}">
                                                                 <div class="p-3">
                                                                     <span
@@ -472,7 +472,7 @@
                                                     <div class="row align-items-center px-3">
                                                         @foreach ($property->features ?? [] as $featureItem)
                                                             <div class="col-lg-3 d-flex align-items-center">
-                                                                <img class="rounded-xl w-6 w-1/2 h-6"
+                                                                <img class="rounded-xl w-6 w-1/2 h-6" loading="lazy"
                                                                     src="{{ $featureItem->image_url }}">
                                                                 <div class="p-3">
                                                                     <span class="text-sm">{{ $featureItem->name }}</span>
@@ -525,7 +525,7 @@
                                                                 <span class="fw-bold">{{ $key }}</span>
                                                                 <span>
                                                                     <img src="{{ $facilities->pluck('image_url')->first() }}"
-                                                                        alt="{{ $key }}"
+                                                                        alt="{{ $key }}" loading="lazy"
                                                                         style="vertical-align: top; margin-top: 3px;"
                                                                         width="18" height="18">
                                                                 </span>
@@ -585,7 +585,7 @@
                                                             <table width="100%">
                                                                 <tr class="border-bottom-none">
                                                                     <td width="90">
-                                                                        <div class="blii"><img
+                                                                        <div class="blii"><img loading="lazy"
                                                                                 src="{{ asset($property->image_thumb) }}"
                                                                                 width="80"
                                                                                 alt="{{ $property->name }}">

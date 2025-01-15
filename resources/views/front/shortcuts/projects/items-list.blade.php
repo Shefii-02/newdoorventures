@@ -5,7 +5,7 @@
                 <div class="h-full md:flex">
                     <div class="relative overflow-hidden md:shrink-0">
                         <a target="_blank" href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}">
-                            <img class="object-cover w-full h-full transition-all duration-500 md:w-48 hover:scale-110" src="{{ RvMedia::getImageUrl($project->image, 'small', false, RvMedia::getDefaultImage()) }}" alt="{{ $project->name }}">
+                            <img loading="lazy" class="object-cover w-full h-full transition-all duration-500 md:w-48 hover:scale-110" src="{{ RvMedia::getImageUrl($project->image, 'small', false, RvMedia::getDefaultImage()) }}" alt="{{ $project->name }}">
                         </a>
                         <div class="absolute top-6 end-6">
                             <button type="button" class="text-lg text-red-600 bg-white rounded-full shadow btn btn-icon dark:bg-slate-900 dark:shadow-gray-700 add-to-wishlist" aria-label="{{ __('Add to wishlist') }}" data-box-type="project" data-id="{{ $project->id }}">

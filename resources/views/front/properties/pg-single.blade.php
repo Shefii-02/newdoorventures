@@ -399,7 +399,7 @@
                                                             <div class="row align-items-center px-3">
                                                                 @foreach ($property->features ?? [] as $featureItem)
                                                                     <div class="col-lg-3 mb-3 d-flex align-items-center">
-                                                                        <img class="rounded-xl w-6 w-1/2 h-6"
+                                                                        <img class="rounded-xl w-6 w-1/2 h-6" loading="lazy"
                                                                             src="{{ $featureItem->image_url }}">
                                                                         <div class="p-3">
                                                                             <span
@@ -427,7 +427,7 @@
                                                             <div class="row align-items-center px-3">
                                                                 @foreach ($property->furnishing ?? [] as $furnishingItem)
                                                                     <div class="col-lg-3 mb-3 d-flex align-items-center">
-                                                                        <img class="rounded-xl w-6 w-1/2 h-6"
+                                                                        <img class="rounded-xl w-6 w-1/2 h-6" loading="lazy"
                                                                             src="{{ $furnishingItem->image_url }}">
                                                                         <div class="p-3">
                                                                             <span
@@ -459,7 +459,7 @@
                                                            
                                                                     <div
                                                                         class="col-lg-3 mb-3 d-flex  flex-column align-items-center">
-                                                                        <img class="rounded-xl w-6 w-1/2 h-6"
+                                                                        <img class="rounded-xl w-6 w-1/2 h-6" loading="lazy"
                                                                             src="{{ $ruleItem->rule->image_url }}">
                                                                             <label class="text-sm mt-1">{{ $ruleItem->rule->name }}</label>
                                                                         <div class="p-3">
@@ -503,7 +503,7 @@
                                                                     <table width="100%">
                                                                         <tr class="border-bottom-none">
                                                                             <td width="90">
-                                                                                <div class="blii"><img class="rounded-3"
+                                                                                <div class="blii"><img class="rounded-3" loading="lazy"
                                                                                         src="{{ $property->image_thumb }}"
                                                                                         width="80"
                                                                                         alt="{{ $property->name }}">

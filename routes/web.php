@@ -24,13 +24,6 @@ Route::get('/mail', function () {
 
 
 
-Route::group(['prefix' => 'mobile'], function () {
-    Route::get('/', [App\Http\Controllers\Frontend\MobileController::class, 'home'])
-    ->name('home');
-});
-
-
-
 Route::post('/log-validation-error', [App\Http\Controllers\LogController::class, 'logValidationError'])
     ->name('log.validation.error');
 

@@ -114,7 +114,7 @@
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Carpet Area {{ $property->carpet_area ?? 0 }}
                                                             sqft</h4>
-                                                        <span>{{ shorten_price(round(($property->price / ($property->square > 0 ? $property->square : 1)),3)) }}/sqft</span>
+                                                        <span>{{ shorten_price(round($property->price / ($property->square > 0 ? $property->square : 1), 3)) }}/sqft</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3 mb-3">
@@ -168,7 +168,7 @@
 
                                     </div>
                                     <div class="px-3 mt-8">
-                                        <a href="#" data-id="{{ $property->id }}" data-type="property" 
+                                        <a href="#" data-id="{{ $property->id }}" data-type="property"
                                             class=" text-white btn bg-primary popup-contact-modal-form">{{ __('Get Phone Number') }}</a>
                                     </div>
                                 </div>
@@ -178,7 +178,8 @@
                 </div>
             </div>
             <div class="jump-header sticky top-34 z-999">
-                <ul style="border-bottom-width:3px !important" class="flex-wrap justify-left inline-block w-full p-4  text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
+                <ul style="border-bottom-width:3px !important"
+                    class="flex-wrap justify-left inline-block w-full p-4  text-left bg-white border-b rounded-t-xl dark:border-gray-800 mb-0 dark:bg-slate-900 overflow-x-auto whitespace-nowrap cursor-grab"
                     x-data="{ isDragging: false, startX: 0, scrollLeft: 0 }"
                     x-on:mousedown="isDragging = true; startX = $event.pageX - $el.offsetLeft; scrollLeft = $el.scrollLeft;"
                     x-on:mousemove="if (isDragging) { $el.scrollLeft = scrollLeft - ($event.pageX - startX); }"
@@ -270,7 +271,7 @@
                     <div class="md:flex">
                         <div class=" lg:w-2/3 md:w-1/2 ">
 
-                            <div class="container-fluid mb-5 section" id="MoreDetails" 
+                            <div class="container-fluid mb-5 section" id="MoreDetails"
                                 :class="{ 'active': activeSection === 'MoreDetails' }">
                                 <div class="md:flex">
                                     <div class="w-full p-1 ">
@@ -306,7 +307,7 @@
                                                             {!! $property->content !!}
                                                         </span>
                                                     </div>
-                                                    <a href="#" data-id="{{ $property->id }}" data-type="property" 
+                                                    <a href="#" data-id="{{ $property->id }}" data-type="property"
                                                         class="popup-contact-modal-form text-white btn bg-primary mt-10">{{ __('Get Phone Number') }}</a>
                                                 </div>
                                             </div>
@@ -316,7 +317,7 @@
                             </div>
 
                             @if ($property->project_id && ($project = $property->project))
-                                <div class="container-fluid mb-5 section" id="AboutProject" 
+                                <div class="container-fluid mb-5 section" id="AboutProject"
                                     :class="{ 'active': activeSection === 'AboutProject' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -325,7 +326,7 @@
                                                     <h4 class="fs-5 font-bold me-2">About Project </h4>
                                                     <div class="row align-items-center">
                                                         <div class="col-lg-4 d-flex align-items-center">
-                                                            <img class="rounded-xl w-30 w-1/2 h-16"
+                                                            <img class="rounded-xl w-30 w-1/2 h-16" loading="lazy"
                                                                 src="{{ asset('images/' . $property->project->image) }}">
                                                             <div class="p-3 ">
                                                                 <span
@@ -380,7 +381,7 @@
                                 </div>
                             @endif
                             @if ($property->furnishing->count() > 0)
-                                <div class="container-fluid mb-5 section" id="FurnishingDetails" 
+                                <div class="container-fluid mb-5 section" id="FurnishingDetails"
                                     :class="{ 'active': activeSection === 'FurnishingDetails' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -390,7 +391,7 @@
                                                     <div class="row align-items-center px-3">
                                                         @foreach ($property->furnishing ?? [] as $furnishingItem)
                                                             <div class="col-lg-3 d-flex align-items-center">
-                                                                <img class="rounded-xl w-6 w-1/2 h-6"
+                                                                <img class="rounded-xl w-6 w-1/2 h-6" loading="lazy"
                                                                     src="{{ $furnishingItem->image_url }}">
                                                                 <div class="p-3">
                                                                     <span
@@ -407,7 +408,7 @@
                                 </div>
                             @endif
                             @if ($property->features->count())
-                                <div class="container-fluid mb-5 section" id="Amenities" 
+                                <div class="container-fluid mb-5 section" id="Amenities"
                                     :class="{ 'active': activeSection === 'Amenities' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -417,7 +418,7 @@
                                                     <div class="row align-items-center px-3">
                                                         @foreach ($property->features ?? [] as $featureItem)
                                                             <div class="col-lg-3 d-flex align-items-center">
-                                                                <img class="rounded-xl w-6 w-1/2 h-6"
+                                                                <img class="rounded-xl w-6 w-1/2 h-6" loading="lazy"
                                                                     src="{{ $featureItem->image_url }}">
                                                                 <div class="p-3">
                                                                     <span class="text-sm">{{ $featureItem->name }}</span>
@@ -432,12 +433,13 @@
                                 </div>
                             @endif
                             <div class="container-fluid mb-5 section">
-                                
+
                                 <a href="https://www.indoordesigns.in" target="_blank">
                                     <div class="py-2">
-                                        <img src="{{ asset('themes/images/in-door-ad.png') }}" class="w-100 rounded-2">
+                                        <img src="{{ asset('themes/images/in-door-ad.png') }}" loading="lazy"
+                                            class="w-100 rounded-2">
                                     </div>
-                                    
+
                                 </a>
                             </div>
                             @if ('location' == 'location')
@@ -458,7 +460,7 @@
 
 
                             @if ($property->facilities->groupBy('name')->count())
-                                <div class="container-fluid mb-5 section" id="Landmarks" 
+                                <div class="container-fluid mb-5 section" id="Landmarks"
                                     :class="{ 'active': activeSection === 'Landmarks' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1">
@@ -479,7 +481,7 @@
                                                                 <span class="fw-bold">{{ $key }}</span>
                                                                 <span>
                                                                     <img src="{{ $facilities->pluck('image_url')->first() }}"
-                                                                        alt="{{ $key }}"
+                                                                        loading="lazy" alt="{{ $key }}"
                                                                         style="vertical-align: top; margin-top: 3px;"
                                                                         width="18" height="18">
                                                                 </span>
@@ -519,7 +521,7 @@
                             @endif
 
                             @if ($property->latitude && $property->longitude)
-                                <div class="container-fluid mb-5 section" id="Location" 
+                                <div class="container-fluid mb-5 section" id="Location"
                                     :class="{ 'active': activeSection === 'Location' }">
                                     <div class="md:flex">
                                         <div class="w-full p-1 ">
@@ -539,11 +541,12 @@
                                                             <table width="100%">
                                                                 <tr class="border-bottom-none">
                                                                     <td width="90">
-                                                                        <div class="blii"><img
+                                                                        <div class="blii"><img loading="lazy"
                                                                                 src="{{ asset($property->image_thumb) }}"
                                                                                 width="80"
                                                                                 alt="{{ $property->name }}">
-                                                                            <div class="status text-white">{!! $property->mode !!}
+                                                                            <div class="status text-white">
+                                                                                {!! $property->mode !!}
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -587,7 +590,7 @@
                                         <div class="border-theme rounded-xl">
                                             <div class="px-3 py-5">
                                                 <h4 class="fs-5  font-bold me-2 text-capitalize ">
-                                                    Similar Properties for {{ $property->type_name }}  Nearby
+                                                    Similar Properties for {{ $property->type_name }} Nearby
                                                 </h4>
                                             </div>
                                             <div class="px-2">
@@ -602,7 +605,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class=" mt-8 lg:w-1/3 md:w-1/2 md:p-4 md:mt-0">
                             <div class="sticky  " style="top: 11rem;z-index:999">
@@ -613,7 +616,7 @@
                                     ])
                                 </div>
                                 <div class="mt-4">
-                                    <a href="#"  data-id="{{ $property->id }}" data-type="property" 
+                                    <a href="#" data-id="{{ $property->id }}" data-type="property"
                                         class="w-full py-4 text-white btn bg-primary fs-5 popup-contact-modal-form"><i
                                             class="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
                                 </div>

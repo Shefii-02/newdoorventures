@@ -8,7 +8,7 @@
 @foreach($advertisementList as $adv)
     <div class="py-4">
         <a href="{{ $adv->redirection ?: '#' }}" target="{{ $adv->redirection ? '_blank' : '' }}">
-            <img src="{{ asset('images/' . $adv->image) }}" class="w-100">
+            <img loading="lazy" src="{{ asset('images/' . $adv->image) }}" class="w-100">
         </a>
     </div>
 @endforeach

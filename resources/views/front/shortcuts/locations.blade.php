@@ -21,7 +21,7 @@
                     class="overflow-hidden duration-500 ease-in-out bg-white shadow location-item group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 p-2">
                     <div class="relative overflow-hidden rounded-2xl">
                         <a target="_blank" href="{{ url('properties?city=Hebbal') }}">
-                            <img src="{{ asset('images/cities/location-1.jpg') }}" alt="Hebbal">
+                            <img loading="lazy" src="{{ asset('images/cities/location-1.jpg') }}" alt="Hebbal">
                             <div class="absolute inset-0 bg-slate-900 bg-opacity-40">
                             </div>
                             <div class="absolute -translate-x-1/2 top-2/3 start-1/2 -translate-y-2/3">
@@ -39,7 +39,7 @@
                     class="overflow-hidden duration-500 ease-in-out bg-white shadow location-item group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 p-2">
                     <div class="relative overflow-hidden rounded-2xl">
                         <a target="_blank" href="{{ url('properties?city=Yelahanka') }}">
-                            <img src="{{ asset('images/cities/location-2.jpg') }}" alt="Yelahanka">
+                            <img loading="lazy" src="{{ asset('images/cities/location-2.jpg') }}" alt="Yelahanka">
                             <div class="absolute inset-0 bg-slate-900 bg-opacity-40">
                             </div>
                             <div class="absolute -translate-x-1/2 top-2/3 start-1/2 -translate-y-2/3">
@@ -55,7 +55,7 @@
                     class="overflow-hidden duration-500 ease-in-out bg-white shadow location-item group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 p-2">
                     <div class="relative overflow-hidden rounded-2xl">
                         <a target="_blank" href="{{ url('properties?city=Thanisandra') }}">
-                            <img src="{{ asset('images/cities/location-3.jpg') }}" alt="Thanisandra">
+                            <img loading="lazy" src="{{ asset('images/cities/location-3.jpg') }}" alt="Thanisandra">
                             <div class="absolute inset-0 bg-slate-900 bg-opacity-40">
                             </div>
                             <div class="absolute -translate-x-1/2 top-2/3 start-1/2 -translate-y-2/3">
@@ -71,7 +71,7 @@
                     class="overflow-hidden duration-500 ease-in-out bg-white shadow location-item group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 p-2">
                     <div class="relative overflow-hidden rounded-2xl">
                         <a target="_blank" href="{{ url('properties?city=Hennur+Road') }}">
-                            <img src="{{ asset('images/cities/location-4.jpg') }}" alt="Hennur Road">
+                            <img loading="lazy" src="{{ asset('images/cities/location-4.jpg') }}" alt="Hennur Road">
                             <div class="absolute inset-0 bg-slate-900 bg-opacity-40">
                             </div>
                             <div class="absolute -translate-x-1/2 top-2/3 start-1/2 -translate-y-2/3">
@@ -88,7 +88,7 @@
                     class="overflow-hidden duration-500 ease-in-out bg-white shadow location-item group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 p-2">
                     <div class="relative overflow-hidden rounded-2xl">
                         <a target="_blank" href="{{ url('properties?city=Devanahalli') }}">
-                            <img src="{{ asset('images/cities/location-5.jpg') }}" alt="Devanahalli">
+                            <img loading="lazy" src="{{ asset('images/cities/location-5.jpg') }}" alt="Devanahalli">
                             <div class="absolute inset-0 bg-slate-900 bg-opacity-40">
                             </div>
                             <div class="absolute -translate-x-1/2 top-2/3 start-1/2 -translate-y-2/3">
@@ -104,7 +104,7 @@
                     class="overflow-hidden duration-500 ease-in-out bg-white shadow location-item group rounded-xl dark:bg-slate-900 hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 p-2">
                     <div class="relative overflow-hidden rounded-2xl">
                         <a target="_blank" href="{{ url('properties?city=Bagalur') }}">
-                            <img src="{{ asset('images/cities/location-3.jpg') }}" alt="Bagalur">
+                            <img loading="lazy" src="{{ asset('images/cities/location-3.jpg') }}" alt="Bagalur">
                             <div class="absolute inset-0 bg-slate-900 bg-opacity-40">
                             </div>
                             <div class="absolute -translate-x-1/2 top-2/3 start-1/2 -translate-y-2/3">

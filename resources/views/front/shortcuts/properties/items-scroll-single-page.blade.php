@@ -22,7 +22,7 @@
             <div class="p-2">
                 <div class="relative overflow-hidden p-2">
                     <a target="_blank" href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug ]) }}">
-                        <img src="{{ RvMedia::getImageUrl($property->image, 'small', false, RvMedia::getDefaultImage()) }}"
+                        <img loading="lazy" src="{{ RvMedia::getImageUrl($property->image, 'small', false, RvMedia::getDefaultImage()) }}"
                             alt="{{ $property->name }}" class="rounded-xl duration-500">
                     </a>
                      <div class="absolute top-6 end-6">

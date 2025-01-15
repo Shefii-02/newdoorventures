@@ -23,7 +23,7 @@
             <div class="container">
                 <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-[30px]">
                     <div class="lg:col-span-7 md:col-span-6">
-                        <img src="{{ asset('themes/hously/images/svg/contact.svg') }}" alt="Get in touch!">
+                        <img loading="lazy" src="{{ asset('themes/hously/images/svg/contact.svg') }}" alt="Get in touch!">
                     </div>
 
                     <div class="lg:col-span-5 md:col-span-6">

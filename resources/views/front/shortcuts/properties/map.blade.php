@@ -2,7 +2,7 @@
     <table width="100%">
         <tr>
             <td width="90">
-                <div class="blii"><img src="__image_thumb__" width="80" alt="__name__">
+                <div class="blii"><img loading="lazy" src="__image_thumb__" width="80" alt="__name__">
                     <div class="status">__status_html__</div>
                 </div>
             </td>

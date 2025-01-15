@@ -29,7 +29,7 @@
             @foreach($readyToMoveProjects ?? [] as $project)
                 <div class="mx-4 text-center">
                     <a target="_blank" title="{{ $project->name }}" href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug ]) }}">
-                        <img class="rounded-circle"
+                        <img loading="lazy" class="rounded-circle"
                         src="{{ asset('images/'.$project->image) }}" onerror="this.src='/themes/images/dummy-image.webp'" alt="{{ $project->name }}" >
                         <h4 class="small fs-16 fw-bold fs-6 truncate">{{ $project->name }}</h4>
                         <h6 class="fs-13 truncate">{{ $project->locality }}</h6>

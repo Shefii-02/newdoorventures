@@ -9,7 +9,7 @@
                             <div class="relative overflow-hidden">
                                 <a target="_blank"
                                     href="{{ route('public.project_single', ['uid' => $project->unique_id, 'slug' => $project->slug]) }}">
-                                    <img src="{{ asset('images/' . $project->image) }}"
+                                    <img loading="lazy" src="{{ asset('images/' . $project->image) }}"
                                         onerror="this.src='/themes/images/dummy-image.webp'" alt="{{ $project->name }}"
                                         class="rounded-md duration-500 h-50 w-100">
                                 </a>

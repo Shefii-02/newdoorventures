@@ -1,6 +1,6 @@
 <div class="relative overflow-hidden">
     <a target="_blank" href="{{ route('public.property_single', ['uid' => $property->unique_id, 'slug' => $property->slug]) }}">
-        <img src="{{ asset('images/' . $property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'"
+        <img src="{{ asset('images/' . $property->image) }}" onerror="this.src='/themes/images/dummy-image.webp'" loading="lazy"
             alt="{{ $property->name }}" class="rounded-md duration-500 h-50 w-100">
     </a>
     <div class="absolute top-6 end-6">

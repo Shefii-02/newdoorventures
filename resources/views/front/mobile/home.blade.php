@@ -47,10 +47,10 @@
 
     <div class="home-header-box bg-theme">
         <div class="p-2">
-            <h2 class="fw-semibold text-light fs-4 ">Welcome to <span class="text-dark fw-bold ms-2">New Door
+            <h2 class="fw-semibold text-light fs-6 ">Welcome to <span class="text-dark fw-bold ms-2">New Door
                     Ventures,</span>
             </h2>
-            <h4 class="fw-bold text-light fs-5 mt-3">Explore Properties to Buy, Rent, or Sell with Ease</h4>
+            <h4 class="fw-bold text-light fs-16 mt-3">Explore Properties to Buy, Rent, or Sell with Ease</h4>
             {{-- <h6 class="text-light fs-6 mt-3">Post Your Properties <span
                     class="ms-1 bg-dark text-white px-2 py-1 rounded fs-6">Free!</span></h6> --}}
         </div>
