@@ -1,5 +1,5 @@
 
-@extends('layouts.app')
+@extends('front.mobile.layouts')
 
 @push('header')
     <style>

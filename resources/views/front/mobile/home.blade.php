@@ -4,6 +4,7 @@
         [x-cloak] {
             display: none !important;
         }
+
         .mobile-hero-slider .item {
             border-radius: 9px;
             margin: 10px
@@ -43,8 +44,6 @@
 @endpush
 
 @section('content')
-   
-
     <div class="home-header-box bg-theme">
         <div class="p-2">
             <h2 class="fw-semibold text-light fs-6 ">Welcome to <span class="text-dark fw-bold ms-2">New Door
@@ -57,7 +56,7 @@
         <div class="collg-12">
             <div class="">
                 @include('front.mobile.search-bar')
-                
+
             </div>
         </div>
     </div>
@@ -109,25 +108,28 @@
             }'>
             <div class="item">
                 <div class="box">
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                        width="42px" height="42px" viewBox="0,0,256,256">
-                        <g fill="#cba641" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
-                            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                            font-family="none" font-weight="none" font-size="none" text-anchor="none"
-                            style="mix-blend-mode: normal">
-                            <g transform="scale(8,8)">
-                                <path
-                                    d="M17.99219,3c-0.09603,0.00165 -0.18956,0.0308 -0.26953,0.08398l-7.5,5c-0.14997,0.09853 -0.23564,0.26985 -0.22449,0.44894c0.01115,0.17909 0.1174,0.33847 0.27843,0.41764c0.16102,0.07917 0.35213,0.06598 0.50075,-0.03455l7.22266,-4.81445l7.22266,4.81445c0.22969,0.15091 0.53812,0.08814 0.69057,-0.14053c0.15245,-0.22867 0.09176,-0.53752 -0.13588,-0.6915l-7.5,-5c-0.0844,-0.05612 -0.18381,-0.0854 -0.28516,-0.08398zM12.5,9c-0.27614,0 -0.5,0.22386 -0.5,0.5v6c0.00094,0.82804 0.67196,1.49906 1.5,1.5h9c0.82804,-0.00094 1.49906,-0.67196 1.5,-1.5v-6c0,-0.27614 -0.22386,-0.5 -0.5,-0.5c-0.27614,0 -0.5,0.22386 -0.5,0.5v6c-0.00033,0.27601 -0.22399,0.49967 -0.5,0.5h-2.5v-3c0,-1.10457 -0.89543,-2 -2,-2c-1.10457,0 -2,0.89543 -2,2v3h-2.5c-0.27601,-0.00033 -0.49967,-0.22399 -0.5,-0.5v-6c0,-0.27614 -0.22386,-0.5 -0.5,-0.5zM3.5,10c-0.27614,0 -0.5,0.22386 -0.5,0.5c0,0.27614 0.22386,0.5 0.5,0.5h1.65625l4.87695,12.67969c0.07435,0.19306 0.25992,0.32039 0.4668,0.32031h17c0.27614,0 0.5,-0.22386 0.5,-0.5c0,-0.27614 -0.22386,-0.5 -0.5,-0.5h-16.65625l-0.38477,-1h14.04102c0.19763,0.00006 0.37675,-0.11629 0.45703,-0.29687l4,-9c0.06877,-0.15469 0.0546,-0.33368 -0.03766,-0.47562c-0.09226,-0.14194 -0.25008,-0.22756 -0.41937,-0.22751h-3.5v1h2.73047l-3.55664,8h-14.09961l-3.07617,-8h4.00195v-1h-4.38672l-0.64648,-1.67969c-0.07435,-0.19306 -0.25992,-0.32039 -0.4668,-0.32031zM18.0293,12c0.54081,0.01585 0.97094,0.45896 0.9707,1v3h-2v-3c-0.00012,-0.27037 0.10925,-0.52927 0.30317,-0.71767c0.19392,-0.1884 0.45587,-0.29025 0.72612,-0.28233zM13,25c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c-0.00127,-1.10404 -0.89596,-1.99873 -2,-2zM22,25c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c-0.00127,-1.10404 -0.89596,-1.99873 -2,-2zM12.95898,26c0.27225,-0.01118 0.53727,0.08923 0.73377,0.27799c0.1965,0.18876 0.30747,0.44953 0.30724,0.72201c-0.0005,0.55208 -0.44792,0.9995 -1,1c-0.55228,0.01133 -1.00918,-0.42721 -1.02051,-0.97949c-0.01133,-0.55228 0.42721,-1.00918 0.97949,-1.02051zM21.95898,26c0.27225,-0.01118 0.53727,0.08923 0.73377,0.27799c0.1965,0.18876 0.30747,0.44953 0.30724,0.72201c-0.0005,0.55208 -0.44792,0.9995 -1,1c-0.55228,0.01133 -1.00918,-0.42721 -1.02051,-0.97949c-0.01133,-0.55228 0.42721,-1.00918 0.97949,-1.02051z">
-                                </path>
+                    <a href="{{ route('public.properties.sale') }}">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            width="42px" height="42px" viewBox="0,0,256,256">
+                            <g fill="#cba641" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                                stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                                font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                                style="mix-blend-mode: normal">
+                                <g transform="scale(8,8)">
+                                    <path
+                                        d="M17.99219,3c-0.09603,0.00165 -0.18956,0.0308 -0.26953,0.08398l-7.5,5c-0.14997,0.09853 -0.23564,0.26985 -0.22449,0.44894c0.01115,0.17909 0.1174,0.33847 0.27843,0.41764c0.16102,0.07917 0.35213,0.06598 0.50075,-0.03455l7.22266,-4.81445l7.22266,4.81445c0.22969,0.15091 0.53812,0.08814 0.69057,-0.14053c0.15245,-0.22867 0.09176,-0.53752 -0.13588,-0.6915l-7.5,-5c-0.0844,-0.05612 -0.18381,-0.0854 -0.28516,-0.08398zM12.5,9c-0.27614,0 -0.5,0.22386 -0.5,0.5v6c0.00094,0.82804 0.67196,1.49906 1.5,1.5h9c0.82804,-0.00094 1.49906,-0.67196 1.5,-1.5v-6c0,-0.27614 -0.22386,-0.5 -0.5,-0.5c-0.27614,0 -0.5,0.22386 -0.5,0.5v6c-0.00033,0.27601 -0.22399,0.49967 -0.5,0.5h-2.5v-3c0,-1.10457 -0.89543,-2 -2,-2c-1.10457,0 -2,0.89543 -2,2v3h-2.5c-0.27601,-0.00033 -0.49967,-0.22399 -0.5,-0.5v-6c0,-0.27614 -0.22386,-0.5 -0.5,-0.5zM3.5,10c-0.27614,0 -0.5,0.22386 -0.5,0.5c0,0.27614 0.22386,0.5 0.5,0.5h1.65625l4.87695,12.67969c0.07435,0.19306 0.25992,0.32039 0.4668,0.32031h17c0.27614,0 0.5,-0.22386 0.5,-0.5c0,-0.27614 -0.22386,-0.5 -0.5,-0.5h-16.65625l-0.38477,-1h14.04102c0.19763,0.00006 0.37675,-0.11629 0.45703,-0.29687l4,-9c0.06877,-0.15469 0.0546,-0.33368 -0.03766,-0.47562c-0.09226,-0.14194 -0.25008,-0.22756 -0.41937,-0.22751h-3.5v1h2.73047l-3.55664,8h-14.09961l-3.07617,-8h4.00195v-1h-4.38672l-0.64648,-1.67969c-0.07435,-0.19306 -0.25992,-0.32039 -0.4668,-0.32031zM18.0293,12c0.54081,0.01585 0.97094,0.45896 0.9707,1v3h-2v-3c-0.00012,-0.27037 0.10925,-0.52927 0.30317,-0.71767c0.19392,-0.1884 0.45587,-0.29025 0.72612,-0.28233zM13,25c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c-0.00127,-1.10404 -0.89596,-1.99873 -2,-2zM22,25c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c-0.00127,-1.10404 -0.89596,-1.99873 -2,-2zM12.95898,26c0.27225,-0.01118 0.53727,0.08923 0.73377,0.27799c0.1965,0.18876 0.30747,0.44953 0.30724,0.72201c-0.0005,0.55208 -0.44792,0.9995 -1,1c-0.55228,0.01133 -1.00918,-0.42721 -1.02051,-0.97949c-0.01133,-0.55228 0.42721,-1.00918 0.97949,-1.02051zM21.95898,26c0.27225,-0.01118 0.53727,0.08923 0.73377,0.27799c0.1965,0.18876 0.30747,0.44953 0.30724,0.72201c-0.0005,0.55208 -0.44792,0.9995 -1,1c-0.55228,0.01133 -1.00918,-0.42721 -1.02051,-0.97949c-0.01133,-0.55228 0.42721,-1.00918 0.97949,-1.02051z">
+                                    </path>
+                                </g>
                             </g>
-                        </g>
-                    </svg>
-                    <span class="mt-2">Buy</span>
+                        </svg>
+                        <span class="mt-2">Buy</span>
+                    </a>
                 </div>
 
             </div>
             <div class="item">
                 <div class="box">
+                    <a href="{{ route('public.properties.rent') }}">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         width="42px" height="42px" viewBox="0,0,256,256">
                         <g fill="#cba641" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
@@ -142,11 +144,13 @@
                         </g>
                     </svg>
                     <span class="mt-2">Rent</span>
+                    </a>
                 </div>
 
             </div>
             <div class="item">
                 <div class="box">
+                    <a href="{{ route('public.properties.pg') }}">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         width="42px" height="42px" viewBox="0,0,256,256">
                         <g fill="#cba641" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
@@ -161,11 +165,13 @@
                         </g>
                     </svg>
                     <span class="mt-2">PG/Co-Living</span>
+                    </a>
                 </div>
 
             </div>
             <div class="item">
                 <div class="box">
+                    <a href="{{ route('public.properties.commercial') }}">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         width="42px" height="42px" viewBox="0,0,256,256">
                         <g fill="#cba641" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
@@ -180,11 +186,13 @@
                         </g>
                     </svg>
                     <span class="mt-2">Commercial</span>
+                    </a>
                 </div>
 
             </div>
             <div class="item">
                 <div class="box">
+                    <a href="{{ url('/projects?type=new-launch') }}">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         width="42px" height="42px" viewBox="0,0,256,256">
                         <g fill="#cba641" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
@@ -199,10 +207,12 @@
                         </g>
                     </svg>
                     <span class="mt-2">New Launch</span>
+                    </a>
                 </div>
             </div>
             <div class="item">
                 <div class="box">
+                    <a href="{{ route('public.properties.plot') }}">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         width="42px" height="42px" viewBox="0,0,256,256">
                         <g fill="#cba641" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
@@ -217,11 +227,13 @@
                         </g>
                     </svg>
                     <span class="mt-2">Plot and Lands</span>
+                    </a>
                 </div>
 
             </div>
             <div class="item">
                 <div class="box">
+                    <a href="{{ route('public.projects') }}">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         width="42px" height="42px" viewBox="0,0,256,256">
                         <g fill="#cba641" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
@@ -236,6 +248,7 @@
                         </g>
                     </svg>
                     <span class="mt-2">Projects</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -423,7 +436,7 @@
                         }
 
                         this.lastScrollTop = currentScroll <= 0 ? 0 :
-                        currentScroll; // Prevent negative scroll values
+                            currentScroll; // Prevent negative scroll values
                     });
                 },
             };

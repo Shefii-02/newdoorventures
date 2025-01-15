@@ -41,10 +41,9 @@ class FrontendController extends Controller
         $latest_blogs               = BlogPost::orderBy('created_at', 'desc')->limit(3)->get();
 
         $result = $this->agent->isMobile();
-        if($result){
+        if ($result) {
             return view('front.mobile.home', compact('categories', 'featured_properties_rent', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
-        }
-        else{
+        } else {
             return view('front.index', compact('categories', 'featured_properties_rent', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
         }
     }
@@ -59,7 +58,7 @@ class FrontendController extends Controller
             $keywords = implode(', ', $request->s);
             $searchByTitle .=  $keywords . ', ';
         }
-        
+
         // if ($request->has('type') && $request->type != '') {
         $searchByTitle .= $purpose . " Properties for " . ucfirst($type);
         // }
@@ -144,8 +143,12 @@ class FrontendController extends Controller
 
         $searchByTitle = $this->searchByTitle($request, $properties, '', "Residential");
 
-
-        return view('front.properties.index', compact('type', 'properties', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        $result = $this->agent->isMobile();
+        if ($result) {
+            return view('front.mobile.property-index', compact('type', 'properties', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        } else {
+            return view('front.properties.index', compact('type', 'properties', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        }
     }
 
 
@@ -207,8 +210,12 @@ class FrontendController extends Controller
         $pageTitle = 'Properties for Sale in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Browse a wide selection of properties for sale in Bangalore and Karnataka. Find houses, apartments, plots, and more to buy at competitive prices.';
         $pageKeywords = 'properties for sale, houses for sale in Bangalore, apartments for sale in Karnataka, buy homes in Bangalore, residential plots for sale in Karnataka, real estate for sale, commercial properties for sale, affordable homes for sale, property listings in Bangalore';
-
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        $result = $this->agent->isMobile();
+        if ($result) {
+            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        } else {
+            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        }
     }
     public function PropertiesForRent(Request $request)
     {
@@ -262,8 +269,12 @@ class FrontendController extends Controller
         $pageTitle = 'Properties for Rent in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Explore a variety of properties for rent in Bangalore and Karnataka. Find apartments, houses, PG accommodations, and more at competitive rental prices.';
         $pageKeywords = 'properties for rent, apartments for rent in Bangalore, houses for rent in Karnataka, rental properties in Bangalore, PG accommodation in Karnataka, rental flats in Bangalore, commercial spaces for rent, affordable houses for rent in Karnataka, paying guest accommodation, real estate rentals';
-
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        $result = $this->agent->isMobile();
+        if ($result) {
+            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        } else {
+            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        }
     }
     public function PropertiesForPlot(Request $request)
     {
@@ -330,8 +341,12 @@ class FrontendController extends Controller
         $pageDescription = "Browse a variety of residential and commercial plots for sale in Bangalore and Karnataka. Find your ideal plot for construction, investment, or development.";
         $pageKeywords = "plots for sale, residential plots in Bangalore, commercial plots in Karnataka, land for sale in Bangalore, investment land in Karnataka, real estate plots, agricultural plots in Karnataka, plot for construction, buy plots in Bangalore, land investment opportunities";
 
-
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        $result = $this->agent->isMobile();
+        if ($result) {
+            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        } else {
+            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        }
     }
     public function PropertiesForPg(Request $request)
     {
@@ -418,8 +433,12 @@ class FrontendController extends Controller
         $pageTitle = 'PG Accommodation for Rent in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Explore a variety of Paying Guest (PG) accommodations for rent in Bangalore and Karnataka. Find affordable PGs, private rooms, and shared spaces that suit your needs.';
         $pageKeywords = 'PG accommodation in Bangalore, paying guests in Karnataka, PG for rent in Bangalore, affordable PGs in Bangalore, PG rooms for rent in Karnataka, private rooms for rent in Bangalore, shared PG accommodation, budget PGs in Bangalore, PG spaces near IT hubs, PGs for students in Bangalore, PG rental properties in Karnataka, PG facilities in Bangalore';
-
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        $result = $this->agent->isMobile();
+        if ($result) {
+            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        } else {
+            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        }
     }
 
 
@@ -490,8 +509,12 @@ class FrontendController extends Controller
         $pageDescription = 'Discover a wide range of commercial properties for sale and rent in Bangalore and Karnataka. From office spaces to retail shops, find the perfect location for your business.';
         $pageKeywords = 'commercial properties for sale in Bangalore, commercial properties for rent in Karnataka, office spaces for rent in Bangalore, retail shops for sale in Karnataka, commercial real estate in Bangalore, business spaces for lease in Bangalore, commercial property investment in Karnataka, commercial land for sale in Bangalore, office buildings for rent in Karnataka, shops for rent in Bangalore, commercial plots for sale, industrial properties for rent, commercial space for lease';
 
-
-        return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        $result = $this->agent->isMobile();
+        if ($result) {
+            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        } else {
+            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+        }
     }
 
 
@@ -522,7 +545,7 @@ class FrontendController extends Controller
         return $searchByTitle; // Return the generated search title
     }
 
-    
+
     public function projects(Request $request)
     {
         $query = Project::query();
@@ -547,8 +570,11 @@ class FrontendController extends Controller
         $pageTitle = 'All Real Estate Projects: New Launch, Ready to Launch & Under Construction in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Explore a variety of real estate projects including new launches, ready-to-launch, and under-construction properties in Bangalore and Karnataka. Find your dream home or investment opportunity today.';
         $pageKeywords = 'new launch real estate projects in Bangalore, ready to launch projects in Karnataka, under construction properties in Bangalore, residential projects in Karnataka, commercial projects Bangalore, real estate investment Bangalore, new homes Bangalore, property projects in Karnataka, builder projects Bangalore, new construction properties, affordable housing projects Karnataka, residential development Bangalore, upcoming projects Bangalore, ongoing construction in Karnataka';
-
-        return view('front.projects.index', compact('projects', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle'));
+        $result = $this->agent->isMobile();
+        if ($result) {
+        } else {
+            return view('front.projects.index', compact('projects', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle'));
+        }
     }
 
     public function propertyDetails($uid, $slug)
@@ -859,32 +885,32 @@ class FrontendController extends Controller
 
             // Query 1: Search in 'city'
             $cities = Project::query()
-                                ->where('city', 'LIKE', "%{$keyword}%")
-                                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
-                                    $query->where('construction_status', $type);
-                                })
-                                ->where('city', '!=', '')
-                                ->distinct()
-                                ->pluck('city')->toArray();
+                ->where('city', 'LIKE', "%{$keyword}%")
+                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
+                    $query->where('construction_status', $type);
+                })
+                ->where('city', '!=', '')
+                ->distinct()
+                ->pluck('city')->toArray();
 
 
             // Query 2: Search in 'locality'
             $localities = Project::query()
-                                    ->where('locality', 'LIKE', "%{$keyword}%")
-                                    ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
-                                        $query->where('construction_status', $type);
-                                    })
-                                    ->where('locality', '!=', '')
-                                    ->distinct()
-                                    ->pluck('locality')->toArray();
+                ->where('locality', 'LIKE', "%{$keyword}%")
+                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
+                    $query->where('construction_status', $type);
+                })
+                ->where('locality', '!=', '')
+                ->distinct()
+                ->pluck('locality')->toArray();
 
             // Query 3: Search in associated 'project name'
             $projects = Project::where('name', 'LIKE', "%{$keyword}%")
-                                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
-                                    $query->where('construction_status', $type);
-                                })
-                                ->distinct()
-                                ->pluck('name')->toArray();
+                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
+                    $query->where('construction_status', $type);
+                })
+                ->distinct()
+                ->pluck('name')->toArray();
         }
 
 

@@ -1,16 +1,23 @@
-
-@extends('layouts.app')
+@extends('front.mobile.layouts')
 
 @push('header')
     <style>
         @media (min-width: 1280px) {
             .container {
-                /* max-width: 1450px !important; */
+                max-width: 1450px !important;
             }
         }
     </style>
 @endpush
+@php
+    $car_parkiing = $property->customFields->where('name', 'Car Parking ')->first() ?? 0;
+    $grade = $property->customFields->where('name', 'Grade')->first() ?? '---';
+    $facing = $property->customFields->where('name', 'Facing')->first() ?? '---';
+    $lockInPeriod = $property->customFields->where('name', 'Lock-in period')->first() ?? '---';
+    $overlooking = $property->customFields->where('name', 'Overlooking')->first() ?? '---';
+    $suitableFor = $property->customFields->where('name', 'Suitable for')->first() ?? '---';
 
+@endphp
 
 @section('content')
 
@@ -21,20 +28,20 @@
                     <div class="px-3 col-lg-9">
                         <div class="row pt-5 align-items-top">
 
-                            <div class="px-3 col-lg-2  md:p-4 md:flex flex-column text-lg-end mb-3">
+                            <div class="px-3 col-lg-2 mb-3 text-lg-end md:p-4 md:flex flex-column">
                                 <span class="fw-bold fs-4 text-theme">
                                     {{ shorten_price($property->price) }}
                                 </span>
                                 <span class="mt-2 fs-6">{{ $property->square_text }}</span>
                             </div>
-                            <div class="px-3 col-lg-9 md:p-4 md:flex flex-column mb-3">
+                            <div class="px-3 col-lg-9 mb-3 md:p-4 md:flex flex-column">
                                 <div class="flex flex-column flex-column">
-                                    <h4 class=" d-inline  font-bold me-2">{{ $property->name }}
+                                    <h4 class=" d-inline  font-bold me-2">
+                                        {{ $property->name }}
                                         <span
                                             class=" d-inline font-bold text-capitalize text-theme border-5 border-gray-300 border-end-0 border-top-0 border-bottom-0 ps-2">
-                                            For {{ $property->type_name }}</span>
+                                            For {{ $property->type }}</span>
                                         <div class=" mt-2">
-
                                             @if ($property->project)
                                                 <p class="d-inline fw-bolder me-2  text-base text-theme">
                                                     {{ $property->project->name }}
@@ -62,24 +69,29 @@
         <div class="container mt-2">
 
             <div class="px-3  ">
-                <div class="border-theme rounded flex flex-wrap justify-between  py-1" style="width: fit-content;">
+                <div class="border-theme rounded flex flex-wrap  py-1" style="width: fit-content;">
                     <span
-                        class="text-dark font-medium text-sm  inline  dark:text-gray-400 text-capitalize px-2">{{ $property->number_bedroom ?? 0 }}
-                        Beds</span>
+                        class="text-dark font-bold text-sm  inline  dark:text-gray-400 text-capitalize px-2">{{ $property->furnishing_status ?? '' }}</span>
                     <span
-                        class="text-dark font-medium  text-sm inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->number_bathroom ?? 0 }}
-                        Baths</span>
+                        class="text-dark font-bold  text-sm inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $car_parkiing ?? 0 }}
+                        Car Parking
+                    </span>
+
                     <span
-                        class="text-dark font-medium  text-sm  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->balconies ?? 0 }}
-                        Balconies</span>
+                        class="text-dark font-bold  text-sm  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">
+                        {{ $property->mode }} Purpose
+                    </span>
                     <span
-                        class="text-dark font-medium text-sm  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">{{ $property->covered_parking ?? 0 }}
-                        Covered Parking</span>
+                        class="text-dark font-bold  text-sm  inline  dark:text-gray-400 text-capitalize border-2  border-end-0 border-top-0 border-bottom-0 px-2">
+                        Grade
+                        {{ $grade ?? '' }}
+                    </span>
+
                 </div>
             </div>
             @if ($property->project->rera_status == 'registered')
                 <div class="px-3  mt-4">
-                    <div class="border-theme rounded flex flex-wrap" style="width: fit-content;">
+                    <div class="border-theme rounded flex " style="width: fit-content;">
                         <span
                             class="text-light text-sm  bg-theme font-medium  inline  dark:text-gray-400 text-uppercase px-2">RERA
                             STATUS</span>
@@ -112,58 +124,99 @@
                                         <div class="px-3 col-lg-12 md:p-4">
                                             <div class="row">
                                                 <div class="col-lg-3 mb-3">
-                                                    <div class="flex flex-column">
-                                                        <h4 class="fw-bold">Carpet Area {{ $property->carpet_area ?? 0 }}
-                                                            sqft</h4>
-                                                        <span>{{ shorten_price(round($property->price / ($property->square > 0 ? $property->square : 1), 3)) }}/sqft</span>
+                                                    <div class="flex flex-column text-lg-center gap-2">
+                                                        <h4><span class="fw-bold">Carpet Area</span>
+                                                            <small>{{ $property->carpet_area ?? 0 }} sqft</small>
+                                                        </h4>
+                                                        <span>{{ shorten_price($property->price / ($property->square > 0 ? $property->square : 1)) }}/sqft</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3 mb-3">
-                                                    <div class="flex flex-column">
-                                                        <h4 class="fw-bold">Developer</h4>
-                                                        <span>{{ $property->project && $property->project->investor ? $property->project->investor->name : '---' }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 mb-3">
-                                                    <div class="flex flex-column">
-                                                        <h4 class="fw-bold">Project</h4>
-                                                        <span>{{ $property->project->name ?? '---' }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 mb-3">
-                                                    <div class="flex flex-column">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column text-lg-center gap-2">
                                                         <h4 class="fw-bold">Floor</h4>
                                                         <span>{{ $property->available_floor }} (Out of
                                                             {{ $property->number_floor }} Floors)</span>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
+                                                        <h4 class="fw-bold">Units on Floor</h4>
+                                                        <span>{{ $property->units_on_floor ?? '---' }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
+                                                        <h4 class="fw-bold">Facing</h4>
+                                                        <span>{{ $facing ?? '--' }}</span>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                             <div class="row mt-8">
-                                                <div class="col-lg-3 mb-3">
-                                                    <div class="flex flex-column">
-                                                        <h4 class="fw-bold">Transaction Type</h4>
-                                                        <span class="text-capitalize">{{ $property->type }}</span>
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
+                                                        <h4 class="fw-bold">Washroom</h4>
+                                                        <span class="text-capitalize">{{ $property->washroom }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3 mb-3">
-                                                    <div class="flex flex-column">
-                                                        <h4 class="fw-bold">Status</h4>
-                                                        <span
-                                                            class="text-capitalize">{{ str_replace('_', ' ', $property->construction_status) }}</span>
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
+                                                        <h4 class="fw-bold">Cabin</h4>
+                                                        <span>{{ $property->cabin }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3 mb-3">
-                                                    <div class="flex flex-column">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
+                                                        <h4 class="fw-bold">Seats</h4>
+                                                        <span>{{ $property->seats }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
+                                                        <h4 class="fw-bold">Pantry</h4>
+                                                        <span>{{ $property->pantry }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-8">
+                                                @if ($property->type == 'rent')
+                                                    <div class="col-lg-3  mb-3">
+                                                        <div class="flex flex-column gap-2  text-lg-center">
+                                                            <h4 class="fw-bold">Lock-in period</h4>
+                                                            <span>{{ $lockInPeriod ?? '---' }}</span>
+                                                        </div>
+                                                    </div>
+                                                @else 
+                                                    <div class="col-lg-3  mb-3">
+                                                        <div class="flex flex-column gap-2  text-lg-center">
+                                                            <h4 class="fw-bold">Suitable for</h4>
+                                                            <span>{{ $suitableFor ?? '---' }}</span>
+                                                        </div>
+                                                    </div>
+                                                
+                                                @endif
+
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
                                                         <h4 class="fw-bold">Open parking</h4>
                                                         <span>{{ $property->open_parking }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3 mb-3">
-                                                    <div class="flex flex-column">
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
                                                         <h4 class="fw-bold">Covered parking</h4>
                                                         <span>{{ $property->covered_parking }}</span>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-3  mb-3">
+                                                    <div class="flex flex-column gap-2  text-lg-center">
+                                                        <h4 class="fw-bold">Overlooking</h4>
+                                                        <span
+                                                            class="text-capitalize">{{ $property->overlooking ?? '--' }}</span>
+                                                    </div>
+                                                </div>
+                                              
+
                                             </div>
                                         </div>
 
@@ -433,16 +486,6 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="container-fluid mb-5 section">
-
-                                <a href="https://www.indoordesigns.in" target="_blank">
-                                    <div class="py-2">
-                                        <img src="{{ asset('themes/images/in-door-ad.png') }}" loading="lazy"
-                                            class="w-100 rounded-2">
-                                    </div>
-
-                                </a>
-                            </div>
                             @if ('location' == 'location')
                                 <div class="container-fluid mb-5">
                                     <div class="md:flex">
@@ -482,7 +525,7 @@
                                                                 <span class="fw-bold">{{ $key }}</span>
                                                                 <span>
                                                                     <img src="{{ $facilities->pluck('image_url')->first() }}"
-                                                                        loading="lazy" alt="{{ $key }}"
+                                                                        alt="{{ $key }}" loading="lazy"
                                                                         style="vertical-align: top; margin-top: 3px;"
                                                                         width="18" height="18">
                                                                 </span>
@@ -585,28 +628,6 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="container-fluid mb-5" id="rent-related">
-                                <div class="md:flex">
-                                    <div class="w-full p-1 ">
-                                        <div class="border-theme rounded-xl">
-                                            <div class="px-3 py-5">
-                                                <h4 class="fs-5  font-bold me-2 text-capitalize ">
-                                                    Similar Properties for {{ $property->type_name }} Nearby
-                                                </h4>
-                                            </div>
-                                            <div class="px-2">
-                                                @include(
-                                                    'front.shortcuts.properties.items-scroll-related',
-                                                    ['properties' => $similarProperties]
-                                                )
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                         <div class=" mt-8 lg:w-1/3 md:w-1/2 md:p-4 md:mt-0">
                             <div class="sticky  " style="top: 11rem;z-index:999">

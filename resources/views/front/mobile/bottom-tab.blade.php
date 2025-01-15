@@ -26,12 +26,12 @@
         <div class="nav-slot bg-white round-top-right">
             @if (auth()->check())
                 <a href="{{ route('admin.dashboard.index') }}" class="nav-link">
-                    <i class="mdi mdi-person fa-fw"></i>
+                    <i class="mdi mdi-account fa-fw"></i>
                     Account
                 </a>
             @elseif(auth('account')->check())
                 <a href="{{ route('user.dashboard') }}" class="nav-link">
-                    <i class="mdi mdi-person fa-fw"></i>
+                    <i class="mdi mdi-account fa-fw"></i>
                     Account
                 </a>
             @else
