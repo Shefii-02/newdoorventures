@@ -23,6 +23,12 @@ use Illuminate\Routing\Controller;
 class FrontendController extends Controller
 {
     use \App\Emails;
+    private $agent;
+
+    public function __construct()
+    {
+        $this->agent = new \Jenssegers\Agent\Agent;
+    }
 
     public function index()
     {
@@ -34,8 +40,13 @@ class FrontendController extends Controller
         $recent_viwed_properties    = $this->recentlyViewedProperties();
         $latest_blogs               = BlogPost::orderBy('created_at', 'desc')->limit(3)->get();
 
-
-        return view('front.index', compact('categories', 'featured_properties_rent', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
+        $result = $this->agent->isMobile();
+        if($result){
+            return view('front.mobile.home', compact('categories', 'featured_properties_rent', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
+        }
+        else{
+            return view('front.index', compact('categories', 'featured_properties_rent', 'featured_properties', 'featured_project', 'recent_viwed_properties', 'latest_blogs'));
+        }
     }
 
 

@@ -12,15 +12,15 @@
         </section>
     </div>
 
-    <div>
+    <div class="mt-16 lg:mt-24">
         @include('front.home.featured-projects', ['featured_projects' => $featured_project, 'title' => '', 'content' => ''])
     </div>
 
-    <div>
+    <div class="mt-16 lg:mt-24">
         @include('front.home.featured-properties', ['featured_properties' => $featured_properties, 'title' => '', 'content' => ''])
     </div>
 
-    <div>
+    <div class="mt-16 lg:mt-24">
         @include('front.home.featured-properties-rent', ['featured_properties_rent' => $featured_properties_rent, 'title' => '', 'content' => ''])
     </div>
 

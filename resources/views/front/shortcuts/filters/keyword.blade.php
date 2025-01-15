@@ -152,6 +152,7 @@
         }
         document.getElementById(`search-box-${type}`).value = '';
         document.getElementById(`suggestions-list-${type}`).style.display = 'none';
+        document.getElementById(`suggestions-ul-${type}`).innerHTML = "";
     }
 
     function removeItem(type, item) {
