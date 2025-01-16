@@ -3,7 +3,6 @@
     <div class="ck-content">
         @include('front.home.hero-section', ['images' => '', 'title' => '', 'content' => ''])
     </div>
-
     <div>
         <section class=" pt-28 lg:pt-32">
             <div class="container">

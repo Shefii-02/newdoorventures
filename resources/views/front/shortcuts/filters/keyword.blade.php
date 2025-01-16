@@ -65,7 +65,7 @@
         <i class="mdi mdi-magnify icons"></i>
         <input x-ref="inputElement"  id="search-box-{{ $type ?? 'default' }}" type="search"
             class="border-0 form-input filter-input-box bg-gray-50 dark:bg-slate-800 pl-10" autocomplete="off"
-            placeholder="Search for Projects, Areas, etc." oninput="fetchSuggestions2('{{ $type ?? 'default' }}')" onfocus="showSuggestions('{{ $type ?? 'default' }}')">
+            placeholder="Search for Projects, Areas, etc." oninput="fetchSuggestions('{{ $type ?? 'default' }}')" onfocus="showSuggestions('{{ $type ?? 'default' }}')">
         <i id="loading-icon-{{ $type ?? 'default' }}" class="absolute hidden mdi mdi-loading mdi-spin top-5 right-5"></i>
 
         <!-- Suggestions List -->
@@ -89,7 +89,7 @@
 </div>
 
 @push('footer')
-<script>
+{{-- <script>
     const selectedItems = {};
 
     function fetchSuggestions(type) {
@@ -210,6 +210,6 @@
             suggestionsList.style.display = 'block';
         }
     }
-</script>
+</script> --}}
 @endpush
 
