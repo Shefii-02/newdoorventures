@@ -89,8 +89,8 @@
 </div>
 
 @push('footer')
-{{-- <script>
-    const selectedItems = {};
+<script>
+    var selectedItems = {};
 
     function fetchSuggestions(type) {
         const searchQuery = document.getElementById(`search-box-${type}`).value;
@@ -210,6 +210,6 @@
             suggestionsList.style.display = 'block';
         }
     }
-</script> --}}
+</script>
 @endpush
 

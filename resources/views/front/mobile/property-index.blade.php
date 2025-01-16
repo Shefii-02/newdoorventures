@@ -116,7 +116,7 @@
 
 @push('footer')
     {{-- <script>
-        const selectedItems = {};
+        var selectedItems = {};
 
         function fetchSuggestions(type) {
 
