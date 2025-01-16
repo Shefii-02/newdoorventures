@@ -1,34 +1,18 @@
 @if ($properties->isNotEmpty())
 
-    <div
-        data-slick='{
-        "autoplay": true,
-        "autoplaySpeed": 2000,
-        "slidesToShow": 3,
-        "slidesToScroll": 1,
-        "arrows": true,
-        "dots": false,
-        "infinite": true,
-        "responsive": [
-            {"breakpoint": 1024, "settings": {"slidesToShow": 3}},
-            {"breakpoint": 768, "settings": {"slidesToShow": 2}},
-            {"breakpoint": 480, "settings": {"slidesToShow": 1}}
-        ]
-    }'>
+    <div class="property-slider-item">
 
-            @foreach ($properties as $property)
-                @if ($property->type == 'pg')
-                    @include('front.shortcuts.properties.item-pg', compact('property'))
-                @elseif($property->category->name == 'plot and land')
-                    @include('front.shortcuts.properties.item-plot', compact('property'))
-                @elseif($property->category->name == 'rent')
-                    @include('front.shortcuts.properties.item-rent', compact('property'))
-                @else
-                    @include('front.shortcuts.properties.item-sale', compact('property'))
-                @endif
-            @endforeach
-
-
+        @foreach ($properties as $property)
+            @if ($property->type == 'pg')
+                @include('front.shortcuts.properties.item-pg', compact('property'))
+            @elseif($property->category->name == 'plot and land')
+                @include('front.shortcuts.properties.item-plot', compact('property'))
+            @elseif($property->category->name == 'rent')
+                @include('front.shortcuts.properties.item-rent', compact('property'))
+            @else
+                @include('front.shortcuts.properties.item-sale', compact('property'))
+            @endif
+        @endforeach
     </div>
     {{-- </div> --}}
 @else
@@ -41,3 +25,38 @@
         <p class="mt-3 text-xl text-gray-500 dark:text-gray-300">{{ __('No properties found.') }}</p>
     </div>
 @endif
+
+
+
+@push('footer')
+    <script>
+        $('.property-slider-item').slick({
+            "autoplay": true,
+            "autoplaySpeed": 2000,
+            "slidesToShow": 3,
+            "slidesToScroll": 1,
+            "arrows": true,
+            "dots": false,
+            "infinite": true,
+            "responsive": [{
+                    "breakpoint": 1024,
+                    "settings": {
+                        "slidesToShow": 3
+                    }
+                },
+                {
+                    "breakpoint": 768,
+                    "settings": {
+                        "slidesToShow": 2
+                    }
+                },
+                {
+                    "breakpoint": 480,
+                    "settings": {
+                        "slidesToShow": 1
+                    }
+                }
+            ]
+        });
+    </script>
+@endpush
