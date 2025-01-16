@@ -90,8 +90,8 @@
         </div>
     </div>
     <div class="mobile-type-slider px-3 pt-5">
-        <div
-            data-slick='{
+        <div class="mobile-type-slider-item"
+            {{-- data-slick='{
                 "autoplay": true,
                 "autoplaySpeed": 2000,
                 "slidesToShow": 3,
@@ -104,7 +104,8 @@
                     {"breakpoint": 768, "settings": {"slidesToShow": 4}},
                     {"breakpoint": 480, "settings": {"slidesToShow": 4}}
                 ]
-            }'>
+            }' --}}
+            >
             <div class="item">
                 <div class="box">
                     <a href="{{ route('public.properties.sale') }}">
@@ -293,6 +294,16 @@
 @push('footer')
     <script>
         $('.hero-single-item').slick({
+            "autoplay": true,
+            "autoplaySpeed": 2000,
+            "slidesToShow": 1,
+            "slidesToScroll": 1,
+            "arrows": false,
+            "dots": true,
+            "infinite": true,
+        });
+
+        $('.mobile-type-slider-item').slick({
             "autoplay": true,
             "autoplaySpeed": 2000,
             "slidesToShow": 1,
