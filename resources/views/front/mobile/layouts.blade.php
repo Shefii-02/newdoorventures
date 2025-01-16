@@ -155,7 +155,6 @@
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -165,18 +164,15 @@
         window.defaultThemeMode = "light";
         // system
     </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-
-
-    {{-- {!! Theme::header() !!} --}}
-
-    {{-- <link media="all" type="text/css" rel="stylesheet"
-        href="{{ asset('vendor/core/plugins/language/css/language-public.css?v=2.2.0') }}">
-
-    <link media="all" type="text/css" rel="stylesheet"
-        href="{{ asset('vendor/core/core/base/libraries/ckeditor/content-styles.css') }}"> --}}
-
-    {{-- //needed project/property single pahe --}}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('[data-slick]').slick();
+        });
+    </script>
 
     <link media="all" type="text/css" rel="stylesheet"
         href="{{ asset('themes/hously/plugins/tobii/css/tobii.min.css') }}">
@@ -332,15 +328,7 @@
 
         gtag('config', 'G-ZD5X2WP5QJ');
     </script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('[data-slick]').slick();
-        });
-    </script>
 </head>
 
 <body class="dark:bg-slate-900">
@@ -682,11 +670,11 @@
     <script src="{{ asset('themes/hously/plugins/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('themes/hously/plugins/easy_background.js') }}"></script>
 
-    <script src="{{ asset('themes/hously/js/wishlist.js') }}"></script>
+    {{-- <script src="{{ asset('themes/hously/js/wishlist.js') }}"></script> --}}
 
 
     {{-- <script src="{{ asset('vendor/core/plugins/language/js/language-public.js?v=2.2.0') }}"></script> --}}
-    <script src="{{ asset('themes/hously/js/cookie-consent/js/cookie-consent.js') }}"></script>
+    {{-- <script src="{{ asset('themes/hously/js/cookie-consent/js/cookie-consent.js') }}"></script> --}}
     <script src="{{ asset('themes/hously/js/app2cb4.js?v=1.0') }}"></script>
     <script src="{{ asset('themes/hously/js/script2cb4.js') }}"></script>
 
@@ -965,7 +953,7 @@
 
 
     @stack('footer')
-    <script src="https://stage.newdoorventures.in/themes/hously/plugins/particles.js/particles.js"></script>
+    <script src="/themes/hously/plugins/particles.js/particles.js"></script>
     <script>
         $(window).on('load', function() {
             $(".loading-state").hide();

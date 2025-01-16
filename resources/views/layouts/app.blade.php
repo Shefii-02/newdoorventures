@@ -749,7 +749,7 @@
         });
     </script>
     @stack('footer')
-    <script src="https://stage.newdoorventures.in/themes/hously/plugins/particles.js/particles.js"></script>
+    <script src="/themes/hously/plugins/particles.js/particles.js"></script>
     <script>
         $(window).on('load', function() {
             $(".loading-state").hide();
