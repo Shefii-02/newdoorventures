@@ -130,7 +130,7 @@
 
                 <!-- Suggestions List -->
                 <div id="suggestions-list-{{ $div ?? 'default' }}"
-                    class="absolute z-10 w-full mt-10 bg-white shadow-md rounded-md dark:bg-slate-900 dark:text-white"
+                    class="absolute z-10 w-full mt-10 bg-dark shadow-md rounded-md dark:bg-slate-900 dark:text-white"
                     style="display:none;">
                     <ul id="suggestions-ul-{{ $div ?? 'default' }}" class="list-none p-0 m-0 max-h-48 overflow-auto">
                     </ul>
@@ -162,8 +162,8 @@
 </div>
 </form>
 
-@push('header')
-<script>
+{{-- @push('header') --}}
+{{-- <script>
     var selectedItems = {};
 
     function fetchSuggestions(type) {
@@ -288,5 +288,156 @@
             suggestionsList.style.display = 'block';
         }
     }
-</script>
+</script> --}}
+{{-- @endpush --}}
+
+@push('footer')
+    <script>
+        const selectedItems = {};
+
+        function fetchSuggestions(type) {
+            const searchQuery = document.getElementById(`search-box-${type}`).value.trim();
+            const loadingIcon = document.getElementById(`loading-icon-${type}`);
+            const suggestionsList = document.getElementById(`suggestions-list-${type}`);
+            const suggestionsUl = document.getElementById(`suggestions-ul-${type}`);
+
+            if (searchQuery.length > 1) {
+                loadingIcon.style.display = 'inline-block'; // Show loading icon
+
+                fetch(`/searching-in-keywords?k=${encodeURIComponent(searchQuery)}&type=${type}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        loadingIcon.style.display = 'none'; // Hide loading icon
+                        renderSuggestions(data, type);
+                    })
+                    .catch(error => {
+                        loadingIcon.style.display = 'none'; // Hide loading icon
+                        console.error('Error fetching suggestions:', error);
+                    });
+            } else {
+                hideSuggestions(type);
+            }
+        }
+
+        function renderSuggestions(data, type) {
+            const suggestionsUl = document.getElementById(`suggestions-ul-${type}`);
+            suggestionsUl.innerHTML = ''; // Clear previous suggestions
+
+            if (data && Object.keys(data).length > 0) {
+                Object.keys(data).forEach(category => {
+                    if (data[category].length > 0) {
+                        const categoryHeading = createListElement(category, 'px-4 py-2 font-bold text-gray-800');
+                        suggestionsUl.appendChild(categoryHeading);
+
+                        data[category].forEach(item => {
+                            const li = createListElement(item.display,
+                                'px-4 py-2 hover:bg-dark-200 cursor-pointer');
+                            li.onclick = () => selectItem(type, item.value);
+                            suggestionsUl.appendChild(li);
+                        });
+                    }
+                });
+                showSuggestions(type);
+            } else {
+                const noResults = createListElement('No results found', 'px-4 py-2 text-center');
+                suggestionsUl.appendChild(noResults);
+                showSuggestions(type);
+            }
+        }
+
+        function selectItem(type, item) {
+            if (!selectedItems[type]) selectedItems[type] = [];
+            if (!selectedItems[type].includes(item)) {
+                selectedItems[type].push(item);
+                updateSelectedItems(type);
+            }
+            clearSearchBox(type);
+            hideSuggestions(type);
+        }
+
+        function removeItem(type, item) {
+            if (selectedItems[type]) {
+                selectedItems[type] = selectedItems[type].filter(selectedItem => selectedItem !== item);
+                updateSelectedItems(type);
+            }
+        }
+
+        function updateSelectedItems(type) {
+            const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
+            selectedItemsDisplay.innerHTML = ''; // Clear previous items
+
+            selectedItems[type].forEach(item => {
+                const itemDiv = createItemDisplay(item, type);
+                selectedItemsDisplay.appendChild(itemDiv);
+
+                const hiddenInput = createHiddenInput('s[]', item);
+                selectedItemsDisplay.appendChild(hiddenInput);
+            });
+
+            toggleShowMoreButton(type);
+        }
+
+        function createItemDisplay(item, type) {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('flex', 'items-center','text-dark', 'bg-gray-200', 'px-2', 'py-1', 'rounded-md');
+            itemDiv.textContent = item;
+
+            const removeIcon = document.createElement('span');
+            removeIcon.textContent = '×';
+            removeIcon.classList.add('ml-2', 'text-danger', 'cursor-pointer');
+            removeIcon.onclick = () => removeItem(type, item);
+
+            itemDiv.appendChild(removeIcon);
+            return itemDiv;
+        }
+
+        function createHiddenInput(name, value) {
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = name;
+            hiddenInput.value = value;
+            return hiddenInput;
+        }
+
+        function createListElement(text, classes) {
+            const li = document.createElement('li');
+            li.textContent = text;
+            li.className = classes;
+            return li;
+        }
+
+        function toggleShowMoreButton(type) {
+            const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
+            showMoreBtn.style.display = selectedItems[type].length > 5 ? 'block' : 'none';
+        }
+
+        function toggleShowMore(type) {
+            const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
+            const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
+
+            if (selectedItemsDisplay.style.maxHeight === '100%') {
+                selectedItemsDisplay.style.maxHeight = '30px';
+                showMoreBtn.textContent = 'Show More';
+            } else {
+                selectedItemsDisplay.style.maxHeight = '100%';
+                showMoreBtn.textContent = 'Show Less';
+            }
+        }
+
+        function showSuggestions(type) {
+            const suggestionsList = document.getElementById(`suggestions-list-${type}`);
+            suggestionsList.style.display = suggestionsList.children.length > 0 ? 'block' : 'none';
+        }
+
+        function hideSuggestions(type) {
+            const suggestionsList = document.getElementById(`suggestions-list-${type}`);
+            suggestionsList.style.display = 'none';
+        }
+
+        function clearSearchBox(type) {
+            const searchBox = document.getElementById(`search-box-${type}`);
+            searchBox.value = '';
+            document.getElementById(`suggestions-list-${type}`).innerHTML="";
+        }
+    </script>
 @endpush
