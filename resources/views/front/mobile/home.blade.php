@@ -61,49 +61,23 @@
         </div>
     </div>
     <div class="mobile-hero-slider pt-5">
-        <div class="hero-single-item" {{-- data-slick='{
-                "autoplay": true,
-                "autoplaySpeed": 2000,
-                "slidesToShow": 1,
-                "slidesToScroll": 1,
-                "arrows": false,
-                "dots": true,
-                "infinite": true,
-                "responsive": [
-                    {"breakpoint": 1024, "settings": {"slidesToShow": 1}},
-                    {"breakpoint": 768, "settings": {"slidesToShow": 1}},
-                    {"breakpoint": 480, "settings": {"slidesToShow": 1}}
-                ]
-            }' --}}>
+        <div class="hero-single-item">
             <div class="item">
-                <img src="/themes/images/banners/01.jpg">
+                <img src="/themes/images/banners/01.jpg" loading="lazzy">
             </div>
             <div class="item">
-                <img src="/themes/images/banners/02.jpg">
+                <img src="/themes/images/banners/02.jpg"  loading="lazzy">
             </div>
             <div class="item">
-                <img src="/themes/images/banners/03.jpg">
+                <img src="/themes/images/banners/03.jpg"  loading="lazzy">
             </div>
             <div class="item">
-                <img src="/themes/images/banners/04.jpg">
+                <img src="/themes/images/banners/04.jpg"  loading="lazzy">
             </div>
         </div>
     </div>
     <div class="mobile-type-slider px-3 pt-5">
-        <div class="mobile-type-slider-item" {{-- data-slick='{
-                "autoplay": true,
-                "autoplaySpeed": 2000,
-                "slidesToShow": 3,
-                "slidesToScroll": 1,
-                "arrows": false,
-                "dots": true,
-                "infinite": true,
-                "responsive": [
-                    {"breakpoint": 1024, "settings": {"slidesToShow": 4}},
-                    {"breakpoint": 768, "settings": {"slidesToShow": 4}},
-                    {"breakpoint": 480, "settings": {"slidesToShow": 4}}
-                ]
-            }' --}}>
+        <div class="mobile-type-slider-item">
             <div class="item">
                 <div class="box">
                     <a href="{{ route('public.properties.sale') }}">
