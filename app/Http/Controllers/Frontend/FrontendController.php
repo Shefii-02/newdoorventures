@@ -1122,8 +1122,6 @@ class FrontendController extends Controller
         }
     }
 
-
-
     public function searchProjects(Request $request)
     {
         if ($request->filled('k') && $request->k != '') {
@@ -1236,7 +1234,6 @@ class FrontendController extends Controller
         // Return the results as a JSON response
         return response()->json($results);
     }
-
 
     function ShortcutFilterProperties($query, $request)
     {
@@ -1400,9 +1397,6 @@ class FrontendController extends Controller
 
         return $query;
     }
-
-
-
 
     public function postConsult(Request $request)
     { // Validate the input
