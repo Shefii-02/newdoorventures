@@ -33,10 +33,10 @@ class FrontendController extends Controller
     public function index()
     {
         $categories                 = Category::where('status', 'published')->get();
-        $featured_properties        = Property::where('moderation_status', 'approved')->where('type', 'sell')->get();
-        $featured_properties_rent   = Property::where('moderation_status', 'approved')->where('type', 'rent')->get();
+        $featured_properties        = Property::where('moderation_status', 'approved')->where('type', 'sell')->orderBy('created_at','desc')->limit(9)->get();
+        $featured_properties_rent   = Property::where('moderation_status', 'approved')->where('type', 'rent')->orderBy('created_at','desc')->limit(9)->get();
 
-        $featured_project           = Project::get();
+        $featured_project           = Project::orderBy('created_at','desc')->limit(9)->get();
         $recent_viwed_properties    = $this->recentlyViewedProperties();
         $latest_blogs               = BlogPost::orderBy('created_at', 'desc')->limit(3)->get();
 

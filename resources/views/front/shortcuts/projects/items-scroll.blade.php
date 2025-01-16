@@ -77,8 +77,6 @@
     </div>
 @endif
 
-
-
 @push('footer')
     <script>
         $('.project-slider-item').slick({

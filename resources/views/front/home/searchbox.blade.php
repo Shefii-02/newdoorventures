@@ -46,8 +46,6 @@
                                 'plot' => 'Plots/Land',
                                 'projects' => 'Projects',
                             ];
-                     
-                            
                         @endphp
 
                         @foreach ($searchTabs as $key => $value)
