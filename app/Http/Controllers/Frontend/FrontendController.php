@@ -643,7 +643,7 @@ class FrontendController extends Controller
 
         if ($result) {
             return match ($property->type) {
-                
+
                 'sell', 'rent' => view('front.mobile.sale-rent-single', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
                 'pg' => view('front.mobile.pg-single', compact('property', 'recent_properties', 'rules', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
                 default => abort(404),
@@ -670,8 +670,7 @@ class FrontendController extends Controller
         $result = $this->agent->isMobile();
         if ($result) {
             return view('front.mobile.project-single', compact('project', 'configurations', 'advertisement', 'pageTitle', 'pageDescription', 'pageKeywords'));
-        }
-        else{
+        } else {
             return view('front.projects.single', compact('project', 'configurations', 'advertisement', 'pageTitle', 'pageDescription', 'pageKeywords'));
         }
     }
@@ -775,15 +774,22 @@ class FrontendController extends Controller
 
             if ($type == 'plot') {
                 // Query 1: Search in 'city'
-                $cities = Property::query()->where('moderation_status', 'approved')
+                $cities = Property::query()
+                    ->where('moderation_status', 'approved')
                     ->where('city', 'LIKE', "%{$keyword}%")
                     ->where('city', '!=', '')
                     ->whereHas('categories', function ($query) {
                         $query->where('name', 'Plot and Land');
                     })
                     ->distinct()
-                    ->pluck('city')->toArray();
-
+                    ->pluck('city') // Pluck distinct city names
+                    ->map(function ($city) {
+                        return [
+                            'value' => $city, // Actual city name
+                            'display' => "{$city}, {$city}" // Formatted as city, city
+                        ];
+                    })
+                    ->toArray();
 
                 // Query 2: Search in 'locality'
                 $localities = Property::query()
@@ -794,7 +800,15 @@ class FrontendController extends Controller
                         $query->where('name', 'Plot and Land');
                     })
                     ->distinct()
-                    ->pluck('locality')->toArray();
+                    ->select(['locality', 'city']) // Include both locality and city
+                    ->get()
+                    ->map(function ($locality) {
+                        return [
+                            'value' => $locality->locality, // Actual locality name
+                            'display' => "{$locality->locality}, {$locality->city}" // Formatted as locality, city
+                        ];
+                    })
+                    ->toArray();
 
                 // Query 3: Search in associated 'project name'
                 $projects = Project::WhereHas('properties', function ($subQuery) use ($type) {
@@ -809,34 +823,79 @@ class FrontendController extends Controller
                     })
                     ->where('name', 'LIKE', "%{$keyword}%")
                     ->distinct()
-                    ->pluck('name')->toArray();
+                    ->select(['name', 'locality', 'city']) // Include name, locality, and city
+                    ->get()
+                    ->map(function ($project) {
+                        return [
+                            'value' => $project->name, // Actual project name
+                            'display' => "{$project->name}, {$project->locality}, {$project->city}" // Formatted as name, locality, city
+                        ];
+                    })
+                    ->toArray();
             } else {
                 // Query 1: Search in 'city'
-                $cities = Property::query()->where('moderation_status', 'approved')
+                $cities = Property::query()
+                    ->where('moderation_status', 'approved')
                     ->where('city', 'LIKE', "%{$keyword}%")
                     ->where('city', '!=', '')
                     ->where('type', $type)
                     ->distinct()
-                    ->pluck('city')->toArray();
+                    ->pluck('city') // Pluck the distinct city names
+                    ->map(function ($city) {
+                        return [
+                            'value' => $city, // Actual city name for value
+                            'display' => "{$city}, {$city}" // Formatted as city, city for display
+                        ];
+                    })
+                    ->toArray();
+
 
 
                 // Query 2: Search in 'locality'
+                // $localities = Property::query()
+                //     ->where('moderation_status', 'approved')
+                //     ->where('locality', 'LIKE', "%{$keyword}%")
+                //     ->where('locality', '!=', '')
+                //     ->where('type', $type)
+                //     ->distinct()
+                //     ->pluck('locality')->toArray();
                 $localities = Property::query()
                     ->where('moderation_status', 'approved')
                     ->where('locality', 'LIKE', "%{$keyword}%")
                     ->where('locality', '!=', '')
                     ->where('type', $type)
                     ->distinct()
-                    ->pluck('locality')->toArray();
+                    ->select(['locality', 'city'])
+                    ->get()
+                    ->map(function ($locality) {
+                        return [
+                            'value' => $locality->locality,
+                            'display' => "{$locality->locality}"
+                        ];
+                    })
+                    ->toArray();
+
 
                 // Query 3: Search in associated 'project name'
-                $projects = Project::WhereHas('properties', function ($subQuery) use ($type) {
-                    $subQuery->where('type', $type);
-                })
-                    ->where('name', 'LIKE', "%{$keyword}%")
+                $projects = Project::query()
+                    ->whereHas('properties', function ($subQuery) use ($type) {
+                        $subQuery->where('type', $type);
+                    })
+                    ->orWhere('name', 'LIKE', "%{$keyword}%")
+                    ->orWhere('city', 'LIKE', "%{$keyword}%")
+                    ->orWhere('locality', 'LIKE', "%{$keyword}%")
                     ->distinct()
-                    ->pluck('name')->toArray();
+                    ->select(['name', 'locality', 'city'])
+                    ->get()
+                    ->map(function ($project) {
+                        return [
+                            'value' => $project->name, // Project name as the value
+                            'display' => "{$project->name}, {$project->locality}, {$project->city}" // Display formatted as project_name, locality, city
+                        ];
+                    })
+                    ->toArray();
             }
+
 
 
 
@@ -853,7 +912,6 @@ class FrontendController extends Controller
             if (count($projects) > 0) {
                 $results['projects'] = $projects;
             }
-
             // Return the results as a JSON response
             return response()->json($results);
         }

@@ -63,10 +63,12 @@
     <!-- Search Box -->
     <div class="relative mt-2 filter-search-form filter-border">
         <i class="mdi mdi-magnify icons"></i>
-        <input x-ref="inputElement"  id="search-box-{{ $type ?? 'default' }}" type="search"
+        <input x-ref="inputElement" id="search-box-{{ $type ?? 'default' }}" type="search"
             class="border-0 form-input filter-input-box bg-gray-50 dark:bg-slate-800 pl-10" autocomplete="off"
-            placeholder="Search for Projects, Areas, etc." oninput="fetchSuggestions('{{ $type ?? 'default' }}')" onfocus="showSuggestions('{{ $type ?? 'default' }}')">
-        <i id="loading-icon-{{ $type ?? 'default' }}" class="absolute hidden mdi mdi-loading mdi-spin top-5 right-5"></i>
+            placeholder="Search for Projects, Areas, etc." oninput="fetchSuggestions('{{ $type ?? 'default' }}')"
+            onfocus="showSuggestions('{{ $type ?? 'default' }}')">
+        <i id="loading-icon-{{ $type ?? 'default' }}"
+            class="absolute hidden mdi mdi-loading mdi-spin top-5 right-5"></i>
 
         <!-- Suggestions List -->
         <div id="suggestions-list-{{ $type ?? 'default' }}"
@@ -83,90 +85,98 @@
             <!-- Dynamically generated selected items will go here -->
         </div>
         <!-- Show More Button -->
-        <span role="button" id="show-more-btn-{{ $type ?? 'default' }}" class="text-blue-500 text-sm mt-2 z-9" style="display: none"
-            onclick="toggleShowMore('{{ $type ?? 'default' }}')">Show More</span>
+        <span role="button" id="show-more-btn-{{ $type ?? 'default' }}" class="text-blue-500 text-sm mt-2 z-9"
+            style="display: none" onclick="toggleShowMore('{{ $type ?? 'default' }}')">Show More</span>
     </div>
 </div>
 
 @push('footer')
-<script>
-    var selectedItems = {};
+    <script>
+        const selectedItems = {};
 
-    function fetchSuggestions(type) {
-        const searchQuery = document.getElementById(`search-box-${type}`).value;
-        const loadingIcon = document.getElementById(`loading-icon-${type}`);
-        const suggestionsList = document.getElementById(`suggestions-list-${type}`);
-        const suggestionsUl = document.getElementById(`suggestions-ul-${type}`);
+        function fetchSuggestions(type) {
+            const searchQuery = document.getElementById(`search-box-${type}`).value.trim();
+            const loadingIcon = document.getElementById(`loading-icon-${type}`);
+            const suggestionsList = document.getElementById(`suggestions-list-${type}`);
+            const suggestionsUl = document.getElementById(`suggestions-ul-${type}`);
 
-        if (searchQuery.length > 1) {
-            loadingIcon.style.display = 'inline-block'; // Show loading icon
+            if (searchQuery.length > 1) {
+                loadingIcon.style.display = 'inline-block'; // Show loading icon
 
-            fetch(`/searching-in-keywords?k=${searchQuery}&type=${type}`)
-                .then(response => response.json())
-                .then(data => {
-                    loadingIcon.style.display = 'none'; // Hide loading icon
-                    suggestionsUl.innerHTML = ''; // Clear previous suggestions
+                fetch(`/searching-in-keywords?k=${encodeURIComponent(searchQuery)}&type=${type}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        loadingIcon.style.display = 'none'; // Hide loading icon
+                        renderSuggestions(data, type);
+                    })
+                    .catch(error => {
+                        loadingIcon.style.display = 'none'; // Hide loading icon
+                        console.error('Error fetching suggestions:', error);
+                    });
+            } else {
+                hideSuggestions(type);
+            }
+        }
 
-                    if (data && Object.keys(data).length > 0) {
-                        Object.keys(data).forEach(category => {
-                            if (data[category].length > 0) {
-                                const categoryHeading = document.createElement('li');
-                                categoryHeading.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-                                categoryHeading.classList.add('px-4', 'py-2', 'font-bold', 'text-gray-800');
-                                suggestionsUl.appendChild(categoryHeading);
+        function renderSuggestions(data, type) {
+            const suggestionsUl = document.getElementById(`suggestions-ul-${type}`);
+            suggestionsUl.innerHTML = ''; // Clear previous suggestions
 
-                                data[category].forEach(item => {
-                                    const li = document.createElement('li');
-                                    li.textContent = item;
-                                    li.classList.add('px-4', 'py-2', 'hover:bg-gray-200', 'cursor-pointer');
-                                    li.onclick = () => selectItem(type, item);
-                                    suggestionsUl.appendChild(li);
-                                });
-                            }
+            if (data && Object.keys(data).length > 0) {
+                Object.keys(data).forEach(category => {
+                    if (data[category].length > 0) {
+                        const categoryHeading = createListElement(category, 'px-4 py-2 font-bold text-gray-800');
+                        suggestionsUl.appendChild(categoryHeading);
+
+                        data[category].forEach(item => {
+                            const li = createListElement(item.display,
+                                'px-4 py-2 hover:bg-gray-200 cursor-pointer');
+                            li.onclick = () => selectItem(type, item.value);
+                            suggestionsUl.appendChild(li);
                         });
-                        suggestionsList.style.display = 'block'; // Show suggestions
-                    } else {
-                        const noResults = document.createElement('li');
-                        noResults.textContent = 'No results found';
-                        noResults.classList.add('px-4', 'py-2', 'text-center');
-                        suggestionsUl.appendChild(noResults);
-                        suggestionsList.style.display = 'block';
                     }
-                })
-                .catch(error => {
-                    loadingIcon.style.display = 'none'; // Hide loading icon
-                    console.error('Error fetching suggestions:', error);
                 });
-        } else {
-            suggestionsList.style.display = 'none'; // Hide suggestions if input is too short
+                showSuggestions(type);
+            } else {
+                const noResults = createListElement('No results found', 'px-4 py-2 text-center');
+                suggestionsUl.appendChild(noResults);
+                showSuggestions(type);
+            }
         }
-    }
 
-    function selectItem(type, item) {
-        if (!selectedItems[type]) {
-            selectedItems[type] = [];
+        function selectItem(type, item) {
+            if (!selectedItems[type]) selectedItems[type] = [];
+            if (!selectedItems[type].includes(item)) {
+                selectedItems[type].push(item);
+                updateSelectedItems(type);
+            }
+            clearSearchBox(type);
+            hideSuggestions(type);
         }
-        if (!selectedItems[type].includes(item)) {
-            selectedItems[type].push(item);
-            updateSelectedItems(type);
+
+        function removeItem(type, item) {
+            if (selectedItems[type]) {
+                selectedItems[type] = selectedItems[type].filter(selectedItem => selectedItem !== item);
+                updateSelectedItems(type);
+            }
         }
-        document.getElementById(`search-box-${type}`).value = '';
-        document.getElementById(`suggestions-list-${type}`).style.display = 'none';
-        document.getElementById(`suggestions-ul-${type}`).innerHTML = "";
-    }
 
-    function removeItem(type, item) {
-        if (selectedItems[type]) {
-            selectedItems[type] = selectedItems[type].filter(selectedItem => selectedItem !== item);
-            updateSelectedItems(type);
+        function updateSelectedItems(type) {
+            const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
+            selectedItemsDisplay.innerHTML = ''; // Clear previous items
+
+            selectedItems[type].forEach(item => {
+                const itemDiv = createItemDisplay(item, type);
+                selectedItemsDisplay.appendChild(itemDiv);
+
+                const hiddenInput = createHiddenInput('s[]', item);
+                selectedItemsDisplay.appendChild(hiddenInput);
+            });
+
+            toggleShowMoreButton(type);
         }
-    }
 
-    function updateSelectedItems(type) {
-        const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
-        selectedItemsDisplay.innerHTML = ''; // Clear previous items
-
-        selectedItems[type].forEach(item => {
+        function createItemDisplay(item, type) {
             const itemDiv = document.createElement('div');
             itemDiv.classList.add('flex', 'items-center', 'bg-gray-200', 'px-2', 'py-1', 'rounded-md');
             itemDiv.textContent = item;
@@ -177,39 +187,55 @@
             removeIcon.onclick = () => removeItem(type, item);
 
             itemDiv.appendChild(removeIcon);
-            selectedItemsDisplay.appendChild(itemDiv);
+            return itemDiv;
+        }
 
+        function createHiddenInput(name, value) {
             const hiddenInput = document.createElement('input');
             hiddenInput.type = 'hidden';
-            hiddenInput.name = 's[]';
-            hiddenInput.value = item;
-
-            selectedItemsDisplay.appendChild(hiddenInput);
-        });
-
-        const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
-        showMoreBtn.style.display = selectedItems[type].length > 5 ? 'block' : 'none';
-    }
-
-    function toggleShowMore(type) {
-        const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
-        const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
-
-        if (selectedItemsDisplay.style.maxHeight === '100%') {
-            selectedItemsDisplay.style.maxHeight = '30px';
-            showMoreBtn.textContent = 'Show More';
-        } else {
-            selectedItemsDisplay.style.maxHeight = '100%';
-            showMoreBtn.textContent = 'Show Less';
+            hiddenInput.name = name;
+            hiddenInput.value = value;
+            return hiddenInput;
         }
-    }
 
-    function showSuggestions(type) {
-        const suggestionsList = document.getElementById(`suggestions-list-${type}`);
-        if (suggestionsList.children.length > 0) {
-            suggestionsList.style.display = 'block';
+        function createListElement(text, classes) {
+            const li = document.createElement('li');
+            li.textContent = text;
+            li.className = classes;
+            return li;
         }
-    }
-</script>
+
+        function toggleShowMoreButton(type) {
+            const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
+            showMoreBtn.style.display = selectedItems[type].length > 5 ? 'block' : 'none';
+        }
+
+        function toggleShowMore(type) {
+            const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
+            const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
+
+            if (selectedItemsDisplay.style.maxHeight === '100%') {
+                selectedItemsDisplay.style.maxHeight = '30px';
+                showMoreBtn.textContent = 'Show More';
+            } else {
+                selectedItemsDisplay.style.maxHeight = '100%';
+                showMoreBtn.textContent = 'Show Less';
+            }
+        }
+
+        function showSuggestions(type) {
+            const suggestionsList = document.getElementById(`suggestions-list-${type}`);
+            suggestionsList.style.display = suggestionsList.children.length > 0 ? 'block' : 'none';
+        }
+
+        function hideSuggestions(type) {
+            const suggestionsList = document.getElementById(`suggestions-list-${type}`);
+            suggestionsList.style.display = 'none';
+        }
+
+        function clearSearchBox(type) {
+            const searchBox = document.getElementById(`search-box-${type}`);
+            searchBox.value = '';
+        }
+    </script>
 @endpush
-
