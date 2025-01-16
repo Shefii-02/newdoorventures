@@ -553,7 +553,29 @@ class FrontendController extends Controller
         // Filters for projects...
         $project_query = $this->ShortcutFilterProjects($query, $request);
 
+        /////////////////////////////////
+        $projectSearchKeywords = $this->projectSearchKeywords($request, $request->type);
+
+        if (isset($projectSearchKeywords['properties'])) {
+            $keywordProjects = $projectSearchKeywords['properties'];
+        } else {
+            $keywordProjects = collect();
+        }
+
+        if (isset($projectSearchKeywords['proejctsProperties'])) {
+            $projectProperties = $projectSearchKeywords['proejctsProperties'];
+        } else {
+            $projectProperties = collect();
+        }
+
+
+        //////////////////////////////////
+
         $projects = $project_query->get();
+
+
+
+        $properties = $projects->merge($keywordProjects);
 
         if ($request->ajax()) {
             $html = view('front.shortcuts.projects.items', compact('projects'))->render();
@@ -1035,6 +1057,72 @@ class FrontendController extends Controller
     }
 
 
+    public function projectSearchKeywords(Request $request, $type = null)
+    {
+        if ($request->has('s') && $request->filled('s')) {
+            $keywords = is_array($request->s) ? $request->s : [$request->s];
+
+            // Fetch City-based Properties
+            $cityProperties = Project::query()
+                ->where(function ($query) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $query->orWhere('city', 'LIKE', "%{$keyword}%");
+                    }
+                })
+                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
+                    $query->where('construction_status', $type);
+                });
+            $cityProperties = $cityProperties->distinct()->get();
+
+            // Fetch Project-based Properties
+            $projectIds = Project::query()
+                ->where(function ($query) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $query->orWhere('name', 'LIKE', "%{$keyword}%");
+                    }
+                })
+                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
+                    $query->where('construction_status', $type);
+                })
+                ->pluck('id');
+
+            // Fetch Locality-based Properties
+            $localityProperties = Project::query()
+                ->where(function ($query) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $query->orWhere('locality', 'LIKE', "%{$keyword}%");
+                    }
+                })
+                ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
+                    $query->where('construction_status', $type);
+                });
+
+            $localityProperties = $localityProperties->distinct()->get();
+
+            $proejctsProperties = collect();
+            if ($projectIds) {
+                $proejctsProperties = Property::whereIn('project_id', $projectIds);
+                if (in_array($type, ['sell', 'rent', 'pg'])) {
+                    $proejctsProperties->where('type', $type);
+                } else if ($type === 'commercial') {
+                    $proejctsProperties->where('mode', 'commercial');
+                }
+                $proejctsProperties->distinct()
+                    ->get();
+            }
+
+
+            // Merge City, Project, and Locality Properties
+            $mergedProperties = $cityProperties->merge($localityProperties)
+                ->unique('id') // Remove duplicates based on ID
+                ->values(); // Reindex the collection
+
+
+            return ['properties' => $mergedProperties, 'proejctsProperties' => $proejctsProperties];
+        }
+    }
+
+
 
     public function searchProjects(Request $request)
     {
@@ -1044,33 +1132,89 @@ class FrontendController extends Controller
             $type = ($request->type == 'new-launch' ? 'new_launch' : $request->type);
 
             // Query 1: Search in 'city'
-            $cities = Project::query()
+            // $cities = Project::query()
+            //     ->where('city', 'LIKE', "%{$keyword}%")
+            //     ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
+            //         $query->where('construction_status', $type);
+            //     })
+            //     ->where('city', '!=', '')
+            //     ->distinct()
+            //     ->pluck('city')->toArray();
+
+
+            $cities = Property::query()
                 ->where('city', 'LIKE', "%{$keyword}%")
+                ->where('city', '!=', '')
                 ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
                     $query->where('construction_status', $type);
                 })
-                ->where('city', '!=', '')
                 ->distinct()
-                ->pluck('city')->toArray();
+                ->pluck('city') // Pluck the distinct city names
+                ->map(function ($city) {
+                    return [
+                        'value' => $city, // Actual city name for value
+                        'display' => "{$city}" // Formatted as city, city for display
+                    ];
+                })
+                ->toArray();
+
+
 
 
             // Query 2: Search in 'locality'
-            $localities = Project::query()
+            // $localities = Project::query()
+            //     ->where('locality', 'LIKE', "%{$keyword}%")
+            //     ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
+            //         $query->where('construction_status', $type);
+            //     })
+            //     ->where('locality', '!=', '')
+            //     ->distinct()
+            //     ->pluck('locality')->toArray();
+
+            $localities = Property::query()
+                ->where('moderation_status', 'approved')
                 ->where('locality', 'LIKE', "%{$keyword}%")
+                ->where('locality', '!=', '')
                 ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
                     $query->where('construction_status', $type);
                 })
-                ->where('locality', '!=', '')
                 ->distinct()
-                ->pluck('locality')->toArray();
+                ->select(['locality', 'city'])
+                ->get()
+                ->map(function ($locality) {
+                    return [
+                        'value' => $locality->locality,
+                        'display' => "{$locality->locality},{$locality->city}"
+                    ];
+                })
+                ->toArray();
 
             // Query 3: Search in associated 'project name'
-            $projects = Project::where('name', 'LIKE', "%{$keyword}%")
+            // $projects = Project::where('name', 'LIKE', "%{$keyword}%")
+            //     ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
+            //         $query->where('construction_status', $type);
+            //     })
+            //     ->distinct()
+            //     ->pluck('name')->toArray();
+            $projects = Project::query()
+                ->where(function ($query) use ($keyword) {
+                    $query->orWhere('name', 'LIKE', "%{$keyword}%")
+                        ->orWhere('city', 'LIKE', "%{$keyword}%")
+                        ->orWhere('locality', 'LIKE', "%{$keyword}%");
+                })
                 ->when(isset($type) && in_array($type, ['new_launch', 'ready_to_move', 'under_construction']), function ($query) use ($type) {
                     $query->where('construction_status', $type);
                 })
                 ->distinct()
-                ->pluck('name')->toArray();
+                ->select(['name', 'locality', 'city'])
+                ->get()
+                ->map(function ($project) {
+                    return [
+                        'value' => $project->name, // Project name as the value
+                        'display' => "{$project->name}, {$project->locality}, {$project->city}" // Display formatted as project_name, locality, city
+                    ];
+                })
+                ->toArray();
         }
 
 
@@ -1093,60 +1237,6 @@ class FrontendController extends Controller
         return response()->json($results);
     }
 
-
-
-
-    // public function searchProjects(Request $request)
-    // {
-    //     if ($request->has('s') && $request->filled('s')) {
-    //         $keywords = is_array($request->s) ? $request->s : [$request->s];
-
-
-
-    //         $projects = Project::query()->orWhere('city', 'LIKE', "%{$keywords}%")
-    //             ->orWhere('locality', 'LIKE', "%{$keywords}%")
-    //             ->orWhere('name', 'LIKE', "%{$keywords}%");
-    //     }
-    //     // // Keyword-based Search
-    //     if ($request->filled('k') && $request->k != '') {
-    //         $query = Project::query();
-
-    //         // // Handle 'type' filters
-    //         // if ($request->filled('type')) {
-    //         //     $type = $request->type;
-    //         //     switch ($type) {
-    //         //         case 'projects':
-    //         //             $query->where('construction_status', '!=' ,'new_launch');
-    //         //             break;
-    //         //         case 'new-lanuch':
-    //         //             $query->where('construction_status', 'new_launch');
-    //         //             break;
-    //         //         default:
-    //         //             return collect(); // Return an empty collection if type is invalid
-    //         //     }
-    //         // }
-
-    //         $keyword = $request->k;
-
-    //         $query->where(function ($q) use ($keyword) {
-    //             $q->where('name', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('slug', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('description', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('content', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('location', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('city', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('locality', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('sub_locality', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('landmark', 'LIKE', "%{$keyword}%")
-    //                 ->orWhereHas('categories', function ($subQuery) use ($keyword) {
-    //                     $subQuery->where('name', 'LIKE', "%{$keyword}%");
-    //                 });
-    //         });
-    //         return $query->get();
-    //     }
-
-    //     return collect();
-    // }
 
     function ShortcutFilterProperties($query, $request)
     {
