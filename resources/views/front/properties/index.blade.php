@@ -70,7 +70,7 @@
                         'projects' => $projects,
                     ])
                 @elseif(isset($type) && $type == 'commercial')
-                @dump($type)
+
                     @include('front.shortcuts.properties.search-box-top-commercial', [
                         'id' => null,
                         'type' => request()->get('type') ?? isset($type) ? $type : '',
