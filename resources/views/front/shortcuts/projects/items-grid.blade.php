@@ -81,7 +81,7 @@
                         <div class="box">
                             <div class="px-1.5 bg-gray-300 py-4 rounded">
                                 <h1 class="fw-bold  text-center text-dark  ">
-                                    Sell/Rent your Property with us for Free
+                                    Post  your Sell/Rent Property with us for Free
                                 </h1>
                             </div>
                             <div class="py-4 ">

@@ -6,20 +6,29 @@
                 max-width: 1450px !important;
             }
         }
+
+        .jump-header.sticky ul{
+            display: flex !important;
+            width: 100% !important;
+            overflow-y: auto !important;
+            flex-wrap:nowrap !important;
+        }
     </style>
 @endpush
 
 
 @section('content')
+<div id="alert-container"></div>
+@include('layouts.topnav')
     <section class="relative  mt-28  content" data-property-id="{{ $property->id }}" x-data="scrollSpy()"
         x-init="init()">
         <div class="bg-white jump-header sticky z-999 top-0 mt-28 dark:bg-dark dark:text-white">
             <div class="container">
-                <div class="px-3 row">
+                <div class=" row">
                     <div class="px-6 col-lg-9">
                         <div class="row pt-5 align-items-top">
 
-                            <div class="px-3 col-lg-10 mt-5 md:p-4">
+                            <div class=" col-lg-10 mt-5 md:p-4">
                                 <span>
                                     <span class="fw-bold fs-2 text-theme">{{ shorten_price($property->price) }}</span>
                                     <span class="fs-5"> onwards</span>
@@ -45,13 +54,13 @@
 
                         </div>
                     </div>
-                    <div class="px-3 mt-8 col-lg-3 mb-3">
+                    <div class=" mt-8 col-lg-3 mb-3 ">
                         <span class="">Posted on {{ date('M d, Y', strtotime($property->created_at)) }}</span>
                     </div>
                 </div>
 
 
-                <div class=" mt-2 px-3">
+                <div class=" mt-2 ">
 
                     <div class="px-3  flex flex-wrap">
                         <span class="text-md">Occupancy Type : <i class="mdi mdi-bed-outline"></i> <span
@@ -79,7 +88,7 @@
                                     <div class="border-theme rounded-b-xl border-top-0">
                                         <div class="px-5 py-5">
                                             <div class="md:flex">
-                                                <div class="px-3 col-lg-12 md:p-4">
+                                                <div class=" col-lg-12 md:p-4">
                                                     <div class="row">
                                                         <div class="col-lg-3 mb-3">
                                                             <div class="flex flex-column">
@@ -283,13 +292,13 @@
                                                 </div>
 
                                             </div>
-                                            <div class="px-3 mx-3 border-theme rounded">
+                                            <div class=" px-3 border-theme rounded">
                                                 <span class=" text-sm py-3 ">
                                                     {!! $property->content !!}
                                                 </span>
                                             </div>
                                           
-                                            <div class="px-3 mt-5">
+                                            <div class=" mt-5">
                                                 <a href="#" data-id="{{ $property->id }}" data-type="property" 
                                                     class="btn-sm text-white btn bg-primary popup-contact-modal-form">{{ __('Get Phone Number') }}</a>
                                             </div>
@@ -365,7 +374,7 @@
                             @endif
 
                             {{-- @if ($relatedProperties->count()) --}}
-                                <li role="presentation" class="inline-block">
+                                {{-- <li role="presentation" class="inline-block">
                                     <button @click="scrollToSection('Similar')"
                                         :class="{ 'tab-active': activeTab === 'Similar' }"
                                         class="w-full px-6 py-2 text-base font-bold transition-all duration-500 ease-in-out rounded-md hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
@@ -373,7 +382,7 @@
                                         aria-controls="similar" aria-selected="true">
                                         Similar
                                     </button>
-                                </li>
+                                </li> --}}
                             {{-- @endif --}}
 
 
@@ -393,8 +402,8 @@
                                             <div class="md:flex">
                                                 <div class="w-full p-1 ">
                                                     <div class="border-theme rounded-xl">
-                                                        <div class="px-3 py-5">
-                                                            <h4 class="fs-5  font-bold me-2">Amenities and Common
+                                                        <div class=" py-5">
+                                                            <h4 class="fs-5 px-3 font-bold me-2">Amenities and Common
                                                                 Area </h4>
                                                             <div class="row align-items-center px-3">
                                                                 @foreach ($property->features ?? [] as $featureItem)
@@ -424,7 +433,7 @@
                                                         <div class="px-3 py-5">
                                                             <h4 class="fs-5 font-bold me-2">Furnishing Details
                                                             </h4>
-                                                            <div class="row align-items-center px-3">
+                                                            <div class="row align-items-center ">
                                                                 @foreach ($property->furnishing ?? [] as $furnishingItem)
                                                                     <div class="col-lg-3 mb-3 d-flex align-items-center">
                                                                         <img class="rounded-xl w-6 w-1/2 h-6" loading="lazy"
@@ -450,9 +459,9 @@
                                         <div class="container-fluid mb-5 section" id="Rules"
                                             :class="{ 'active': activeSection === 'Rules' }">
                                             <div class="md:flex">
-                                                <div class="w-full p-1 ">
+                                                <div class="w-full p-1 px-3">
                                                     <div class="border-theme rounded-xl">
-                                                        <div class="px-3 py-5">
+                                                        <div class="py-5">
                                                             <h4 class="fs-5  font-bold me-2">Rules</h4>
                                                             <div class="row align-items-center">
                                                                 @foreach ($property->pg_rules ?? [] as $ruleItem)
@@ -556,7 +565,7 @@
                                         </div>
                                     @endif --}}
                                 </div>
-                                <div class=" mt-8 lg:w-1/3 md:w-1/2 md:p-4 md:mt-0">
+                                <div class=" mt-8 lg:w-1/3 md:w-1/2 md:p-4 md:mt-0 " style="margin-bottom: 100px">
                                     <div class="sticky  " style="top: 11rem;z-index:999">
                                         <div
                                             class="mb-2 rounded-2xl shadow bg-theme dark:bg-slate-800 dark:shadow-gray-700">

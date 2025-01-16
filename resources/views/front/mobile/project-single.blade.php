@@ -16,11 +16,19 @@
             }
         }
 
-        .x-btn{
+        .x-btn {
             top: -33px !important;
             right: 0;
             font-size: 30px;
             z-index: 99999 !important;
+        }
+
+
+        .jump-header.sticky ul {
+            display: flex !important;
+            width: 100% !important;
+            overflow-y: auto !important;
+            flex-wrap: nowrap !important;
         }
     </style>
 @endpush
@@ -28,6 +36,8 @@
 
 
 @section('content')
+    <div id="alert-container"></div>
+    @include('layouts.topnav')
     <section class="relative mt-36">
         <div class="container" data-property-id="{{ $project->id }}" x-data="scrollSpy()" x-init="init()">
             @include('front.shortcuts.properties.slider', [
@@ -751,7 +761,7 @@
                             @endif
 
                         </div>
-                        <div class=" mt-8 lg:w-1/3 md:w-1/2 md:p-4 md:mt-0">
+                        <div class=" mt-8 lg:w-1/3 md:w-1/2 md:p-4 md:mt-0" style="margin-bottom: 100px ">
                             <div class="sticky top-1/4" style="z-index:99">
                                 <div class="mb-2 rounded-2xl shadow bg-theme dark:bg-slate-800 dark:shadow-gray-700">
                                     @include('front.shortcuts.consult-form', [
@@ -814,8 +824,7 @@
                         <img :src="currentImage" alt="Ad Image" class="w-full h-full rounded-lg">
                     </a>
                     <!-- Close Button -->
-                    <button @click="closeModal()"
-                        class="absolute x-btn text-light bg-red-500  rounded-full p-2">
+                    <button @click="closeModal()" class="absolute x-btn text-light bg-red-500  rounded-full p-2">
                         ✕
                     </button>
                 </div>

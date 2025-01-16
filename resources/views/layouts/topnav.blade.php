@@ -13,7 +13,7 @@
 
         <div class="menu-extras">
             <div class="menu-item">
-                <button type="button" class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
+                <button type="button" class="navbar-toggle" id="isToggle" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling">
                     <div class="lines">
                         <span></span>
                         <span></span>
@@ -23,8 +23,7 @@
             </div>
         </div>
 
-        <ul class="buy-button list-none mb-0">
-
+        <ul class="buy-button list-none mb-0 d-none d-lg-block">
             <li class="block md:none inline mb-0">
                 @if(auth()->check())
                     <a href="{{ route('admin.dashboard.index') }}"
@@ -99,3 +98,33 @@
         </div>
     </div>
 </nav>
+
+
+<div class="offcanvas offcanvas-start" style=" width: 80% !important;" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title d-flex gap-3 align-items-center" id="offcanvasScrollingLabel">
+        <img class="" src="https://stage.newdoorventures.in/images/general/logo-dark.png" alt="Logo">
+      </h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close">X</button>
+    </div>
+    <hr>
+    <div class="offcanvas-body">
+        <ul class="navigation-menu justify-end">
+            <li class="active mb-3">
+                <a href="{{ route('public.index') }}" target="_self" class="sub-menu-item active">
+                    Home
+                </a>
+            </li>
+            <li class="mb-3">
+                <a href="{{ route('public.news') }}" target="_self" class="sub-menu-item">
+                    News
+                </a>
+            </li>
+            <li class="mb-3">
+                <a href="{{ route('public.contact') }}" target="_self" class="sub-menu-item">
+                    Contact
+                </a>
+            </li>
+        </ul>
+    </div>
+  </div>

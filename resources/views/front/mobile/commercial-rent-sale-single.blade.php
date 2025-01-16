@@ -7,6 +7,13 @@
                 max-width: 1450px !important;
             }
         }
+
+        .jump-header.sticky ul{
+            display: flex !important;
+            width: 100% !important;
+            overflow-y: auto !important;
+            flex-wrap:nowrap !important;
+        }
     </style>
 @endpush
 @php
@@ -20,6 +27,8 @@
 @endphp
 
 @section('content')
+    <div id="alert-container"></div>
+    @include('layouts.topnav')
 
     <section class="relative  content" data-property-id="{{ $property->id }}" x-data="scrollSpy()" x-init="init()">
         <div class="bg-white jump-header sticky z-999 top-0 mt-28 dark:bg-dark dark:text-white">
@@ -186,14 +195,13 @@
                                                             <span>{{ $lockInPeriod ?? '---' }}</span>
                                                         </div>
                                                     </div>
-                                                @else 
+                                                @else
                                                     <div class="col-lg-3  mb-3">
                                                         <div class="flex flex-column gap-2  text-lg-center">
                                                             <h4 class="fw-bold">Suitable for</h4>
                                                             <span>{{ $suitableFor ?? '---' }}</span>
                                                         </div>
                                                     </div>
-                                                
                                                 @endif
 
                                                 <div class="col-lg-3  mb-3">
@@ -215,7 +223,7 @@
                                                             class="text-capitalize">{{ $property->overlooking ?? '--' }}</span>
                                                     </div>
                                                 </div>
-                                              
+
 
                                             </div>
                                         </div>
@@ -629,7 +637,7 @@
                                 </div>
                             @endif
                         </div>
-                        <div class=" mt-8 lg:w-1/3 md:w-1/2 md:p-4 md:mt-0">
+                        <div class=" mt-8 lg:w-1/3 md:w-1/2 md:p-4 md:mt-0"  style="margin-bottom: 100px">
                             <div class="sticky  " style="top: 11rem;z-index:999">
                                 <div class="mb-2 rounded-2xl shadow bg-theme dark:bg-slate-800 dark:shadow-gray-700">
                                     @include('front.shortcuts.consult-form', [

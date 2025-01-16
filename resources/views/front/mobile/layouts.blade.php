@@ -151,6 +151,19 @@
             /* Safari and Chrome */
             appearance: auto !important;
         }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        .sticky-search-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
     </style>
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -332,15 +345,7 @@
 </head>
 
 <body class="dark:bg-slate-900">
-    <div x-data="scrollHandler()" x-ref="header" x-show="show" x-cloak
-        x-transition:enter="transform opacity-0 -translate-y-full" x-transition:enter-end="transform-none opacity-100"
-        x-transition:leave="transform opacity-100" x-transition:leave-end="transform opacity-0 -translate-y-full"
-        class="sticky-search-bar bg-white shadow-sm" style="display: none;">
-        <div class="bg-theme pt-1 px-1.5">
-            @include('front.mobile.search-bar', ['div' => 'search2'])
-        </div>
-
-    </div>
+    
 
     <div class="loading-state">
         <div class="loading"></div>
@@ -623,6 +628,8 @@
     </div>
 
 
+  
+
 
     <button type="button" onclick="topFunction()" id="back-to-top"
         class="fixed z-10 items-center justify-center hidden text-lg text-center text-white rounded-full bg-primary back-to-top bottom-28 end-5 h-9 w-9"
@@ -684,10 +691,25 @@
 
             $('body').on('click', '.submit-btn', function(e) {
                 e.preventDefault();
-                var idd =$(this).data('id');
-                alert($('typeOption'+idd).val())
-                
+
+                // Get the ID from the data attribute
+                var idd = $(this).data('id');
+
+                // Get the selected option value
+                var option = $('#typeOption-' + idd).val();
+
+                // Validate option value
+                if (option === 'sale' || option === 'rent' || option === 'pg') {
+                    // Update the form action dynamically
+                    $('form#form-' + idd).attr('action', '/properties/' + option);
+
+                    // Submit the form
+                    $('form#form-' + idd).submit();
+                } else {
+                    alert('Please select a valid option.');
+                }
             });
+
 
             $('body').on('input', '.range-input input', function() {
 
@@ -1147,6 +1169,30 @@
             if (suggestionsList.children.length > 0) {
                 suggestionsList.style.display = 'block';
             }
+        }
+    </script>
+    <script>
+        function scrollHandler() {
+            return {
+                lastScrollTop: 0, // Start tracking from the top
+                show: false,
+                init() {
+                    window.addEventListener('scroll', () => {
+                        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                        console.log(currentScroll)
+                        if (currentScroll > 200) {
+                            // Show the search bar after scrolling beyond 200px
+                            this.show = true;
+                        } else {
+                            // Hide the search bar when back to or below 200px
+                            this.show = false;
+                        }
+
+                        this.lastScrollTop = currentScroll <= 0 ? 0 :
+                            currentScroll; // Prevent negative scroll values
+                    });
+                },
+            };
         }
     </script>
 </body>

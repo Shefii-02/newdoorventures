@@ -33,10 +33,10 @@ class FrontendController extends Controller
     public function index()
     {
         $categories                 = Category::where('status', 'published')->get();
-        $featured_properties        = Property::where('moderation_status', 'approved')->where('type', 'sell')->orderBy('created_at','desc')->limit(9)->get();
-        $featured_properties_rent   = Property::where('moderation_status', 'approved')->where('type', 'rent')->orderBy('created_at','desc')->limit(9)->get();
+        $featured_properties        = Property::where('moderation_status', 'approved')->where('type', 'sell')->orderBy('created_at', 'desc')->limit(9)->get();
+        $featured_properties_rent   = Property::where('moderation_status', 'approved')->where('type', 'rent')->orderBy('created_at', 'desc')->limit(9)->get();
 
-        $featured_project           = Project::orderBy('created_at','desc')->limit(9)->get();
+        $featured_project           = Project::orderBy('created_at', 'desc')->limit(9)->get();
         $recent_viwed_properties    = $this->recentlyViewedProperties();
         $latest_blogs               = BlogPost::orderBy('created_at', 'desc')->limit(3)->get();
 
@@ -607,29 +607,53 @@ class FrontendController extends Controller
             ->where('id', '!=', $property->id) // Exclude the current property
             ->get();
 
-
+        $result = $this->agent->isMobile();
 
 
         if ($property->mode == 'Commercial') {
             if ($property->category && $property->category->name == 'Plot and Land') {
-                return view('front.properties.plot-property', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
+                if ($result) {
+                    return view('front.mobile.plot-property', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
+                } else {
+                    return view('front.properties.plot-property', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
+                }
             }
 
-            return match ($property->type) {
-                'sell', 'rent' => view('front.properties.commercial-rent-sale-single', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
-                default => abort(404),
-            };
+            if ($result) {
+                return match ($property->type) {
+                    'sell', 'rent' => view('front.mobile.commercial-rent-sale-single', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
+                    default => abort(404),
+                };
+            } else {
+                return match ($property->type) {
+                    'sell', 'rent' => view('front.properties.commercial-rent-sale-single', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
+                    default => abort(404),
+                };
+            }
         }
 
         if ($property->category && $property->category->name == 'Plot and Land') {
-            return view('front.properties.plot-property', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
+            if ($result) {
+                return view('front.mobile.plot-property', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
+            } else {
+                return view('front.properties.plot-property', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
+            }
         }
 
-        return match ($property->type) {
-            'sell', 'rent' => view('front.properties.single', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
-            'pg' => view('front.properties.pg-single', compact('property', 'recent_properties', 'rules', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
-            default => abort(404),
-        };
+        if ($result) {
+            return match ($property->type) {
+                
+                'sell', 'rent' => view('front.mobile.sale-rent-single', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
+                'pg' => view('front.mobile.pg-single', compact('property', 'recent_properties', 'rules', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
+                default => abort(404),
+            };
+        } else {
+            return match ($property->type) {
+                'sell', 'rent' => view('front.properties.single', compact('property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
+                'pg' => view('front.properties.pg-single', compact('property', 'recent_properties', 'rules', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
+                default => abort(404),
+            };
+        }
     }
 
     public function projectDetails($uid, $slug)
@@ -642,8 +666,13 @@ class FrontendController extends Controller
         $pageDescription = $project->content;
         $pageKeywords = 'new launch projects, under construction projects, ready to launch properties, real estate projects in Bangalore, residential projects, commercial projects in Karnataka, real estate builders in Bangalore, upcoming property launches, real estate development, investment in property, new construction projects in Karnataka, real estate investment opportunities, residential apartments, commercial spaces for sale in Bangalore';
 
-
-        return view('front.projects.single', compact('project', 'configurations', 'advertisement', 'pageTitle', 'pageDescription', 'pageKeywords'));
+        $result = $this->agent->isMobile();
+        if ($result) {
+            return view('front.mobile.project-single', compact('project', 'configurations', 'advertisement', 'pageTitle', 'pageDescription', 'pageKeywords'));
+        }
+        else{
+            return view('front.projects.single', compact('project', 'configurations', 'advertisement', 'pageTitle', 'pageDescription', 'pageKeywords'));
+        }
     }
 
     public function contact()
