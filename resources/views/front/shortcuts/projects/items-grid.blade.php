@@ -74,7 +74,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-2 d-none d-lg-block">
             <div class="card">
                 <div class="card-body">
                     <a href="{{ route('user.properties.create') }}" target="_blank">

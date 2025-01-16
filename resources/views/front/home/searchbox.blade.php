@@ -63,7 +63,7 @@
                         @foreach ($searchTabs as $key => $value)
                             <div x-show="activeTab === '{{ $key }}'" class="p-4" id="{{ $key }}" role="tabpanel">
                                 @php($type = $key === 'projects' ? 'project' : ($key === 'plot' ? 'plot' : 'property'))
-                                 @include("front.shortcuts.filters.tabs.$key", ['type' => $key, 'categories' => $categories])
+                                @include("front.shortcuts.filters.tabs.$key", ['type' => $key, 'categories' => $categories])
                             </div>
                         @endforeach
                     </div>

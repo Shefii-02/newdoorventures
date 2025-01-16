@@ -1,25 +1,25 @@
 @extends('front.mobile.layouts')
 @php
-    $searchType = 'properties';
-@endphp
 
+    $searchType = 'projects';
+    $type = request()->get('type') != '' ? request()->get('type') : 'projects';
+@endphp
 @section('content')
     <div x-data="scrollHandler()" x-ref="header" x-show="show" x-cloak
         x-transition:enter="transform opacity-0 -translate-y-full" x-transition:enter-end="transform-none opacity-100"
         x-transition:leave="transform opacity-100" x-transition:leave-end="transform opacity-0 -translate-y-full"
         class="sticky-search-bar bg-white shadow-sm" style="display: none;">
         <div class="bg-theme pt-1 px-1.5">
-            @include('front.mobile.search-bar', ['div' => 'search2','selected' =>$type])
+            @include('front.mobile.search-bar', ['div' => 'search2','selected' =>'projects'])
         </div>
 
     </div>
 
     <div class="bg-theme">
         <div class="pt-3 px-2">
-            @include('front.mobile.search-bar', ['div' => 'search1','selected' =>$type])
+            @include('front.mobile.search-bar', ['div' => 'search1','selected' =>'projects'])
         </div>
     </div>
-
     <div class="relative mt-10">
         <div class="relative hidden md:block">
             <div class="overflow-hidden text-white shape z-1 dark:text-slate-900">
@@ -28,12 +28,23 @@
                 </svg>
             </div>
         </div>
-    </div>
 
+        <div class="fixed top-0 start-0 w-10/12 h-screen transition-transform duration-300 -translate-x-full md:hidden z-999 dark:bg-gray-800"
+            id="filter-drawer">
+            <div class="absolute inset-0 w-full h-full p-4 overflow-y-auto bg-white dark:bg-slate-900">
+                <button type="button" id="close-filters"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm px-1.5 absolute top-2.5 end-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <i class="text-xl mdi mdi-close"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
 
     <section class="relative">
         <div class="container">
             <h3 class="fs-4 pb-5 text-gray fw-bold ">{{ isset($searchByTitle) ? $searchByTitle : '' }}</h3>
+
             @php
                 $filtersApplied =
                     request()->filled('city') ||
@@ -50,29 +61,27 @@
                 @if (request()->filled('city') && request('city') !== 'null')
                     <span class="text-capitalize fs-6">Locality: <span class="fw-bold">{{ request('city') }}</span></span> |
                 @endif
-                @if (request()->filled('project') && request('project') !== 'null')
-                    <span class="text-capitalize fs-6">Project: <span class="fw-bold">{{ request('project') }}</span></span>
+                @if (request()->filled('builder') && request('builder') !== 'null')
+                    <span class="text-capitalize fs-6">Builder: <span
+                            class="fw-bold">{{ implode(', ', request('builder')) }}</span></span>
                     |
                 @endif
                 @if (is_array(request()->get('categories')))
                     <span class="text-capitalize fs-6">Categories: <span
                             class="fw-bold">{{ implode(', ', request('categories')) }}</span></span> |
                 @endif
-                @if (is_array(request()->get('bedrooms')))
-                    <span class="text-capitalize fs-6">Bedrooms: <span
-                            class="fw-bold">{{ implode(', ', request('bedrooms')) }}</span></span> |
-                @endif
                 @if (is_array(request()->get('ownership')))
                     <span class="text-capitalize fs-6">Ownership: <span
                             class="fw-bold">{{ implode(', ', request('ownership')) }}</span></span> |
                 @endif
-                @if (is_array(request()->get('availability')))
-                    <span class="text-capitalize fs-6">Availability: <span
-                            class="fw-bold">{{ implode(', ', request('availability')) }}</span></span> |
+                @if (is_array(request()->get('construction')))
+                    <span class="text-capitalize fs-6">Construction Status: <span
+                            class="fw-bold">{{ str_replace('_', ' ', implode(', ', request('construction'))) }}</span></span>
+                    |
                 @endif
                 @if (is_array(request()->get('occupancy')))
                     <span class="text-capitalize fs-6">Occupancy: <span
-                            class="fw-bold">{{ implode(', ', request('occupancy')) }}</span></span> |
+                            class="fw-bold">{{ str_replace('_', ' ', implode(', ', request('occupancy'))) }}</span></span> |
                 @endif
 
 
@@ -98,21 +107,16 @@
             <div id="items-map" @class([
                 'hidden' => !request()->input('layout') == 'map' || !$showMap,
             ])>
-                {{-- {!! Theme::partial('real-estate.properties.items-map', compact('properties')) !!} --}}
             </div>
             <div data-box-type="property" @class(['hidden' => request()->input('layout') == 'map']) data-layout="grid"
                 style="max-height: none; max-width: none">
                 <div id="items-list">
-                    @include(
-                        'front.shortcuts.properties.items',
-                        compact('properties', 'projectProperties', 'readyToMoveProjects'))
+                    @include('front.shortcuts.projects.items', compact('projects'))
                 </div>
             </div>
         </div>
     </section>
 @endsection
-
-
 
 @push('footer')
     {{-- <script>
@@ -120,10 +124,10 @@
 
         function fetchSuggestions(type) {
 
-            const searchQuery = document.getElementById(`search-box-${type}`).value;
-            const loadingIcon = document.getElementById(`loading-icon-${type}`);
-            const suggestionsList = document.getElementById(`suggestions-list-${type}`);
-            const suggestionsUl = document.getElementById(`suggestions-ul-${type}`);
+            const searchQuery = document.getElementById(`search-box-projects`).value;
+            const loadingIcon = document.getElementById(`loading-icon-projects`);
+            const suggestionsList = document.getElementById(`suggestions-list-projects`);
+            const suggestionsUl = document.getElementById(`suggestions-ul-projects`);
 
             if (searchQuery.length > 1) {
                 loadingIcon.style.display = 'inline-block'; // Show loading icon
@@ -179,9 +183,9 @@
                 selectedItems[type].push(item);
                 updateSelectedItems(type);
             }
-            document.getElementById(`search-box-${type}`).value = '';
-            document.getElementById(`suggestions-list-${type}`).style.display = 'none';
-            document.getElementById(`suggestions-ul-${type}`).innerHTML = ''
+            document.getElementById(`search-box-projects`).value = '';
+            document.getElementById(`suggestions-list-projects`).style.display = 'none';
+            document.getElementById(`suggestions-ul-projects`).innerHTML = ''
         }
 
         function removeItem(type, item) {
@@ -192,7 +196,7 @@
         }
 
         function updateSelectedItems(type) {
-            const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
+            const selectedItemsDisplay = document.getElementById(`selected-items-display-projects`);
             selectedItemsDisplay.innerHTML = ''; // Clear previous items
 
             selectedItems[type].forEach(item => {
@@ -216,13 +220,13 @@
                 selectedItemsDisplay.appendChild(hiddenInput);
             });
 
-            const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
+            const showMoreBtn = document.getElementById(`show-more-btn-projects`);
             showMoreBtn.style.display = selectedItems[type].length > 5 ? 'block' : 'none';
         }
 
         function toggleShowMore(type) {
-            const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
-            const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
+            const selectedItemsDisplay = document.getElementById(`selected-items-display-projects`);
+            const showMoreBtn = document.getElementById(`show-more-btn-projects`);
 
             if (selectedItemsDisplay.style.maxHeight === '100%') {
                 selectedItemsDisplay.style.maxHeight = '30px';
@@ -234,7 +238,7 @@
         }
 
         function showSuggestions(type) {
-            const suggestionsList = document.getElementById(`suggestions-list-${type}`);
+            const suggestionsList = document.getElementById(`suggestions-list-projects`);
             if (suggestionsList.children.length > 0) {
                 suggestionsList.style.display = 'block';
             }

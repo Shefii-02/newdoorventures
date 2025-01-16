@@ -345,7 +345,7 @@
 </head>
 
 <body class="dark:bg-slate-900">
-    
+
 
     <div class="loading-state">
         <div class="loading"></div>
@@ -377,8 +377,7 @@
 
                     <form class="generic-form" action="{{ route('public.send.consult') }}" method="POST">
                         @csrf
-                        <input type="hidden" value="{{ isset($type) ? $type : '' }}" name="type"
-                            id="type">
+                        <input type="hidden" value="{{ isset($type) ? $type : '' }}" name="type" id="type">
                         <input type="hidden" value="" name="data_id" id="data_id">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" name="name" required
@@ -454,9 +453,10 @@
                 </svg>
             </button>
         </div>
-        <div class="offcanvas-body">
+        <div class=" sticky  px-5 ">
             <!-- Tabs Navigation -->
-            <ul class="nav nav-tabs" id="propertyFilterTabs" role="tablist">
+            <ul class="nav nav-tabs  overflow-x-hidden gap-2 justify-content-center" id="propertyFilterTabs"
+                role="tablist">
                 <li class="nav-item" role="presentation">
                     <span class="nav-link active" id="buy-tab" data-bs-toggle="tab" data-bs-target="#buy"
                         type="button" role="tab" aria-controls="buy" aria-selected="true">
@@ -592,43 +592,65 @@
                     <p>Projects</p>
                 </li>
             </ul>
-
+        </div>
+        <div class="offcanvas-body">
             <!-- Tab Content -->
             <div class="tab-content mt-3" id="propertyFilterTabsContent">
                 <!-- Buy Tab -->
                 <div class="tab-pane fade show active" id="buy" role="tabpanel" aria-labelledby="buy-tab">
-                    <p>Content for the "Buy" filter option.</p>
+                    @include('front.shortcuts.filters.mobile-tabs.buy', [
+                        'type' => 'buy',
+                        'categories' => $categories,
+                    ])
                 </div>
                 <!-- Rent Tab -->
                 <div class="tab-pane fade" id="rent" role="tabpanel" aria-labelledby="rent-tab">
-                    <p>Content for the "Rent" filter option.</p>
+                    @include('front.shortcuts.filters.mobile-tabs.rent', [
+                        'type' => 'rent',
+                        'categories' => $categories,
+                    ])
                 </div>
                 <!-- PG/Co-Living Tab -->
                 <div class="tab-pane fade" id="pg" role="tabpanel" aria-labelledby="pg-tab">
-                    <p>Content for the "PG/Co-Living" filter option.</p>
+                    @include('front.shortcuts.filters.mobile-tabs.pg-co-living', [
+                        'type' => 'pg',
+                        'categories' => $categories,
+                    ])
                 </div>
                 <!-- Commercial Tab -->
                 <div class="tab-pane fade" id="commercial" role="tabpanel" aria-labelledby="commercial-tab">
-                    <p>Content for the "Commercial" filter option.</p>
+                    @include('front.shortcuts.filters.mobile-tabs.commercial', [
+                        'type' => 'commercial',
+                        'categories' => $categories,
+                    ])
                 </div>
                 <!-- New Launch Tab -->
                 <div class="tab-pane fade" id="newlaunch" role="tabpanel" aria-labelledby="newlaunch-tab">
-                    <p>Content for the "New Launch" filter option.</p>
+                    @include('front.shortcuts.filters.mobile-tabs.new-launch', [
+                        'type' => 'project',
+                        'categories' => $categories,
+                    ])
                 </div>
                 <!-- Plot and Lands Tab -->
                 <div class="tab-pane fade" id="plot" role="tabpanel" aria-labelledby="plot-tab">
-                    <p>Content for the "Plot and Lands" filter option.</p>
+                    @include('front.shortcuts.filters.mobile-tabs.buy', [
+                        'type' => 'plot',
+                        'categories' => $categories,
+                    ])
                 </div>
                 <!-- Projects Tab -->
                 <div class="tab-pane fade" id="projects" role="tabpanel" aria-labelledby="projects-tab">
-                    <p>Content for the "Projects" filter option.</p>
+                    @include('front.shortcuts.filters.mobile-tabs.buy', [
+                        'type' => 'project',
+                        'categories' => $categories,
+                    ])
                 </div>
             </div>
         </div>
     </div>
 
 
-  
+
 
 
     <button type="button" onclick="topFunction()" id="back-to-top"
@@ -689,7 +711,7 @@
         $(document).ready(function() {
 
 
-            $('body').on('click', '.submit-btn', function(e) {
+            $('body').on('click', '.submit-btn-search', function(e) {
                 e.preventDefault();
 
                 // Get the ID from the data attribute
@@ -699,9 +721,14 @@
                 var option = $('#typeOption-' + idd).val();
 
                 // Validate option value
-                if (option === 'sale' || option === 'rent' || option === 'pg') {
+                if (option === 'sale' || option === 'rent' || option === 'pg' || option == 'plot') {
                     // Update the form action dynamically
                     $('form#form-' + idd).attr('action', '/properties/' + option);
+
+                    // Submit the form
+                    $('form#form-' + idd).submit();
+                } else if(option === 'projects') {
+                    $('form#form-' + idd).attr('action', '/projects/');
 
                     // Submit the form
                     $('form#form-' + idd).submit();

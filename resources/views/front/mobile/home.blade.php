@@ -36,7 +36,7 @@
         x-transition:leave="transform opacity-100" x-transition:leave-end="transform opacity-0 -translate-y-full"
         class="sticky-search-bar bg-white shadow-sm" style="display: none;">
         <div class="bg-theme pt-1 px-1.5">
-            @include('front.mobile.search-bar', ['div' => 'search2'])
+            @include('front.mobile.search-bar', ['div' => 'search2','selected' => ''])
         </div>
 
     </div>
@@ -51,7 +51,7 @@
         </div>
         <div class="col-lg-12">
             <div class="">
-                @include('front.mobile.search-bar', ['div' => 'search1'])
+                @include('front.mobile.search-bar', ['div' => 'search1','selected' => ''])
             </div>
         </div>
     </div>

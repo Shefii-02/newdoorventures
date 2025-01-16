@@ -27,7 +27,7 @@
 
         .offcanvas .nav-tabs .nav-item.show .nav-link,
         .nav-tabs .nav-link.active {
-            background-color: transparent !important;
+            background-color: #000000 !important;
             border: 1px solid #cba641 !important;
             color: #cba641 !important
         }
@@ -103,19 +103,21 @@
         <div class="d-flex gap-1 items-center">
             <div class="input-group ">
                 <span class="input-group-text p-0 m-0 left-only-rounded">
+             
                     <select id="typeOption-{{ $div }}" form="form-{{ $div }}"
                         class="form-control left-only-rounded border-1 border-bottom-0 border-top-0 border-left-0"
                         name="type">
-                        <option data-action="/sales" value="sale">Buy</option>
-                        <option data-action="/rent" value="rent">Rent</option>
-                        <option data-action="/pg" value="pg">PG</option>
-                        <option data-action="/projects" value="">Projects</option>
+                        <option {{ $selected == 'sell' ? 'selected' : '' }} data-action="/sales" value="sale">Buy </option>
+                        <option {{ $selected == 'rent' ? 'selected' : ''  }} data-action="/rent" value="rent">Rent </option>
+                        <option {{ $selected == 'pg' ? 'selected' : ''  }} data-action="/pg" value="pg">PG</option>
+                        <option {{ $selected == 'plot' ? 'selected' : ''  }} data-action="/plot" value="plot">Plot</option>
+                        <option {{ $selected == 'projects' ? 'selected' : ''  }} data-action="/projects" value="projects">Projects</option>
                     </select>
                 </span>
                 <input x-ref="inputElement"  form="form-{{ $div }}" autocomplete="off" type="search" class="form-control  border-0"
                     id="search-box-{{ $div ?? 'default' }}" oninput="fetchSuggestions('{{ $div ?? 'default' }}')"
                     onfocus="showSuggestions('{{ $div ?? 'default' }}')">
-                <button data-id="{{ $div }}" class="submit-btn input-group-text  border-1 text-white bg-theme right-only-rounded">
+                <button data-id="{{ $div }}" class="submit-btn-search input-group-text  border-1 text-white bg-theme right-only-rounded">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-search" viewBox="0 0 16 16">
                         <path

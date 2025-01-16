@@ -7,7 +7,7 @@
             @endif
             <div class="price-input">
                 <!-- Display Min and Max Values -->
-                <span class="price-range-values d-flex gap-2 mb-5 text-black">
+                <span class="price-range-values d-flex flex-wrap gap-2 mb-5 text-black">
                     <span x-text="formattedMinPrice">₹0.00</span> - <span x-text="formattedMaxPrice">₹50+ Crores</span>
                 </span>
 
@@ -46,7 +46,7 @@
             </div>
 
             <!-- Manual Inputs -->
-            <div class="manual-input mt-5 flex gap-4 items-center">
+            <div class="manual-input flex-wrap mt-5 flex gap-4 items-center">
                 <label for="manual-min" class="font-medium text-sm text-black">Min Price:</label>
                 <input type="number" id="manual-min" x-model="minPrice" x-bind:min="min"
                     x-bind:max="max" x-on:input="updateMin" class="rounded-md border border-gray-300 p-2 w-32">
