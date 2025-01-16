@@ -85,6 +85,7 @@
     ];
 
 @endphp
+<form action="/" id="form-{{ $div }}" >   
 <div x-data="{
     placeholders: {{ json_encode($placeholders) }},
     currentIndex: 0,
@@ -99,7 +100,7 @@
         this.currentIndex = (this.currentIndex + 1) % this.placeholders.length;
     }
 }">
-    <form action="/" id="form-{{ $div }}">    </form>
+    
         <div class="d-flex gap-1 items-center">
             <div class="input-group ">
                 <span class="input-group-text p-0 m-0 left-only-rounded">
@@ -138,16 +139,16 @@
             {{-- <input x-ref="inputElement" style="border-radius: 7px !important;" type="search"
             class="form-control rounded-5" oninput="fetchSuggestions('{{ $div ?? 'default' }}')"
             onfocus="showSuggestions('{{ $div ?? 'default' }}')"> --}}
-            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" style="border-radius: 7px !important;"
+            <span role="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" style="border-radius: 7px !important;"
                 class="p-1 text-light border-1 fw-bolder rounded-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                     class="bi bi-text-center" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
                         d="M4 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
                 </svg>
-            </button>
+            </span>
         </div>
-
+   
 </div>
 <!-- Display Selected Items -->
 <div id="selected-items-container-{{ $div ?? 'default' }}"
@@ -159,3 +160,133 @@
     <span role="button" id="show-more-btn-{{ $div ?? 'default' }}" class="text-blue-500 text-sm mt-2 z-9"
         style="display: none" onclick="toggleShowMore('{{ $div ?? 'default' }}')">Show More</span>
 </div>
+</form>
+
+@push('header')
+<script>
+    var selectedItems = {};
+
+    function fetchSuggestions(type) {
+        const searchQuery = document.getElementById(`search-box-${type}`).value;
+        const loadingIcon = document.getElementById(`loading-icon-${type}`);
+        const suggestionsList = document.getElementById(`suggestions-list-${type}`);
+        const suggestionsUl = document.getElementById(`suggestions-ul-${type}`);
+        const typeOption = document.getElementById(`typeOption-${type}`).value;
+        if (searchQuery.length > 1) {
+            loadingIcon.style.display = 'inline-block'; // Show loading icon
+
+            fetch(`/searching-in-keywords?k=${searchQuery}&type=${typeOption}`)
+                .then(response => response.json())
+                .then(data => {
+                    loadingIcon.style.display = 'none'; // Hide loading icon
+                    suggestionsUl.innerHTML = ''; // Clear previous suggestions
+
+                    if (data && Object.keys(data).length > 0) {
+                        Object.keys(data).forEach(category => {
+                            if (data[category].length > 0) {
+                                const categoryHeading = document.createElement('li');
+                                categoryHeading.textContent = category.charAt(0).toUpperCase() + category
+                                    .slice(1);
+                                categoryHeading.classList.add('px-4', 'py-2', 'font-bold', 'text-theme');
+                                suggestionsUl.appendChild(categoryHeading);
+
+                                data[category].forEach(item => {
+                                    const li = document.createElement('li');
+                                    li.textContent = item;
+                                    li.classList.add('px-4', 'py-2', 'hover:bg-gray-200',
+                                        'text-dark',
+                                        'cursor-pointer');
+                                    li.onclick = () => selectItem(type, item);
+                                    suggestionsUl.appendChild(li);
+                                });
+                            }
+                        });
+                        suggestionsList.style.display = 'block'; // Show suggestions
+                    } else {
+                        const noResults = document.createElement('li');
+                        noResults.textContent = 'No results found';
+                        noResults.classList.add('px-4', 'py-2', 'text-center', 'text-dark');
+                        suggestionsUl.appendChild(noResults);
+                        suggestionsList.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    loadingIcon.style.display = 'none'; // Hide loading icon
+                    console.error('Error fetching suggestions:', error);
+                });
+        } else {
+            suggestionsList.style.display = 'none'; // Hide suggestions if input is too short
+        }
+    }
+
+    function selectItem(type, item) {
+        if (!selectedItems[type]) {
+            selectedItems[type] = [];
+        }
+        if (!selectedItems[type].includes(item)) {
+            selectedItems[type].push(item);
+            updateSelectedItems(type);
+        }
+        document.getElementById(`search-box-${type}`).value = '';
+        document.getElementById(`suggestions-list-${type}`).style.display = 'none';
+        document.getElementById(`suggestions-ul-${type}`).innerHTML = "";
+    }
+
+    function removeItem(type, item) {
+        if (selectedItems[type]) {
+            selectedItems[type] = selectedItems[type].filter(selectedItem => selectedItem !== item);
+            updateSelectedItems(type);
+        }
+    }
+
+    function updateSelectedItems(type) {
+        const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
+        selectedItemsDisplay.innerHTML = ''; // Clear previous items
+
+        selectedItems[type].forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('flex', 'items-center', 'border-1', 'px-2', 'py-1', 'rounded-md');
+            itemDiv.textContent = item;
+
+            const removeIcon = document.createElement('span');
+            removeIcon.textContent = '×';
+            removeIcon.classList.add('ms-2', 'text-red-500', 'cursor-pointer');
+            removeIcon.onclick = () => removeItem(type, item);
+
+            itemDiv.appendChild(removeIcon);
+            selectedItemsDisplay.appendChild(itemDiv);
+
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 's[]';
+            hiddenInput.value = item;
+            hiddenInput.form  = 'form-'+type;
+
+            selectedItemsDisplay.appendChild(hiddenInput);
+        });
+
+        const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
+        showMoreBtn.style.display = selectedItems[type].length > 5 ? 'block' : 'none';
+    }
+
+    function toggleShowMore(type) {
+        const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
+        const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
+
+        if (selectedItemsDisplay.style.maxHeight === '100%') {
+            selectedItemsDisplay.style.maxHeight = '30px';
+            showMoreBtn.textContent = 'Show More';
+        } else {
+            selectedItemsDisplay.style.maxHeight = '100%';
+            showMoreBtn.textContent = 'Show Less';
+        }
+    }
+
+    function showSuggestions(type) {
+        const suggestionsList = document.getElementById(`suggestions-list-${type}`);
+        if (suggestionsList.children.length > 0) {
+            suggestionsList.style.display = 'block';
+        }
+    }
+</script>
+@endpush

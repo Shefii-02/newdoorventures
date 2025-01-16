@@ -65,7 +65,7 @@
         <i class="mdi mdi-magnify icons"></i>
         <input x-ref="inputElement"  id="search-box-{{ $type ?? 'default' }}" type="search"
             class="border-0 form-input filter-input-box bg-gray-50 dark:bg-slate-800 pl-10" autocomplete="off"
-            placeholder="Search for Projects, Areas, etc." oninput="fetchSuggestions2('{{ $type ?? 'default' }}')" onfocus="showSuggestions('{{ $type ?? 'default' }}')">
+            placeholder="Search for Projects, Areas, etc." oninput="fetchSuggestionsMobile('{{ $type ?? 'default' }}')" onfocus="showSuggestionsMobile('{{ $type ?? 'default' }}')">
         <i id="loading-icon-{{ $type ?? 'default' }}" class="absolute hidden mdi mdi-loading mdi-spin top-5 right-5"></i>
 
         <!-- Suggestions List -->
@@ -84,7 +84,7 @@
         </div>
         <!-- Show More Button -->
         <span role="button" id="show-more-btn-{{ $type ?? 'default' }}" class="text-blue-500 text-sm mt-2 z-9" style="display: none"
-            onclick="toggleShowMore('{{ $type ?? 'default' }}')">Show More</span>
+            onclick="toggleShowMoreMobile('{{ $type ?? 'default' }}')">Show More</span>
     </div>
 </div>
 
@@ -92,7 +92,7 @@
 <script>
     const selectedItems = {};
 
-    function fetchSuggestions(type) {
+    function fetchSuggestionsMobile(type) {
         const searchQuery = document.getElementById(`search-box-${type}`).value;
         const loadingIcon = document.getElementById(`loading-icon-${type}`);
         const suggestionsList = document.getElementById(`suggestions-list-${type}`);
@@ -119,7 +119,7 @@
                                     const li = document.createElement('li');
                                     li.textContent = item;
                                     li.classList.add('px-4', 'py-2', 'hover:bg-gray-200', 'cursor-pointer');
-                                    li.onclick = () => selectItem(type, item);
+                                    li.onclick = () => selectItemMobile(type, item);
                                     suggestionsUl.appendChild(li);
                                 });
                             }
@@ -142,27 +142,27 @@
         }
     }
 
-    function selectItem(type, item) {
+    function selectItemMobile(type, item) {
         if (!selectedItems[type]) {
             selectedItems[type] = [];
         }
         if (!selectedItems[type].includes(item)) {
             selectedItems[type].push(item);
-            updateSelectedItems(type);
+            updateSelectedItemsMobile(type);
         }
         document.getElementById(`search-box-${type}`).value = '';
         document.getElementById(`suggestions-list-${type}`).style.display = 'none';
         document.getElementById(`suggestions-ul-${type}`).innerHTML = "";
     }
 
-    function removeItem(type, item) {
+    function removeItemMobile(type, item) {
         if (selectedItems[type]) {
             selectedItems[type] = selectedItems[type].filter(selectedItem => selectedItem !== item);
-            updateSelectedItems(type);
+            updateSelectedItemsMobile(type);
         }
     }
 
-    function updateSelectedItems(type) {
+    function updateSelectedItemsMobile(type) {
         const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
         selectedItemsDisplay.innerHTML = ''; // Clear previous items
 
@@ -174,7 +174,7 @@
             const removeIcon = document.createElement('span');
             removeIcon.textContent = '×';
             removeIcon.classList.add('ml-2', 'text-red-500', 'cursor-pointer');
-            removeIcon.onclick = () => removeItem(type, item);
+            removeIcon.onclick = () => removeItemMobile(type, item);
 
             itemDiv.appendChild(removeIcon);
             selectedItemsDisplay.appendChild(itemDiv);
@@ -191,7 +191,7 @@
         showMoreBtn.style.display = selectedItems[type].length > 5 ? 'block' : 'none';
     }
 
-    function toggleShowMore(type) {
+    function toggleShowMoreMobile(type) {
         const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
         const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
 
@@ -204,7 +204,7 @@
         }
     }
 
-    function showSuggestions(type) {
+    function showSuggestionsMobile(type) {
         const suggestionsList = document.getElementById(`suggestions-list-${type}`);
         if (suggestionsList.children.length > 0) {
             suggestionsList.style.display = 'block';

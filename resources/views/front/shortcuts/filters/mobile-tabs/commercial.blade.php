@@ -2,17 +2,17 @@
     <input type="hidden" name="type" value="{{ $type }}">
     <input type="hidden" name="m" value="{{ 'commercial' }}">
     <div class="col-lg-12">
-        <div class="row align-items-center">
+        {{-- <div class="row align-items-center">
             <div class="col-md-12 mb-3">
                 <div class="row align-items-center">
                     <div class="col-lg-12 col-12">
-                        @include('front.shortcuts.filters.keyword', ['type' => $type])
+                        @include('front.shortcuts.filters.mobile-keyword', ['type' => $type])
                     </div>
                 </div>
             </div>
 
 
-        </div>
+        </div> --}}
 
         <!-- Commercial Tab -->
         <div>

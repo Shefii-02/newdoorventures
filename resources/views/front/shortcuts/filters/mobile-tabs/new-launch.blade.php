@@ -4,11 +4,20 @@
     <input type="hidden" name="m" value="new-launch">
     <div class="col-lg-12">
         <div class="row align-items-center">
+            <div class="col-md-2 flex justify-end all-residential">
+                <button type="button"
+                    class="flex items-center gap-2 toggle-advanced-search text-primary hover:text-secondary">
+                    {{ __('Residential') }}
+
+                    <i class="mdi mdi-chevron-up1"></i>
+                </button>
+            </div>
             <div class="col-md-12 mb-3">
                 <div class="row align-items-center">
                     <div class="col-lg-12 col-12">
                         @include("front.shortcuts.filters.keyword", ['type' => $type])
                     </div>
+                   
                 </div>
             </div>
             <div class="col-md-2">

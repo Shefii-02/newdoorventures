@@ -533,7 +533,7 @@
                         </svg></span>
                     <p>Commercial</p>
                 </li>
-                <li class="nav-item" role="presentation">
+                {{-- <li class="nav-item" role="presentation">
                     <span class="nav-link" id="newlaunch-tab" data-bs-toggle="tab" data-bs-target="#newlaunch"
                         type="button" role="tab" aria-controls="newlaunch" aria-selected="false">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -551,7 +551,7 @@
                             </g>
                         </svg></span>
                     <p>New Launch</p>
-                </li>
+                </li> --}}
                 <li class="nav-item" role="presentation">
                     <span class="nav-link" id="plot-tab" data-bs-toggle="tab" data-bs-target="#plot"
                         type="button" role="tab" aria-controls="plot" aria-selected="false">
@@ -603,7 +603,7 @@
                         'categories' => $categories,
                     ])
                 </div>
-                <!-- Rent Tab -->
+               <!-- Rent Tab -->
                 <div class="tab-pane fade" id="rent" role="tabpanel" aria-labelledby="rent-tab">
                     @include('front.shortcuts.filters.mobile-tabs.rent', [
                         'type' => 'rent',
@@ -625,12 +625,12 @@
                     ])
                 </div>
                 <!-- New Launch Tab -->
-                <div class="tab-pane fade" id="newlaunch" role="tabpanel" aria-labelledby="newlaunch-tab">
+               {{--   <div class="tab-pane fade" id="newlaunch" role="tabpanel" aria-labelledby="newlaunch-tab">
                     @include('front.shortcuts.filters.mobile-tabs.new-launch', [
                         'type' => 'project',
                         'categories' => $categories,
                     ])
-                </div>
+                </div>--}}
                 <!-- Plot and Lands Tab -->
                 <div class="tab-pane fade" id="plot" role="tabpanel" aria-labelledby="plot-tab">
                     @include('front.shortcuts.filters.mobile-tabs.buy', [
@@ -644,7 +644,7 @@
                         'type' => 'project',
                         'categories' => $categories,
                     ])
-                </div>
+                </div> 
             </div>
         </div>
     </div>
@@ -724,7 +724,8 @@
                 if (option === 'sale' || option === 'rent' || option === 'pg' || option == 'plot') {
                     // Update the form action dynamically
                     $('form#form-' + idd).attr('action', '/properties/' + option);
-
+                    // console.log($('form#form-' + idd).serializeArray());
+                    
                     // Submit the form
                     $('form#form-' + idd).submit();
                 } else if(option === 'projects') {
@@ -1073,131 +1074,7 @@
         });
     </script>
 
-    <script>
-        const selectedItems = {};
-
-        function fetchSuggestions(type) {
-            const searchQuery = document.getElementById(`search-box-${type}`).value;
-            const loadingIcon = document.getElementById(`loading-icon-${type}`);
-            const suggestionsList = document.getElementById(`suggestions-list-${type}`);
-            const suggestionsUl = document.getElementById(`suggestions-ul-${type}`);
-            const typeOption = document.getElementById(`typeOption-${type}`).value;
-            if (searchQuery.length > 1) {
-                loadingIcon.style.display = 'inline-block'; // Show loading icon
-
-                fetch(`/searching-in-keywords?k=${searchQuery}&type=${typeOption}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        loadingIcon.style.display = 'none'; // Hide loading icon
-                        suggestionsUl.innerHTML = ''; // Clear previous suggestions
-
-                        if (data && Object.keys(data).length > 0) {
-                            Object.keys(data).forEach(category => {
-                                if (data[category].length > 0) {
-                                    const categoryHeading = document.createElement('li');
-                                    categoryHeading.textContent = category.charAt(0).toUpperCase() + category
-                                        .slice(1);
-                                    categoryHeading.classList.add('px-4', 'py-2', 'font-bold', 'text-theme');
-                                    suggestionsUl.appendChild(categoryHeading);
-
-                                    data[category].forEach(item => {
-                                        const li = document.createElement('li');
-                                        li.textContent = item;
-                                        li.classList.add('px-4', 'py-2', 'hover:bg-gray-200',
-                                            'text-dark',
-                                            'cursor-pointer');
-                                        li.onclick = () => selectItem(type, item);
-                                        suggestionsUl.appendChild(li);
-                                    });
-                                }
-                            });
-                            suggestionsList.style.display = 'block'; // Show suggestions
-                        } else {
-                            const noResults = document.createElement('li');
-                            noResults.textContent = 'No results found';
-                            noResults.classList.add('px-4', 'py-2', 'text-center', 'text-dark');
-                            suggestionsUl.appendChild(noResults);
-                            suggestionsList.style.display = 'block';
-                        }
-                    })
-                    .catch(error => {
-                        loadingIcon.style.display = 'none'; // Hide loading icon
-                        console.error('Error fetching suggestions:', error);
-                    });
-            } else {
-                suggestionsList.style.display = 'none'; // Hide suggestions if input is too short
-            }
-        }
-
-        function selectItem(type, item) {
-            if (!selectedItems[type]) {
-                selectedItems[type] = [];
-            }
-            if (!selectedItems[type].includes(item)) {
-                selectedItems[type].push(item);
-                updateSelectedItems(type);
-            }
-            document.getElementById(`search-box-${type}`).value = '';
-            document.getElementById(`suggestions-list-${type}`).style.display = 'none';
-            document.getElementById(`suggestions-ul-${type}`).innerHTML = "";
-        }
-
-        function removeItem(type, item) {
-            if (selectedItems[type]) {
-                selectedItems[type] = selectedItems[type].filter(selectedItem => selectedItem !== item);
-                updateSelectedItems(type);
-            }
-        }
-
-        function updateSelectedItems(type) {
-            const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
-            selectedItemsDisplay.innerHTML = ''; // Clear previous items
-
-            selectedItems[type].forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.classList.add('flex', 'items-center', 'border-1', 'px-2', 'py-1', 'rounded-md');
-                itemDiv.textContent = item;
-
-                const removeIcon = document.createElement('span');
-                removeIcon.textContent = '×';
-                removeIcon.classList.add('ms-2', 'text-red-500', 'cursor-pointer');
-                removeIcon.onclick = () => removeItem(type, item);
-
-                itemDiv.appendChild(removeIcon);
-                selectedItemsDisplay.appendChild(itemDiv);
-
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = 's[]';
-                hiddenInput.value = item;
-
-                selectedItemsDisplay.appendChild(hiddenInput);
-            });
-
-            const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
-            showMoreBtn.style.display = selectedItems[type].length > 5 ? 'block' : 'none';
-        }
-
-        function toggleShowMore(type) {
-            const selectedItemsDisplay = document.getElementById(`selected-items-display-${type}`);
-            const showMoreBtn = document.getElementById(`show-more-btn-${type}`);
-
-            if (selectedItemsDisplay.style.maxHeight === '100%') {
-                selectedItemsDisplay.style.maxHeight = '30px';
-                showMoreBtn.textContent = 'Show More';
-            } else {
-                selectedItemsDisplay.style.maxHeight = '100%';
-                showMoreBtn.textContent = 'Show Less';
-            }
-        }
-
-        function showSuggestions(type) {
-            const suggestionsList = document.getElementById(`suggestions-list-${type}`);
-            if (suggestionsList.children.length > 0) {
-                suggestionsList.style.display = 'block';
-            }
-        }
-    </script>
+  
     <script>
         function scrollHandler() {
             return {
