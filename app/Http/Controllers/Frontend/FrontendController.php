@@ -105,8 +105,8 @@ class FrontendController extends Controller
             $keywordProperties = collect();
         }
 
-        if (isset($propertySearchKeywords['proejctsProperties'])) {
-            $projectProperties = $propertySearchKeywords['proejctsProperties'];
+        if (isset($propertySearchKeywords['similarProperties'])) {
+            $projectProperties = $propertySearchKeywords['similarProperties'];
         } else {
             $projectProperties = collect();
         }
@@ -182,8 +182,8 @@ class FrontendController extends Controller
             $keywordProperties = collect();
         }
 
-        if (isset($propertySearchKeywords['proejctsProperties'])) {
-            $projectProperties = $propertySearchKeywords['proejctsProperties'];
+        if (isset($propertySearchKeywords['similarProperties'])) {
+            $projectProperties = $propertySearchKeywords['similarProperties'];
         } else {
             $projectProperties = collect();
         }
@@ -245,8 +245,8 @@ class FrontendController extends Controller
             $keywordProperties = collect();
         }
 
-        if (isset($propertySearchKeywords['proejctsProperties'])) {
-            $projectProperties = $propertySearchKeywords['proejctsProperties'];
+        if (isset($propertySearchKeywords['similarProperties'])) {
+            $projectProperties = $propertySearchKeywords['similarProperties'];
         } else {
             $projectProperties = collect();
         }
@@ -304,8 +304,8 @@ class FrontendController extends Controller
             $keywordProperties = collect();
         }
 
-        if (isset($propertySearchKeywords['proejctsProperties'])) {
-            $projectProperties = $propertySearchKeywords['proejctsProperties'];
+        if (isset($propertySearchKeywords['similarProperties'])) {
+            $projectProperties = $propertySearchKeywords['similarProperties'];
         } else {
             $projectProperties = collect();
         }
@@ -373,8 +373,8 @@ class FrontendController extends Controller
             $keywordProperties = collect();
         }
 
-        if (isset($propertySearchKeywords['proejctsProperties'])) {
-            $projectProperties = $propertySearchKeywords['proejctsProperties'];
+        if (isset($propertySearchKeywords['similarProperties'])) {
+            $projectProperties = $propertySearchKeywords['similarProperties'];
         } else {
             $projectProperties = collect();
         }
@@ -472,8 +472,8 @@ class FrontendController extends Controller
             $keywordProperties = collect();
         }
 
-        if (isset($propertySearchKeywords['proejctsProperties'])) {
-            $projectProperties = $propertySearchKeywords['proejctsProperties'];
+        if (isset($propertySearchKeywords['similarProperties'])) {
+            $projectProperties = $propertySearchKeywords['similarProperties'];
         } else {
             $projectProperties = collect();
         }
@@ -563,8 +563,8 @@ class FrontendController extends Controller
             $keywordProjects = collect();
         }
 
-        if (isset($projectSearchKeywords['proejctsProperties'])) {
-            $projectProperties = $projectSearchKeywords['proejctsProperties'];
+        if (isset($projectSearchKeywords['similarProjects'])) {
+            $projectProperties = $projectSearchKeywords['similarProjects'];
         } else {
             $projectProperties = collect();
         }
@@ -632,26 +632,30 @@ class FrontendController extends Controller
             ->where('id', '!=', $property->id) // Exclude the current property
             ->get();
 
+
+
+
+
         $result = $this->agent->isMobile();
 
 
         if ($property->mode == 'Commercial') {
             if ($property->category && $property->category->name == 'Plot and Land') {
                 if ($result) {
-                    return view('front.mobile.plot-property', compact('categories','property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
+                    return view('front.mobile.plot-property', compact('categories', 'property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
                 } else {
-                    return view('front.properties.plot-property', compact('categories','property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
+                    return view('front.properties.plot-property', compact('categories', 'property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
                 }
             }
 
             if ($result) {
                 return match ($property->type) {
-                    'sell', 'rent' => view('front.mobile.commercial-rent-sale-single', compact('categories','property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
+                    'sell', 'rent' => view('front.mobile.commercial-rent-sale-single', compact('categories', 'property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
                     default => abort(404),
                 };
             } else {
                 return match ($property->type) {
-                    'sell', 'rent' => view('front.properties.commercial-rent-sale-single', compact('categories','property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
+                    'sell', 'rent' => view('front.properties.commercial-rent-sale-single', compact('categories', 'property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
                     default => abort(404),
                 };
             }
@@ -659,23 +663,23 @@ class FrontendController extends Controller
 
         if ($property->category && $property->category->name == 'Plot and Land') {
             if ($result) {
-                return view('front.mobile.plot-property', compact('categories','property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
+                return view('front.mobile.plot-property', compact('categories', 'property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
             } else {
-                return view('front.properties.plot-property', compact('categories','property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
+                return view('front.properties.plot-property', compact('categories', 'property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties'));
             }
         }
 
         if ($result) {
             return match ($property->type) {
 
-                'sell', 'rent' => view('front.mobile.sale-rent-single', compact('categories','property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
-                'pg' => view('front.mobile.pg-single', compact('categories','property', 'recent_properties', 'rules', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
+                'sell', 'rent' => view('front.mobile.sale-rent-single', compact('categories', 'property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
+                'pg' => view('front.mobile.pg-single', compact('categories', 'property', 'recent_properties', 'rules', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
                 default => abort(404),
             };
         } else {
             return match ($property->type) {
-                'sell', 'rent' => view('front.properties.single', compact('categories','property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
-                'pg' => view('front.properties.pg-single', compact('categories','property', 'recent_properties', 'rules', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
+                'sell', 'rent' => view('front.properties.single', compact('categories', 'property', 'recent_properties', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
+                'pg' => view('front.properties.pg-single', compact('categories', 'property', 'recent_properties', 'rules', 'pageTitle', 'pageDescription', 'pageKeywords', 'pageTitle', 'pageDescription', 'pageKeywords', 'similarProperties')),
                 default => abort(404),
             };
         }
@@ -691,12 +695,12 @@ class FrontendController extends Controller
         $pageDescription = $project->content;
         $pageKeywords = 'new launch projects, under construction projects, ready to launch properties, real estate projects in Bangalore, residential projects, commercial projects in Karnataka, real estate builders in Bangalore, upcoming property launches, real estate development, investment in property, new construction projects in Karnataka, real estate investment opportunities, residential apartments, commercial spaces for sale in Bangalore';
         $categories                 = Category::where('status', 'published')->get();
-        
+
         $result = $this->agent->isMobile();
         if ($result) {
-            return view('front.mobile.project-single', compact('categories','project', 'configurations', 'advertisement', 'pageTitle', 'pageDescription', 'pageKeywords'));
+            return view('front.mobile.project-single', compact('categories', 'project', 'configurations', 'advertisement', 'pageTitle', 'pageDescription', 'pageKeywords'));
         } else {
-            return view('front.projects.single', compact('categories','project', 'configurations', 'advertisement', 'pageTitle', 'pageDescription', 'pageKeywords'));
+            return view('front.projects.single', compact('categories', 'project', 'configurations', 'advertisement', 'pageTitle', 'pageDescription', 'pageKeywords'));
         }
     }
 
@@ -1007,18 +1011,40 @@ class FrontendController extends Controller
                 } else if ($type === 'commercial') {
                     $proejctsProperties->where('mode', 'commercial');
                 }
-                $proejctsProperties =$proejctsProperties->distinct()->get();
+                $proejctsProperties = $proejctsProperties->distinct()->get();
             }
 
-      
+
 
             // Merge City, Project, and Locality Properties
-            $mergedProperties = $cityProperties->merge($proejctsProperties)->merge($localityProperties)
-                ->unique('id') // Remove duplicates based on ID
+            $mergeProperties = $cityProperties->merge($proejctsProperties)->merge($localityProperties);
+            $mergedProperties = $mergeProperties->unique('id') // Remove duplicates based on ID
                 ->values(); // Reindex the collection
+            //    dd($mergeProperties->select('locality','city','price','project_id','number_bedroom','sub_locality','landmark'));
+            //     $similarProperties = collect();
+            $similarProperties = Property::query()
+                ->where('moderation_status', 'approved')
+                ->where(function ($query) use ($mergeProperties) {
+                    $query->whereIn('locality', $mergeProperties->pluck('locality')->filter()->unique())
+                        ->orWhereIn('city', $mergeProperties->pluck('city')->filter()->unique())
+                        ->orWhereIn('price', $mergeProperties->pluck('price')->filter()->unique())
+                        ->orWhereIn('project_id', $mergeProperties->pluck('project_id')->filter()->unique())
+                        ->orWhereIn('number_bedroom', $mergeProperties->pluck('number_bedroom')->filter()->unique())
+                        ->orWhereIn('sub_locality', $mergeProperties->pluck('sub_locality')->filter()->unique())
+                        ->orWhereIn('landmark', $mergeProperties->pluck('landmark')->filter()->unique());
+                });
+            if (in_array($type, ['sell', 'rent', 'pg'])) {
+                $similarProperties->where('type', $type);
+            } else if ($type === 'commercial') {
+                $similarProperties->where('mode', 'commercial');
+            }
+            $similarProperties=$similarProperties->whereNotNull('project_id')->whereNotNull('price')->whereNotNull('city')->whereNotNull('locality')->whereNotNull('number_bedroom')->whereNotNull('sub_locality')->whereNotNull('landmark')->distinct()
+                ->get();
+//   // if (in_array($type, ['sell', 'rent'])) {
+                //     $similarProperties->whereNotNull('project_id')->whereNotNull('number_bedroom');
+                // }
 
-           
-            return ['properties' => $mergedProperties, 'proejctsProperties' => $proejctsProperties];
+            return ['properties' => $mergedProperties, 'similarProperties' => $similarProperties];
         }
 
         return array(); // Return an empty collection if no keywords are provided
@@ -1085,8 +1111,7 @@ class FrontendController extends Controller
                 ->unique('id') // Remove duplicates based on ID
                 ->values(); // Reindex the collection
 
-
-            return ['properties' => $mergedProperties, 'proejctsProperties' => $proejctsProperties];
+            return ['properties' => $mergedProperties, 'similarProjects' => $proejctsProperties];
         }
     }
 
@@ -1217,9 +1242,9 @@ class FrontendController extends Controller
                 if ($keyword != '' && $keyword != 'null') {
 
                     $query->where(function ($query) use ($keyword) {
-                         $query->where('city', $keyword )
-                            ->orWhere('content', $keyword )
-                            ->orWhere('locality', $keyword );
+                        $query->where('city', $keyword)
+                            ->orWhere('content', $keyword)
+                            ->orWhere('locality', $keyword);
                         // $query->where('city', 'LIKE', '%' . $keyword . '%')
                         //     ->orWhere('content', 'LIKE', '%' . $keyword . '%')
                         //     ->orWhere('locality', 'LIKE', '%' . $keyword . '%');
@@ -1293,7 +1318,7 @@ class FrontendController extends Controller
 
         if ($request->filled('project') && $request->project !== '' && $request->project != 'null') {
             $projectId = Project::where('name', $request->project)->pluck('id');
-            
+
             if ($projectId) {
                 $query->whereIn('project_id', $projectId)->get();
             }

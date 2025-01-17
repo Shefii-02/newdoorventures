@@ -462,7 +462,8 @@
         function clearSearchBox(type) {
             const searchBox = document.getElementById(`search-box-${type}`);
             searchBox.value = '';
-            document.getElementById(`suggestions-list-${type}`).innerHTML = "";
+            // document.getElementById(`suggestions-list-${type}`).innerHTML = "";
+             document.getElementById(`suggestions-ul-${type}`).innerHTML = ''
         }
     </script>
 @endpush
