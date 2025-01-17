@@ -381,6 +381,9 @@
 
                         </ul>
                     </div>
+                    <div class="my-5">
+                        <div class="sharethis-inline-share-buttons"></div>
+                    </div>
                     <div class="">
                         <div class=" mt-4">
                             <div class="md:flex">

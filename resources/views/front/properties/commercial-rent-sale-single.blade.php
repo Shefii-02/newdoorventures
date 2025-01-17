@@ -370,6 +370,10 @@
                                 </div>
                             </div>
 
+                            <div class="my-5">
+                                <div class="sharethis-inline-share-buttons"></div>
+                            </div>
+                            
                             @if ($property->project_id && ($project = $property->project))
                                 <div class="container-fluid mb-5 section" id="AboutProject"
                                     :class="{ 'active': activeSection === 'AboutProject' }">

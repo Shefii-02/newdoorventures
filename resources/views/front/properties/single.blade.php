@@ -9,6 +9,7 @@
             }
         }
     </style>
+    <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=6789fc7d6ba8ae00127779b8&product=inline-share-buttons&source=platform" async="async"></script>
 @endpush
 
 
@@ -56,6 +57,7 @@
                     <div class="px-3 mt-8 col-lg-3">
                         <span class="">Posted on {{ date('M d, Y', strtotime($property->created_at)) }}</span>
                     </div>
+                 
                 </div>
             </div>
         </div>
@@ -316,6 +318,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="my-5">
+                                <div class="sharethis-inline-share-buttons"></div>
+                            </div>
+                       
 
                             @if ($property->project_id && ($project = $property->project))
                                 <div class="container-fluid mb-5 section" id="AboutProject"
