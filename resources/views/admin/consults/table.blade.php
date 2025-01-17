@@ -28,8 +28,8 @@
                         </div>
                         <div class="w-2/12 text-center">
                             <span
-                                class="font-medium px-2.5 py-0.5 text-sm font-medium  {{ $consult->property ? 'text-primary ' : 'text-info ' }} inline-block text-capitalize rounded">
-                                {{ $consult->property ? 'Property' : 'Project' }}
+                                class="font-medium px-2.5 py-0.5 text-sm font-medium  {{ $consult->property ? 'text-primary ' : ($consult->project ? 'text-info ' : 'text-danger') }} inline-block text-capitalize rounded">
+                                {{ $consult->property ? 'Property' : ($consult->project ?'Project' : 'Deleted') }}
                             </span>
                         </div>
                     

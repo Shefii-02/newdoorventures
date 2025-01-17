@@ -20,7 +20,7 @@
             <div><a href="{{ route('public.property_single', ['uid' => $lead->property->unique_id, 'slug' => $lead->property->slug]) }}">{{ $lead->property->name }}</a></div>
         </div>
     </div>
-@else
+@elseif($lead->project)
     <div style="border-bottom: 1px solid #e5e3e3;margin-bottom: 1rem;margin-top: 1rem;padding-bottom: 10px;">
         <div>
             <div style="font-weight: 600;margin-bottom: 6px;">Project</div>

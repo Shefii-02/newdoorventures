@@ -19,7 +19,7 @@
                         Name
                     </th>
                     <td>
-                        {{ $consult->property ? $consult->property->name : $consult->project->name }}
+                        {{ $consult->property ? $consult->property->name : ($consult->project ? $consult->project->name : 'Deleted') }}
                     </td>
                 </tr>
                 @if ($consult->property)
@@ -37,7 +37,7 @@
                         Category
                     </th>
                     <td>
-                        {{ $consult->property ? $consult->property->category->name : $consult->project->category->name }}
+                        {{ $consult->property ? $consult->property->category->name : ($consult->project ? $consult->project->category->name : '--') }}
                     </td>
                 </tr>
                 <tr>
@@ -63,7 +63,7 @@
                     <td>
                         @if ($consult->property)
                             <a href="{{ route('public.property_single',['uid' => $consult->property->unique_id,'slug' => $consult->property->slug]) }}" target="_new">Click here</a>
-                        @else
+                        @elseif ($consult->project)
                         <a href="{{ route('public.project_single',['uid' => $consult->project->unique_id,'slug' => $consult->project->slug]) }}" target="_new">Click here</a>
 
                         @endif
