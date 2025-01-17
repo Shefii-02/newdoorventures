@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
     <div class="ck-content">
         @include('front.home.hero-section', ['images' => '', 'title' => '', 'content' => ''])
     </div>
@@ -12,25 +13,42 @@
     </div>
 
     <div class="mt-16 lg:mt-24">
-        @include('front.home.featured-projects', ['featured_projects' => $featured_project, 'title' => '', 'content' => ''])
+        @include('front.home.featured-projects', [
+            'featured_projects' => $featured_project,
+            'title' => '',
+            'content' => '',
+        ])
     </div>
 
     <div class="mt-16 lg:mt-24">
-        @include('front.home.featured-properties', ['featured_properties' => $featured_properties, 'title' => '', 'content' => ''])
+        @include('front.home.featured-properties', [
+            'featured_properties' => $featured_properties,
+            'title' => '',
+            'content' => '',
+        ])
     </div>
 
     <div class="mt-16 lg:mt-24">
-        @include('front.home.featured-properties-rent', ['featured_properties_rent' => $featured_properties_rent, 'title' => '', 'content' => ''])
+        @include('front.home.featured-properties-rent', [
+            'featured_properties_rent' => $featured_properties_rent,
+            'title' => '',
+            'content' => '',
+        ])
     </div>
 
     <div>
-        @include('front.home.latest-news', ['latest_blogs' => $latest_blogs, 'title' => '', 'content' => ''])
+        @include('front.home.latest-news', [
+            'latest_blogs' => $latest_blogs,
+            'title' => '',
+            'content' => '',
+        ])
     </div>
 
     <div>
         <div class="container mt-16 lg:mt-24">
             <div class="grid grid-cols-1 text-center">
-                <h3 class="mb-6 text-2xl font-medium leading-normal text-black md:text-3xl md:leading-normal dark:text-white">
+                <h3
+                    class="mb-6 text-2xl font-medium leading-normal text-black md:text-3xl md:leading-normal dark:text-white">
                     Have questions? Get in touch!
                 </h3>
                 <p class="max-w-xl mx-auto text-slate-400">
@@ -44,4 +62,6 @@
             </div>
         </div>
     </div>
+
 @endsection
+
