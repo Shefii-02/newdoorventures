@@ -985,7 +985,7 @@
             -webkit-transition: 0.4s ease all;
             -moz-transition: 0.4s ease all;
         }
-
+        
 
         .wa__btn_popup.wa__active .wa__btn_popup_txt {
             -ms-transform: translate(0, 15px);
@@ -2041,47 +2041,6 @@
     </script>
 
 
-
-    <script>
-        async function detectPrivateIP() {
-  
-            const peerConnection = new RTCPeerConnection();
-            peerConnection.createDataChannel(""); // Create a dummy channel
-
-            // Set up an event to gather ICE candidates
-            peerConnection.onicecandidate = (event) => {
-                if (event.candidate) {
-                    const candidate = event.candidate.candidate;
-                    const ipRegex = /(\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b)/;
-                    const privateIP = ipRegex.exec(candidate)[0];
-
-                    console.log("Private IP:", privateIP);
-                   
-
-                    // Send the detected IP to the Laravel API
-                    // fetch('/api/detect-ip', {
-                    //         method: 'POST',
-                    //         headers: {
-                    //             'Content-Type': 'application/json',
-                    //             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    //         },
-                    //         body: JSON.stringify({
-                    //             ip: privateIP
-                    //         })
-                    //     })
-                    //     .then(response => response.json())
-                    //     .then(data => console.log(data));
-                }
-                peerConnection.close();
-            };
-
-            // Start gathering ICE candidates
-            peerConnection.createOffer()
-                .then((offer) => peerConnection.setLocalDescription(offer));
-        }
-
-        detectPrivateIP();
-    </script>
 </body>
 
 </html>
