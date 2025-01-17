@@ -8,6 +8,8 @@
             }
         }
     </style>
+        <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=6789fc7d6ba8ae00127779b8&product=inline-share-buttons&source=platform" async="async"></script>
+
 @endpush
 @php
     $car_parkiing = $property->customFields->where('name', 'Car Parking ')->first() ?? 0;
@@ -373,7 +375,7 @@
                             <div class="my-5">
                                 <div class="sharethis-inline-share-buttons"></div>
                             </div>
-                            
+
                             @if ($property->project_id && ($project = $property->project))
                                 <div class="container-fluid mb-5 section" id="AboutProject"
                                     :class="{ 'active': activeSection === 'AboutProject' }">

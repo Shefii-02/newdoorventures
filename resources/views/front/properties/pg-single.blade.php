@@ -7,6 +7,8 @@
             }
         }
     </style>
+        <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=6789fc7d6ba8ae00127779b8&product=inline-share-buttons&source=platform" async="async"></script>
+
 @endpush
 
 
