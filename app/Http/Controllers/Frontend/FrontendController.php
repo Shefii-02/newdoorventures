@@ -1324,8 +1324,9 @@ class FrontendController extends Controller
 
         if ($request->filled('project') && $request->project !== '' && $request->project != 'null') {
             $projectId = Project::where('name', $request->project)->pluck('id');
+            
             if ($projectId) {
-                $query->where('project_id', $projectId)->get();
+                $query->whereIn('project_id', $projectId)->get();
             }
         }
 

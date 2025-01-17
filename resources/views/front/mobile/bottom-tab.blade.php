@@ -1,5 +1,5 @@
 <div class="mobile-bottom mobile-bottom position-relative z-999">
-    <div class="nav">
+    <div class="nav"> 
         <div class="nav-slot bg-white round-top-left">
             <a href="{{ url('/') }}" class="nav-link active text-center">
                 <i class="mdi mdi-home fa-fw"></i>
