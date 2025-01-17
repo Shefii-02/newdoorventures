@@ -30,7 +30,7 @@
             @if($projectProperties->count())
                 <div class="row mt-3">
                     <h3 class="py-3 font-bold fs-3">
-                    {{ $projectProperties->first()->project->name }} Project related similar properties
+                        Similar Properties for {{ $type }} Nearby
                     </h3>
                     @foreach ($projectProperties ?? [] as $Pkey => $property)
                         @if ($property->type == 'pg')
@@ -68,7 +68,7 @@
                         <div class="box">
                             <div class="px-1.5 bg-gray-300 py-4 rounded">
                                 <h1 class="fw-bold  text-center text-dark  ">
-                                    Post  your Sell/Rent Property with us for Free
+                                    Post your Sell/Rent Property with us for Free
                                 </h1>
                             </div>
                             <div class="py-4 ">

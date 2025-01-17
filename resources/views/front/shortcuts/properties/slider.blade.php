@@ -28,32 +28,32 @@
                 @if($hasYouTube)
                     <div class="flex flex-col">
                         <div class="w-1/2">
-                            @include('front.shortcuts.properties..slider-image', ['property' => $item, 'image' => $images[1]])
+                            @include('front.shortcuts.properties.slider-image', ['property' => $item, 'image' => $images[1]])
                         </div>
                         <div class="w-1/2 mt-2">
-                            @include('front.shortcuts.properties..youtube-video', ['youtube_video' => $youtube_video])
+                            @include('front.shortcuts.properties.youtube-video', ['youtube_video' => $youtube_video])
                         </div>
                     </div>
                 @else
-                    @include('front.shortcuts.properties..slider-image', ['property' => $item, 'image' => $images[1]])
+                    @include('front.shortcuts.properties.slider-image', ['property' => $item, 'image' => $images[1]])
                 @endif
             </div>
         @elseif ($numberImages === 3)
             <div class="lg:w-1/2 md:w-1/2 p-1">
-                @include('front.shortcuts.properties..slider-image', ['property' => $item, 'image' => $images[0]])
+                @include('front.shortcuts.properties.slider-image', ['property' => $item, 'image' => $images[0]])
             </div>
             <div class="lg:w-1/2 md:w-1/2 p-1">
                 <div class="flex">
                     <div class="w-1/2 p-1">
-                        @include('front.shortcuts.properties..slider-image', ['property' => $item, 'image' => $images[1]])
+                        @include('front.shortcuts.properties.slider-image', ['property' => $item, 'image' => $images[1]])
                     </div>
                     <div class="w-1/2 p-1">
-                        @include('front.shortcuts.properties..slider-image', ['property' => $item, 'image' => $images[2]])
+                        @include('front.shortcuts.properties.slider-image', ['property' => $item, 'image' => $images[2]])
                     </div>
                 </div>
                 @if($hasYouTube)
                     <div class="w-full h-36 mt-2">
-                        @include('front.shortcuts.properties..youtube-video', ['youtube_video' => $youtube_video])
+                        @include('front.shortcuts.properties.youtube-video', ['youtube_video' => $youtube_video])
                     </div>
                 @endif
             </div>
@@ -61,15 +61,15 @@
 
             <div class="lg:w-1/2 md:w-1/2 p-1">
                 
-                @include('front.shortcuts.properties..slider-image', ['property' => $item, 'image' => $images[0], 'main' => true,'property_type' => $property_type])
+                @include('front.shortcuts.properties.slider-image', ['property' => $item, 'image' => $images[0], 'main' => true,'property_type' => $property_type])
             </div>
             <div class="lg:w-1/2 md:w-1/2 p-1">
                 <div class="flex">
                     <div class="w-1/2 p-1">
-                        @include('front.shortcuts.properties..slider-image', ['property' => $item, 'image' => $images[1]])
+                        @include('front.shortcuts.properties.slider-image', ['property' => $item, 'image' => $images[1]])
                     </div>
                     <div class="w-1/2 p-1">
-                        @include('front.shortcuts.properties..slider-image', [
+                        @include('front.shortcuts.properties.slider-image', [
                             'property' => $item,
                             'image' => $images[2],
                             'mores' => $numberImages > 3 ? $numberImages - 2 : 0,
@@ -101,6 +101,11 @@
                     </div>
                 @endif
             </div>
+            @foreach($images as $key => $image)
+                @if ($key > 4)
+                    @include('front.shortcuts.properties..slider-image', ['property' => $item, 'image' => $image,'hidden' => true])
+                @endif
+            @endforeach
         @endif
     </div>
 </div>

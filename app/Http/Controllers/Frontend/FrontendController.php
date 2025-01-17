@@ -194,6 +194,7 @@ class FrontendController extends Controller
 
         $properties = $property_query->get();
 
+
         $properties = $properties->merge($keywordProperties);
 
         if ($request->ajax()) {
@@ -952,42 +953,7 @@ class FrontendController extends Controller
 
     public function propertySearchKeywords(Request $request, $type = null)
     {
-        // if ($request->has('s') && $request->filled('s')) {
-        //     $keywords = is_array($request->s) ? $request->s : [$request->s];
 
-        //     $projectIds = Project::whereIn('name', $keywords)->pluck('id');
-
-        //     $properties = Property::query()
-        //         ->where('moderation_status', 'approved')
-        //         ->where(function ($query) use ($keywords) {
-        //             foreach ($keywords as $keyword) {
-        //                 $query->orWhereIn('city', 'LIKE', "%{$keyword}%")
-        //                     ->orWhereIn('locality', 'LIKE', "%{$keyword}%")
-        //                     ->orWhereHas('project', function ($q) use ($keyword) {
-        //                         $q->orWhereIn('name', 'LIKE', "%{$keyword}%");
-        //                     });
-        //             }
-        //         });
-
-
-        //     if (in_array($type, ['sell', 'rent', 'pg'])) {
-        //         $properties->where('type', $type);
-        //     } else if (in_array($type, ['commercial'])) {
-        //         $properties->where('mode', 'commercial');
-        //     }
-        //     $proejctsProperties = collect();
-        //     if ($projectIds) {
-        //         $properties->whereIn('project_id', $projectIds);
-        //         $proejctsProperties = Property::whereIn('project_id', $projectIds)->where('type', $type)->get();
-        //     }
-
-
-        //     $results['properties']          = $properties->get();
-        //     $results['proejctsProperties']  = $proejctsProperties;
-
-
-        //     return $results;
-        // }
 
         if ($request->has('s') && $request->filled('s')) {
             $keywords = is_array($request->s) ? $request->s : [$request->s];
@@ -1012,7 +978,7 @@ class FrontendController extends Controller
             $projectIds = Project::query()
                 ->where(function ($query) use ($keywords) {
                     foreach ($keywords as $keyword) {
-                        $query->orWhere('name', 'LIKE', "%{$keyword}%");
+                        $query->orWhere('name', "$keyword");
                     }
                 })
                 ->pluck('id');
@@ -1041,17 +1007,17 @@ class FrontendController extends Controller
                 } else if ($type === 'commercial') {
                     $proejctsProperties->where('mode', 'commercial');
                 }
-                $proejctsProperties->distinct()
-                    ->get();
+                $proejctsProperties =$proejctsProperties->distinct()->get();
             }
 
+      
 
             // Merge City, Project, and Locality Properties
             $mergedProperties = $cityProperties->merge($proejctsProperties)->merge($localityProperties)
                 ->unique('id') // Remove duplicates based on ID
                 ->values(); // Reindex the collection
 
-
+           
             return ['properties' => $mergedProperties, 'proejctsProperties' => $proejctsProperties];
         }
 
@@ -1251,9 +1217,12 @@ class FrontendController extends Controller
                 if ($keyword != '' && $keyword != 'null') {
 
                     $query->where(function ($query) use ($keyword) {
-                        $query->where('name', 'LIKE', '%' . $keyword . '%')
-                            ->orWhere('content', 'LIKE', '%' . $keyword . '%')
-                            ->orWhere('locality', 'LIKE', '%' . $keyword . '%');
+                         $query->where('city', $keyword )
+                            ->orWhere('content', $keyword )
+                            ->orWhere('locality', $keyword );
+                        // $query->where('city', 'LIKE', '%' . $keyword . '%')
+                        //     ->orWhere('content', 'LIKE', '%' . $keyword . '%')
+                        //     ->orWhere('locality', 'LIKE', '%' . $keyword . '%');
                         // ->orWhereHas('categories', function ($subQuery) use ($keyword) {
                         //     $subQuery->where('name', 'LIKE', "%{$keyword}%");
                         // });
