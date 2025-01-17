@@ -1,5 +1,5 @@
 <div class="mobile-bottom mobile-bottom position-relative z-999">
-    <div class="nav"> 
+    <div class="nav">
         <div class="nav-slot bg-white round-top-left">
             <a href="{{ url('/') }}" class="nav-link active text-center">
                 <i class="mdi mdi-home fa-fw"></i>
@@ -12,7 +12,13 @@
                 Properties
             </a>
         </div>
-        <div class="nav-slot curve">
+        <div class="nav-slot curve position-relative" x-data="{ visible: true }" x-init="setInterval(() => visible = !visible, 1000)">
+            <label 
+                class="post-property" 
+                :class="{ 'opacity-100 visible': visible, 'opacity-0 invisible': !visible }"
+            >
+                Post Property for Free
+            </label>
             <a href="{{ url('account/properties/create') }}" role="button" class="floating-button">
                 <i class="mdi mdi-plus"></i>
             </a>

@@ -969,15 +969,14 @@
 
         .wa__btn_popup .wa__btn_popup_txt {
             position: absolute;
-            width: 156px;
+            width: 100px;
             right: 100%;
             background-color: #f5f7f9;
-            font-size: 12px;
+            font-size: 8px;
             color: #43474e;
-            top: 7px;
- 
-            padding: 7px 0 7px 12px;
-            margin-right: 7px;
+            top: -20px;
+            padding: 3px 0 0px 12px;
+            margin-right: -13px;
             letter-spacing: -0.03em;
             border-radius: 4px;
             -webkit-border-radius: 4px;
@@ -986,6 +985,7 @@
             -webkit-transition: 0.4s ease all;
             -moz-transition: 0.4s ease all;
         }
+        
 
         .wa__btn_popup.wa__active .wa__btn_popup_txt {
             -ms-transform: translate(0, 15px);
@@ -1398,7 +1398,7 @@
             </div>
             <!-- /.wa__popup_content_list -->
         </div>
-    
+
         <!------------->
     </div>
     @if (session()->has('status') ||
