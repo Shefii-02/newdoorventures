@@ -7,7 +7,3 @@
 @endphp
 @include("front.shortcuts.properties.items-$currentLayout", compact('properties','readyToMoveProjects'))
 
-
-{{-- @if ($properties instanceof \Illuminate\Pagination\LengthAwarePaginator)
-    {{ $properties->links(Theme::getThemeNamespace('partials.pagination')) }}
-@endif --}}

@@ -1616,7 +1616,7 @@
                 </div>
                 <!-- PG/Co-Living Tab -->
                 <div class="tab-pane fade" id="pg" role="tabpanel" aria-labelledby="pg-tab">
-                    @include('front.shortcuts.filters.mobile-tabs.pg-co-living', [
+                    @include('front.shortcuts.filters.mobile-tabs.pg', [
                         'type' => 'pg',
                         'categories' => $categories,
                     ])

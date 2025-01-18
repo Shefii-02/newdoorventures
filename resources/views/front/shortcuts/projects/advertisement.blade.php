@@ -1,5 +1,8 @@
+
 @php
-    $count = $projects->count();
+    $count1 = $similarProjects->count();
+    $count2 = $projects->count();
+    $count = $count1 + $count2;
     $sideShowAdvertisement = ceil($count / 3);  // Correcting the division to ensure proper rounding
     $sideShowAdvertisement = $sideShowAdvertisement <= 0 ? 1 : $sideShowAdvertisement;
     $advertisementList = \App\Models\Advertisement::where('text', 'page_list')->inRandomOrder()->limit($sideShowAdvertisement)->get();  // Using `get()` instead of `limit()` directly

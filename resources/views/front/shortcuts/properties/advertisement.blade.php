@@ -1,5 +1,5 @@
 @php
-    $count1 = $projectProperties->count();
+    $count1 = $similarProperties->count();
     $count2 = $properties->count();
     $count = $count1 + $count2;
     $sideShowAdvertisement = ceil($count / 3);  // Correcting the division to ensure proper rounding

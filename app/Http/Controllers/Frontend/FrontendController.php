@@ -78,7 +78,7 @@ class FrontendController extends Controller
 
     public function properties(Request $request)
     {
-        $type = $request->type ?? 'sale';
+        $type = $request->type ?? '';
         $query = Property::query()->where('moderation_status', 'approved');
 
         if ($request->filled('type') && $request->type == 'commercial') {
@@ -96,7 +96,6 @@ class FrontendController extends Controller
 
         $property_query = $this->ShortcutFilterProperties($query, $request);
 
-
         $propertySearchKeywords = $this->propertySearchKeywords($request, $type);
 
         if (isset($propertySearchKeywords['properties'])) {
@@ -106,15 +105,18 @@ class FrontendController extends Controller
         }
 
         if (isset($propertySearchKeywords['similarProperties'])) {
-            $projectProperties = $propertySearchKeywords['similarProperties'];
+            $similarProperties = $propertySearchKeywords['similarProperties'];
         } else {
-            $projectProperties = collect();
+            $similarProperties = collect();
         }
-        // Other filters...
 
-        // dd($keywordProperties,$projectProperties);
+
 
         $properties = $property_query->get();
+
+        $similarProperties = $this->similarPropertiesFilter($properties, $type);
+
+        $properties = $properties->merge($keywordProperties);
 
         if ($request->ajax()) {
 
@@ -133,7 +135,7 @@ class FrontendController extends Controller
         $categories = Category::where('status', 'published')->get();
 
         $readyToMoveProjects = Project::where('construction_status', 'ready_to_move')->orWhere('construction_status', 'new_launch')->get();
-        $newLaunchProjects = Project::where('construction_status', 'new_launch')->get();
+
 
         $pageTitle = 'Residential Properties for Sale, Rent, and Lease in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Explore a wide range of residential properties including houses, apartments, flats, and more for sale, rent, or lease in Bangalore and Karnataka. Find your dream home today!';
@@ -145,9 +147,9 @@ class FrontendController extends Controller
 
         $result = $this->agent->isMobile();
         if ($result) {
-            return view('front.mobile.property-index', compact('type', 'properties', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+            return view('front.mobile.property-index', compact('type', 'properties', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'similarProperties', 'readyToMoveProjects'));
         } else {
-            return view('front.properties.index', compact('type', 'properties', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+            return view('front.properties.index', compact('type', 'properties', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'similarProperties', 'readyToMoveProjects'));
         }
     }
 
@@ -183,17 +185,16 @@ class FrontendController extends Controller
         }
 
         if (isset($propertySearchKeywords['similarProperties'])) {
-            $projectProperties = $propertySearchKeywords['similarProperties'];
+            $similarProperties = $propertySearchKeywords['similarProperties'];
         } else {
-            $projectProperties = collect();
+            $similarProperties = collect();
         }
-
-
-        // Other filters...
-
 
         $properties = $property_query->get();
 
+        $similarPropertiesFilter = $this->similarPropertiesFilter($properties, $type);
+
+        $similarProperties = $similarPropertiesFilter->merge($similarProperties);
 
         $properties = $properties->merge($keywordProperties);
 
@@ -203,19 +204,17 @@ class FrontendController extends Controller
         }
 
         $readyToMoveProjects = Project::where('construction_status', 'ready_to_move')->orWhere('construction_status', 'new_launch')->get();
-        $newLaunchProjects = Project::where('construction_status', 'new_launch')->get();
 
         $searchByTitle = $this->searchByTitle($request, $properties, 'Sale', "Residential");
-
 
         $pageTitle = 'Properties for Sale in Bangalore & Karnataka | New Door Ventures';
         $pageDescription = 'Browse a wide selection of properties for sale in Bangalore and Karnataka. Find houses, apartments, plots, and more to buy at competitive prices.';
         $pageKeywords = 'properties for sale, houses for sale in Bangalore, apartments for sale in Karnataka, buy homes in Bangalore, residential plots for sale in Karnataka, real estate for sale, commercial properties for sale, affordable homes for sale, property listings in Bangalore';
         $result = $this->agent->isMobile();
         if ($result) {
-            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'similarProperties', 'readyToMoveProjects'));
         } else {
-            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'similarProperties', 'readyToMoveProjects'));
         }
     }
     public function PropertiesForRent(Request $request)
@@ -223,14 +222,13 @@ class FrontendController extends Controller
         $query = Property::query()->where('type', 'rent')->where('status', 'renting')->where('moderation_status', 'approved');
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders = Investor::get();
-        $cities = Property::where('type', 'sell')
+        $cities = Property::where('type', 'rent')
             ->where('moderation_status', 'approved')
             ->distinct('locality')
             ->orderBy('locality', 'asc')
             ->pluck('locality');
 
         $categories = Category::where('status', 'published')->where('has_rent', 1)->get();
-
 
         $type = 'rent';
         $projects    = Project::WhereHas('properties', function ($subQuery) use ($type) {
@@ -246,14 +244,17 @@ class FrontendController extends Controller
         }
 
         if (isset($propertySearchKeywords['similarProperties'])) {
-            $projectProperties = $propertySearchKeywords['similarProperties'];
+            $similarProperties = $propertySearchKeywords['similarProperties'];
         } else {
-            $projectProperties = collect();
+            $similarProperties = collect();
         }
-        // Other filters...
 
-        // dd($keywordProperties,$projectProperties);
         $properties = $property_query->get();
+
+        $similarPropertiesFilter = $this->similarPropertiesFilter($properties, $type);
+
+        $similarProperties = $similarPropertiesFilter->merge($similarProperties);
+
         $properties = $properties->merge($keywordProperties);
 
         if ($request->ajax()) {
@@ -262,7 +263,7 @@ class FrontendController extends Controller
         }
 
         $readyToMoveProjects = Project::where('construction_status', 'ready_to_move')->orWhere('construction_status', 'new_launch')->get();
-        $newLaunchProjects = Project::where('construction_status', 'new_launch')->get();
+
 
         $searchByTitle = $this->searchByTitle($request, $properties, 'Rent', "Residential");
 
@@ -272,13 +273,14 @@ class FrontendController extends Controller
         $pageKeywords = 'properties for rent, apartments for rent in Bangalore, houses for rent in Karnataka, rental properties in Bangalore, PG accommodation in Karnataka, rental flats in Bangalore, commercial spaces for rent, affordable houses for rent in Karnataka, paying guest accommodation, real estate rentals';
         $result = $this->agent->isMobile();
         if ($result) {
-            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'similarProperties', 'readyToMoveProjects'));
         } else {
-            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'similarProperties', 'readyToMoveProjects'));
         }
     }
     public function PropertiesForPlot(Request $request)
     {
+
         $category   = 'Plot and Land';
         $query      = Property::query()
             ->whereHas('categories', function ($query) use ($category) {
@@ -305,13 +307,11 @@ class FrontendController extends Controller
         }
 
         if (isset($propertySearchKeywords['similarProperties'])) {
-            $projectProperties = $propertySearchKeywords['similarProperties'];
+            $similarProperties = $propertySearchKeywords['similarProperties'];
         } else {
-            $projectProperties = collect();
+            $similarProperties = collect();
         }
-        // Other filters...
 
-        // dd($keywordProperties,$projectProperties);
 
         $projects    = Project::WhereHas('properties', function ($subQuery) use ($type) {
             $subQuery
@@ -324,6 +324,10 @@ class FrontendController extends Controller
 
 
         $properties = $property_query->get();
+        $similarPropertiesFilter = $this->similarPropertiesFilter($properties, $type);
+
+        $similarProperties = $similarPropertiesFilter->merge($similarProperties);
+
         $properties = $properties->merge($keywordProperties);
 
         if ($request->ajax()) {
@@ -333,7 +337,6 @@ class FrontendController extends Controller
 
 
         $readyToMoveProjects = Project::where('construction_status', 'ready_to_move')->orWhere('construction_status', 'new_launch')->get();
-        $newLaunchProjects = Project::where('construction_status', 'new_launch')->get();
 
         $searchByTitle = $this->searchByTitle($request, $properties, 'Plot and Lands', "Residential");
 
@@ -344,9 +347,9 @@ class FrontendController extends Controller
 
         $result = $this->agent->isMobile();
         if ($result) {
-            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'similarProperties', 'readyToMoveProjects'));
         } else {
-            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'similarProperties', 'readyToMoveProjects'));
         }
     }
     public function PropertiesForPg(Request $request)
@@ -356,10 +359,10 @@ class FrontendController extends Controller
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders = Investor::get();
         $cities = Property::where('type', 'pg')
-                            ->where('moderation_status', 'approved')
-                            ->distinct('locality')
-                            ->orderBy('locality', 'asc')
-                            ->pluck('locality');
+            ->where('moderation_status', 'approved')
+            ->distinct('locality')
+            ->orderBy('locality', 'asc')
+            ->pluck('locality');
 
         $categories = Category::WhereHas('properties', function ($subQuery) use ($type) {
             $subQuery->where('type', $type)->where('moderation_status', 'approved');
@@ -374,13 +377,11 @@ class FrontendController extends Controller
         }
 
         if (isset($propertySearchKeywords['similarProperties'])) {
-            $projectProperties = $propertySearchKeywords['similarProperties'];
+            $similarProperties = $propertySearchKeywords['similarProperties'];
         } else {
-            $projectProperties = collect();
+            $similarProperties = collect();
         }
-        // Other filters...
 
-        // dd($keywordProperties,$projectProperties);
 
         $projects    = Project::WhereHas('properties', function ($subQuery) use ($type) {
             $subQuery->where('type', $type)
@@ -417,6 +418,11 @@ class FrontendController extends Controller
 
 
         $properties = $property_query->get();
+
+        $similarPropertiesFilter = $this->similarPropertiesFilter($properties, $type);
+
+        $similarProperties = $similarPropertiesFilter->merge($similarProperties);
+
         $properties = $properties->merge($keywordProperties);
 
         if ($request->ajax()) {
@@ -426,7 +432,6 @@ class FrontendController extends Controller
 
 
         $readyToMoveProjects = Project::where('construction_status', 'ready_to_move')->orWhere('construction_status', 'new_launch')->get();
-        $newLaunchProjects = Project::where('construction_status', 'new_launch')->get();
 
         $searchByTitle = $this->searchByTitle($request, $properties, 'PG', "Residential");
 
@@ -436,9 +441,9 @@ class FrontendController extends Controller
         $pageKeywords = 'PG accommodation in Bangalore, paying guests in Karnataka, PG for rent in Bangalore, affordable PGs in Bangalore, PG rooms for rent in Karnataka, private rooms for rent in Bangalore, shared PG accommodation, budget PGs in Bangalore, PG spaces near IT hubs, PGs for students in Bangalore, PG rental properties in Karnataka, PG facilities in Bangalore';
         $result = $this->agent->isMobile();
         if ($result) {
-            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'similarProperties', 'readyToMoveProjects'));
         } else {
-            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'similarProperties', 'readyToMoveProjects'));
         }
     }
 
@@ -473,13 +478,11 @@ class FrontendController extends Controller
         }
 
         if (isset($propertySearchKeywords['similarProperties'])) {
-            $projectProperties = $propertySearchKeywords['similarProperties'];
+            $similarProperties = $propertySearchKeywords['similarProperties'];
         } else {
-            $projectProperties = collect();
+            $similarProperties = collect();
         }
-        // Other filters...
 
-        // dd($keywordProperties,$projectProperties);
 
         if (($request->has('tab') && $request->tab == 'sale') || $request->has('type') && $request->type == 'commercial-sale') {
             $property_query = $property_query->where('type', 'sell');
@@ -488,6 +491,11 @@ class FrontendController extends Controller
         }
 
         $properties = $property_query->get();
+
+        $similarPropertiesFilter = $this->similarPropertiesFilter($properties, $type);
+
+        $similarProperties = $similarPropertiesFilter->merge($similarProperties);
+
         $properties = $properties->merge($keywordProperties);
 
         if ($request->ajax()) {
@@ -500,7 +508,7 @@ class FrontendController extends Controller
             'new_launch',
             'under_construction',
         ])->get();
-        $newLaunchProjects = Project::where('construction_status', 'new_launch')->get();
+
 
 
         $searchByTitle = $this->searchByTitle($request, $properties, '', "Commercial");
@@ -512,9 +520,9 @@ class FrontendController extends Controller
 
         $result = $this->agent->isMobile();
         if ($result) {
-            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+            return view('front.mobile.property-index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'similarProperties', 'readyToMoveProjects'));
         } else {
-            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'projectProperties', 'readyToMoveProjects', 'newLaunchProjects'));
+            return view('front.properties.index', compact('properties', 'categories', 'cities', 'builders', 'type', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'projects', 'similarProperties', 'readyToMoveProjects'));
         }
     }
 
@@ -564,19 +572,24 @@ class FrontendController extends Controller
         }
 
         if (isset($projectSearchKeywords['similarProjects'])) {
-            $projectProperties = $projectSearchKeywords['similarProjects'];
+            $similarProjects = $projectSearchKeywords['similarProjects'];
         } else {
-            $projectProperties = collect();
+            $similarProjects = collect();
         }
 
-
         //////////////////////////////////
-
         $projects = $project_query->get();
 
 
+        $similarProjectsFilter = $this->similarProjectFilter($projects, $request->type);
 
-        $properties = $projects->merge($keywordProjects);
+        $similarProjects = $similarProjectsFilter->merge($similarProjects);
+
+
+
+//  similarProjects
+
+        $projects = $projects->merge($keywordProjects);
 
         if ($request->ajax()) {
             $html = view('front.shortcuts.projects.items', compact('projects'))->render();
@@ -595,9 +608,9 @@ class FrontendController extends Controller
         $pageKeywords = 'new launch real estate projects in Bangalore, ready to launch projects in Karnataka, under construction properties in Bangalore, residential projects in Karnataka, commercial projects Bangalore, real estate investment Bangalore, new homes Bangalore, property projects in Karnataka, builder projects Bangalore, new construction properties, affordable housing projects Karnataka, residential development Bangalore, upcoming projects Bangalore, ongoing construction in Karnataka';
         $result = $this->agent->isMobile();
         if ($result) {
-            return view('front.mobile.project-index', compact('projects', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle'));
+            return view('front.mobile.project-index', compact('projects', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'similarProjects'));
         } else {
-            return view('front.projects.index', compact('projects', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle'));
+            return view('front.projects.index', compact('projects', 'categories', 'cities', 'builders', 'pageTitle', 'pageDescription', 'pageKeywords', 'searchByTitle', 'similarProjects'));
         }
     }
 
@@ -887,8 +900,6 @@ class FrontendController extends Controller
                     })
                     ->toArray();
 
-
-
                 // Query 2: Search in 'locality'
                 // $localities = Property::query()
                 //     ->where('moderation_status', 'approved')
@@ -913,26 +924,30 @@ class FrontendController extends Controller
                     })
                     ->toArray();
 
-                // Query 3: Search in associated 'project name'
-                $projects = Project::query()
-                    ->where(function ($query) use ($keyword) {
-                        $query->orWhere('name', 'LIKE', "%{$keyword}%")
-                            ->orWhere('city', 'LIKE', "%{$keyword}%")
-                            ->orWhere('locality', 'LIKE', "%{$keyword}%");
-                    })
-                    ->whereHas('properties', function ($subQuery) use ($type) {
-                        $subQuery->where('type', $type);
-                    })
-                    ->distinct()
-                    ->select(['name', 'locality', 'city'])
-                    ->get()
-                    ->map(function ($project) {
-                        return [
-                            'value' => $project->name, // Project name as the value
-                            'display' => "{$project->name}, {$project->locality}, {$project->city}" // Display formatted as project_name, locality, city
-                        ];
-                    })
-                    ->toArray();
+                if ($type != 'pg') {
+                    // Query 3: Search in associated 'project name'
+                    $projects = Project::query()
+                        ->where(function ($query) use ($keyword) {
+                            $query->orWhere('name', 'LIKE', "%{$keyword}%")
+                                ->orWhere('city', 'LIKE', "%{$keyword}%")
+                                ->orWhere('locality', 'LIKE', "%{$keyword}%");
+                        })
+                        // ->whereHas('properties', function ($subQuery) use ($type) {
+                        //     $subQuery->where('type', $type);
+                        // })
+                        ->distinct()
+                        ->select(['name', 'locality', 'city'])
+                        ->get()
+                        ->map(function ($project) {
+                            return [
+                                'value' => $project->name, // Project name as the value
+                                'display' => "{$project->name}, {$project->locality}, {$project->city}" // Display formatted as project_name, locality, city
+                            ];
+                        })
+                        ->toArray();
+                } else if ($type == 'pg') {
+                    $projects = collect();
+                }
             }
 
             $results = [];
@@ -957,11 +972,8 @@ class FrontendController extends Controller
 
     public function propertySearchKeywords(Request $request, $type = null)
     {
-
-
         if ($request->has('s') && $request->filled('s')) {
             $keywords = is_array($request->s) ? $request->s : [$request->s];
-
             // Fetch City-based Properties
             $cityProperties = Property::query()
                 ->where('moderation_status', 'approved')
@@ -971,7 +983,7 @@ class FrontendController extends Controller
                     }
                 });
 
-            if (in_array($type, ['sell', 'rent', 'pg'])) {
+            if ($type != null  && in_array($type, ['sell', 'rent', 'pg'])) {
                 $cityProperties->where('type', $type);
             } else if ($type === 'commercial') {
                 $cityProperties->where('mode', 'commercial');
@@ -986,7 +998,6 @@ class FrontendController extends Controller
                     }
                 })
                 ->pluck('id');
-
             // Fetch Locality-based Properties
             $localityProperties = Property::query()
                 ->where('moderation_status', 'approved')
@@ -996,7 +1007,7 @@ class FrontendController extends Controller
                     }
                 });
 
-            if (in_array($type, ['sell', 'rent', 'pg'])) {
+            if ($type != null  && in_array($type, ['sell', 'rent', 'pg'])) {
                 $localityProperties->where('type', $type);
             } else if ($type === 'commercial') {
                 $localityProperties->where('mode', 'commercial');
@@ -1014,19 +1025,19 @@ class FrontendController extends Controller
                 $proejctsProperties = $proejctsProperties->distinct()->get();
             }
 
-
-
             // Merge City, Project, and Locality Properties
             $mergeProperties = $cityProperties->merge($proejctsProperties)->merge($localityProperties);
-            $mergedProperties = $mergeProperties->unique('id') // Remove duplicates based on ID
-                ->values(); // Reindex the collection
-            //    dd($mergeProperties->select('locality','city','price','project_id','number_bedroom','sub_locality','landmark'));
-            //     $similarProperties = collect();
+            $mergedProperties = $mergeProperties->unique('id')->values();
+            $similarProperties = collect();
 
             if ($type == 'pg') {
                 $similarProperties = $this->similarPropertiesPg($mergeProperties, $type);
             } else {
                 $similarProperties = $this->similarProperties($mergeProperties, $type);
+            }
+
+            if ($similarProperties->count() == 0) {
+                $similarProperties = $this->similarItems($type, true);
             }
 
 
@@ -1035,13 +1046,14 @@ class FrontendController extends Controller
             //     $similarProperties->whereNotNull('project_id')->whereNotNull('number_bedroom');
             // }
 
+
             return ['properties' => $mergedProperties, 'similarProperties' => $similarProperties];
         }
 
         return array(); // Return an empty collection if no keywords are provided
     }
 
-    public function similarProperties($mergeProperties, $type)
+    public function similarProperties($mergeProperties, $type = null)
     {
         $similarProperties = Property::query()
             ->where('moderation_status', 'approved')
@@ -1054,10 +1066,15 @@ class FrontendController extends Controller
                     ->orWhereIn('sub_locality', $mergeProperties->pluck('sub_locality')->filter()->unique())
                     ->orWhereIn('landmark', $mergeProperties->pluck('landmark')->filter()->unique());
             });
-        if (in_array($type, ['sell', 'rent', 'pg'])) {
+        if ($type != null  && in_array($type, ['sell', 'rent', 'pg'])) {
             $similarProperties->where('type', $type);
         } else if ($type === 'commercial') {
             $similarProperties->where('mode', 'commercial');
+        }
+        else if ($type === 'plot') {
+            $similarProperties->whereHas('categories', function ($query) {
+                $query->where('name', 'Plot and Land');
+            });
         }
         $similarProperties = $similarProperties->whereNotNull('project_id')->whereNotNull('price')->whereNotNull('city')->whereNotNull('locality')->whereNotNull('number_bedroom')->whereNotNull('sub_locality')->whereNotNull('landmark')->distinct()
             ->get();
@@ -1068,18 +1085,50 @@ class FrontendController extends Controller
     public function similarPropertiesPg($mergeProperties, $type)
     {
         $similarProperties = Property::query()
-                                        ->where('moderation_status', 'approved')
-                                        ->where(function ($query) use ($mergeProperties) {
-                                            $query->whereIn('locality', $mergeProperties->pluck('locality')->filter()->unique())
-                                                ->orWhereIn('city', $mergeProperties->pluck('city')->filter()->unique())
-                                                ->orWhereIn('price', $mergeProperties->pluck('price')->filter()->unique())
-                                                ->orWhereIn('project_id', $mergeProperties->pluck('project_id')->filter()->unique())
-                                                ->orWhereIn('number_bedroom', $mergeProperties->pluck('number_bedroom')->filter()->unique())
-                                                ->orWhereIn('sub_locality', $mergeProperties->pluck('sub_locality')->filter()->unique())
-                                                ->orWhereIn('landmark', $mergeProperties->pluck('landmark')->filter()->unique());
-                                        })->where('type', $type);
+            ->where('moderation_status', 'approved')
+            ->where(function ($query) use ($mergeProperties) {
+                $query->whereIn('locality', $mergeProperties->pluck('locality')->filter()->unique())
+                    ->orWhereIn('city', $mergeProperties->pluck('city')->filter()->unique())
+                    ->orWhereIn('price', $mergeProperties->pluck('price')->filter()->unique())
+                    ->orWhereIn('project_id', $mergeProperties->pluck('project_id')->filter()->unique())
+                    ->orWhereIn('number_bedroom', $mergeProperties->pluck('number_bedroom')->filter()->unique())
+                    ->orWhereIn('sub_locality', $mergeProperties->pluck('sub_locality')->filter()->unique())
+                    ->orWhereIn('landmark', $mergeProperties->pluck('landmark')->filter()->unique());
+            })->where('type', $type);
         $similarProperties = $similarProperties->whereNotNull('price')->whereNotNull('city')->whereNotNull('locality')->whereNotNull('sub_locality')->whereNotNull('landmark')->distinct()
-                                                ->get();
+            ->get();
+
+        return $similarProperties;
+    }
+
+
+    public function similarPropertiesFilter($mergeProperties, $type)
+    {
+        $similarProperties = Property::query()
+            ->where('moderation_status', 'approved')
+            ->where(function ($query) use ($mergeProperties) {
+                $query->whereIn('locality', $mergeProperties->pluck('locality')->filter()->unique())
+                    ->orWhereIn('city', $mergeProperties->pluck('city')->filter()->unique())
+                    ->orWhereIn('price', $mergeProperties->pluck('price')->filter()->unique())
+                    ->orWhereIn('project_id', $mergeProperties->pluck('project_id')->filter()->unique())
+                    ->orWhereIn('number_bedroom', $mergeProperties->pluck('number_bedroom')->filter()->unique())
+                    ->orWhereIn('sub_locality', $mergeProperties->pluck('sub_locality')->filter()->unique())
+                    ->orWhereIn('landmark', $mergeProperties->pluck('landmark')->filter()->unique());
+            });
+
+        if ($type != null  && in_array($type, ['sell', 'rent', 'pg'])) {
+            $similarProperties->where('type', $type);
+        } else if ($type === 'commercial') {
+            $similarProperties->where('mode', 'commercial');
+        }
+        else if ($type === 'plot') {
+            $similarProperties->whereHas('categories', function ($query) {
+                $query->where('name', 'Plot and Land');
+            });
+        }
+
+        $similarProperties = $similarProperties->whereNotNull('project_id')->whereNotNull('price')->whereNotNull('city')->whereNotNull('locality')->whereNotNull('number_bedroom')->whereNotNull('sub_locality')->whereNotNull('landmark')->distinct()
+            ->get();
 
         return $similarProperties;
     }
@@ -1139,13 +1188,28 @@ class FrontendController extends Controller
                     ->get();
             }
 
-
             // Merge City, Project, and Locality Properties
-            $mergedProperties = $cityProperties->merge($localityProperties)
-                ->unique('id') // Remove duplicates based on ID
-                ->values(); // Reindex the collection
+            $mergedProjects = $cityProperties->merge($localityProperties)
+                                                ->unique('id') // Remove duplicates based on ID
+                                                ->values(); // Reindex the collection
 
-            return ['properties' => $mergedProperties, 'similarProjects' => $proejctsProperties];
+          
+            $mergeProperties = $cityProperties->merge($proejctsProperties)->merge($localityProperties);
+            $mergedProjects = $mergeProperties->unique('id')->values();
+            $similarProperties = collect();
+
+            $similarProjects = $this->similarProperties($mergeProperties, $type);
+            
+
+            if ($similarProjects->count() == 0) {
+                $similarProjects = $this->similarItems($type, false);
+            }
+
+           
+
+         
+
+            return ['projects' => $mergedProjects,'similarProjects' => $similarProjects];
         }
     }
 
@@ -1361,6 +1425,28 @@ class FrontendController extends Controller
         return $query;
     }
 
+    function similarItems($type, $is_propertyy = true)
+    {
+        if ($is_propertyy) {
+            $similar = Property::query();
+            if (in_array($type, ['sell', 'rent', 'pg'])) {
+                $similar->where('type', $type);
+            } else if ($type === 'commercial') {
+                $similar->where('mode', 'commercial');
+            } else if ($type === 'plot') {
+                $similar->whereHas('categories', function ($query) {
+                    $query->where('name', 'Plot and Land');
+                });
+            }
+            $similar = $similar->distinct()->limit(24)->get();
+        } else {
+            $similar = Project::query();
+
+            $similar = $similar->distinct()->limit(24)->get();
+        }
+        return $similar;
+    }
+
     function ShortcutFilterProjects($query, $request)
     {
         // Keyword search
@@ -1427,6 +1513,66 @@ class FrontendController extends Controller
         }
 
         return $query;
+    }
+
+    public function similarProjects($mergeProperties, $type = null)
+    {
+        $similarProjects = Property::query()
+            ->where('moderation_status', 'approved')
+            ->where(function ($query) use ($mergeProperties) {
+                $query->whereIn('locality', $mergeProperties->pluck('locality')->filter()->unique())
+                    ->orWhereIn('city', $mergeProperties->pluck('city')->filter()->unique())
+                    ->orWhereIn('price', $mergeProperties->pluck('price')->filter()->unique())
+                    ->orWhereIn('project_id', $mergeProperties->pluck('project_id')->filter()->unique())
+                    ->orWhereIn('number_bedroom', $mergeProperties->pluck('number_bedroom')->filter()->unique())
+                    ->orWhereIn('sub_locality', $mergeProperties->pluck('sub_locality')->filter()->unique())
+                    ->orWhereIn('landmark', $mergeProperties->pluck('landmark')->filter()->unique());
+            });
+        if ($type != null  && in_array($type, ['sell', 'rent', 'pg'])) {
+            $similarProjects->where('type', $type);
+        } else if ($type === 'commercial') {
+            $similarProjects->where('mode', 'commercial');
+        }
+        else if ($type === 'plot') {
+            $similarProjects->whereHas('categories', function ($query) {
+                $query->where('name', 'Plot and Land');
+            });
+        }
+        $similarProjects = $similarProjects->whereNotNull('project_id')->whereNotNull('price')->whereNotNull('city')->whereNotNull('locality')->whereNotNull('number_bedroom')->whereNotNull('sub_locality')->whereNotNull('landmark')->distinct()
+                                            ->get();
+
+        return $similarProjects;
+    }
+
+    public function similarProjectFilter($mergeProperties, $type)
+    {
+        $similarProperties = Property::query()
+            ->where('moderation_status', 'approved')
+            ->where(function ($query) use ($mergeProperties) {
+                $query->whereIn('locality', $mergeProperties->pluck('locality')->filter()->unique())
+                    ->orWhereIn('city', $mergeProperties->pluck('city')->filter()->unique())
+                    ->orWhereIn('price', $mergeProperties->pluck('price')->filter()->unique())
+                    ->orWhereIn('project_id', $mergeProperties->pluck('project_id')->filter()->unique())
+                    ->orWhereIn('number_bedroom', $mergeProperties->pluck('number_bedroom')->filter()->unique())
+                    ->orWhereIn('sub_locality', $mergeProperties->pluck('sub_locality')->filter()->unique())
+                    ->orWhereIn('landmark', $mergeProperties->pluck('landmark')->filter()->unique());
+            });
+
+        if ($type != null  && in_array($type, ['sell', 'rent', 'pg'])) {
+            $similarProperties->where('type', $type);
+        } else if ($type === 'commercial') {
+            $similarProperties->where('mode', 'commercial');
+        }
+        else if ($type === 'plot') {
+            $similarProperties->whereHas('categories', function ($query) {
+                $query->where('name', 'Plot and Land');
+            });
+        }
+
+        $similarProperties = $similarProperties->whereNotNull('project_id')->whereNotNull('price')->whereNotNull('city')->whereNotNull('locality')->whereNotNull('number_bedroom')->whereNotNull('sub_locality')->whereNotNull('landmark')->distinct()
+            ->get();
+
+        return $similarProperties;
     }
 
     public function postConsult(Request $request)

@@ -41,7 +41,7 @@
                                 'buy' => 'Buy',
                                 'rent' => 'Rent',
                                 'new-launch' => 'New Launch',
-                                'pg-co-living' => 'PG / Co-living',
+                                'pg' => 'PG / Co-living',
                                 'commercial' => 'Commercial',
                                 'plot' => 'Plots/Land',
                                 'projects' => 'Projects',
