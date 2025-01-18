@@ -355,11 +355,11 @@ class FrontendController extends Controller
         $query = Property::query()->where('type', 'pg')->where('status', 'renting')->where('moderation_status', 'approved');
         $property_query = $this->ShortcutFilterProperties($query, $request);
         $builders = Investor::get();
-        $cities = Property::where('type', 'sell')
-            ->where('moderation_status', 'approved')
-            ->distinct('locality')
-            ->orderBy('locality', 'asc')
-            ->pluck('locality');
+        $cities = Property::where('type', 'pg')
+                            ->where('moderation_status', 'approved')
+                            ->distinct('locality')
+                            ->orderBy('locality', 'asc')
+                            ->pluck('locality');
 
         $categories = Category::WhereHas('properties', function ($subQuery) use ($type) {
             $subQuery->where('type', $type)->where('moderation_status', 'approved');
@@ -1022,32 +1022,66 @@ class FrontendController extends Controller
                 ->values(); // Reindex the collection
             //    dd($mergeProperties->select('locality','city','price','project_id','number_bedroom','sub_locality','landmark'));
             //     $similarProperties = collect();
-            $similarProperties = Property::query()
-                ->where('moderation_status', 'approved')
-                ->where(function ($query) use ($mergeProperties) {
-                    $query->whereIn('locality', $mergeProperties->pluck('locality')->filter()->unique())
-                        ->orWhereIn('city', $mergeProperties->pluck('city')->filter()->unique())
-                        ->orWhereIn('price', $mergeProperties->pluck('price')->filter()->unique())
-                        ->orWhereIn('project_id', $mergeProperties->pluck('project_id')->filter()->unique())
-                        ->orWhereIn('number_bedroom', $mergeProperties->pluck('number_bedroom')->filter()->unique())
-                        ->orWhereIn('sub_locality', $mergeProperties->pluck('sub_locality')->filter()->unique())
-                        ->orWhereIn('landmark', $mergeProperties->pluck('landmark')->filter()->unique());
-                });
-            if (in_array($type, ['sell', 'rent', 'pg'])) {
-                $similarProperties->where('type', $type);
-            } else if ($type === 'commercial') {
-                $similarProperties->where('mode', 'commercial');
+
+            if ($type == 'pg') {
+                $similarProperties = $this->similarPropertiesPg($mergeProperties, $type);
+            } else {
+                $similarProperties = $this->similarProperties($mergeProperties, $type);
             }
-            $similarProperties=$similarProperties->whereNotNull('project_id')->whereNotNull('price')->whereNotNull('city')->whereNotNull('locality')->whereNotNull('number_bedroom')->whereNotNull('sub_locality')->whereNotNull('landmark')->distinct()
-                ->get();
-//   // if (in_array($type, ['sell', 'rent'])) {
-                //     $similarProperties->whereNotNull('project_id')->whereNotNull('number_bedroom');
-                // }
+
+
+
+            // if (in_array($type, ['sell', 'rent'])) {
+            //     $similarProperties->whereNotNull('project_id')->whereNotNull('number_bedroom');
+            // }
 
             return ['properties' => $mergedProperties, 'similarProperties' => $similarProperties];
         }
 
         return array(); // Return an empty collection if no keywords are provided
+    }
+
+    public function similarProperties($mergeProperties, $type)
+    {
+        $similarProperties = Property::query()
+            ->where('moderation_status', 'approved')
+            ->where(function ($query) use ($mergeProperties) {
+                $query->whereIn('locality', $mergeProperties->pluck('locality')->filter()->unique())
+                    ->orWhereIn('city', $mergeProperties->pluck('city')->filter()->unique())
+                    ->orWhereIn('price', $mergeProperties->pluck('price')->filter()->unique())
+                    ->orWhereIn('project_id', $mergeProperties->pluck('project_id')->filter()->unique())
+                    ->orWhereIn('number_bedroom', $mergeProperties->pluck('number_bedroom')->filter()->unique())
+                    ->orWhereIn('sub_locality', $mergeProperties->pluck('sub_locality')->filter()->unique())
+                    ->orWhereIn('landmark', $mergeProperties->pluck('landmark')->filter()->unique());
+            });
+        if (in_array($type, ['sell', 'rent', 'pg'])) {
+            $similarProperties->where('type', $type);
+        } else if ($type === 'commercial') {
+            $similarProperties->where('mode', 'commercial');
+        }
+        $similarProperties = $similarProperties->whereNotNull('project_id')->whereNotNull('price')->whereNotNull('city')->whereNotNull('locality')->whereNotNull('number_bedroom')->whereNotNull('sub_locality')->whereNotNull('landmark')->distinct()
+            ->get();
+
+        return $similarProperties;
+    }
+
+    public function similarPropertiesPg($mergeProperties, $type)
+    {
+        $similarProperties = Property::query()
+                                        ->where('moderation_status', 'approved')
+                                        ->where(function ($query) use ($mergeProperties) {
+                                            $query->whereIn('locality', $mergeProperties->pluck('locality')->filter()->unique())
+                                                ->orWhereIn('city', $mergeProperties->pluck('city')->filter()->unique())
+                                                ->orWhereIn('price', $mergeProperties->pluck('price')->filter()->unique())
+                                                ->orWhereIn('project_id', $mergeProperties->pluck('project_id')->filter()->unique())
+                                                ->orWhereIn('number_bedroom', $mergeProperties->pluck('number_bedroom')->filter()->unique())
+                                                ->orWhereIn('sub_locality', $mergeProperties->pluck('sub_locality')->filter()->unique())
+                                                ->orWhereIn('landmark', $mergeProperties->pluck('landmark')->filter()->unique());
+                                        })->where('type', $type);
+        $similarProperties = $similarProperties->whereNotNull('price')->whereNotNull('city')->whereNotNull('locality')->whereNotNull('sub_locality')->whereNotNull('landmark')->distinct()
+                                                ->get();
+
+        return $similarProperties;
     }
 
 
