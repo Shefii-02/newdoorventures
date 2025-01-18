@@ -105,7 +105,7 @@
                 <div id="items-list">
                     @include(
                         'front.shortcuts.properties.items',
-                        compact('properties', 'projectProperties', 'readyToMoveProjects'))
+                        compact('properties', 'similarProperties', 'readyToMoveProjects'))
                 </div>
             </div>
         </div>

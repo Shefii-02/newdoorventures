@@ -27,7 +27,7 @@
                     <div>
                         <div class="p-4 rounded-lg">
                             <label>Budget</label>
-                            @include('front.shortcuts.filters.price-range-new', [
+                            @include('front.shortcuts.filters.price-range', [
                                 'type' => $type,
                                 'min' => '100000',
                                 'max' => '1000000000',
