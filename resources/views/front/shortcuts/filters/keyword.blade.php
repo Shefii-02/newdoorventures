@@ -92,7 +92,7 @@
 
 @push('footer')
     <script>
-        const selectedItems = {};
+        var selectedItems = {};
 
         function fetchSuggestions(type) {
             const searchQuery = document.getElementById(`search-box-${type}`).value.trim();

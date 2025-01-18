@@ -72,7 +72,7 @@
 
                     <div>
                         <div x-show="activeTab2 === 'budget_pg'" class="p-4 rounded-lg" x-cloak>
-                            @include('front.shortcuts.filters.price-range-new', ['type' => $type,'min' => '1000','max'=> '100000','step'=>'500'])
+                            @include('front.shortcuts.filters.price-range', ['type' => $type,'min' => '1000','max'=> '100000','step'=>'500'])
                         </div>
                         {{-- <div x-show="activeTab2 === 'bedroom_pg'" class="p-4 rounded-lg" x-cloak>
                             @include("front.shortcuts.filters.bedroom-section", ['type' => $type])
