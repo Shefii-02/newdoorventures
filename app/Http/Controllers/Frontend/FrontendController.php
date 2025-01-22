@@ -1582,21 +1582,37 @@ class FrontendController extends Controller
             'property_id' => 'nullable|integer',
         ]);
 
-    //     $existingConsult = Consult::where('ip_address', $request->ip())
-    //     ->where(function ($query) use ($request) {
-    //         $query->where('property_id', $request->data_id)
-    //               ->orWhere('project_id', $request->data_id);
-    //     })->first();
-    
-    // if ($existingConsult) {
-    //     return response()->json([
-    //         'error' => true,
-    //         'message' => 'You have already submitted a request for this property or project. We will get in touch with you shortly.',
-    //     ]);
-    // }
-    
-    // Proceed with the request submission logic
-    
+        // Check for duplicate submission
+        $existingConsult = Consult::where('ip_address', $request->ip());
+
+        if($request->type == 'project'){
+            $existingConsult = $existingConsult->where('project_id', $request->data_id);
+        }
+        else if($request->type == 'property'){
+            $existingConsult = $existingConsult->where('property_id', $request->data_id);
+        }
+        else{
+            return response()->json([
+                'error' => true,
+                'message' => 'Invalid Request.',
+            ]);
+        }
+
+        $existingConsult = $existingConsult->first();
+
+        //     ->where(function ($query) use ($request) {
+        //         $query->where('property_id', $request->property_id)
+        //             ->orWhere('project_id', $request->project_id);
+        //     })->first();
+
+
+        if ($existingConsult) {
+            return response()->json([
+                'error' => true,
+                'message' => 'You have already submitted a request, we will get in touch with you shortly.',
+            ]);
+        }
+
         // Save the consult record
 
         try {

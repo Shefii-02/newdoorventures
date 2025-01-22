@@ -1236,14 +1236,12 @@
                         </button>
                     </div>
 
-
                     <div class="modal-body">
-
                         <form class="generic-form" action="{{ route('public.send.consult') }}" method="POST">
                             @csrf
-                            <input type="hidden" value="{{ isset($type) ? $type : '' }}" name="type"
+                            <input type="hidden" value="{{ isset($type) ? $type : '' }}" name="type" class="type"
                                 id="type">
-                            <input type="hidden" value="" name="data_id" id="data_id">
+                            <input type="hidden" value="" name="data_id" id="data_id" class="data_id">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" name="name" required
                                     id="floatingInputName" placeholder="">
@@ -1818,8 +1816,9 @@
                 const type = $(this).data('type'); // Get the property name from data-name
 
                 // Set the property ID in the hidden input field
-                $('#data_id').val(id);
-                $('#type').val(type);
+                $('.data_id').val(id);
+                $('.type').val(type);
+
 
                 // Update the modal title dynamically
                 // $('#enquiryModalLabel').text(`Enquiry for ${propertyName}`);
