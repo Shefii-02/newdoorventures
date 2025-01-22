@@ -63,7 +63,6 @@ class LoginController extends Controller
 
     public function showRestForm(Request $request)
     {
-
         return view('auth.passwords.forgot-password');
     }
 
@@ -90,7 +89,6 @@ class LoginController extends Controller
             return back()->withErrors(['email' => 'Failed to send reset link. Please try again later.']);
         }
     }
-
 
     public function ResetPassword(Request $request){
         $request->validate([

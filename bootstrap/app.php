@@ -42,7 +42,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->report(function (Throwable $exception) {
-            // if (!env('APP_DEBUG')) {
+            if (!env('APP_DEBUG')) {
             $content['message'] = $exception->getMessage();
             $content['file'] = $exception->getFile();
             $content['line'] = $exception->getLine();
@@ -52,6 +52,6 @@ return Application::configure(basePath: dirname(__DIR__))
             $content['body'] = request()->all();
             $content['ip'] = request()->ip();
             \App\Emails::sendError($content);
-            // }
+            }
         });
     })->create();

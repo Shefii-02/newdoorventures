@@ -587,7 +587,7 @@ class FrontendController extends Controller
 
 
 
-//  similarProjects
+        //  similarProjects
 
         $projects = $projects->merge($keywordProjects);
 
@@ -1070,8 +1070,7 @@ class FrontendController extends Controller
             $similarProperties->where('type', $type);
         } else if ($type === 'commercial') {
             $similarProperties->where('mode', 'commercial');
-        }
-        else if ($type === 'plot') {
+        } else if ($type === 'plot') {
             $similarProperties->whereHas('categories', function ($query) {
                 $query->where('name', 'Plot and Land');
             });
@@ -1120,8 +1119,7 @@ class FrontendController extends Controller
             $similarProperties->where('type', $type);
         } else if ($type === 'commercial') {
             $similarProperties->where('mode', 'commercial');
-        }
-        else if ($type === 'plot') {
+        } else if ($type === 'plot') {
             $similarProperties->whereHas('categories', function ($query) {
                 $query->where('name', 'Plot and Land');
             });
@@ -1190,26 +1188,26 @@ class FrontendController extends Controller
 
             // Merge City, Project, and Locality Properties
             $mergedProjects = $cityProperties->merge($localityProperties)
-                                                ->unique('id') // Remove duplicates based on ID
-                                                ->values(); // Reindex the collection
+                ->unique('id') // Remove duplicates based on ID
+                ->values(); // Reindex the collection
 
-          
+
             $mergeProperties = $cityProperties->merge($proejctsProperties)->merge($localityProperties);
             $mergedProjects = $mergeProperties->unique('id')->values();
             $similarProperties = collect();
 
             $similarProjects = $this->similarProperties($mergeProperties, $type);
-            
+
 
             if ($similarProjects->count() == 0) {
                 $similarProjects = $this->similarItems($type, false);
             }
 
-           
 
-         
 
-            return ['projects' => $mergedProjects,'similarProjects' => $similarProjects];
+
+
+            return ['projects' => $mergedProjects, 'similarProjects' => $similarProjects];
         }
     }
 
@@ -1532,14 +1530,13 @@ class FrontendController extends Controller
             $similarProjects->where('type', $type);
         } else if ($type === 'commercial') {
             $similarProjects->where('mode', 'commercial');
-        }
-        else if ($type === 'plot') {
+        } else if ($type === 'plot') {
             $similarProjects->whereHas('categories', function ($query) {
                 $query->where('name', 'Plot and Land');
             });
         }
         $similarProjects = $similarProjects->whereNotNull('project_id')->whereNotNull('price')->whereNotNull('city')->whereNotNull('locality')->whereNotNull('number_bedroom')->whereNotNull('sub_locality')->whereNotNull('landmark')->distinct()
-                                            ->get();
+            ->get();
 
         return $similarProjects;
     }
@@ -1562,8 +1559,7 @@ class FrontendController extends Controller
             $similarProperties->where('type', $type);
         } else if ($type === 'commercial') {
             $similarProperties->where('mode', 'commercial');
-        }
-        else if ($type === 'plot') {
+        } else if ($type === 'plot') {
             $similarProperties->whereHas('categories', function ($query) {
                 $query->where('name', 'Plot and Land');
             });
@@ -1586,46 +1582,54 @@ class FrontendController extends Controller
             'property_id' => 'nullable|integer',
         ]);
 
-        // Check for duplicate submission
-        // $existingConsult = Consult::where('ip_address', $request->ip())
-        //     ->where(function ($query) use ($request) {
-        //         $query->where('property_id', $request->property_id)
-        //             ->orWhere('project_id', $request->project_id);
-        //     })->first();
-
-        // if ($existingConsult) {
-        //     return response()->json([
-        //         'error' => true,
-        //         'message' => 'You have already submitted a consultation request for this property/project.',
-        //     ]);
-        // }
-
+    //     $existingConsult = Consult::where('ip_address', $request->ip())
+    //     ->where(function ($query) use ($request) {
+    //         $query->where('property_id', $request->data_id)
+    //               ->orWhere('project_id', $request->data_id);
+    //     })->first();
+    
+    // if ($existingConsult) {
+    //     return response()->json([
+    //         'error' => true,
+    //         'message' => 'You have already submitted a request for this property or project. We will get in touch with you shortly.',
+    //     ]);
+    // }
+    
+    // Proceed with the request submission logic
+    
         // Save the consult record
 
         try {
-            $lead              = new Consult();
-            $lead->name        = $request->name;
-            $lead->email       = $request->email;
-            $lead->phone       = $request->phone;
-            if ($request->type == 'project') {
-                $lead->project_id  = $request->data_id;
+            if ($request->has('data_id') && $request->data_id != '') {
+                $lead              = new Consult();
+                $lead->name        = $request->name;
+                $lead->email       = $request->email;
+                $lead->phone       = $request->phone;
+                if ($request->type == 'project') {
+                    $lead->project_id  = $request->data_id;
+                } else {
+                    $lead->property_id  =   $request->data_id;
+                }
+
+                $lead->ip_address = $request->ip();
+                $lead->status = 'unread';
+                $lead->save();
+
+                $this->adminContactReceived($request);
+
+                return response()->json([
+                    'error' => false,
+                    'message' => 'Thank you, we have received your request, we will get in touch with you shortly.',
+                    'data' => [
+                        'next_page' => null, // Or set a URL for redirection if needed
+                    ],
+                ]);
             } else {
-                $lead->property_id  =   $request->data_id;
+                return response()->json([
+                    'error' => true,
+                    'message' => 'An error occurred while submitting your request. Please try again later.',
+                ]);
             }
-
-            $lead->ip_address = $request->ip();
-            $lead->status = 'unread';
-            $lead->save();
-
-            $this->adminContactReceived($request);
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Thank you, we have received your request, we will get in touch with you shortly.',
-                'data' => [
-                    'next_page' => null, // Or set a URL for redirection if needed
-                ],
-            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => true,
