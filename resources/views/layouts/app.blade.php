@@ -1200,7 +1200,7 @@
 </head>
 
 <body class="dark:bg-slate-900">
-    <div class="js-container ">
+    <div id="app">
         <div class="loading-state">
             <div class="loading"></div>
         </div>
@@ -1667,47 +1667,7 @@
         }
     </script>
 
-    {{-- <script>
-        function scrollSpy() {
-            return {
-                activeSection: null,
-                offset: 190,
-                activeTab: null,
-                init() {
-                    this.activeTab = 'Overview';
-                    this.detectSectionInView();
-                    window.addEventListener('scroll', this.detectSectionInView.bind(this));
-                },
-                detectSectionInView() {
-                    const sections = document.querySelectorAll('.section');
-                    const viewportHeight = window.innerHeight;
 
-                    sections.forEach(section => {
-                        const rect = section.getBoundingClientRect();
-                        const sectionMidpoint = rect.top + (rect.height / 2);
-
-                        // Activate the section when its midpoint is near the middle of the viewport
-                        if (sectionMidpoint >= viewportHeight * 0.4 && sectionMidpoint <= viewportHeight * 0.6) {
-                            // this.activeSection = section.id;
-                        }
-                    });
-                },
-                scrollToSection(sectionId) {
-                    const section = document.getElementById(sectionId);
-                    const yOffset = -this.offset; // Negative offset to scroll slightly above the section
-
-                    const yPosition = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-                    window.scrollTo({
-                        top: yPosition,
-                        behavior: 'smooth'
-                    });
-                    this.activeTab = sectionId;
-                    this.activeSection = sectionId;
-                }
-            };
-        }
-    </script>  --}}
     <script>
         function scrollSpy() {
             return {
@@ -1828,130 +1788,6 @@
             });
         });
     </script>
-
-
-    <style>
-        @keyframes confetti-slow {
-            0% {
-                transform: translate3d(0, 0, 0) rotateX(0) rotateY(0);
-            }
-
-            100% {
-                transform: translate3d(25px, 105vh, 0) rotateX(360deg) rotateY(180deg);
-            }
-        }
-
-        @keyframes confetti-medium {
-            0% {
-                transform: translate3d(0, 0, 0) rotateX(0) rotateY(0);
-            }
-
-            100% {
-                transform: translate3d(100px, 105vh, 0) rotateX(100deg) rotateY(360deg);
-            }
-        }
-
-        @keyframes confetti-fast {
-            0% {
-                transform: translate3d(0, 0, 0) rotateX(0) rotateY(0);
-            }
-
-            100% {
-                transform: translate3d(-50px, 105vh, 0) rotateX(10deg) rotateY(250deg);
-            }
-        }
-
-
-        .confetti-container {
-            perspective: 700px;
-            position: fixed;
-            /* Ensures it stays in the background */
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 0;
-            /* Pushes it behind other elements */
-            pointer-events: none;
-            /* Allows clicks to pass through */
-        }
-
-
-        .confetti {
-            position: absolute;
-            z-index: 1;
-            top: -10px;
-            border-radius: 0%;
-        }
-
-        .confetti--animation-slow {
-            animation: confetti-slow 2.25s linear 1 forwards;
-        }
-
-        .confetti--animation-medium {
-            animation: confetti-medium 1.75s linear 1 forwards;
-        }
-
-        .confetti--animation-fast {
-            animation: confetti-fast 1.25s linear 1 forwards;
-        }
-    </style>
-
-    <script>
-        const Confettiful = function(el) {
-            this.el = el;
-            this.containerEl = null;
-
-            this.confettiFrequency = 9;
-            this.confettiColors = ['#fce18a', '#ff726d', '#b48def', '#f4306d'];
-            this.confettiAnimations = ['slow', 'medium', 'fast'];
-
-            this._setupElements();
-            this._renderConfetti();
-        };
-
-        Confettiful.prototype._setupElements = function() {
-            const containerEl = document.createElement('div');
-            const elPosition = this.el.style.position;
-
-            if (elPosition !== 'relative' || elPosition !== 'absolute') {
-                this.el.style.position = 'relative';
-            }
-
-            containerEl.classList.add('confetti-container');
-
-            this.el.appendChild(containerEl);
-
-            this.containerEl = containerEl;
-        };
-
-        Confettiful.prototype._renderConfetti = function() {
-            this.confettiInterval = setInterval(() => {
-                const confettiEl = document.createElement('div');
-                const confettiSize = Math.floor(Math.random() * 3) + 7 + 'px';
-                const confettiBackground = this.confettiColors[Math.floor(Math.random() * this.confettiColors
-                    .length)];
-                const confettiLeft = Math.floor(Math.random() * this.el.offsetWidth) + 'px';
-                const confettiAnimation = this.confettiAnimations[Math.floor(Math.random() * this
-                    .confettiAnimations.length)];
-
-                confettiEl.classList.add('confetti', 'confetti--animation-' + confettiAnimation);
-                confettiEl.style.left = confettiLeft;
-                confettiEl.style.width = confettiSize;
-                confettiEl.style.height = confettiSize;
-                confettiEl.style.backgroundColor = confettiBackground;
-
-                confettiEl.removeTimeout = setTimeout(function() {
-                    confettiEl.parentNode.removeChild(confettiEl);
-                }, 3000);
-
-                this.containerEl.appendChild(confettiEl);
-            }, 25);
-        };
-
-        window.confettiful = new Confettiful(document.querySelector('.js-container'));
-    </script>
-
 
 
 
