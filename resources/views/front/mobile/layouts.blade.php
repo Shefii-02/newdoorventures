@@ -2152,7 +2152,7 @@
     </script>
 
 
-<style>
+{{-- <style>
     @keyframes confetti-slow {
         0% {
             transform: translate3d(0, 0, 0) rotateX(0) rotateY(0);
@@ -2272,7 +2272,7 @@
     };
 
     window.confettiful = new Confettiful(document.querySelector('.js-container'));
-</script>
+</script> --}}
 
     <script>
         (function($) {
