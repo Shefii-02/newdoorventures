@@ -89,7 +89,11 @@ class FrontendController extends Controller
             $query->whereHas('categories', function ($query) use ($plot) {
                 $query->where('name', $plot);
             });
-        } else if ($request->filled('type') && $request->type != '' && $request->type != 'null') {
+        } 
+        else if ($request->filled('type') && $request->type == 'all-residential') {
+
+        }
+        else if ($request->filled('type') && $request->type != '' && $request->type != 'null') {
             $query->where('type',  $request->type);
         } else {
         }
