@@ -114,9 +114,9 @@ class ProjectController extends Controller
                 $master_images = null;
             }
 
-            $images           =  isset($imagePath['filePaths']) ? $imagePath['filePaths'] : '';
-            $cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : '';
-            $master_images    =  isset($master_images['filePaths']) ? $imagePath['filePaths'] : '';
+            $images           =  isset($imagePath['filePaths']) ? $imagePath['filePaths'] : null;
+            $cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : null;
+            $master_images    =  isset($master_images['filePaths']) ? $imagePath['filePaths'] : null;
 
             $request->merge(['images' => $images, 'master_plan_images' => $master_images, 'cover_image' => $cover_image]);
             $request->merge(['videos' => array_filter($videos)]);
@@ -290,7 +290,7 @@ class ProjectController extends Controller
             // }
 
             // $images           =  isset($imagePath['filePaths']) ? $imagePath['filePaths'] : '';
-            $cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : '';
+            $cover_image      =  isset($imagePath['coverImagePath']) ? $imagePath['coverImagePath'] : null;
 
 
             $request->merge(['images' => $NewimagePath, 'master_plan_images' => $NewimagePath2, 'cover_image' => $cover_image]);
@@ -466,7 +466,7 @@ class ProjectController extends Controller
     protected function storeFiles($files, $coverImage = null)
     {
         $filePaths = [];
-        $coverImagePath = "";
+        $coverImagePath = null;
 
         foreach ($files ?? [] as $index => $file) {
             $folderPath = 'projects';
@@ -588,7 +588,7 @@ class ProjectController extends Controller
                 $confItm                  = new ConfigrationDetail();
                 $confItm->reference_id    = $project->id;
                 $confItm->configration_id = $confValue['id'];
-                $confItm->distance        = $confValue['value'] ?? '';
+                $confItm->distance        = $confValue['value'] ?? null;
                 $confItm->reference_type  = 'App\Models\Project';
                 $confItm->save();
             }
