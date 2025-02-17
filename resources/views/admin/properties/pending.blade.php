@@ -78,7 +78,7 @@
                         @include('admin.properties.filter')
                      </div>
 
-                </div>
+                </div> 
                 <div class="container px-2  overflow-x-auto shadow-md sm:rounded-lg mt-3">
                     <div class="relative">
                         @if (permission_check('Property Delete'))
