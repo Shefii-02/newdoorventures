@@ -18,7 +18,7 @@ class LoginController extends Controller
     use AuthenticatesUsers, LogoutGuardTrait;
 
     use \App\Emails;
-    
+
     public string $redirectTo = '/account/dashboard';
 
     protected function guard()
@@ -51,11 +51,20 @@ class LoginController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'status' => 'pending',
+            'status' => 'approved',
+            'is_staff' => 0,
+            'auto_approvel' => 0,
             'password' => Hash::make($request->password),
         ]);
 
-        $this->accountCreated($account);
+        if ($account->status == 'pending') {
+            $this->accountCreated($account);
+        } else if ($account->status == 'approved') {
+            $this->accountCreated($account);
+            $this->accountApproved($account);
+        }
+
+
         auth('account')->login($account);
 
         return redirect($this->redirectTo);
@@ -90,29 +99,30 @@ class LoginController extends Controller
         }
     }
 
-    public function ResetPassword(Request $request){
+    public function ResetPassword(Request $request)
+    {
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:8|confirmed',
         ]);
-     
+
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function (Account $user, string $password) {
                 $user->forceFill([
                     'password' => Hash::make($password)
                 ])->setRememberToken(Str::random(60));
-     
+
                 $user->save();
-     
+
                 event(new PasswordReset($user));
             }
         );
-     
+
         return $status === Password::PASSWORD_RESET
-                    ? redirect()->route('user.login')->with('status', __($status))
-                    : back()->withErrors(['email' => [__($status)]]);
+            ? redirect()->route('user.login')->with('status', __($status))
+            : back()->withErrors(['email' => [__($status)]]);
     }
 
     public function logout(Request $request)
