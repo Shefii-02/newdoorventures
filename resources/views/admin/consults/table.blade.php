@@ -50,7 +50,7 @@
                                         </svg>
                                     </button>
                                 @endif
-                                <form action="{{ route('admin.consults.destroy', $consult->id) }}" method="POST">
+                                <form action="{{ route('admin.consults.destroy', $consult->id) }}" method="POST" class="ms-4">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"  class="open-consult-modal block hover:text-meta-1">
