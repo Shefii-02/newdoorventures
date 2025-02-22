@@ -1,7 +1,7 @@
 <div>
     @if ($lead->property || $lead->project)
         You have received a response for your inquiry for
-        @if ($request->type == 'project')
+        @if ($lead->project)
             <a
                 href="{{ route('public.project_single', ['uid' => $lead->project->unique_id, 'slug' => $lead->project->slug]) }}">{{ $lead->project->name }}</a>
         @else
