@@ -1587,7 +1587,7 @@ class FrontendController extends Controller
         ]);
 
         // Check for duplicate submission
-        $existingConsult = Consult::where('ip_address', $request->ip());
+        $existingConsult = Consult::where('ip_address', $request->ip())->where('email',$request->email)->where('phone',$request->phone);
 
         if($request->type == 'project'){
             $existingConsult = $existingConsult->where('project_id', $request->data_id);
