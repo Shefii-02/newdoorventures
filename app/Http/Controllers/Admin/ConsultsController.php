@@ -47,7 +47,7 @@ class ConsultsController extends Controller
     public function show(string $id)
     {
         //
-        $consult = Consult::findOrFail($id);
+        $consult = Consult::findOrFail($id) ?? abort(404);
         return view('admin.consults.modal-content', compact('consult'));
     }
 
@@ -69,6 +69,9 @@ class ConsultsController extends Controller
     public function destroy(string $id)
     {
         //
+        $consult = Consult::findOrFail($id) ?? abort(404);
+        $consult->delete();
+        return redirect()->route('admin.consults.index')->with('success', 'Lead deleted successfully!');
     }
 
     public function update(Request $request, $id)
@@ -78,7 +81,7 @@ class ConsultsController extends Controller
             return abort(404);
         }
 
-        $consult = Consult::findOrFail($id);
+        $consult = Consult::findOrFail($id) ?? abort(404);
         $consult->update($request->only('status'));
       
         if($request->status == 'attended'){
