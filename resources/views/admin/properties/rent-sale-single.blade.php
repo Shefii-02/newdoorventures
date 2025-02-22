@@ -199,11 +199,14 @@
                             {"breakpoint": 480, "settings": {"slidesToShow": 1}}
                         ]
                     }'>
-                            @foreach ($property->images ?? [] as $image)
-                                <div>
-                                    <img src="{{ asset('images/' . $image) }}" class="w-100 rounded-3 object-cover" />
-                                </div>
-                            @endforeach
+                            @if (is_array($property->images))
+                                @foreach ($property->images ?? [] as $image)
+                                    <div>
+                                        <img src="{{ asset('images/' . $image) }}"
+                                            class="w-100 rounded-3 object-cover" />
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                         <section class="mt-3">
                             <div class="col-lg-12 text-start">
