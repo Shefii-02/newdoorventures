@@ -67,6 +67,10 @@
                 <td class="px-2 py-1 text-center">
                     <span class="text-sm text-danger text-capitalize fw-bold">{{ $property->moderation_status }}</span>
                 </td>
+                @else
+                <td class="px-2 py-1 text-center">
+                    <span class="text-sm text-danger text-capitalize fw-bold">---</span>
+                </td>
                 @endif
                
                 <td class="px-2 py-1 text-center">
