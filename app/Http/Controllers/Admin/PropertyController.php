@@ -65,8 +65,8 @@ class PropertyController extends Controller
             $pagination = view('admin.properties.pagination', compact('properties'))->render();
             return response()->json(['rows' => $rows, 'pagination' => $pagination]);
         }
-
-        $staffs = Account::where('is_staff', '1')->get();
+// where('is_staff', '1')->
+        $staffs = Account::get();
 
         return view('admin.properties.pending', compact('properties', 'staffs'));
     }
@@ -115,8 +115,8 @@ class PropertyController extends Controller
             $pagination = view('admin.properties.pagination', compact('properties'))->render();
             return response()->json(['rows' => $rows, 'pagination' => $pagination]);
         }
-
-        $staffs = Account::where('is_staff', '1')->get();
+// where('is_staff', '1')->
+        $staffs = Account::get();
         return view('admin.properties.approved', compact('properties', 'staffs'));
     }
 
@@ -166,8 +166,8 @@ class PropertyController extends Controller
             $pagination = view('admin.properties.pagination', compact('properties'))->render();
             return response()->json(['rows' => $rows, 'pagination' => $pagination]);
         }
-
-        $staffs = Account::where('is_staff', '1')->get();
+// where('is_staff', '1')->
+        $staffs = Account::get();
         return view('admin.properties.suspended', compact('properties', 'staffs'));
     }
 

@@ -1,5 +1,34 @@
 @extends('admin.layouts.master')
+@push('header')
+<style>
+     input.form-control,
+        select.form-control,
+        .select2.select2-container {
+            width: 100% !important;
+        }
 
+        .select2-container .select2-selection--single {
+            height: 40px !important;
+            /* border: var(--bb-border-width) var(--bb-border-style) var(--bb-border-color) !important; */
+        }
+
+        .select2-container--default .select2-selection--single {
+            border-radius: 6px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 35px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__clear {
+            height: 35px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 36px !important;
+        }
+</style>
+@endpush
 @section('content')
     <div class="py-4">
         <div
@@ -73,23 +102,25 @@
                         </li>
                     </ul>
                     <div class="py-3">
-                       @include('admin.properties.filter')
+                        @include('admin.properties.filter')
                     </div>
                 </div>
             </div>
             <div class="container px-2 card overflow-x-auto shadow-md sm:rounded-lg mt-3">
                 <div class="relative">
                     @if (permission_check('Property Delete'))
-                    <div class="p-2">
-                        <form method="POST" id="muli_form_"
-                            action="{{ route('admin.properties.multidestroy') }}">@csrf @method('DELETE')</form>
-                        <button form="muli_form_" onclick="confirmDeleteAll(event,'muli_form_')"  type="submit" role="button"  class="btn text-dark btn-sm btn-danger hover:text-light">Delete Selected items</button>
-                    </div>
+                        <div class="p-2">
+                            <form method="POST" id="muli_form_" action="{{ route('admin.properties.multidestroy') }}">@csrf
+                                @method('DELETE')</form>
+                            <button form="muli_form_" onclick="confirmDeleteAll(event,'muli_form_')" type="submit"
+                                role="button" class="btn text-dark btn-sm btn-danger hover:text-light">Delete Selected
+                                items</button>
+                        </div>
                     @endif
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th  class="p-4 text-dark fw-bold">
+                                <th class="p-4 text-dark fw-bold">
 
                                 </th>
                                 <th colspan="3" class="p-4 text-dark fw-bold">
@@ -141,8 +172,7 @@
 
 @push('footer')
     <!-- Modal -->
-    <div id="property-modal"
-        class="hidden fixed inset-0 z-999999 bg-black bg-opacity-50 flex justify-center items-center">
+    <div id="property-modal" class="hidden fixed inset-0 z-999999 bg-black bg-opacity-50 flex justify-center items-center">
         <div class="bg-white p-6 rounded shadow-lg w-11/12">
             <div id="property-modal-content"></div>
         </div>
@@ -224,5 +254,18 @@
         //             .catch(error => console.error('Error:', error));
         //     }
         // });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $('#user').select2({
+                placeholder: "Select a user",
+                allowClear: true,
+                width: 'resolve'
+            });
+        });
     </script>
 @endpush

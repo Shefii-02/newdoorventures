@@ -22,7 +22,7 @@
     <div class="col-lg-3">
         <div class="relative mt-1 px-3">
             <label for="table-search" class=" small mb-1">Staffs</label>
-            <select class="form-control" name="staff">
+            <select class="form-control" id="user" name="staff">
                 <option value=""></option>
                 @foreach ($staffs ?? [] as $staff)
                     <option {{ request()->get('staff') == $staff->id ? 'selected' :  '' }} value="{{ $staff->id }}">{{ $staff->name }}</option>
@@ -41,3 +41,4 @@
         <input type="submit" class="btn btn-info" value="Search">
     </div>
 </form>
+

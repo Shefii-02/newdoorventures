@@ -1269,13 +1269,13 @@
                                 class="type" id="type">
                             <input type="hidden" value="" name="data_id" id="data_id" class="data_id">
                             <div class="form-floating mb-3">
-                                <input autocomplete="off" type="text" class="form-control" name="name" required
-                                    id="floatingInputName" placeholder="">
+                                <input autocomplete="off" type="text" class="form-control" name="name"
+                                    required id="floatingInputName" placeholder="">
                                 <label for="floatingInputName">Full Name</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input  autocomplete="off" type="text" class="form-control" name="email" required
-                                    id="floatingInputName" placeholder="">
+                                <input autocomplete="off" type="text" class="form-control" name="email"
+                                    required id="floatingInputName" placeholder="">
                                 <label for="floatingInputName">Email Id</label>
                             </div>
                             <div class="form-floating mb-3">
@@ -1901,6 +1901,8 @@
     </script>
 
 
+
+    
 </body>
 
 </html>
