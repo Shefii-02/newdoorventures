@@ -31,132 +31,128 @@
                                 d="M14.1896 0.459804C14.3922 0.307837 14.6708 0.333165 14.8227 0.510459L16.5704 2.58734C17.0009 3.09389 17.0009 3.85373 16.545 4.41094L14.7974 6.48782C14.7214 6.58913 14.5948 6.63978 14.4682 6.63978C14.3668 6.63978 14.2655 6.61445 14.1896 6.53847C14.0123 6.36118 13.9869 6.08257 14.1389 5.90528L15.7852 3.95504H1.75361C1.50033 3.95504 1.29771 3.75241 1.29771 3.49914C1.29771 3.24586 1.50033 3.04324 1.75361 3.04324H15.7852L14.1389 1.093C13.9869 0.890376 14.0123 0.61177 14.1896 0.459804ZM15.0097 2.68302H1.75362C1.3014 2.68302 0.9375 3.04692 0.9375 3.49914C0.9375 3.95136 1.3014 4.31525 1.75362 4.31525H15.0097L13.8654 5.67085C13.8651 5.67123 13.8648 5.67161 13.8644 5.67199C13.5725 6.01385 13.646 6.50432 13.9348 6.79318C14.1022 6.96055 14.3113 7 14.4682 7C14.6795 7 14.9203 6.91713 15.0784 6.71335L16.8207 4.64286L16.8238 4.63904C17.382 3.95682 17.3958 3.00293 16.8455 2.35478C16.8453 2.35453 16.845 2.35429 16.8448 2.35404L15.0984 0.278534L15.0962 0.276033C14.8097 -0.0583053 14.3139 -0.0837548 13.9734 0.17163L13.964 0.17867L13.9551 0.186306C13.6208 0.472882 13.5953 0.968616 13.8507 1.30913L13.857 1.31743L15.0097 2.68302Z"
                                 fill=""></path>
                         </svg>
-                        Contact Form Enquiries
+                        Account Details
                     </li>
                 </ol>
             </nav>
         </div>
     </div>
     <div>
-        <!-- ===== contacts List Start ===== -->
+        <!-- ===== accounts List Start ===== -->
         <div class="col-span-12">
             <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div class="p-4 md:p-6 xl:p-7.5">
                     <div class="flex items-start justify-between">
                         <h2 class="text-title-sm2 font-bold text-black dark:text-white">
-                            Contact Form Enquiries List
+                            Account Details
                         </h2>
+                        <div class="relative">
+                            @if (permission_check('Property Add'))
+                                <a class="bg-primary bg-warning hover:bg-opacity-90 inline-flex items-center justify-center px-6 py-2 rounded-md text-center text-sm text-white"
+                                    href="{{ url()->previous() }}">
+                                    Back
+                                </a>
+                            @endif
+                        </div>
                     </div>
                 </div>
-
-                <div class="border-b border-stroke px-4 pb-2 dark:border-strokedark md:px-6 xl:px-7.5">
-                    <div class="flex justify-between items-center gap-x-6">
-                        <div class="w-2/12 text-left"><span class="font-medium">Name</span></div>
-                        <div class="w-2/12 text-left"><span class="font-medium">Email</span></div>
-                        <div class="w-2/12 text-center"><span class="font-medium">Question</span></div>
-                        <div class="w-2/12 text-center"><span class="font-medium">Status</span></div>
-                        <div class="w-2/12 text-center"><span class="font-medium">Created at</span></div>
-                        <div class="w-2/12 text-center"><span class="font-medium">Actions</span></div>
-                    </div>
-                </div>
-
-                <div class="p-4 md:p-6 xl:p-7.5">
-                    <div class="flex flex-col gap-y-4">
-                        @foreach ($enquirys as $enquiry)
-                            <div class="flex justify-between items-center gap-x-6">
-                                <div class="w-2/12 text-left">
-                                    <span class="font-medium">{{ $enquiry->name }}</span>
-                                </div>
-                                <div class="w-2/12 text-left">
-                                    <span class="font-medium">{{ $enquiry->email }}</span>
-                                </div>
-                                <div class="w-2/12 text-center">
-                                    <span class="font-medium"
-                                        title="{{ $enquiry->subject }}">{{ Str::limit($enquiry->subject, '20', '.....') }}</span>
-                                </div>
-                                <div class="w-2/12 text-center">
-                                    <span
-                                        class="inline-block text-capitalize rounded px-2.5 py-0.5 text-sm font-medium text-white {{ $enquiry->status === 'unread' ? 'bg-red' : 'bg-success' }}">
-                                        {{ $enquiry->status }}
-                                    </span>
-                                </div>
-                                <div class="w-2/12 text-center">
-                                    <span class="font-medium">{!! dateTimeFormat($enquiry->created_at) !!}</span>
-                                </div>
-                                <div class="w-2/12 text-center">
-                                    <div class="flex justify-center">
-                                        @if (permission_check('Enquiry Attend'))
-                                            <button data-id="{{ $enquiry->id }}"
-                                                class="open-contact-modal block hover:text-meta-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
-                                                    <path
-                                                        d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
-                                                </svg>
-                                            </button>
-                                        @endif
-                                        <form action="{{ route('admin.contact.destroy', $enquiry->id) }}" method="POST"
-                                            class="ms-4">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="open-consult-modal block hover:text-meta-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z">
-                                                    </path>
-                                                    <path
-                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                        </form>
+            </div>
+        </div>
+    </div>
+    <!-- ===== Consults List Start ===== -->
+    <div class="col-span-12">
+        <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div class="col-span-12 px-4 mt-3">
+                <div>
+                    <form action="{{ route('admin.accounts.update', $account->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class=" row">
+                            <div class="col-lg-6">
+                                <div class="mt-3">
+                                    <strong class="mb-3 fw-bold"><u>Contact Details:</u></strong><br>
+                                    <div class="mt-2">
+                                        <span>{{ $account->name }}</span><br>
+                                        <span>{{ $account->email }}</span><br>
+                                        <span>{{ $account->phone }}</span>
                                     </div>
-
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
+                            <div class="col-lg-6">
+                                <div class="mt-3">
+                                    <strong class="mb-3 fw-bold"><u>Other Details:</u></strong><br>
+                                    <div class="mt-2">
+                                        <span>Created at : </span><i
+                                            class="">{{ date('d M, Y h:i:s a', strtotime($account->created_at)) }}</i>
+                                        <br>
+                                        <span>Last Login at : </span><i
+                                            class="">{{ date('d M, Y h:i:s a', strtotime($account->last_login)) }}</i><br>
+                                        <span>Total Properties : </span><i
+                                            class="">{{ $account->properties->count() ?? '--' }}</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @if (permission_check('Set Staff'))
+                            <div class="mt-3">
+                                <strong class="mb-3 fw-bold"><u>Set as Staff:</u></strong><br>
+                                <div class="flex gap-4 mt-4">
+                                    <div class="form-check">
+                                        <input type="radio" id="isNotStaff" name="is_staff" value="0"
+                                            class="form-check-input" {{ $account->is_staff === 0 ? 'checked' : '' }}>
+                                        <label for="isNotStaff" class="form-check-label">Not a Staff</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input type="radio" id="isStaff" name="is_staff" value="1"
+                                            class="form-check-input" {{ $account->is_staff === 1 ? 'checked' : '' }}>
+                                        <label for="isStaff" class="form-check-label">It's Staff</label>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="mt-4">
+                            <strong class="mb-3">Status:</strong>
+                            <div class="flex gap-4 mt-4">
+                                <div class="form-check">
+                                    <input type="radio" disabled id="statusPending" name="pending" value="pending"
+                                        class="form-check-input" {{ $account->status === 'pending' ? 'checked' : '' }}>
+                                    <label for="statusPending" class="form-check-label">Pending</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input type="radio" {{ !permission_check('Account Approvel') ? 'disabled' : '' }}
+                                        id="statusSuspended" name="status" value="suspended" class="form-check-input"
+                                        {{ $account->status === 'suspended' ? 'checked' : '' }}>
+                                    <label for="statusSuspended" class="form-check-label">Suspended</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" {{ !permission_check('Account Approvel') ? 'disabled' : '' }}
+                                        id="statusApproved" name="status" value="approved" class="form-check-input"
+                                        {{ $account->status === 'approved' ? 'checked' : '' }}>
+                                    <label for="statusApproved" class="form-check-label">Approved</label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        @if (permission_check('Account Approvel'))
+                            <div class="mt-4 text-right">
+                                <button type="submit" class="bg-success text-white px-4 py-2 rounded">Save</button>
+                                <a role="button" class="bg-red text-white px-4 py-2 rounded"
+                                href="{{ url()->previous() }}">Back to Page</a>
+                            </div>
+                        @endif
+                    </form>
+                </div>
+                <div class="mt-4">
+                    <h2>Properties List</h2>
+                    @include('admin.accounts.properties')
                 </div>
             </div>
         </div>
-        <!-- Modal -->
-        <div id="contact-modal" class="hidden fixed inset-0 z-9999 bg-black bg-opacity-50 flex justify-center items-center">
-            <div class="bg-white p-6 rounded shadow-lg w-1/2">
-                <div id="contact-modal-content"></div>
-            </div>
-        </div>
-        <!-- ===== contacts List End ===== -->
     </div>
 @endsection
-
-@push('footer')
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById('contact-modal');
-            const modalContent = document.getElementById('contact-modal-content');
-
-            document.querySelectorAll('.open-contact-modal').forEach(button => {
-                button.addEventListener('click', async (e) => {
-                    const contactId = e.target.closest('button').getAttribute('data-id');
-
-                    // Fetch the contact details
-                    const response = await fetch(`/admin/contact/${contactId}`);
-                    const html = await response.text();
-
-                    modalContent.innerHTML = html;
-                    modal.classList.remove('hidden');
-                });
-            });
-
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.add('hidden');
-                    modalContent.innerHTML = '';
-                }
-            });
-        });
-    </script>
-@endpush

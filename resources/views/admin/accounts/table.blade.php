@@ -1,5 +1,4 @@
 <div class="col-lg-12 mt-3 px-2">
-    @if($accounts->count() > 0)
         <div class="border-b border-stroke px-4 pb-2 dark:border-strokedark md:px-6 xl:px-7.5">
             <div class="flex  items-center gap-x-6">
                 <div class="w-3/12 text-left"><span class="font-medium">Name</span></div>
@@ -12,7 +11,7 @@
 
         <div class="p-4 md:p-6 xl:p-7.5">
             <div class="flex flex-col gap-y-4">
-                @foreach ($accounts as $account)
+                @forelse ($accounts ?? [] as $account)
                     <div class="flex items-center gap-x-6">
                         <div class="w-3/12 text-left">
                             <span class="font-medium">{{ $account->name }}</span><br>
@@ -32,11 +31,11 @@
                                 {{ date('M d, Y', strtotime($account->created_at)) }}
                             </span>
                         </div>
-                    
+
                         <div class=" d-flex justify-content-end w-2/12">
                             <div class="flex gap-2 ">
                                 @if (permission_check('Account Approvel'))
-                                    <button data-id="{{ $account->id }}"
+                                    {{-- <button data-id="{{ $account->id }}"
                                         class="open-account-modal block hover:text-meta-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
@@ -45,7 +44,16 @@
                                             <path
                                                 d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
                                         </svg>
-                                    </button>
+                                    </button> --}}
+                                    <a href="{{ route('admin.accounts.show', $account->id) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                            <path
+                                                d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                                            <path
+                                                d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                                        </svg>
+                                    </a>
                                 @endif
                                 @if (permission_check('Account Delete'))
                                     <form method="POST" id="form_{{ $account->id }}"
@@ -69,8 +77,14 @@
 
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <tr>
+                        <td class="text-center" colspan="12">
+                            <p class="font-bold">No Data Found..</p>
+                        </td>
+                    </tr>
+                @endforelse
             </div>
         </div>
-    @endif
+
 </div>

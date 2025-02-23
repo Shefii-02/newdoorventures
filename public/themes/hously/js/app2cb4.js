@@ -944,7 +944,8 @@
                         processData: !1,
                         success: function(t) {
                             $(a).closest("form").find(".text-success").html("").hide(), $(a).closest("form").find(".text-danger").html("").hide(), t.error ? i(t.message) : ($(a).closest("form").find("input[type=text]:not([readonly])").val(""), $(a).closest("form").find("input[type=email]").val(""), $(a).closest("form").find("input[type=number]").val(""), $(a).closest("form").find("input[type=url]").val(""), $(a).closest("form").find("input[type=tel]").val(""), $(a).closest("form").find("select").val(""), $(a).closest("form").find("textarea").val(""), n(t.message), t.data && t.data.next_page && (window.location.href = t.data.next_page)), "undefined" != typeof refreshRecaptcha && refreshRecaptcha(), $(a).prop("disabled", !1).removeClass("button-loading")
-                            $('#BookingModal').modal('toggle');
+                            // $('#BookingModal').modal('toggle');
+                            $('#BookingModal').modal('hide');
                         },
                         error: function(e) {
                             "undefined" != typeof refreshRecaptcha && refreshRecaptcha(), $(a).prop("disabled", !1).removeClass("button-loading"), t(e, $(a).closest("form"))

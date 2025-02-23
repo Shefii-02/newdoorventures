@@ -58,7 +58,7 @@
                 </tr>
                 <tr>
                     <th>
-                        Deatils view
+                        Detailed view
                     </th>
                     <td>
                         @if ($consult->property)

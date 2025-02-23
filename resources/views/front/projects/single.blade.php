@@ -98,7 +98,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="px-3 mt-8">
-                                                    <a href="#" data-id="{{ $project->id }}" data-type="type"
+                                                    <a href="#" data-id="{{ $project->id }}" data-type="project"
                                                         class=" text-theme btn btn-sm bg-trasparent border-theme popup-contact-modal-form">
                                                         <i class="mdi mdi-download me-2"></i>
                                                         {{ __('Download Brochure') }}
@@ -253,7 +253,7 @@
 
                                                     </div>
                                                     <div class="px-3 mt-8">
-                                                        <a href="" data-id="{{ $project->id }}" data-type="type"
+                                                        <a href="" data-id="{{ $project->id }}" data-type="project"
                                                             class="text-sm popup-contact-modal-form text-white btn bg-primary">{{ __('Get Phone Number') }}</a>
                                                     </div>
                                                 </div>
@@ -765,7 +765,7 @@
                                     ])
                                 </div>
                                 <div class="mt-4">
-                                    <a href="" data-id="{{ $project->id }}" data-type="type"
+                                    <a href="" data-id="{{ $project->id }}" data-type="project"
                                         class="w-full py-4 text-white btn bg-primary fs-5  popup-contact-modal-form ">
                                         <i lass="mdi mdi-download me-2"></i> {{ __('Download Brochure') }}</a>
                                 </div>

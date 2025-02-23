@@ -985,7 +985,7 @@
             -webkit-transition: 0.4s ease all;
             -moz-transition: 0.4s ease all;
         }
-        
+
 
         .wa__btn_popup.wa__active .wa__btn_popup_txt {
             -ms-transform: translate(0, 15px);
@@ -1197,6 +1197,32 @@
 
         gtag('config', 'G-ZD5X2WP5QJ');
     </script>
+    <!-- Meta Pixel Code -->
+    <script>
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1346729286483943');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1346729286483943&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
 </head>
 
 <body class="dark:bg-slate-900">
@@ -1239,21 +1265,21 @@
                     <div class="modal-body">
                         <form class="generic-form" action="{{ route('public.send.consult') }}" method="POST">
                             @csrf
-                            <input type="hidden" value="{{ isset($type) ? $type : '' }}" name="type" class="type"
-                                id="type">
+                            <input type="hidden" value="{{ isset($type) ? $type : '' }}" name="type"
+                                class="type" id="type">
                             <input type="hidden" value="" name="data_id" id="data_id" class="data_id">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="name" required
+                                <input autocomplete="off" type="text" class="form-control" name="name" required
                                     id="floatingInputName" placeholder="">
                                 <label for="floatingInputName">Full Name</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="email" required
+                                <input  autocomplete="off" type="text" class="form-control" name="email" required
                                     id="floatingInputName" placeholder="">
                                 <label for="floatingInputName">Email Id</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text"
+                                <input autocomplete="off" type="text"
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                     class="form-control" name="phone" maxlength="12" required id="floatingInputNo"
                                     placeholder="+91 Phone">
@@ -1442,7 +1468,7 @@
 
     {{-- <script src="{{ asset('vendor/core/plugins/language/js/language-public.js?v=2.2.0') }}"></script> --}}
     <script src="{{ asset('themes/hously/js/cookie-consent/js/cookie-consent.js') }}"></script>
-    <script src="{{ asset('themes/hously/js/app2cb4.js?v=1.0') }}"></script>
+    <script src="{{ asset('themes/hously/js/app2cb4.js?v=1.1') }}"></script>
     <script src="{{ asset('themes/hously/js/script2cb4.js') }}"></script>
 
     <script>
@@ -1767,7 +1793,6 @@
             }
         } catch (err) {}
     </script>
-
     <script>
         $(document).ready(function() {
             $('body').on('click', '.popup-contact-modal-form', function(event) {

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 
 class AccountsController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      */
@@ -53,7 +54,7 @@ class AccountsController extends Controller
     {
         //
         $account = Account::findOrFail($id);
-        return view('admin.accounts.modal-content', compact('account'));
+        return view('admin.accounts.single', compact('account'));
     }
 
     /**
