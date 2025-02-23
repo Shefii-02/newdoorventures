@@ -19,8 +19,8 @@ Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.'
     Route::get('properties/suspended', [PropertyController::class, 'suspended'])->name('properties.suspended'); 
     Route::get('properties/sold-rented', [PropertyController::class, 'soldRented'])->name('properties.sold-rented');
     Route::delete('properties/multi-destroy', [PropertyController::class, 'multiDestroy'])->name('properties.multidestroy');
+    Route::post('properties/update-status/{id}', [PropertyController::class, 'updateStatus'])->name('properties.update-status');
     Route::resource('properties', PropertyController::class)->names('properties');
-
     
     Route::resource('projects', ProjectController::class)->names('projects');
     Route::resource('builders', BuilderController::class)->names('builders');

@@ -608,42 +608,42 @@ class PropertyController extends Controller
     //     return redirect()->route('admin.properties.index')->with('success', 'Status updated successfully!');
     // }
 
-    // public function update(Request $request, string $id)
-    // {
-    //     $property = Property::findOrFail($id);
+    public function updateStatus(Request $request, string $id)
+    {
+        $property = Property::findOrFail($id);
 
-    //     $previousStatus = $property->moderation_status;
-    //     $property->update($request->only('moderation_status'));
+        $previousStatus = $property->moderation_status;
+        $property->update($request->only('moderation_status'));
 
-    //     // Handle transitions based on the status
-    //     switch ($request->moderation_status) {
-    //         case 'approved':
-    //             if ($previousStatus == 'pending') {
-    //                 $this->adApproved($property); // Handle pending to approved
-    //             } elseif (in_array($previousStatus, ['rented', 'sold'])) {
-    //                 $this->adRePublished($property); // Handle re-approval of sold/rented properties
-    //             }
-    //             break;
+        // Handle transitions based on the status
+        switch ($request->moderation_status) {
+            case 'approved':
+                if ($previousStatus == 'pending') {
+                    $this->adApproved($property); // Handle pending to approved
+                } elseif (in_array($previousStatus, ['rented', 'sold'])) {
+                    $this->adRePublished($property); // Handle re-approval of sold/rented properties
+                }
+                break;
 
-    //         case 'suspended':
-    //             if (in_array($previousStatus, ['pending', 'approved'])) {
-    //                 $this->adSuspended($property); // Handle transition to suspended
-    //             }
-    //             break;
+            case 'suspended':
+                if (in_array($previousStatus, ['pending', 'approved'])) {
+                    $this->adSuspended($property); // Handle transition to suspended
+                }
+                break;
 
-    //         case 'rented':
-    //         case 'sold':
-    //             if ($previousStatus == 'approved') {
-    //                 $this->adCompleted($property); // Handle approved to rented/sold
-    //             }
-    //             break;
+            case 'rented':
+            case 'sold':
+                if ($previousStatus == 'approved') {
+                    $this->adCompleted($property); // Handle approved to rented/sold
+                }
+                break;
 
-    //         default:
-    //             break;
-    //     }
-    //     Session::flash('success_msg', 'Status updated successfully!');
-    //     return redirect()->back();
-    // }
+            default:
+                break;
+        }
+        Session::flash('success_msg', 'Status updated successfully!');
+        return redirect()->back();
+    }
 
 
     /**

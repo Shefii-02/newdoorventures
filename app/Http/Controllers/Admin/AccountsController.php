@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 
 class AccountsController extends Controller
 {
+    use \App\Emails;
     
     /**
      * Display a listing of the resource.
