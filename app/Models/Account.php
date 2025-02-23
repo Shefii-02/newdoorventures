@@ -186,10 +186,16 @@ class Account extends BaseModel implements
     //     );
     // }
 
-    public function properties(): MorphMany
+    // public function properties(): MorphMany
+    // {
+    //     return $this->morphMany(Property::class, 'author');
+    // }
+
+    public function properties()
     {
-        return $this->morphMany(Property::class, 'author');
+        return $this->hasMany(Property::class, 'author_id','id');
     }
+
 
     // public function canPost(): bool
     // {
