@@ -120,7 +120,7 @@
                         <div class="card-body">
                             <form action="{{ route('admin.properties.update-status', $property->id) }}" method="POST">
                                 @csrf
-                                @method('PUT')
+                                {{-- @method('PUT') --}}
                                 <div class="">
                                     <strong class="mb-3">Status:</strong>
                                     <div class="d-flex gap-4 mt-3 flex-wrap">
