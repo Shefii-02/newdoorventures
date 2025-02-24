@@ -6,7 +6,7 @@
                 href="{{ route('public.project_single', ['uid' => $lead->project->unique_id, 'slug' => $lead->project->slug]) }}">{{ $lead->project->name }}</a>
         @else
             <a
-                href="{{ route('public.property_single', ['uid' => $lead->property->unique_id, 'slug' => $lead->property->slug]) }}">{{ $$lead->property->name }}</a>
+                href="{{ route('public.property_single', ['uid' => $lead->property->unique_id, 'slug' => $lead->property->slug]) }}">{{ $lead->property->name }}</a>
         @endif
         from {{ $lead->name }}.
     @else
