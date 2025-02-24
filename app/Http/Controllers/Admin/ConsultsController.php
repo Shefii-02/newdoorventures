@@ -44,11 +44,16 @@ class ConsultsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request,string $id)
     {
         //
+        if ($request->ajax()) {
         $consult = Consult::findOrFail($id) ?? abort(404);
         return view('admin.consults.modal-content', compact('consult'));
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**
