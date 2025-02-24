@@ -20,9 +20,9 @@ class ConsultsController extends Controller
     public function index()
     {
         //
-        $consults_unreaded = Consult::where('status','unread')->orderBy('status', 'desc')->paginate(50);
-        $consults_attended = Consult::where('status','attended')->orderBy('status', 'desc')->paginate(50);
-        return view('admin.consults.index', compact('consults_unreaded','consults_attended'));
+        $consults_unreaded = Consult::where('status', 'unread')->orderBy('status', 'desc')->paginate(50);
+        $consults_attended = Consult::where('status', 'attended')->orderBy('status', 'desc')->paginate(50);
+        return view('admin.consults.index', compact('consults_unreaded', 'consults_attended'));
     }
 
     /**
@@ -44,16 +44,12 @@ class ConsultsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request,string $id)
+    public function show(Request $request, string $id)
     {
         //
-        if ($request->ajax()) {
+
         $consult = Consult::findOrFail($id) ?? abort(404);
         return view('admin.consults.modal-content', compact('consult'));
-        }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -82,14 +78,14 @@ class ConsultsController extends Controller
     public function update(Request $request, $id)
     {
 
-        if(!permission_check('Leads Attend')){
+        if (!permission_check('Leads Attend')) {
             return abort(404);
         }
 
         $consult = Consult::findOrFail($id) ?? abort(404);
         $consult->update($request->only('status'));
-      
-        if($request->status == 'attended'){
+
+        if ($request->status == 'attended') {
             $this->userLeadResponded($consult);
         }
 
