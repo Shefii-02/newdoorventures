@@ -1405,7 +1405,7 @@ class FrontendController extends Controller
 
         // Furnishing filter
         // if ($request->filled('furnishing') && $request->furnishing !== '' && $request->furnishing != 'null') {
-        //     $query->whereIn('furnishing', $request->furnishing);
+        //     $query->whereIn('furnishing_status', $request->furnishing);
         // }
 
         // Budget filter
