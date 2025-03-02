@@ -116,7 +116,7 @@
                                                 <div class="col-lg-3 mb-3">
                                                     <div class="flex flex-column">
                                                         <h4 class="fw-bold">Carpet Area {{ $property->carpet_area ?? 0 }}
-                                                            sqft</h4>
+                                                            sqft</h4>11
                                                         <span>{{ shorten_price(round($property->price / ($property->square > 0 ? $property->square : 1), 3)) }}/sqft</span>
                                                     </div>
                                                 </div>
