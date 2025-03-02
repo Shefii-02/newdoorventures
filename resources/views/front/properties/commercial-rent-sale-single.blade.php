@@ -8,8 +8,9 @@
             }
         }
     </style>
-        <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=6789fc7d6ba8ae00127779b8&product=inline-share-buttons&source=platform" async="async"></script>
-
+    <script type="text/javascript"
+        src="https://platform-api.sharethis.com/js/sharethis.js#property=6789fc7d6ba8ae00127779b8&product=inline-share-buttons&source=platform"
+        async="async"></script>
 @endpush
 @php
     $car_parkiing = $property->customFields->where('name', 'Car Parking ')->first() ?? 0;
@@ -130,7 +131,7 @@
                                                         <h4><span class="fw-bold">Carpet Area</span>
                                                             <small>{{ $property->carpet_area ?? 0 }} sqft</small>
                                                         </h4>
-                                                        <span>{{ shorten_price($property->price / ($property->square > 0 ? $property->square : 1)) }}/sqft</span>
+                                                        <span>{{ shorten_price(round($property->price / ($property->square > 0 ? $property->square : 1), 3)) }}/sqft</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3  mb-3">
@@ -149,7 +150,7 @@
                                                 <div class="col-lg-3  mb-3">
                                                     <div class="flex flex-column gap-2  text-lg-center">
                                                         <h4 class="fw-bold">Facing</h4>
-                                                        <span>{{ $facing ?? '--' }}</span>
+                                                        <span>{{ $facing ? $facing->value : '--' }}</span>
                                                     </div>
                                                 </div>
 
@@ -188,14 +189,13 @@
                                                             <span>{{ $lockInPeriod ?? '---' }}</span>
                                                         </div>
                                                     </div>
-                                                @else 
+                                                @else
                                                     <div class="col-lg-3  mb-3">
                                                         <div class="flex flex-column gap-2  text-lg-center">
                                                             <h4 class="fw-bold">Suitable for</h4>
                                                             <span>{{ $suitableFor ?? '---' }}</span>
                                                         </div>
                                                     </div>
-                                                
                                                 @endif
 
                                                 <div class="col-lg-3  mb-3">
@@ -217,7 +217,7 @@
                                                             class="text-capitalize">{{ $property->overlooking ?? '--' }}</span>
                                                     </div>
                                                 </div>
-                                              
+
 
                                             </div>
                                         </div>
